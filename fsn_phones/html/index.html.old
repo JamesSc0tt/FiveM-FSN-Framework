@@ -1,0 +1,147 @@
+<html>
+
+<head>
+	<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+	<link href="index.css" rel="stylesheet" type="text/css" />
+	
+	<!-- these css are always active -->
+	<link href="pages_css/iphone/main.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/main.css" rel="stylesheet" type="text/css" />
+	
+	<!-- dynamically loaded samsung css -->
+	<link href="pages_css/samsung/adverts.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/call.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/contacts.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/email.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/fleeca.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/home.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/messages.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/pay.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/phone.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/twitter.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/samsung/whitelists.css" rel="stylesheet" type="text/css" />
+
+	<!-- dynamically loaded iphone css -->
+	<link href="pages_css/iphone/adverts.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/call.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/contacts.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/email.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/fleeca.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/home.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/messages.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/pay.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/phone.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/twitter.css" rel="stylesheet" type="text/css" />
+	<link href="pages_css/iphone/whitelists.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="phone-main">
+		<!-- PUT CONTENT FOR SAMSUNG HERE -->
+		<div id="phone-samsung" class="main-phone">
+
+		</div>
+		<!-- PUT CONTENT FOR IPHONE HERE -->
+		<div id="phone-iphone">
+			<img src="img/Apple/Frame.png" class="frame-a">
+			<div class="data-a"></div>
+			<div class="battery-a"></div>
+			<h1 class="time-a">9:50</h1>
+			<div id="page-iphone-home">
+				<div class="wallpaperA"></div>
+				<div class="screen">
+					<div id="home">
+						<div class="contact">
+							<h1>Contacts</h1>
+						</div>
+						<div class="phone">
+							<h1>Phone</h1>
+						</div>
+						<div class="text">
+							<h1>Messages</h1>
+						</div>
+						<div class="wallet">
+							<h1>Wallet</h1>
+						</div>
+						<div class="interact twitter" onmousedown="changePage('twitter', 'iphone')">
+							<h1>Twitter</h1>
+						</div>
+						<div class="ad">
+							<h1>Advertise</h1>
+						</div>
+						<div class="mail">
+							<h1>Mail</h1>
+						</div>
+						<div class="whitelist">
+							<h1>Whitelist</h1>
+						</div>
+						<div class="fleeca">
+							<h1>Fleeca App</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="page-iphone-twitter">
+				<div class="twitter">
+					<div class="background-t">
+						<div class="top-bar">
+							<div class="t-logo"></div>
+						</div>
+						<div class="feed-bg">
+							<div class="tweetBase">
+								<div class="tweetIcon">
+									<div class="tweetIconCircle">JS</div>
+								</div>
+								<div class="tweetTextArea">
+									<div class="tweetTitle">@jamessc0tt</div>
+									<div class="tweetText">text...</div>
+								</div>
+							</div>
+							<div class="tweetBase">
+								<div class="tweetIcon">
+									<div class="tweetIconCircle">JS</div>
+								</div>
+								<div class="tweetTextArea">
+									<div class="tweetTitle">@jamessc0tt</div>
+									<div class="tweetText">text...</div>
+								</div>
+							</div>
+							<div class="tweetBase">
+								<div class="tweetIcon">
+									<div class="tweetIconCircle">JS</div>
+								</div>
+								<div class="tweetTextArea">
+									<div class="tweetTitle">@jamessc0tt</div>
+									<div class="tweetText">text...</div>
+								</div>
+							</div>
+							<div class="tweetBase">
+								<div class="tweetIcon">
+									<div class="tweetIconCircle">JS</div>
+								</div>
+								<div class="tweetTextArea">
+									<div class="tweetTitle">@jamessc0tt</div>
+									<div class="tweetText">text...</div>
+								</div>
+							</div>
+							<div class="tweetBase">
+								<div class="tweetIcon">
+									<div class="tweetIconCircle">JS</div>
+								</div>
+								<div class="tweetTextArea">
+									<div class="tweetTitle">@jamessc0tt</div>
+									<div class="tweetText">text...</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<!-- load script last, idk why i just do -->
+	<script src="index.js" type="text/javascript"></script>
+</body>
+</html>

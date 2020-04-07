@@ -1,0 +1,54 @@
+@import url( 'https://fonts.googleapis.com/css?family=Roboto' );
+
+#ass {
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+#actionmenu {
+    position: fixed;
+    left: 10%; 
+    top: 40%;
+	width: 590;
+}
+
+#actionmenu button {
+    background-color: #FFFFFF; 
+    border: 1px solid #FFFFFF;
+    color: black; 
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 24px; 
+    /* margin: 8px 0px 8px 0px; */
+	margin-top: 5px;
+    cursor: pointer; 
+    width: 190px; 
+	float: left;
+	margin-left: 5px;
+    text-transform: uppercase;
+}
+
+#actionmenu button:hover {
+    background-color: #6cd3f9;
+    border: 1px solid #6cd3f9;
+}
+
+.exit {
+	width: 580px !IMPORTANT;
+}
+
+.cat {
+	background-color: #eaeaea !IMPORTANT;
+}
+
+.buy {
+	background-color: #b8f9d7 !IMPORTANT; 
+}
+
+.other {
+	background-color: #eff9b8 !IMPORTANT;
+}
+
+.section {
+
+}

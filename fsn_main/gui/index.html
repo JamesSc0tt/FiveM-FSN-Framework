@@ -1,0 +1,418 @@
+<html>
+    <head>
+        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+        <!--<link href="style.css" rel="stylesheet" type="text/css" />-->
+		<style>
+			@font-face {
+				font-family: pcdown;
+				src: url(pdown.ttf);
+			}
+			* {
+				/* font-family: 'Roboto', sans-serif; */
+				font-family: 'Roboto', sans-serif;
+			}
+			#init {
+				display: none;
+			}
+			.logoarea {
+				position: relative;
+				width: 800px;
+				height: 300px;
+				margin-left: auto;
+				margin-right: auto;
+				padding-top: 40px;
+				align-content: center;
+			}
+			.loading {
+				background-color: rgba(0,0,0,0.4);
+				border-top: 1px solid red;
+				border-bottom: 1px solid red;
+				position: relative;
+				width: 760px;
+				height: 250px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-bottom: 20px;
+				margin-top: -30px;
+				color: white;
+				padding: 20px;
+				display: none;
+			}
+			.loading h1 {
+				width: 100%;
+				text-align: center;
+				line-height: 50px;
+			}
+			.loader {
+			  border: 16px solid #f3f3f3;
+			  border-radius: 50%;
+			  border-top: 16px solid red;
+			  width: 120px;
+			  height: 120px;
+			  margin-left: auto;
+			  margin-right: auto;
+			  margin-top: 20px;
+			  -webkit-animation: spin 2s linear infinite; /* Safari */
+			  animation: spin 2s linear infinite;
+			}
+			/* Safari */
+			@-webkit-keyframes spin {
+			  0% { -webkit-transform: rotate(0deg); }
+			  100% { -webkit-transform: rotate(360deg); }
+			}
+
+			@keyframes spin {
+			  0% { transform: rotate(0deg); }
+			  100% { transform: rotate(360deg); }
+			}
+			.logo {
+				display: block; /*for the img inside your div */ 
+				margin: 0 auto;
+			}
+			.charactercreation {
+				background-color: rgba(0,0,0,0.4);
+				border-top: 1px solid red;
+				border-bottom: 1px solid red;
+				position: relative;
+				width: 760px;
+				height: 320px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-bottom: 20px;
+				margin-top: -30px;
+				color: white;
+				padding: 20px;
+				display: none;
+			}
+			.charactercreation input[type=text] {
+				width: 100%;
+			}
+			.charactercreation textarea {
+				width: 100%;
+				height: 80px;
+				resize: none;
+			}
+			.charactercreation span {
+				color: red;
+				font-size: 10px;
+				float:right;
+			}
+			.createbuttons {
+				width: 100%;
+				height: auto;
+			}
+			.createbuttons button {
+				width: 20%;
+				height: 30px;
+			}
+			.createbackbutton {
+				background-color: rgba(255,0,0,0.2);
+				color:white;
+				font-weight: 10;
+				border: 1px solid rgba(255,0,0,0.3);
+			}
+			.createcreatebutton {
+				float: right;
+				background-color: rgba(0,255,0,0.2);
+				color:white;
+				font-weight: 10;
+				border: 1px solid rgba(0,255,0,0.3);
+			}	
+			.motd {
+				background-color: rgba(0,0,0,0.4);
+				border-top: 1px solid red;
+				border-bottom: 1px solid red;
+				position: relative;
+				width: 760px;
+				height: 250px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-bottom: 20px;
+				margin-top: -30px;
+				color: white;
+				padding: 20px;
+			}
+			.character-menu {
+				background-color: rgba(0,0,0,0.4);
+				border-top: 1px solid red;
+				border-bottom: 1px solid red;
+				position: relative;
+				width: 800px;
+				height: 150px;
+				margin-left: auto;
+				margin-right: auto;
+				padding: 2px;
+				display: none;
+			}
+			.character-1 {
+				height: 100%;
+				width: 266px;
+				float: left;
+			}
+			.char1-create {
+				color: #fff;
+				padding: 20px;
+			}
+			.char1-create button {
+				width: 100%;
+				height: 30px;
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				background-color: rgba(255,69,0, 0.2);
+				border: 1px solid rgba(255,69,0, 0.3);
+				color: white;
+			}
+			.character-2 {
+				height: 100%;
+				width: 266px;
+				float: left;
+				border-left: 1px solid white;
+			}
+			.char2-create {
+				color: #fff;
+				padding: 20px;
+			}
+			.char2-create button {
+				width: 100%;
+				height: 30px;
+				margin-top: 35px;
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				background-color: rgba(255,69,0, 0.2);
+				border: 1px solid rgba(255,69,0, 0.3);
+				color: white;
+			}
+			.character-3 {
+				height: 100%;
+				width: 266px;
+				float: right;
+				border-left: 1px solid white;
+			}
+			.char3-create {
+				color: #fff;
+				padding: 20px;
+			}
+			.char3-create button {
+				width: 100%;
+				height: 30px;
+				margin-top: 35px;
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				background-color: rgba(255,69,0, 0.2);
+				border: 1px solid rgba(255,69,0, 0.3);
+				color: white;
+			}
+			.char1-details {
+				display: none;
+			}
+			.char2-details {
+				display: none;
+			}
+			.char3-details {
+				display: none;
+			}
+			.copyright {
+				color: red;
+				font-size: 10px;
+				position: relative;
+				width: 795px;
+				margin-left: auto;
+				margin-right: auto;
+				padding 5px;
+			}
+			.copyright span {
+				float:right;
+				color: white;
+			}
+			td, tr, table {
+				color: white;
+				width: 100%;
+			}
+			table {
+				padding: 5px;
+			}
+			td button {
+				width: 100%;
+				height: 30px;
+				margin-top: 5px;
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				background-color: rgba(0,255,0,0.2);
+				border: 1px solid rgba(0,255,0,0.3);
+				color:white;
+			}
+			.moneyshit {
+				position: fixed;
+				width: auto;
+				height: auto;
+				top: 40px;
+				right: 20px;
+				font-weight: bold;
+				color: #fff;
+				text-align:right;
+			}
+			.moneyshit * {
+				font-family: pcdown, sans-serif;
+				font-size: 35px;
+				text-shadow:
+					-1px -1px 0 #000,  
+					1px -1px 0 #000,
+					-1px 1px 0 #000,
+					1px 1px 0 #000;
+				}
+			}
+			.money_symbol {
+				font-weight: bolder;
+				color: #3ae8e5 !IMPORTANT;
+			}
+			.bank_symbol {
+				font-weight: bolder;
+				color: #3ae8e5;
+			}
+			.wallet_symbol {
+				font-weight: bolder;
+				color: #48e83a;
+			}
+			.money, .bank, .moneyPlus, .moneyMinus, .bankMinus, .bankPlus {
+				display: none;
+			}
+		</style>
+    </head>
+    <body>
+		<div class="moneyshit">
+			<div class="money"><span class="wallet_symbol">$</span><span id="money_replace"></span></div>
+			<div class="moneyMinus">-<span class="wallet_symbol">$</span><span id="money_change_minus"></span></div>
+			<div class="moneyPlus">+<span class="wallet_symbol">$</span><span id="money_change_plus"></span></div>
+			<div class="bank"><span class="bank_symbol">$</span><span id="bank_replace"></span></div>
+			<div class="bankMinus">-<span class="bank_symbol">$</span><span id="bank_change_minus"></span></div>
+			<div class="bankPlus">+<span class="bank_symbol">$</span><span id="bank_change_plus"></span></div>
+		</div>
+		<div id="init">
+			<div class="logoarea" style="margin-top:50px;margin-bottom:-20px;">
+				<!-- <img class="logo" src="https://cdn.discordapp.com/attachments/334028698774929408/574962529747468317/logo.png" height="80%">
+				-->
+			</div>
+			<div id="loading" class="loading">
+				<div class="loader"></div>
+				<h1 id="loading_text">Creating your character...</h1>
+			</div>
+			<div id="charactercreation" class="charactercreation">
+				<p>First Name: <input type="text" id="create-fname" placeholder="Joe"></input></p>
+				<p>Last Name: <input type="text" id="create-lname" placeholder="Bloggs"></input></p>
+				<p>Date of Birth: <input type="text" id="create-dob" placeholder="mm/dd/yyyy"></input></p>
+				<p>Character Description <span>Used in administration to ensure Serious Roleplay</span><textarea id="create-desc" ></textarea></p>
+				<div class="createbuttons">
+					<button class="createbackbutton">Back</button> <button class="createcreatebutton">Create</button>
+				</div>
+			</div>
+			<div id="motd" class="motd">
+				<table style="width: 100%;margin-bottom:5px;">
+					<tr>
+						<td style="width:25%;text-align:center;">[<b style="color:#ff6851">L</b>] Lock/Unlock vehicle</td>
+						<td style="width:25%;text-align:center;">[<b style="color:#ff6851">F1</b>] Player menu</td>
+						<td style="width:25%;text-align:center;">[<b style="color:#ff6851">Z</b>] Report Player</td>
+						<td style="width:25%;text-align:center;">[<b style="color:#ff6851">G</b>] Toggle voice proximity</td>
+					</tr>
+				</table>
+				Welcome to Fusion Roleplay! Please take a second to review the rules below:<br><br>
+				<span style="width:auto;margin-left:auto;margin-right:auto;font-weight:bold;color:red;font-size:14px;text-align:center;">A microphone is requried to play on this server, without one you may be banned and forced to appeal on our forums.</span>
+				 <ul>
+				  <li>Join Our Discord! <!-- https://discord.gg/WQPFnuE -->for updates, keybinds and information.</li>
+				  <li>Cheating, exploiting or hacking of any kind is not permitted, this includes external crosshairs.</li>
+				  <li>Do not RDM/VDM - You have to have initiated in roleplay with the individual first.</li>
+				  <li>Twitch TOS - Do not intentionally violate Twitch terms of service while playing.</li>
+				  <li>Combat Logging - Do not disconnect from the server/respawn to avoid a roleplay/admin scenario.</li>
+				  <li>EMS - Do not lie to an EMS about your injuries or respawn whilst in EMS custody.</li>
+				  <li>Power Gaming - Do not use mechanics that do not exist in the server to gain an advantage.</li>
+				</ul> 
+			</div>
+			<div id="charactermenu" class="character-menu">
+				<div class="character-1">
+					<div class="char1-create" onclick="charCreator">
+						<span>No character data.</span>
+						<button id="charCreate" onclick="charCreator">Create Character</button>
+					</div>
+					<div class="char1-details">
+						<table>
+							<tr>
+								<td id="char1_id"><b>Character ID:</b> </td>
+							</tr>
+							<tr>
+								<td id="char1_fname"><b>First Name:</b> </td>
+							</tr>
+							<tr>
+								<td id="char1_lname"><b>Last Name:</b> </td>
+							</tr>
+							<tr>
+								<td id="char1_dob"><b>DoB:</b> </td>
+							</tr>
+							<tr>
+								<td><button id="select_1">Select Character</button></td>
+							</tr>
+						</table>					
+					</div>
+				</div>
+				<div class="character-2">
+					<div class="char2-create">
+						<span>No character data.</span>
+						<button id="charCreate">Create Character</button>
+					</div>
+					<div class="char2-details">
+						<table>
+							<tr>
+								<td id="char2_id"><b>Character ID:</b> </td>
+							</tr>
+							<tr>
+								<td id="char2_fname"><b>First Name:</b> </td>
+							</tr>
+							<tr>
+								<td id="char2_lname"><b>Last Name:</b> </td>
+							</tr>
+							<tr>
+								<td id="char2_dob"><b>DoB:</b> </td>
+							</tr>
+							<tr>
+								<td><button id="select_2">Select Character</button></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+				<div class="character-3">
+					<div class="char3-create">
+						<span>No character data.</span>
+						<button id="charCreate">Create Character</button>
+					</div>
+					<div class="char3-details">
+						<table>
+							<tr>
+								<td id="char3_id"><b>Character ID:</b> </td>
+							</tr>
+							<tr>
+								<td id="char3_fname"><b>First Name:</b> </td>
+							</tr>
+							<tr>
+								<td id="char3_lname"><b>Last Name:</b> </td>
+							</tr>
+							<tr>
+								<td id="char3_dob"><b>DoB:</b> </td>
+							</tr>
+							<tr>
+								<td><button id="select_3">Select Character</button></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="copyright">
+				This is a BETA release, it does not represent the final version. <span>FSN Framework v1.0 by JamesSc0tt</span>
+			</div>
+        </div>
+        <script src="index.js" type="text/javascript"></script>
+    </body>
+</html>

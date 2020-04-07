@@ -1,0 +1,317 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Signika', sans-serif;
+    text-transform: uppercase;
+    color: white;
+    text-shadow:
+        -0.5px -0.5px 0 #000,
+        0.5px -0.5px 0 #000,
+        -0.5px 0.5px 0 #000,
+        0.5px 0.5px 0 #000;
+
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+					  supported by Chrome and Opera */
+
+}
+
+.ui {
+	position:fixed;
+	left:0;
+	top:0;
+	width: 100%;
+	height: 100%;
+    background-color: rgba(255, 255, 255, 0.35);
+    z-index: 0;
+	display:none;
+}
+
+.inventory-left {
+	margin-top: 10%;
+	margin-left: 8%;
+	display:inline;
+	float:left;
+    width: 40%;
+	height: 60%;
+    box-shadow: 10px 10px 500px rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.overlay {
+	position:fixed;
+	height:100%;
+	width:100%;
+	top:0;
+	left: 0;
+	z-index:700;
+	display:none;
+}
+.overlay div {
+	position: absolute;
+    left: 50%;
+    top: 100px;
+    transform: translate(-50%, -50%);
+	height: 40px;
+	width: 1000px;
+	font-size:50px;
+	color: rgba(255,255,255,0.8);
+}
+
+.inventory-middle {
+	display:inline;
+	margin-top: 10%;
+	float:left;
+    width: 18%;
+}
+
+.inventory-right {
+	margin-top: 10%;
+	float:left;
+	display:inline;
+    width: 40%;
+	height: 60%;
+    box-shadow: 10px 10px 500px rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.info-div {
+	position:relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 95%;
+	min-height: 200px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.info-div h1 {
+	text-align:center;
+	font-size:18px;
+	padding:20px;
+}
+.info-div h2 {
+	text-align:center;
+	font-size:16px;
+	padding:10px;
+}
+.info-div p {
+	font-size:13px;
+	padding:10px;
+}
+.info-div img {
+	width: 30%;
+	margin-left: 35%;
+}
+.controls-div {
+	position:relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:50px;
+	width: 60%;
+}
+
+.control {
+	width: 100%;
+	height: 50px;
+	margin:5px;
+	margin-top:10px;
+	line-height:50px;
+	font-size:16px;
+	text-align:center;
+    background-color: rgba(0, 0, 0, 0.3);	
+}
+.control-2 {
+	width: 100%;
+	height: 30px;
+	margin:5px;
+	line-height:30px;
+	font-size:16px;
+	text-align:center;
+}
+
+.number {
+	width: 75%;
+	height: 30px;
+	float:left;
+	line-height:30px;
+	font-size:16px;
+	text-align:center;
+    background-color: rgba(0, 0, 0, 0.3);	
+}
+
+.manage {
+	width: 11%;
+	float:left;
+	height: 30px;
+	line-height:30px;
+	font-size:16px;
+	text-align:center;
+    background-color: rgba(0, 0, 0, 0.3);	
+}
+
+#playerInventory {
+    /* width: 625px; */
+    width: 33%;
+    height: 700px;
+    float: left;
+    overflow-y: scroll
+}
+
+
+#otherInventory {
+    width: 33%;
+    height: 700px;
+    float: left;
+    overflow-y: scroll
+}
+
+#count {
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.slot {
+    float: left;
+    width: 117px;
+    height: 125px;
+    background-color: rgba(255,255,255,0.2);
+    margin: 2px;
+    position: relative;
+}
+
+.slot:hover {
+    opacity: 0.8;
+}
+
+.item,
+.item-other {
+    width: 119px;
+    height: 117px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.item-icon img {
+	z-index:9;
+	width:85%;
+	margin: 8px;
+	margin-top:12px;
+}
+
+.item-amt {
+	position: absolute;
+	top:0;
+	right:0;
+	height: 20px;
+	min-width:20px;
+	font-size:14px;
+	text-align:right;
+	line-height:20px;
+	z-index:10;
+    background-color: rgba(17, 5, 17, 0.2);
+	color:white;
+}
+
+.item-name {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 117px;
+    min-height: 20px;
+	line-height:20px;
+    z-index: 500;
+    font-size: 12px;
+    background-color: rgba(17, 5, 17, 0.2);
+}
+
+.ui-draggable-dragging .item-name,
+.ui-draggable-dragging .item-count {
+    display: none;
+}
+
+#playerInventory::-webkit-scrollbar-track,
+#otherInventory::-webkit-scrollbar-track {
+    background-color: none;
+    border: none;
+}
+
+#playerInventory::-webkit-scrollbar,
+#otherInventory::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgba(17, 5, 17, 0.2);
+}
+
+#playerInventory::-webkit-scrollbar-thumb,
+#otherInventory::-webkit-scrollbar-thumb {
+    background-color: rgba(17, 5, 17, 0.4);
+    border: 2px solid rgba(17, 5, 17, 0.1);
+}
+
+.nearbyPlayerButton {
+    width: 100%;
+    margin-top: 5px;
+    display: block;
+    text-decoration: none;
+    padding: 2px;
+    color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(63, 57, 83, 0.226);
+    text-shadow: none;
+    font-size: 14px !important;
+    outline: none;
+    text-transform: none;
+    text-align: center;
+    line-height: 30px;
+    border: none;
+}
+
+.nearbyPlayerButton:hover {
+    background-color: rgba(34, 29, 46, 0.8);
+}
+
+#noSecondInventoryMessage {
+    width: 615px;
+    height: 580px;
+    line-height: 580px;
+    text-align: center;
+}
+
+.console {
+	position: fixed;
+	width: 500px;
+	height: 100px;
+	bottom:20px;
+	right:20px;
+    box-shadow: 10px 10px 500px rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, 0.3);
+	overflow:hidden;
+}
+.console_entry {
+	margin-top:2px;
+    background-color: rgba(255,255,255,0.2);
+	color:white;
+	font-size:13px;
+	padding:4px;
+    text-transform: lowercase;
+	text-shadow:none;
+}
+.console_entry span {
+	text-shadow:none;
+}

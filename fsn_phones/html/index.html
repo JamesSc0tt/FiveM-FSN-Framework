@@ -1,0 +1,542 @@
+<html>
+	<head>
+		<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+		<script
+			  src="https://code.jquery.com/jquery-3.4.1.js"
+			  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+			  crossorigin="anonymous"></script>
+		<link href="index.css" rel="stylesheet" type="text/css" />
+		
+		<!-- these css are always active -->
+		<link href="pages_css/iphone/main.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/main.css" rel="stylesheet" type="text/css" />
+		
+		<!-- dynamically loaded samsung css -->
+		<link href="pages_css/samsung/adverts.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/call.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/contacts.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/email.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/fleeca.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/home.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/messages.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/pay.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/phone.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/twitter.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/samsung/whitelists.css" rel="stylesheet" type="text/css" />
+
+		<!-- dynamically loaded iphone css -->
+		<link href="pages_css/iphone/adverts.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/call.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/contacts.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/email.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/fleeca.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/home.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/messages.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/pay.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/phone.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/twitter.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/whitelists.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/garage.css" rel="stylesheet" type="text/css" />
+		<link href="pages_css/iphone/darkweb.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<!-- NOTIFICATION STUFF FOR IPHONE-->
+		<div id="insertNotifications" class="notifications">
+		</div>
+		<!-- PUT CONTENT FOR SAMSUNG HERE -->
+		<div id="phone-samsung" class="main-phone">
+
+		</div>
+		<!-- PUT CONTENT FOR IPHONE HERE -->
+		<div id="phone-iphone"> <!-- z-index 0 -->
+			<div class="iphone-frame"></div> <!-- z-index 1 -->
+			<div class="iphone-wallpaper"></div> <!-- z-index -1 -->
+			<div class="iphone-toolbar"><!-- z-index 0 -->
+				<div class="iphone-toolbar-left">
+					
+				</div>
+				<div class="iphone-toolbar-right">
+					<img src="img/Apple/battery.png" style="margin-left:10px;margin-top:8px;">
+					<img src="img/Apple/wifi.png">
+					<img src="img/Apple/signal.png">
+				</div>
+			</div> 
+			<div class="iphone-screen"> <!-- z-index 2 -->
+				<div id="page-iphone-home">
+					<div class="homebutton" onclick="changePage('email', 'iphone')">
+						<img src="img/Apple/Mail.png">
+						<h1>Mail</h1>
+					</div>
+					<div class="homebutton" onclick="changePage('phone', 'iphone')">
+						<img src="img/Apple/Phone.png">
+						<h1>Phone</h1>
+					</div>
+					<div class="homebutton" onclick="changePage('messages', 'iphone')">
+						<img src="img/Apple/Messages.png">
+						<h1>Messages</h1>
+					</div>
+					<div class="homebutton" onclick="changePage('adverts', 'iphone')">
+						<img src="img/Apple/Ads.png">
+						<h1>Adverts</h1>
+					</div>
+					<div class="homebutton"  onclick="changePage('contacts', 'iphone')">
+						<img src="img/Apple/Contact.png">
+						<h1>Contacts</h1>
+					</div>
+					<!--
+					<div class="homebutton">
+						<img src="img/Apple/Wallet.png">
+						<h1>Wallet</h1>
+					</div>
+					-->
+					<div class="homebutton" onclick="changePage('twitter', 'iphone')">
+						<img src="img/Apple/Twitter.png">
+						<h1>Twitter</h1>
+					</div>
+					<div class="homebutton" onclick="changePage('whitelists', 'iphone')">
+						<img src="img/Apple/Whitelist.png">
+						<h1>Whitelist</h1>
+					</div>
+					<div class="homebutton" onclick="changePage('fleeca', 'iphone')">
+						<img src="img/Apple/Fleeca.png">
+						<h1>Fleeca</h1>
+					</div>
+					<div class="homebutton" onclick="toggleNotification()">
+						<img src="img/Apple/Noti.png">
+						<h1>Alerts</h1>
+					</div>
+					<div class="homebutton" onclick="changePage('garage', 'iphone')">
+						<img src="img/Apple/Garage.png">
+						<h1>Garage</h1>
+					</div>
+					<div class="homebutton" onclick="changePage('darkweb', 'iphone')">
+						<img src="img/Apple/darkweb.png">
+						<h1></h1>
+					</div>
+				</div>
+				<div id="page-iphone-phone">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/call.png">
+					</div>
+					<div class="iphone-app-main">
+						<div id="insertCalls">
+							<!--
+							<div class="call">
+								<div class="call-icon">
+									<img src="img/Apple/call-in.png">
+								</div>
+								<div class="call-name">
+									<h1>LOGAN WHITEHEAD</h1>
+									<p>Number</h1>
+								</div>
+								
+								<div class="call-manage">
+									<div class="call-manage-icon" onclick="textContact('000-000-000');">
+										<img src="img/Apple/Messages.png">
+									</div>
+									<div class="call-manage-icon" onclick="callContact('999-999-999');">
+										<img src="img/Apple/Phone.png">
+									</div>
+									<div class="call-manage-icon" onclick="viewContact('999-999-999');">
+										<img src="img/Apple/Contact.png">
+										
+									</div>
+								</div>
+							</div>
+							-->
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-garage">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/garage.png">
+					</div>
+					<div class="iphone-app-main">
+						<div id="garageApp-error" class="connection-error">
+							<h1>500</h1>
+							<h2>An Error Occured</h2>
+							<p>Either you don't own a vehicle, or the app hasn't received them yet. Try again later.</p>
+						</div>
+						<div id="insertVehicles" class="garage-list">
+							<!-- 
+							<div class="vehicle">
+								<h1>Vehicle Name</h1>
+								<div class="vehicle-info">
+									<p><b>Type</b>: </p>
+									<p><b>Plate</b>: </p>
+								</div>
+								<div class="vehicle-info">
+									<p><b>Garage Status</b>: </p>
+									<p><b>Stored At</b>: </p>
+								</div>
+								<div class="vehicle-info">
+									<p><b>Financed</b>: </p>
+									<p><b>Payment Information</b></p>
+									<table class="wl-table">
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Amount</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											<td>nil</td>
+											<td>price</td>
+											<td><span class="paid">PAID</span></td>
+										</tbody>
+									</table>
+								</div>
+								<button style="margin:5px;margin-top:20px;width:90%;height:30px;border-radius:5px;color:white;background-color: #303030;font-weight:bold;border:0px;">Restore Vehicle</button>
+							</div>
+							-->
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-darkweb">
+					<div class="iphone-app-titlebar">
+						<!-- <img src="img/Apple/banner_icons/contacts.png"> -->
+					</div>
+					<div class="iphone-app-main">
+						<div id="darkweb-error" class="connection-error">
+							<h1>403</h1>
+							<h2>Access Denied</h2>
+							<p>The server denied your request, ensure to check ACLs to whitelist your IP address.</p>
+						</div>
+						<div id="darkweb-acl">
+							<div id="darkweb-menu" class="menu">
+								<div id="dwpg1" class="button active" onclick="$('#dwpg1').addClass('active');$('#dwpg2').removeClass('active');$('#darkweb-page2').hide();$('#darkweb-page1').show();">
+									MARKET
+								</div>
+								<div id="dwpg2" class="button" onclick="$('#dwpg2').addClass('active');$('#dwpg1').removeClass('active');$('#darkweb-page1').hide();$('#darkweb-page2').show();">
+									ADMIN
+								</div>
+							</div>
+							<div id="darkweb-page1" ><!-- public facing darkweb -->
+								<div id="darkweb-error" class="connection-error">
+									<h1>500</h1>
+									<h2>ERROR</h2>
+									<p style="color:white;">It looks like nobody has posted anything for sale in a while.</p>
+								</div>
+							</div>
+							<div id="darkweb-page2"><!-- admin side darkweb -->
+								<div class="postbutton">
+									+ NEW POST
+								</div>
+								<div class="dw-post">
+									<div class="dw-postimg">
+										<div class="dw-postimgbox">
+										
+										</div>
+									</div>
+									<div class="dw-postinf">
+										<h1>MICROSMG [X10]</h1>
+										<p>A gun with shooting pew pew</p>
+									</div>
+									<div class="dw-order">
+										ORDER NOW
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-contacts">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/contacts.png">
+					</div>
+					<div class="iphone-app-main">
+						<div id="app-section-add-contact">
+							<h1>Add/Edit a contact</h1>
+							<p>Name:</p>
+							<input id="editcontact_name" type="text" placeholder="Bobby Joe..."/>
+							<p>Number:</p>
+							<input id="editcontact_number" type="text" placeholder="000-000-000"/>
+							<button onclick="updateContact()">Submit</button>
+							<button id="viewcontact_delete" onclick="deleteContact()" style="background-color:#870000;">DELETE CONTACT</button>
+						</div>
+						<div id="app-section-view-contacts">
+							<div class="my-contact">
+								<div class="my-contact-picture">
+									<img class="online" src="img/Apple/default-avatar.png">
+								</div>
+								<div class="my-contact-info">
+									<h1>Your contact details:</h1>
+									<p id="myNumber"></p>
+									<p id="myEmail"></p>
+								</div>
+							</div>
+							<div id="insertContacts">
+								<!-- 
+								<div class="contact">
+									<div class="contact-picture">
+										<img class="offline" src="img/Apple/default-avatar.png">
+									</div>
+									<div class="contact-name">
+										<h1>Peter Parker</h1>
+										<p>999-999-999</p>
+									</div>
+									<div class="contact-manage">
+										<div class="contact-manage-icon" onclick="textContact('000-000-000');">
+											<img src="img/Apple/Messages.png">
+										</div>
+										<div class="contact-manage-icon" onclick="callContact('999-999-999');">
+											<img src="img/Apple/Phone.png">
+											
+										</div>
+										<div class="contact-manage-icon" onclick="viewContact('999-999-999');">
+											<img src="img/Apple/Contact.png">
+											
+										</div>
+									</div>
+								</div>
+								-->
+							</div>
+							<div class="plusbutton" onclick="viewContact(false)"> <!-- z-index 3 -->
+								+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-fleeca">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/fleeca.png">
+					</div>
+					<div class="iphone-app-main">
+						<div class="balance-area">
+							<p>- AVAILABLE BALANCE -</p>
+							<h1 id="fleeca_balance"></h1>
+						</div>
+						<div class="transactions">
+							<p>- TRANSACTIONS -</p>
+							<div id="insertTransactions">
+								<!-- 
+								<div class="transaction">
+									<div class="transaction-info">
+										<div class="transaction-title">L.Whitehead</div>
+										<div class="transaction-type">CREDIT</div>
+									</div>
+									<div class="transaction-amt credit">$100</div>
+								</div>
+								-->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-email">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/mail.png">
+					</div>
+					<div class="iphone-app-main">
+						<div class="email-info" onclick="$('#email-info-hideme').fadeToggle()">
+							<h1>EiiMail - Your inbox</h1>
+							<p id="email-info-hideme" style="display:none;">Here you will find information about jobs, payments and social events. The government is always watching, always watching. <span>~ Wazowski</span></p>
+						</div>
+						<div id="insertEmails">
+							<div class="email">
+								<div class="email-title">
+									[DW] Update...
+								</div>
+								<div class="email-image" style="background-image: url('https://images.unsplash.com/photo-1500622944204-b135684e99fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80');"></div>
+								<div class="email-content">
+									We heard drugs are selling better in Vinewood...
+								</div>
+							</div>
+							<div class="email">
+								<div class="email-title">
+									[DW] Update...
+								</div>
+								<div class="email-content">
+									This is an email without an image attachment
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-messages">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/messages.png">
+					</div>
+					<div class="iphone-app-main">
+						<div id="view-message" style="display:none;">
+							<div id="insertMessages" class="messagesfeed">
+								<!--
+								<div class="messagebox">
+									<div class="message-from">
+										I received this text message
+									</div>
+								</div>
+								<div class="messagebox">
+									<div class="message-to">
+										I sent this text message
+									</div>
+								</div>
+								-->
+							</div>
+							<div class="replyfeed">
+								<textarea id="viewing_text"></textarea>
+								<div class="reply-button" onclick="sendText(false, $('#viewing_text').val());$('#viewing_text').val('');changePage('home','iphone');">
+									REPLY
+								</div>
+							</div>
+						</div>
+						<div id="view-messages" class="messages">
+							<div id="insertTexts">
+								<!--
+								<div class="message" onclick="viewMessages('')">
+									<div class="message-title-area">
+										Name (number)<span class="message-title-date">- Today at 15:09</span>
+									</div>
+									<div class="message-text-area">
+										Text preview...
+									</div>
+								</div>
+								-->
+							</div>
+							<div class="writemessage"> <!-- z-index 3 -->
+								Text a friend...
+								<input type="text" id="dialog_number"></input>
+								<textarea id="dialog_text"></textarea>
+								<div class="minusbutton" onclick="$('.writemessage').toggle();$('.msgplusbutton').toggle();"> <!-- z-index 3 -->
+									-
+								</div>
+								<div class="addbutton" onclick="sendText($('#dialog_number').val(), $('#dialog_text').val());$('#dialog_text').val('');changePage('home','iphone');"> <!-- z-index 3 -->
+									+
+								</div>
+							</div>			
+							<div class="msgplusbutton" onclick="$('.writemessage').toggle();$('.msgplusbutton').toggle();"> <!-- z-index 3 -->
+								+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-whitelists">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/wl.png">
+					</div>
+					<div class="iphone-app-main">
+						<div id="insertWhitelists">
+							<!--
+							<div class="whitelist">
+								<div class="whitelist-title">
+									
+								</div>
+								
+								<div class="whitelist-info">
+								
+								</div>
+								
+								<div class="whitelist-manage">
+									<table class="wl-table">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Position</th>
+												<th>Height</th>
+												<th>Born</th>
+												<th>Salary</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>DeMarcus Cousins</td>
+												<td>C</td>
+												<td>6'11"</td>
+												<td>08-13-1990</td>
+												<td>$4,917,000</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							-->
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-adverts">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/adverts.png">
+					</div>
+					<div class="iphone-app-main">
+						<div id="insertAdverts">
+							<!--
+							<div class="advert">
+								<div class="advert-text">
+									I am an advert xx
+								</div>
+								<div class="advert-author">
+									Logan Whitehead - 999-999-999
+								</div>
+							</div>
+							-->
+						</div>
+						<div class="writeadvert"> <!-- z-index 3 -->
+							Write an advert...
+							<textarea id="advert_textarea"></textarea>
+							<div class="minusbutton" onclick="$('.writeadvert').toggle();$('.plusbutton').toggle();"> <!-- z-index 3 -->
+								-
+							</div>
+							<div class="addbutton" onclick="addAdvert()"> <!-- z-index 3 -->
+								+
+							</div>
+						</div>
+						<div class="plusbutton" onclick="$('.writeadvert').toggle();$('.plusbutton').toggle();"> <!-- z-index 3 -->
+							+
+						</div>
+					</div>
+				</div>
+				<div id="page-iphone-twitter">
+					<div class="iphone-app-titlebar">
+						<img src="img/Apple/banner_icons/twitter.png">
+					</div>
+					<div class="iphone-app-main">
+						<div id="insertTweets">
+							<!--
+							<div class="tweet">
+								<div class="tweet-title-area">
+									@jamessc0tt <span class="tweet-title-date">- Today at 15:09</span>
+								</div>
+								<div class="tweet-text-area">
+									this is a tweet im really good at tweeting and that...
+								</div>
+							</div>
+							<div class="tweet mention">
+								<div class="tweet-title-area">
+									@jamessc0tt <span class="tweet-title-date">- Today at 15:09</span>
+								</div>
+								<div class="tweet-text-area">
+									<span>@jamessc0tt</span> this is a tweet im really good at tweeting and that...
+								</div>
+							</div>
+							-->
+						</div>
+						<div class="writetweet"> <!-- z-index 3 -->
+							Write a tweet...
+							<textarea id="tweet_textarea"></textarea>
+							<div class="minusbutton" onclick="$('.writetweet').toggle();$('.plusbutton').toggle();"> <!-- z-index 3 -->
+								-
+							</div>
+							<div class="addbutton" onclick="sendTweet()"> <!-- z-index 3 -->
+								+
+							</div>
+						</div>			
+						<div class="plusbutton" onclick="$('.writetweet').toggle();$('.plusbutton').toggle();"> <!-- z-index 3 -->
+							+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- load script last, idk why i just do -->
+		<script src="index.js" type="text/javascript"></script>
+		
+		<script>
+			//$('#phone-iphone').show();
+			//changePage('home', 'iphone');
+			//currentPhone = 'iphone';
+			
+			//addNotification("img/Apple/Mail.png", "Mail", "A new email has been received")
+		</script>
+	</body>
+</html>
+

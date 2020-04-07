@@ -1,0 +1,83 @@
+<!--
+
+	ActionMenu
+	Created by WolfKnight
+	Additional help from lowheartrate, TheStonedTurtle, and Briglair.
+
+ -->
+
+<html>
+    <head>
+        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+        <script src="ui.js" type="text/javascript"></script>
+        <link href="ui.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+		<div id="ass">
+			<div id="actionmenu">
+				<!--
+					This mainmenu div should be left as it is, you should change the buttons though.
+
+					If you want to make a submenu, then you must create a new div, with the ID of the
+					div being the data-sub attribute of the button that will open it. For example, the
+					below button Example Submenu, has the data-sub attribute of "examplesubmenu", which
+					is the same id as the div below. All submenus must also have a data-parent attribute.
+				 -->
+				<div id="mainmenu">
+					<div id="donly">
+						<div id="section" style="width:100%;height:auto;">
+							<button class="menuoption melee" data-action="buy-WEAPON_HAMMER">[1X] Hammer ($250)</button>
+							<button class="menuoption melee" data-action="buy-WEAPON_BAT">[1X] Bat ($200)</button>
+							<button class="menuoption melee" data-action="buy-WEAPON_GOLFCLUB">[1X] Golf Club ($250)</button>
+							<button class="menuoption melee" data-action="buy-WEAPON_CROWBAR">[1X] Crow Bar ($250)</button>
+							<button class="menuoption melee" data-action="buy-WEAPON_KNIFE">[1X] Knife ($500)</button>
+						</div>
+						<div id="section" style="width:100%;height:auto;">
+							<button class="menuoption misc" data-action="buy-WEAPON_BALL">[1X] Ball ($10)</button>
+							<button class="menuoption misc" data-action="buy-WEAPON_FLARE">[1X] Flare ($500)</button>
+							<button class="menuoption misc" data-action="buy-WEAPON_PETROLCAN">[1X] Jerry Can ($150)</button>
+							<button class="menuoption misc" data-action="buy-WEAPON_FIREEXTINGUISHER">[1X] Extinguisher ($250)</button>
+							<button class="menuoption misc" data-action="buy-WEAPON_FLASHLIGHT">[1X] Flashlight ($250)</button>
+						</div>
+						<div id="section" style="width:100%;height:auto;">
+							<button class="menuoption weapon" data-action="buy-WEAPON_VINTAGEPISTOL">[1X] Vintage Pistol ($500)</button>
+							<button class="menuoption weapon" data-action="buy-WEAPON_COMBATPISTOL">[1X] Combat Pistol ($1500)</button>
+							<button class="menuoption weapon" data-action="buy-WEAPON_PISTOL">[1X] Pistol ($1250)</button>
+							<button class="menuoption weapon" data-action="buy-WEAPON_STUNGUN">[1X] Stungun ($2500)</button>
+						</div>
+						<div id="section" style="width:100%;height:auto;">
+							<button class="menuoption gadget" data-action="buy-GADGET_PARACHUTE">[1X] Parachute ($1000)</button>
+						</div>
+					</div>
+					<div id="dmonly">
+						<div id="section" style="width:100%;height:auto;">
+							<button class="menuoption melee" data-action="buy-WEAPON_HAMMER">[1X] Hammer (500DM)</button>
+							<button class="menuoption melee" data-action="buy-WEAPON_BAT">[1X] Bat (500DM)</button>
+							<button class="menuoption melee" data-action="buy-WEAPON_GOLFCLUB">[1X] Golf Club (500DM)</button>
+							<button class="menuoption melee" data-action="buy-WEAPON_CROWBAR">[1X] Crow Bar (500DM)</button>
+							<button class="menuoption melee" data-action="buy-WEAPON_KNIFE">[1X] Knife (600DM)</button>
+						</div>
+						<div id="section" style="width:100%;height:auto;">
+							<button class="menuoption misc" data-action="buy-WEAPON_BALL">[1X] Ball (20DM)</button>
+							<button class="menuoption misc" data-action="buy-WEAPON_FLARE">[1X] Flare (500DM)</button>
+							<button class="menuoption misc" data-action="buy-WEAPON_PETROLCAN">[1X] Jerry Can (500DM)</button>
+						</div>
+						<div id="section" style="width:100%;height:auto;">
+							<button class="menuoption weapon" data-action="buy-WEAPON_VINTAGEPISTOL">[1X] Vintage Pstl (1000DM)</button>
+							<button class="menuoption weapon" data-action="buy-WEAPON_COMBATPISTOL">[1X] Combat Pistol (2000DM)</button>
+							<button class="menuoption weapon" data-action="buy-WEAPON_PISTOL">[1X] Pistol (3000DM)</button>
+							<button class="menuoption weapon" data-action="buy-WEAPON_PISTOL50">[1X] Deagle (8000DM)</button>
+						</div>
+						<div id="section" style="width:100%;height:auto;">
+							<button class="menuoption gadget" data-action="buy-GADGET_PARACHUTE">[1X] Parachute (7000DM)</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Do not remove this or you will not be able to exit the menu -->
+				<button class="menuoption exit" data-action="exit">Exit</button>
+			</div>
+		</div>
+    </body>
+</html>

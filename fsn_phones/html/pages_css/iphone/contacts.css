@@ -1,0 +1,157 @@
+.iphone-toolbar {
+	background-color:black;
+}
+
+.iphone-app-titlebar {
+	width: 100%;
+	height: 8%;
+	overflow:hidden;
+	background-image: linear-gradient(to right, #999999,#b5b5b5,#999999,#b5b5b5,#999999); 
+}
+
+.iphone-app-titlebar img {
+	height: 60%;
+	display:block;
+	margin: 10px auto;
+}
+
+.iphone-app-main {
+	overflow: auto;
+	width: 100%;
+	max-height:92%;
+	height: 92%;
+	background-color: #f5f5f5;
+	border-radius: 0px 0px 28px 28px;
+}
+.online {
+	border:1px solid green;
+	border-radius: 50%;
+}
+.offline {
+	border:1px solid red;
+	border-radius: 50%;
+}
+.my-contact {
+	width: 100%;
+	margin-top: 10px;
+	background-color:white;
+	height:70px;
+}
+.my-contact-picture {
+	float:left;
+	height: 100%;
+	width: 25%;
+}
+.my-contact-picture img {
+	width: 50px;
+	height: 50px;
+	margin: 10px;
+}
+.my-contact-info {
+	float:left;
+	height:100%;
+	width: 75%;
+}
+.my-contact-info h1 {
+	font-size:18px;
+	line-height:35px;
+	margin-bottom:-5px;
+}
+.my-contact-info p {
+	font-size: 14px;
+	line-height: 15px;
+}
+
+#insertContacts {
+	overflow-y:scroll;
+	height: calc(100%-60px);
+	width: 100%;
+	padding-bottom: 100px;
+}
+
+.contact {
+	width: 100%;
+	height: 40px;
+	background-color:white;
+	margin-top: 10px;
+}
+.contact-picture {
+	float:left;
+	height: 100%;
+	width: 18%;
+}
+.contact-picture img {
+	width: 30px;
+	height: 30px;
+	margin: 5px;
+	margin-left: 10px;
+}
+.contact-name {
+	float:left;
+	height: 100%;
+	width: 50%
+}
+.contact-name h1 {
+	font-size: 15px;
+	line-height: 25px;
+}
+.contact-name p {
+	font-size: 13px;
+	line-height: 10px;
+}
+.contact-manage {
+	float:left;
+	width: 30%;
+	height: 100%;
+}
+.contact-manage-icon {
+	width: 33%;
+	float: left;
+}
+.contact-manage-icon img {
+	width: 80%;
+	height: 55%;
+	margin: 2px;
+	margin-top:9px;
+}
+
+.plusbutton {
+	background-color:#757575;
+	width: 40px;
+	height: 40px;
+	border-radius: 50% 50% 50% 50%;
+	position: fixed;
+	bottom: 50px;
+	right: 70px;
+	z-index: 3;
+	color: white;
+	line-height: 40px;
+	font-size: 30px;
+	text-align: center;
+}
+
+#app-section-add-contact {
+	padding: 20px;
+}
+#app-section-add-contact h1 {
+	font-size: 18px;
+}
+#app-section-add-contact p {
+	margin-top: 15px;
+}
+#app-section-add-contact button {
+	width: 100%;
+	margin-top: 15px;
+	border:0px;
+	border-radius: 5px;
+	background-color:#757575;
+	padding: 10px;
+	color:white;
+	font-weight:bold;
+}
+#app-section-add-contact input {
+	width: 100%;
+	height: 30px;
+	border-radius: 5px;
+	font-size: 15px;
+}

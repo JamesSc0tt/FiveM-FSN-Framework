@@ -1,0 +1,612 @@
+/*
+	Main phone
+*/
+table, th, td {
+  border: 1px solid black;
+}
+table {
+  border-collapse: collapse;
+}
+
+* {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+button {
+	background-color: #2e2e2e;
+	border: 0px;
+	border-radius: 2px;
+	color: white;
+	font-weight:bold;
+	padding: 3px;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+.main_phone {
+	position: fixed;
+	width: 300px;
+	height: auto;
+	bottom: 480px;
+	right: 200px;
+	display: none; 
+}
+.phone_image {
+	width: 100%;
+	z-index: -100;
+	position:absolute;
+}
+.phone_screen {
+	position: absolute;
+	top: 0px;
+	margin-top: 79px;
+	margin-left: 44px;
+	width: 212px;
+	z-index: -1;
+	height: 380px;
+	z-index: 0;
+	background-image: url('img/home-background.png');
+}
+.status_bar {
+	width: 100%;
+	height: 15px;
+	background-color: black;
+	font-family: Arial;
+	font-size: 11px;
+	line-height: 15px;
+	padding-right: 3px;
+	padding-left: 3px;
+	color: white;
+}
+.status_bar div {
+	width: 48%;
+	float:left;
+}
+.status_bar span {
+	width: 48%;
+	text-align:right;
+	float:left;
+}
+.back_bar {
+	width: 100%;
+	position: absolute;
+	height: 7%;
+	background-color: black;
+	align-content: middle;
+}
+.back_img_arrow {
+	height: 100%;
+	width: 50px;
+	float: left;
+	margin-left: 33px;
+}
+.back_img_arrow img {
+	height: 100%;
+}
+.back_img_home {
+	height: 100%;
+	width: 0px;
+	float:left;
+	margin-left: 7px;
+}
+.back_img_home img {
+	height: 100%;
+}
+
+/*
+	Home Screen
+*/
+#screen-home {
+	display: none;
+	height: 93%;
+}
+.home_button {
+	width: 40px;
+	height: 50px;
+	padding: 5px;
+	color: white;
+	font-size: 8px;
+	font-family: Arial;
+	text-align: center;
+	display: inline-block;
+}
+.home_button img {
+	width: 95%;
+	margin-bottom: 2px;
+}
+
+/*
+	No Sim Screen
+*/
+#screen-nosim {
+	width: 100%;
+	height: 100%;
+	background-image: url('img/sim.png');
+	display: none;
+}
+
+/*
+	Contacts Screen
+*/
+#screen-contact-view {
+	display: none;
+	background-color: white;
+	width: 100%;
+	height: 93%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.contactdetails_title {
+	font-family:Arial;
+	font-weight:bold;
+	font-size: 20px;
+	width: 100%;
+	text-align:center;
+	margin-top: 20px;
+}
+.contact_textarea {
+	position: relative;
+	width: 90%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family:Arial;
+	font-weight:bold;
+}
+.contact_textarea input {
+	margin: 3px;
+	height: 30px;
+	width: calc(100% - 6px);
+	margin-bottom: 10px;
+}
+.contact_buttons button {
+	margin: 3px;
+	height: 30px;
+	width: calc(100% - 6px);
+	margin-bottom: 10px;
+}
+#screen-contacts {
+	display: none;
+	background-color: white;
+	width: 100%;
+	height: 93%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.contact {
+	width: 100%;
+	height: 40px;
+	padding: 5px;
+	padding-top: 10px;
+	border-bottom: 1px solid #d1d1d1;
+}
+.contact_details {
+	width: 70%;
+	height: 100%;
+	float: left
+}
+.contact_button {
+	width: 30%;
+	height: 100%;
+	float: left;
+}
+.contact_button button {
+	width: 90%;
+	height: 90%;
+}
+.contact_title {
+	width: 100%;
+	height: 50%;
+	float:left;
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 100%;
+}
+.contact_desc {
+	width: 100%;
+	height: 40%;
+	float: left;
+	font-family: Arial;
+	font-style: italic;
+	line-height: 100%;
+	font-size: 13px;
+}
+
+/*
+	View message screen
+*/
+#screen-message-view {
+	display: none;
+	background-color: white;
+	width: 100%;
+	height: 93%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.view_msg_compose {
+	width: 100%;
+	height: 70%;
+	float:left;
+	border-bottom: 1px solid #d1d1d1;
+	padding-top: 5px;
+}
+.view_msg_box {
+	width: 100%;
+	height: 70%;
+	float:left;
+	border-bottom: 1px solid #d1d1d1;
+	padding-top: 5px;
+}
+.view_msg_textbox {
+	width: 100%;
+	height: 25%;
+	float:left;
+}
+.view_msg_textbox textarea {
+	width: 80%;
+	height: 75%;
+	float:left;
+	resize: none;
+}
+.view_msg_textbox button {
+	width: 20%;
+	height: 75%;
+	float:left;
+}
+.view_msg_textbox input {
+	width: 100%;
+	height: 25%;
+	float:left;
+}
+
+
+/*
+	Messages Screen
+*/
+#screen-messages {
+	display: none;
+	background-color: white;
+	width: 100%;
+	height: 93%;
+}
+.messages_newmessage {
+	
+}
+.messages-box {
+	width: 100%;
+	height: 80%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.msg_box {
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #d1d1d1;
+	padding-top: 5px;
+}
+.msg_title {
+	width: 100%;
+	margin: 2px;
+	margin-bottom: 4px;
+	font-size:14px;
+	font-family: Arial;
+	font-weight: bold;
+}
+.messages_newmessage {
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-family: Arial;
+	font-weight: bold;
+	color:#a8a8a8;
+	border-bottom: 1px solid #d1d1d1;
+}
+.message_button {
+	position: relative;
+	height: 35px;
+	background-color: #1bb747;
+	box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(0,0,0,.25), inset 0 -3px 0 rgba(255,255,255,.2), 0 1px 0 rgba(0,0,0,.1);
+	border-radius: 10px;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #d1d1d1;
+}
+
+/*
+	Phone (Keypad) Screen
+*/
+#screen-phone {
+	display: none;
+	background-color: white;
+	width: 100%;
+	height: 93%;
+}
+.call_buttons {
+	width: 100%;
+	height: 250px;
+	padding-left: 20px;
+}
+.call_number_button {
+	position: relative;
+	width: 50px;
+	line-height: 50px;
+	text-align: center;
+	height: 50px;
+	margin: 3px;
+	border: 1px solid #d1d1d1;
+	border-radius: 50%;
+	float: left;
+	font-size: 25px;
+	font-family: Arial;
+}
+.call_input {
+	position: relative;
+	width: 80%;
+	height: 40px;
+	margin-top: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.call_input input {
+	width: 100%;
+	height: 90%;
+	border: 0px;
+	text-align: center;
+	font-family: Arial;
+	font-size: 20px;
+	border-bottom: 1px solid #d1d1d1;
+}
+.call_button {
+	position: relative;
+	height: 35px;
+	background-color: #1bb747;
+	box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(0,0,0,.25), inset 0 -3px 0 rgba(255,255,255,.2), 0 1px 0 rgba(0,0,0,.1);
+	border-radius: 10px;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -10px;
+}
+.call_icon {
+	width: 20%;
+	float: left;
+	height: 100%;
+	border-right: 1px solid white;
+}
+.call_icon img {
+	width: 55%;
+	margin: 7px;
+	margin-left: 9px;
+}
+.call_text {
+	width: 70%;
+	float: left;
+	height: 100%;
+	font-weight: bold;
+	color: white;
+	font-family: Arial;
+	text-align: center;
+	line-height: 35px;
+}
+
+/* Talk Bubbles */
+.talk-bubble {
+	margin-left: 10px;
+	margin-bottom: 5px;
+  display: inline-block;
+  position: relative;
+	width: calc(100% - 15px);
+	height: auto;
+	background-color: #72a6ff;
+}
+.border{
+  border: 8px solid #666;
+}
+.round{
+  border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+
+}
+
+/* Right triangle placed top left flush. */
+.tri-right.border.left-top:before {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -40px;
+	right: auto;
+  top: -8px;
+	bottom: auto;
+	border: 2px solid;
+	border-color: #666 transparent transparent transparent;
+}
+.tri-right.left-top:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -5px;
+	right: auto;
+  top: 0px;
+	bottom: auto;
+	border: 10px solid;
+	border-color: #72a6ff transparent transparent transparent;
+}
+
+/* talk bubble contents */
+.talktext{
+  padding: 5px;
+  padding-left:10px;
+  font-size:12px;
+  font-family: Arial;
+  color: white;
+}
+.talktext p{
+  /* remove webkit p margins */
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+}
+
+/*
+	Garage Screen
+*/
+#screen-garage {
+	display: none;
+	background-color: white;
+	width: 100%;
+	height: 93%;
+	font-family: Arial;
+	overflow-y:scroll;
+}
+
+#garage-vehicles {
+	overflow: scroll;
+}
+
+.garage-vehicle {
+	padding:2px;
+	margin: 4px;
+	border-radius: 2px;
+	background-color: rgba(0,0,0,0.1);
+}
+
+.garage-vehicle button {
+	width:97%;
+	margin-top:5px;
+	margin: 3px;
+}
+
+.garage-vehicle-title {
+	margin:0px;
+	padding:0px;
+	font-size: 14px;
+	font-weight:bold;
+	width: 100%;
+	padding: 2px;
+	padding-left: 5px;
+}
+
+.garage-vehicle-info {
+	margin:0px;
+	padding:0px;
+	font-size: 12px;
+	width: 100%;
+	padding: 2px;
+	padding-left: 20px;
+}
+
+.garage-vehicle-info span {
+	font-weight: bold;
+}
+/*
+	Whitelists Screen
+*/
+#screen-whitelists {
+	display: none;
+	background-color: white;
+	width: 100%;
+	height: 93%;
+	font-family: Arial;
+	overflow-y: auto;
+}
+
+.whitelists-error {
+	margin: 10px;
+	background-color:#ff9393;
+	border-radius: 3px;
+	color: #fff;
+	padding: 10px;
+}
+.whitelists-whitelist {
+	margin: 5px;
+	background-color:#e2e2e2;
+	font-size: 14px;
+	border-radius: 3px;
+	color: #000;
+	padding: 5px;
+}
+.whitelists-whitelist button {
+	width: 100%;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*
+	Whitelists Screen
+*/
+#screen-adverts {
+	display: none;
+	background-color: white;
+	width: 100%;
+	height: 93%;
+	font-family: Arial;
+	overflow-y:scroll;
+}
+.adverts-error {
+	margin: 10px;
+	background-color:#ff9393;
+	border-radius: 3px;
+	font-size: 14px;
+	color: #fff;
+	padding: 10px;
+}
+.adverts {
+	width: 100%;
+	height: 84%;
+	float:left;
+	border-bottom: 1px solid #d1d1d1;
+	padding-top: 5px;
+}
+.advert-add {
+	width: 100%;
+	height: 10%;
+	float:left;
+}
+
+.advert-add textarea {
+	width: 80%;
+	height: 100%;
+	float:left;
+	resize: none;
+}
+.advert-add button {
+	width: 20%;
+	height: 100%;
+	float:left;
+}
+.advert {
+	margin: 5px;
+	background-color:#ffff8c;
+	font-size: 11px;
+	border-radius: 3px;
+	color: #000;
+	padding: 5px;
+}
+
+.advert_ad {
+	margin: 2px;
+	font-size: 13px;
+	width: 100%;
+	text-align: center;
+}
+
+.advert_contact {
+	width: 100%;
+	text-align: center;
+	font-weight:bolder;
+	padding: 2px;
+}

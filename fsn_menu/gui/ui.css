@@ -1,0 +1,36 @@
+@import url( 'https://fonts.googleapis.com/css?family=Roboto' );
+
+#actionmenu {
+    position: absolute;
+    left: 28%; 
+    top: 40%;
+	width: 380px !important;
+}
+
+#actionmenu button {
+    background-color: #FFFFFF; 
+    border: 1px solid #FFFFFF;
+    color: black; 
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 24px; 
+    margin: 0px 0px 8px 0px;
+    cursor: pointer; 
+    width: 50%; 
+    display: block; 
+    text-transform: uppercase;
+}
+
+.double {
+	width: 45% !important;
+	margin-right: 5px !important;
+	float:left;
+}
+.doublelarge {
+	width: 100% !important;
+}
+
+
+#actionmenu button:hover {
+    background-color: #6cd3f9;
+    border: 1px solid #6cd3f9;
+}

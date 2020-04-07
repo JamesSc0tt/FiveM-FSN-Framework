@@ -1,0 +1,3 @@
+function GetVehicleInventory()
+  return {}
+end

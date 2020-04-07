@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
+body {
+	background-color: rgba(0,0,0,0.2);
+	display: none;
+}
+
+* {
+	font-family: 'Nunito', sans-serif;
+}
+
+.title {
+	width: 100%;
+	height: 15%;
+}
+
+.title h1 {
+	height: 100% !IMPORTANT;
+	text-align: center;
+	line-height: 200px;
+	color: rgba(255,255,255,0.6);
+}
+
+.left {
+	width: 40%;
+	float:left;
+	height: 85%;
+}
+
+.middle {
+	width: 20%;
+	float:left;
+	height: 85%;
+}
+
+.right {
+	width: 40%;
+	float:left;
+	height: 85%;
+}
+
+h2 {
+	text-align: center;
+	color: rgba(255,255,255,0.8);
+}
+
+.boxarea {
+	width: 85%;
+	padding-left:30px;
+	height: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
+.box {
+	width: 110px;
+	height: 125px;
+	border: 1px solid white;
+	margin: 5px;
+	margin-top: 5px;
+	float: left;
+}
+
+.boxicon {
+	width: 100%;
+	height: 80%;
+}
+
+.boxtitle {
+	width: 100%;
+	height: 20%;
+	border-top: 1px solid white;
+	text-align: center;
+	color:rgba(0,0,0,0.8);
+}
+
+.inactive {
+	background-color: rgba(255,255,255,0.3);
+}
+
+.crafting_title {
+	width: 80%;
+	margin:10px;
+	height: 40px;
+	font-size: 40px;
+	border: 1px solid white;
+}
+
+.crafting_icon {
+	width: 80%;
+	margin:10px;
+	height: 130px;
+}
+
+.crafting_icon img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 0px;
+	height: 0px;
+	margin-top: 120px;
+	box-shadow:
+        0 0 60px 80px #fff;  /* inner white */
+        /*0 0 100px 60px #f0f,  middle magenta */
+        /*0 0 140px 90px #0ff;  outer cyan */
+}
+
+.crafting_desc {
+	width: 80%;
+	margin:10px;
+	height: 300px;
+	font-size: 40px;
+	border: 1px solid white;
+}
+
+.crafting_amtselect {
+	width: 80%;
+	margin:10px;
+	height: 40px;
+	font-size: 40px;
+	border: 1px solid white;
+}
+
+.crafting_amt {
+	width: 80%;
+	margin:10px;
+	height: 40px;
+	font-size: 40px;
+	border: 1px solid white;
+}
+
+.crafting_max {
+	width: 80%;
+	margin:10px;
+	height: 40px;
+	font-size: 40px;
+	border: 1px solid white;
+}
+
+#boxcontents {
+	background-color: rgba(255,255,255,0.6);
+}

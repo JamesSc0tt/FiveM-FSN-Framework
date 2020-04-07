@@ -1,0 +1,84 @@
+<html>
+	<head>
+        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+		<script type="text/javascript" src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js'></script>
+        <script src="index.js" type="text/javascript"></script>
+        <link href="index.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<div class="title">
+			<h1>:FSN: Crafting</h1>
+		</div>
+		
+		<div class="left">
+			<h2>Your Inventory</h2>
+			<div class="boxarea">
+				<div class="box" id="boxcontents">
+					<div id="boxcontents">
+						<div class="boxicon">
+						
+						</div>
+						<div class="boxtitle">
+							ITEM_NAME
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var boxArray = document.getElementsByClassName("box");
+			var boxes = Array.prototype.slice.call(boxArray);
+			dragula({ containers: boxes });
+		</script>
+		<div class="middle">
+			<div class="crafting_title">
+			
+			</div>
+			<div class="crafting_icon">
+				<img>
+			</div>
+			<div class="crafting_desc">
+			
+			</div>
+			<div class="crafting_amtselect">
+			
+			</div>
+			<div class="crafting_amt">
+			
+			</div>
+			<div class="crafting_max">
+			
+			</div>
+		</div>
+		<div class="right">
+			<h2>Crafting</h2>
+			<div class="boxarea">
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+				<div class="box inactive"></div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,21 @@
+#page-iphone-home {
+	padding-top: 20px;
+	padding-left: 17px;
+}
+
+.homebutton {
+	width: 20%;
+	margin: 4px;
+	float: left;
+}
+.homebutton h1 {
+	font-weight:normal;
+	color:white;
+	font-size: 11px;
+	text-align: center;
+	line-height: 17px;
+}
+.homebutton img {
+	width: 95%;
+	margin-left: 2px;
+}

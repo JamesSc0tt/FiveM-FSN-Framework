@@ -1,0 +1,147 @@
+<html>
+    <head>
+        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+		<link href="index.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+		<div id="atm_main" class="atm_main">
+			<div class="buttons_left">
+				<button id="button_1" class="main_button"></button>
+				<button id="button_2" class="main_button"></button>
+				<button id="button_3" class="main_button"></button>
+				<button id="button_4" class="main_button"></button>
+			</div>
+			<div class="atm_screen">
+				<div id="withdraw_screen" class="withdraw_screen">
+					<div class="menu_title">
+						WITHDRAW CASH
+					</div>
+					<div class="withdraw_text">
+						<span>ENTER AN AMOUNT:</span>
+					</div>
+					<div class="withdraw_area">
+						<input type="text" class="withdraw_input" placeholder="0000.00"/>
+					</div>
+					<div class="withdraw_options">
+						<div class="option_cancel">
+							<- CANCEL
+						</div>
+						<div class="option_accept">
+							ACCEPT ->
+						</div>
+					</div>
+				</div>
+				<div id="deposit_screen" class="deposit_screen">
+					<div class="menu_title">
+						DEPOSIT CASH
+					</div>
+					<div class="deposit_text">
+						<span>ENTER AN AMOUNT:</span>
+					</div>
+					<div class="deposit_area">
+						<input type="text" class="deposit_input" placeholder="0000.00"/>
+					</div>
+					<div class="deposit_options">
+						<div class="option_cancel">
+							<- CANCEL
+						</div>
+						<div class="option_accept">
+							ACCEPT ->
+						</div>
+					</div>
+				</div>
+				<div id="transfer_screen" class="transfer_screen">
+					<div class="menu_title">
+						TRANSFER FUNDS
+					</div>
+					<div class="transfer_text">
+						<span>ENTER AN AMOUNT:</span>
+					</div>
+					<div class="transfer_area">
+						<input type="text" class="transfer_input" placeholder="0000.00"/>
+					</div>
+					<div class="transfer_text">
+						<span>ENTER AN ACCOUNT NUMBER:</span>
+					</div>
+					<div class="transfer_area">
+						<input id="transfer_input_to" type="text" class="transfer_input" placeholder="1"/>
+					</div>
+					<div class="transfer_options">
+						<div class="option_cancel">
+							<- CANCEL
+						</div>
+						<div class="option_accept">
+							ACCEPT ->
+						</div>
+					</div>
+				</div>
+				<div id="group_screen" class="group_screen">
+					<div class="menu_title">
+						GROUP ACCOUNTS
+					</div>
+					<div class="group_text">
+						<span><u>SECRET FEATURE</u>
+						<br>You have found a secret unreleased
+						<br>feature, this will be available in
+						<br>a later release.
+						<br><br>PRESS ANY BUTTON TO RETURN
+						</span>
+					</div>
+				</div>
+				<div id="options_screen" class="options_screen">
+					<div class="menu_title">
+						MAIN MENU
+					</div>
+					<div class="options_area">
+						<div class="option_1">
+							<- WITHDRAW CASH
+						</div>
+						<div class="option_2">
+							DEPOSIT CASH ->
+						</div>
+						<div class="option_3">
+							<- TRANSFER FUNDS
+						</div>
+						<div class="option_4">
+							GROUP ACCOUNTS ->
+						</div>
+						<div class="option_5">
+							
+						</div>
+						<div class="option_6">
+							RETURN CARD ->
+						</div>
+					</div>
+				</div>
+				<div id="balance_area" class="balance_area">
+					<div class="balance_descriptions">
+						<span>CASH ON HAND:</span><br>
+						<span>AVAILABLE BALANCE:</span>
+					</div>
+					<div class="balance_balances">
+						<span id="replace_balance">DO NOT USE THIS ATM</span>
+						<span id="replace_abalance">DO NOT USE THIS ATM</span>
+					</div>
+				</div>				
+			</div>
+			<div class="buttons_right">
+				<button id="button_5" class="main_button"></button>
+				<button id="button_6" class="main_button"></button>
+				<button id="button_7" class="main_button"></button>
+				<button id="button_8" class="main_button"></button>
+			</div>
+			<div id="atm_logo" class="atm_logo">
+				<img src="atm_logo.png">
+			</div>
+		</div>
+		<div id="atm_keypad" class="atm_keypad">
+			<div class="keypad_numbers">
+			
+			</div>
+			<div class="keypad_buttons">
+			
+			</div>
+		</div>
+        <script src="index.js" type="text/javascript"></script>
+    </body>
+</html>

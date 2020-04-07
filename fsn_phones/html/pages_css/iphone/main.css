@@ -1,0 +1,100 @@
+#phone-iphone { 
+	display:none;
+}
+
+body {
+}
+
+.iphone-frame {
+	position: fixed;
+	bottom: 20px;
+	right: 40px;
+	
+	height: 650px;
+	width: 325px;
+	
+	z-index: 1;
+
+	background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url('../../img/Apple/Frame.png');
+}
+
+.iphone-wallpaper {
+	position: fixed;
+	bottom: 20px;
+	right: 42px;
+	
+	height: 650px;
+	width: 320px;
+	border-radius: 80px 80px 80px 80px;
+	
+	z-index: -1;
+
+	background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url('../../img/Apple/wallpaper.png');
+}
+
+.iphone-toolbar {
+	position: fixed;
+	bottom: 625px;
+	right: 61px;
+	
+	height: 38px;
+	width: 284px;
+	
+	border-radius: 20px 20px 0px 0px;
+	
+	z-index: -1;
+}
+
+.iphone-toolbar-left {
+	float:left;
+	width: 25%;
+	height:100%;
+}
+
+.iphone-toolbar-right {
+	float:right;
+	width: 25%;
+	height:100%;
+}
+
+.iphone-toolbar-right img {
+	width: 18%;
+	margin-top: 20px;
+}
+
+.iphone-screen {
+	position: fixed;
+	bottom: 40px;
+	right: 61px;
+	
+	height: 588px;
+	width: 282px;
+	
+	
+	border-radius: 5px 5px 28px 28px;
+	
+	z-index: 2;
+}
+
+.nicescroll::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.nicescroll::-webkit-scrollbar
+{
+	width: 5px;
+	height: 5px;
+	background-color: #F5F5F5;
+}
+
+.nicescroll::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+}

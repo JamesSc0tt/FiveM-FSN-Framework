@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/gui.iml" filepath="$PROJECT_DIR$/.idea/gui.iml" />
+      <module fileurl="file://F:/github/cstore/web/.idea/web.iml" filepath="F:/github/cstore/web/.idea/web.iml" />
+    </modules>
+  </component>
+</project>

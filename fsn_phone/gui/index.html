@@ -1,0 +1,203 @@
+<html>
+    <head>
+        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+		<link href="index.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+		<div id="phone" class="main_phone">
+			<img src="img/phone.png" class="phone_image"/>
+			<div class="phone_screen">
+				<div id="screen-home">
+					<div id="adverts-button" class="home_button">
+						<img src="img/icons/icon_adverts.png">
+						ADVERTS
+					</div>
+					<div id="phone-button" class="home_button">
+						<img src="img/icons/icon_phone.png">
+						PHONE
+					</div>
+					<div id="messages-button" class="home_button">
+						<img src="img/icons/icon_messages.png">
+						MESSAGES
+					</div>
+					<div id="contacts-button" class="home_button">
+						<img src="img/icons/icon_contacts.png">
+						CONTACTS
+					</div>
+					<div class="home_button">
+						<img src="img/icons/icon_fleeca.png">
+						FLEECA
+					</div>
+					<div id="whitelists-button" class="home_button">
+						<img src="img/icons/icon_whitelists.png">
+						WHITELISTS
+					</div>
+					<div id="garage-button" class="home_button">
+						<img src="img/icons/icon_garage.png">
+						GARAGE
+					</div>
+				</div>
+				<div id="screen-garage">
+					<div class="status_bar"><div id="phone-sim-number"></div> <span>4G LTE</span></div>
+					<div id="garage-vehicles">
+					</div>
+				</div>
+				<div id="screen-whitelists">
+					<div class="status_bar"><div id="phone-sim-number"></div> <span>4G LTE</span></div>
+					<div id="whitelists">
+						<div id="no-whitelists" class="whitelists-error">SYS NOT LOADED</div>
+						<!-- <div id="no-whitelists" class="whitelists-whitelist"><b>PREMIUM DELUXE MOTORSPORTS</b><br><b>Owner:</b> 1<br><b>Access:</b> 1, 2<br><b>Bank: $</b>0<button>Manage Business</button></div> -->
+					</div>
+				</div>
+				<div id="screen-adverts">
+					<div class="status_bar"><div id="phone-sim-number"></div> <span>4G LTE</span></div>
+					<div id="adverts" class="adverts">
+						<!-- <div id="no-adverts" class="adverts-error">There aren't any adverts</div> -->
+						<!-- <div class="advert"><div class="advert_ad">I am currently a taxi driver ring me pls</div><div class="advert_contact">Logan Whitehead - 864325</div></div>
+						<div class="advert"><div class="advert_ad">I am currently a taxi driver ring me pls</div><div class="advert_contact">Logan Whitehead - 864325</div></div> -->
+						<!-- <div id="no-whitelists" class="whitelists-whitelist"><b>PREMIUM DELUXE MOTORSPORTS</b><br><b>Owner:</b> 1<br><b>Access:</b> 1, 2<br><b>Bank: $</b>0<button>Manage Business</button></div> -->
+					</div>
+					<div class="advert-add">
+						<textarea placeholder="Advert..." id="advert_textarea"></textarea>
+						<button onclick="postAdvert()">Post</button>
+					</div>
+				</div>
+				<div id="screen-messages">
+					<div class="status_bar"><div id="phone-sim-number"></div> <span>4G LTE</span></div>
+					<div class="message_button" onclick="displayMessage(false)">
+						<div class="call_icon">
+							<img id="home-button" src="img/message_button.png">
+						</div>
+						<div class="call_text">
+							NEW MESSAGE
+						</div>
+					</div>
+					<div id="messages-append" class="messages-box">
+						<textarea id="textbox-message" placeholder="Message..."></textarea>
+						<button onclick="sendTextMessage()">Send</button>
+					</div>
+				</div>
+				<div id="screen-message-view">
+					<div class="status_bar"><div id="phone-sim-number"></div> <span>4G LTE</span></div>
+					<div class="back_button"><button id="messages-button">< Back</button></div>
+					<div id="msg" class="messages-box">
+						<div id="view-message" class="view_msg_box">
+							<div class="msg_title">
+								<span id="message-contact"></span> (<span id="message-number"></span>)
+							</div>
+							<div class="talk-bubble tri-right left-top">
+							  <div class="talktext">
+								<p id="message-text"></p>
+							  </div>
+							</div>
+						</div>
+						<div class="view_msg_textbox">
+							<input id="textbox-number" type="text" placeholder="Number..."></text>
+							<textarea id="textbox-message" placeholder="Message..."></textarea>
+							<button onclick="sendTextMessage()">Send</button>
+						</div>
+					</div>
+				</div>
+				<div id="screen-contacts">
+					<div class="status_bar"><div id="phone-sim-number"></div> <span>4G LTE</span></div>
+					<div class="message_button" onclick="displayContact(false)">
+						<div class="call_icon">
+							<img id="home-button" src="img/contact_button.png">
+						</div>
+						<div class="call_text">
+							NEW CONTACT
+						</div>
+					</div>
+					<div id="contacts-append" class="messages-box">
+	
+					</div>
+				</div>
+				<div id="screen-contact-view">
+					<div class="status_bar"><div id="phone-sim-number"></div> <span>4G LTE</span></div>
+					<div class="back_button"><button id="contacts-button">< Back</button></div>
+					<div id="ctc-info" class="messages-box">
+						<div id="ctc-buttons">
+						
+						</div>
+						<div class="contactdetails_title">
+							CONTACT DETAILS
+						</div>
+						<div class="contact_textarea">
+							Name:
+							<input id="ctc-name" type="text" placeholder="Name..."\>
+							Phone#:
+							<input id="ctc-number" type="text" placeholder="Number..."\>
+						</div>
+						<div id="ctc-detail-buttons" class="contact_buttons">
+						
+						</div>
+					</div>
+				</div>
+				<div id="screen-phone">
+					<div class="status_bar"><div id="phone-sim-number"></div> <span>4G LTE</span></div>
+					<div class="app_screen">
+						<div class="call_input">
+							<input id="call_input" type="textarea" />
+						</div>
+						<div class="call_buttons">
+							<div id="one" class="call_number_button">
+								1
+							</div>
+							<div id="two" class="call_number_button">
+								2
+							</div>
+							<div id="three" class="call_number_button">
+								3
+							</div>
+							<div id="four" class="call_number_button">
+								4
+							</div>
+							<div id="five" class="call_number_button">
+								5
+							</div>
+							<div id="six" class="call_number_button">
+								6
+							</div>
+							<div id="seven" class="call_number_button">
+								7
+							</div>
+							<div id="eight" class="call_number_button">
+								8
+							</div>
+							<div id="nine" class="call_number_button">
+								9
+							</div>
+							<div class="call_number_button">
+								#
+							</div>
+							<div id="zero" class="call_number_button">
+								0
+							</div>
+							<div id="clear" class="call_number_button" style="color:red;font-weight:bold">
+								C
+							</div>
+						</div>
+						<div class="call_button">
+							<div class="call_icon">
+								<img id="home-button" src="img/phone_button.png">
+							</div>
+							<div class="call_text">
+								CALL
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="screen-nosim">
+				</div>
+				<div id="home-button" class="back_bar">
+					<div class="back_img_arrow">
+					</div>
+					<div class="back_img_home">
+						<img src="img/main-square.png">
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="index.js" type="text/javascript"></script>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<!-- 
+
+	ActionMenu 
+	Created by WolfKnight
+	Additional help from lowheartrate, TheStonedTurtle, and Briglair. 
+
+ -->
+
+<html>
+    <head>
+        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+        <script src="ui.js" type="text/javascript"></script>
+        <link href="ui.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+        <div id="actionmenu" style="display: none;">
+        	<!-- 
+        		This mainmenu div should be left as it is, you should change the buttons though.
+
+        		If you want to make a submenu, then you must create a new div, with the ID of the 
+        		div being the data-sub attribute of the button that will open it. For example, the 
+        		below button Example Submenu, has the data-sub attribute of "examplesubmenu", which
+        		is the same id as the div below. All submenus must also have a data-parent attribute. 
+        	 -->
+        	<div id="mainmenu">
+	            <button class="menuoption" data-sub="weapons">WEAPONS</button>
+	            <button class="menuoption" data-action="inventory">INVENTORY</button>
+	            <button class="menuoption" data-sub="other">OTHER</button>
+			</div>
+
+			<div id="weapons" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="button3">LOOKS LIKE I BROKE SOMETHING IM SORRY</button>
+			</div>
+			<div id="other" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="button3">idk what to put here</button>
+			</div>
+
+			<!-- Do not remove this or you will not be able to exit the menu --> 
+			<button id="exitbutton" class="menuoption" data-action="exit">Exit</button>
+        </div>
+    </body>
+</html>
