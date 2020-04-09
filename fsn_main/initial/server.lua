@@ -13,6 +13,7 @@ end)
 RegisterServerEvent('fsn_main:updateCharacters')
 RegisterServerEvent('fsn_main:createCharacter')
 AddEventHandler('fsn_main:createCharacter', function(data)
+  local source = source
   print(':fsn_main: got character information')
   for k, v in pairs(data) do
     print('> '..k..' = '..v)
