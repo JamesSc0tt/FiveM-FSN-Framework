@@ -72,9 +72,11 @@ local atms = {
   {name="ATM", id=207, x=-302.408, y=-829.945, z=32.417,bank=false},
   {name="ATM", id=207, x=5.134, y=-919.949, z=29.557,bank=false},
   {name="ATM", id=207, x=300.6111, y=-578.7202, z=43.2608,bank=false},
+  {name="ATM", id=207, x=-42.0, y=-1106.140, z=26.4,bank=false},
   {name="BANK",id=207, x=150.619, y =-1039.235, z =29.377,bank=true},
   {name="BANK",id=207, x=-350.638, y=-48.618, z=49.036,bank=true},
   {name="BANK",id=207, x=-1213.288, y=-329.920, z=37.786,bank=true}
+
 }
 
 local moneys = 0
