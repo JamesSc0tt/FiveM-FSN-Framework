@@ -70,6 +70,7 @@ end
 
 RegisterServerEvent('fsn_apartments:getApartment')
 AddEventHandler('fsn_apartments:getApartment', function(char_id)
+  local source = source
 	local appt = MySQL.Sync.fetchAll("SELECT * FROM `fsn_apartments` WHERE `apt_owner` = '"..char_id.."'")
 	if #appt > 0 then
 		local myappt = appt[1]

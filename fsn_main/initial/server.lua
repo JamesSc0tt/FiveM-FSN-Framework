@@ -37,17 +37,18 @@ end)
 ]]
 RegisterServerEvent('fsn_main:requestCharacters')
 AddEventHandler('fsn_main:requestCharacters', function()
+  local source = source
   local steamid = GetPlayerIdentifiers(source)
   steamid = steamid[1]
   local characters = MySQL.Sync.fetchAll("SELECT * FROM `fsn_characters` WHERE `steamid` = '"..steamid.."'")
   for k, v in pairs(players) do
-	if v.steamid == steamid then
-		if v.banned then
-			 print(':FSN: '..v.name..' is BANNED for: '..v.banned_r)
-			 DropPlayer(source, ':FSN: You are BANNED: '..v.banned_r)
-			 CancelEvent()
-		end
-	end
+  	if v.steamid == steamid then
+  		if v.banned then
+  			 print(':FSN: '..v.name..' is BANNED for: '..v.banned_r)
+  			 DropPlayer(source, ':FSN: You are BANNED: '..v.banned_r)
+  			 CancelEvent()
+  		end
+  	end
   end
   TriggerClientEvent('fsn_main:sendCharacters', source, characters)
   updateIdentifiers(source)
@@ -65,6 +66,7 @@ end)
 
 RegisterServerEvent('fsn_main:getCharacter')
 AddEventHandler('fsn_main:getCharacter', function(char_id)
+  local source = source
   local steamid = GetPlayerIdentifiers(source)
   steamid = steamid[1]
   -- TODO: Investigate if the steamid check can be put into the MySQL query
@@ -237,14 +239,6 @@ AddEventHandler('fsn_police:chat:ticket', function(suspectID, jailFine, jailTime
     end
   end
 end)
--------------------------------------------------------------
-print(" ")
-print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
-print(":::::::::::::::::: FSN :: fsn_main loaded ::::::::::::::::::")
-print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
-print("::::::::: FSN framework by JamesSc0tt licensed to ::::::::::")
-print(":::::::::::::::  Devyn Westfield (FusionRP)  :::::::::::::::")
-print("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
-print(" ")
+------------------------------------------------------------- version control stuff
 -------------------------------------------------------------
 SetGameType(':FSN: Framework')
