@@ -2,11 +2,1010 @@
     <head>
         <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
 		<link href="index.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<div id="mdt">
-			<iframe src="https://gov.fsn.life/"></iframe>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script>
+			function timeNow() {
+			  var d = new Date(),
+				  h = (d.getHours()<10?'0':'') + d.getHours(),
+				  m = (d.getMinutes()<10?'0':'') + d.getMinutes();
+			  return h + ':' + m;
+			}
+		</script>
+    </head>
+    <body style="background-color:rgba(255,255,255,0.0)">
+		<div id="main-computer" class="mdt_computer">
+			<img src="images/base_pc.png">
+			<div class="computer_screen">
+				<!-- WARRANT WINDOW -->
+				<div id="warrant-window" class="window">
+					<div class="window_titlebar">
+						<img src="images/icons/warrants.png">
+						<div class="window_titlebar_title">
+							C:\windows\program files\lspd\appdata\mdt_warrants.exe
+						</div>
+						<div class="window_titlebar_button">
+							X
+						</div>
+					</div>
+					<div class="window_application">
+						<div class="cpic_title">
+							LOS SANTOS WARRANTS DATABASE
+						</div>
+						<div class="cpic_desc">
+							Search the police databases for current warrants, you do not need any reason legally to run an individual.
+						</div>
+						<div class="cpic_searcharea">
+							<input class="cpic_searchbar" type="text" placeholder="Search for an individual's name...">
+							<button class="cpic_searchbutton" type="submit">Search</button>
+						</div>
+						<div class="cpic_title" style="text-align:center;margin-top:20px;margin-bottom:20px;display:none">
+							LOADING...
+						</div>
+						<div id="warrants_update" class="cpic_results" style="display:block">
+                            <button id="refreshwarrantsbuttton" class="cpic_searchbutton" type="submit" style="height:30px;background-color:#ffc57f" onclick="requestWarrants()">REFRESH</button>
+							<table>
+                                <!--
+								<tr>
+									<th>ID</th>
+									<th>Charges</th>
+									<th>Time/Fine</th>
+								</tr>
+
+								<tr>
+									<td>1</td>
+									<td>Logan Whitehead</td>
+									<td>[1X] Failure to obey a traffic control device</td>
+									<td>120/$60000</td>
+									<td><center><button>VIEW</button></center></td>
+								</tr>
+								-->
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- CPIC WINDOW -->
+				<div id="cpic-window" class="window">
+					<div class="window_titlebar">
+						<img src="images/icons/cpic.png">
+						<div class="window_titlebar_title">
+							C:\windows\program files\lspd\appdata\mdt_cpic.exe
+						</div>
+						<div id="cpic-close-button" class="window_titlebar_button">
+							X
+						</div>
+					</div>
+					<div class="window_application">
+						<div class="cpic_title">
+							LOS SANTOS CPIC DATABASE
+						</div>
+						<div class="cpic_desc">
+							Search the police databases for a suspect's past, you do not need any reason legally to run an individual. Use this system to determine if an individual is a danger to themselves or others around them.
+						</div>
+						<div class="cpic_searcharea">
+							<input class="cpic_searchbar" type="text" placeholder="Search for an individual's ID# (NOT THEIR TICKET#)...">
+							<button class="cpic_searchbutton" type="submit">Search</button>
+						</div>
+						<div class="cpic_title" style="text-align:center;margin-top:20px;margin-bottom:20px;display:none">
+							LOADING...
+						</div>
+						<div class="cpic_results">
+							<table>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Charges</th>
+									<th>Time/Fine</th>
+									<th></th>
+								</tr>
+								<!--
+								<tr>
+									<td>1</td>
+									<td>Logan Whitehead</td>
+									<td>[1X] Failure to obey a traffic control device</td>
+									<td>120/$60000</td>
+									<td><center><button>VIEW</button></center></td>
+								</tr>
+								-->
+							</table>
+						</div>
+					</div>
+				</div>				
+				<!-- DMV Window -->
+				<div id="dmv-window" class="window">
+					<div class="window_titlebar">
+						<img src="images/icons/dmv.png">
+						<div class="window_titlebar_title">
+							C:\windows\program files\lspd\appdata\mdt_dmv.exe
+						</div>
+						<div class="window_titlebar_button">
+							X
+						</div>
+					</div>
+					<div class="window_application">
+						<div class="cpic_title">
+							LOS SANTOS AUTOMOBILE DATABASE
+						</div>
+						<div class="cpic_desc">
+							Search the police databases for a vehicle information, you do not need any reason legally to run a plate. Use dispatch when available, for less information about the car use /runplate.
+						</div>
+						<div class="cpic_searcharea">
+							<input class="cpic_searchbar" type="text" placeholder="Search a plate...">
+							<button class="cpic_searchbutton" type="submit">Search</button>
+						</div>
+						<div class="cpic_title" style="text-align:center;margin-top:20px;margin-bottom:20px;display:none">
+							LOADING...
+						</div>
+						<div class="cpic_results">
+							<table>
+								<tr>
+									<th>Registered Keeper</th>
+									<th>PLATE</th>
+									<th>Vehicle</th>
+									<th>Color</th>
+								</tr>
+								<!--
+								<tr>
+									<td>1</td>
+									<td>Logan Whitehead</td>
+									<td>[1X] Failure to obey a traffic control device</td>
+									<td>120/$60000</td>
+									<td><center><button>VIEW</button></center></td>
+								</tr>
+								-->
+							</table>
+						</div>
+						<div class="dmv_noresult">
+							
+						</div>
+					</div>
+				</div>
+				<!-- DISPATCH Window -->
+				<div id="dispatch-window" class="window">
+					<div class="window_titlebar">
+						<img src="images/icons/dmv.png">
+						<div class="window_titlebar_title">
+							C:\windows\program files\lspd\appdata\dispatcher.exe
+						</div>
+						<div class="window_titlebar_button">
+							X
+						</div>
+					</div>
+					<div class="window_application">
+						<div class="cpic_title">
+							DISPATCH SYSTEM
+						</div>
+						<div class="cpic_desc">
+							Review recent 911 calls since your duty began.<br>
+							<b>Calls will be included from when your dispatcher was off</b>
+						</div>
+						<div class="dispatch_searcharea">
+							<input class="dispatch_searchbar" type="text" placeholder="Filter by 10 codes...">
+						</div>
+						<div class="cpic_title" style="text-align:center;margin-top:20px;margin-bottom:20px;display:none">
+							LOADING...
+						</div>
+						<div class="dispatch_results">
+							<table id="dispatch-table">
+								<tr>
+									<th>Time</th>
+									<th>10-</th>
+									<th>Call</th>
+									<th>Location</th>
+									<th></th>
+								</tr>
+								<!--
+								<tr>
+									<td>10-32</td>
+									<td>Downed individual</td>
+									<td>Mount chiliad</td>
+									<td><center><button>SET WAYPOIINT</button></center></td>
+								</tr>
+								-->
+							</table>
+						</div>
+						<div class="dmv_noresult">
+							
+						</div>
+					</div>
+				</div>
+				<!-- BOOKING Window -->
+				<div id="booking-window" class="window">
+					<div class="window_titlebar">
+						<img src="images/icons/booking.png">
+						<div class="window_titlebar_title">
+							C:\windows\program files\lspd\appdata\mdt_booking.exe
+						</div>
+						<div class="window_titlebar_button">
+							X
+						</div>
+					</div>
+					<div class="window_application">
+						<div class="cpic_title">
+							BOOKING 
+						</div>
+						<div class="booking_inputarea">
+							<button onclick="booking_reset()" class="booking_inputarea_reset">RESET</button>
+							<div class="booking_playerid">
+								Suspect PLAYERID
+								<input id="booking-player-id" type="text" placeholder="LEAVE BLANK IF WARRANT">
+							</div>
+							<div class="booking_playername">
+								Suspect Name
+								<input id="booking-player-name" type="text" placeholder="Joe Bloggs">
+								<span>A suspect's name has to be EXACTLY right for a warrant to be valid!</span>
+							</div>
+							<div class="booking_officername">
+								Officer Name
+								<input id="booking-officer-name" type="text" placeholder="Logan Whitehead [A-3]">
+								<span>Firstname Lastname [CALLSIGN]</span>
+							</div>
+							<div class="booking_description">
+								Scenario Description <span>This is only required for a warrant and will not be saved if it is applied to a suspect</span>
+								<textarea id="booking-description"></textarea>
+							</div>
+							<div class="booking_chargesarea">
+                                <div class="booking_dropdown">
+                                    <div id="dropdown-1-toggle" class="booking_dropdown_title">
+                                        Road Use and Vehicle Operation
+                                    </div>
+                                    <div id="dropdown-1-toggle" class="booking_dropdown_icon">
+                                        <div id="dropdown-1-icon-down" style="display:none;">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="dropdown-1-icon-up">
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="dropdown-1" class="booking_dropdown_hidden">
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Jaywalking
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(0)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(0)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Evading
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(1)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(1)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Reckless Evading
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(2)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(2)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Vehicular Evasion
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(3)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(3)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Failure to Yeild to an Emergency Vehicle
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(4)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(4)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Failure to obey Traffic Control Devices
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(5)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(5)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Failure to indicate intention of travel
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(6)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(6)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Operation of an Unroadworthy Vehicle
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(7)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(7)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Reckless Driving
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(8)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(8)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Third Degree Speeding
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(9)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(9)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Second Degree Speeding
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(10)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(10)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                First Degree Speeding
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(11)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(11)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Unauthorized Operation of a Motor Vehicle
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(12)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(12)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Unauthorized/Illegal Parking
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(13)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(13)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Driving Under the Influence
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(14)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(14)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="booking_dropdown">
+                                    <div id="dropdown-2-toggle" class="booking_dropdown_title">
+                                        Crimes Against The Person
+                                    </div>
+                                    <div id="dropdown-2-toggle" class="booking_dropdown_icon">
+                                        <div id="dropdown-2-icon-down" style="display:none;">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="dropdown-2-icon-up">
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="dropdown-2" class="booking_dropdown_hidden">
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Assault
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(15)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(15)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Aggrevated Assault / Battery
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(16)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(16)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title" style="font-size:14px;">
+                                                Aggrevated Assault / Battery With a Lethal Weapon
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(17)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(17)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Involuntary Manslaughter
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(18)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(18)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Vehicular Manslaughter
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(19)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(19)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Second Degree Murder
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(20)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(20)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                First Degree Murder
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(21)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(21)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Unlawful Imprisonment
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(22)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(22)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Kidnapping
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(23)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(23)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Impersonation
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(24)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(24)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Stalking
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(25)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(25)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Threatening
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(26)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(26)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="booking_dropdown">
+                                    <div id="dropdown-3-toggle" class="booking_dropdown_title">
+                                        Crimes Against Government Officials
+                                    </div>
+                                    <div id="dropdown-3-toggle" class="booking_dropdown_icon">
+                                        <div id="dropdown-3-icon-down" style="display:none;">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="dropdown-3-icon-up">
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="dropdown-3" class="booking_dropdown_hidden">
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Assault
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(27)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(27)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Aggrevated Assault / Battery
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(28)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(28)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title" style="font-size:14px;">
+                                                Aggrevated Assault / Battery With a Lethal Weapon
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(29)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(29)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Involuntary Manslaughter
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(30)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(30)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Vehicular Manslaughter
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(31)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(31)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Second Degree Murder
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(32)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(32)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                First Degree Murder
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(33)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(33)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Unlawful Imprisonment
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(34)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(34)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Kidnapping
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(35)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(35)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Impersonation
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(36)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(36)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Stalking
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(37)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(37)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Threatening
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(38)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(38)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="booking_dropdown">
+                                    <div id="dropdown-4-toggle" class="booking_dropdown_title">
+                                        Controlled Substance Charges              
+                                    </div>
+                                    <div id="dropdown-4-toggle" class="booking_dropdown_icon">
+                                        <div id="dropdown-4-icon-down" style="display:none;">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="dropdown-4-icon-up">
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="dropdown-4" class="booking_dropdown_hidden">
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Second Degree Possession of a CS
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(39)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(39)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                First Degree Possession of a CS (Supply)
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(40)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(40)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Distribution of a CS
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(41)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(41)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Possession of CS paraphenalia
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(42)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(42)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Cultivation of a controlled substance
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(43)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(43)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="booking_dropdown">
+                                    <div id="dropdown-5-toggle" class="booking_dropdown_title">
+                                        Property Charges  
+                                    </div>
+                                    <div id="dropdown-5-toggle" class="booking_dropdown_icon">
+                                        <div id="dropdown-5-icon-down" style="display:none;">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="dropdown-5-icon-up">
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="dropdown-5" class="booking_dropdown_hidden">
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Petty Theft
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(44)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(44)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Grand Theft
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(45)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(45)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Grand Theft Auto
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(46)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(46)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Second Degree Robbery
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(47)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(47)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                First Degree Robbery
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(48)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(48)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Possesion of Stolen Property
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(49)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(49)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Tresspassing
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(50)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(50)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Destruction of Property
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(51)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(51)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title" style="font-family:14px;">
+                                                Destruction of Government Property
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(52)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(52)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="booking_dropdown">
+                                    <div id="dropdown-6-toggle" class="booking_dropdown_title">
+                                        Crimes Against the Governing Body                              
+                                    </div>
+                                    <div id="dropdown-6-toggle" class="booking_dropdown_icon">
+                                        <div id="dropdown-6-icon-down" style="display:none;">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="dropdown-6-icon-up">
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="dropdown-6" class="booking_dropdown_hidden">
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Bribery
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(53)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(53)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Conspiracy to commit a crime
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(54)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(54)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                False report of a crime
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(55)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(55)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Obstruction of Justice
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(56)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(56)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Initiation of a Riot
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(57)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(57)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Participation in a Riot
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(58)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(58)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Resisting arrest
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(59)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(59)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Terrorism
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(60)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(60)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title" style="font-family:14px;">
+                                                Loitering
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(61)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(61)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="booking_dropdown">
+                                    <div id="dropdown-7-toggle" class="booking_dropdown_title">
+                                        Firearms
+                                    </div>
+                                    <div id="dropdown-7-toggle" class="booking_dropdown_icon">
+                                        <div id="dropdown-7-icon-down" style="display:none;">
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </div>
+                                        <div id="dropdown-7-icon-up">
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="dropdown-7" class="booking_dropdown_hidden">
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Criminal Possession of a Firearm (Class 1)
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(62)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(62)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Criminal Possession of a Firearm (Class 2/3)
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(63)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(63)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title" style="font-size:14px;">
+                                                Unlicensed Distribution of a Firearm (Class 1)
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(64)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(64)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title" style="font-size:14px;">
+                                                Unlicensed Distribution of a Firearm (Class 2/3)
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(65)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(65)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                First Degree Firearm Misuse
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(66)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(66)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                        <div class="booking_dropdown_charge">
+                                            <div class="booking_dropdown_charge_title">
+                                                Second Degree Firearm Misuse
+                                            </div>
+                                            <div class="booking_dropdown_charge_add">
+                                                <button onclick="addCharge(67)" class="booking_dropdown_charge_plus">+</button><button onclick="removeCharge(67)" class="booking_dropdown_charge_minus">-</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+							<!---->
+							</div>
+							<div class="booking_charges">
+								Charges
+								<button onclick="updateCharges()">Refresh</button>
+								<textarea id="booking-charges-textarea" disabled></textarea>
+							</div>
+							<div class="booking_playerid" style="margin-top:30px;height:70px">
+								Suggested jailtime: <span id="booking-suggested-time"></span> months<br>
+								Suggested fine: $<span id="booking-suggested-fine"></span>
+							</div>
+							<div class="booking_playername" style="margin-top:10px">
+								Jailtime
+								<input id="booking-jail" type="text" placeholder="0">
+								<span>Max 100 months without C/HC approval<br>Officer discretion allows you to take off 25%</span>
+							</div>
+							<div class="booking_officername" style="margin-top:10px">
+								Fine
+								<input id="booking-fine" type="text" placeholder="0">
+								<span>Do not include the dollar sign. Sigh.</span>
+							</div>				
+							<div class="booking_buttons">
+								<button class="booking_buttons_warrant" id="booking-warrant-button" onclick="booking_submit_warrant()">SUBMIT WARRANT</button>
+								<button class="booking_buttons_apply" id="booking-now-button" onclick="booking_submit_now()">APPLY TO SUSPECT</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- START MENU -->
+			<div id="start-menu" class="startmenu">
+				<div class="startmenu_sidebar">
+					<div id="off-button" class="startmenu_sidebar_offbutton">
+						<img src="images/pwr_icon.png">
+					</div>
+				</div>
+				<div class="startmenu_programs">
+					<div id="cpic-button" class="startmenu_program">
+						<div class="startmenu_program_icon">
+							<img src="images/icons/cpic.png">
+						</div>
+						<div class="startmenu_program_title">
+							CPIC
+						</div>
+						<div class="startmenu_program_desc">
+							Run a suspect through the data...
+						</div>
+					</div>
+					<div id="dmv-button" class="startmenu_program">
+						<div class="startmenu_program_icon">
+							<img src="images/icons/dmv.png">
+						</div>
+						<div class="startmenu_program_title">
+							DMV
+						</div>
+						<div class="startmenu_program_desc">
+							Check for a vehicles informati...
+						</div>
+					</div>
+					<div id="booking-button" class="startmenu_program">
+						<div class="startmenu_program_icon">
+							<img src="images/icons/booking.png">
+						</div>
+						<div class="startmenu_program_title">
+							BOOKING
+						</div>
+						<div class="startmenu_program_desc">
+							Ticket or organise jail transpo...
+						</div>
+					</div>
+					<div id="warrants-button" class="startmenu_program">
+						<div class="startmenu_program_icon">
+							<img src="images/icons/warrants.png">
+						</div>
+						<div class="startmenu_program_title">
+							WARRANTS
+						</div>
+						<div class="startmenu_program_desc">
+							View the active warrants on th...
+						</div>
+					</div>
+					<div id="dispatch-button" class="startmenu_program">
+						<div class="startmenu_program_icon">
+							<img src="images/icons/dispatch.png">
+						</div>
+						<div class="startmenu_program_title">
+							DISPATCH
+						</div>
+						<div class="startmenu_program_desc">
+							View the recent calls ...
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="computer_taskbar">
+				<div id="start-button" class="taskbar_windowsbutton">
+					<img src="images/win_icon.png">
+				</div>
+				
+				<div class="taskbar_timeandshit">
+					<div class="taskbar_timearea">
+						<script>
+							var d = timeNow() 
+							document.write(d);
+						</script>
+					</div>
+					<div class="taskbar_desktopbutton">
+						
+					</div>
+				</div>
+			</div>
 		</div>
-	</body>
-	<script src="index.js" type="text/javascript"></script>
+		<script src="index.js" type="text/javascript"></script>
+    </body>
 </html>
