@@ -1,4 +1,0 @@
-CONSTS = {}
-CONSTS.SavingWeapons = {
-	
-}
