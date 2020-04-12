@@ -1,0 +1,4 @@
+CONSTS = {}
+CONSTS.SavingWeapons = {
+	
+}
