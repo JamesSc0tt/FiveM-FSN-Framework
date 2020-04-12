@@ -1,9 +1,15 @@
-resource_manifest_version "44febabe-d386-4d18-afbe-5e627f4af937"
+--[[/	:FSN:	\]]--
+resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
+client_script '@fsn_main/cl_utils.lua'
+server_script '@fsn_main/sv_utils.lua'
+client_script '@fsn_main/server_settings/sh_settings.lua'
+server_script '@fsn_main/server_settings/sh_settings.lua'
+server_script '@mysql-async/lib/MySQL.lua'
+--[[/	:FSN:	\]]--
 
 dependency "connectqueue"
 dependency "mysql-async"
 
-server_script '@mysql-async/lib/MySQL.lua'
 server_script "@connectqueue/connectqueue.lua"
 
 server_script "server.lua"

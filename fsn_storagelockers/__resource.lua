@@ -1,3 +1,12 @@
+--[[/	:FSN:	\]]--
+resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
+client_script '@fsn_main/cl_utils.lua'
+server_script '@fsn_main/sv_utils.lua'
+client_script '@fsn_main/server_settings/sh_settings.lua'
+server_script '@fsn_main/server_settings/sh_settings.lua'
+server_script '@mysql-async/lib/MySQL.lua'
+--[[/	:FSN:	\]]--
+
 -- Tell FiveM's NUI system what the main html file is for this resource
 ui_page "nui/ui.html"
 
@@ -9,5 +18,4 @@ files {
 }
 
 client_script 'client.lua'
-server_script '@mysql-async/lib/MySQL.lua'
 server_script 'server.lua'

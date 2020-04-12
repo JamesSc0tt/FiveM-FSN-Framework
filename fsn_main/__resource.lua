@@ -3,6 +3,7 @@ resource_manifest_version "05cfa83c-a124-4cfa-a768-c24a5811d8f9"
 --client_script "debug/cl_subframetime.js"
 --client_script "debug/sh_scheduler.lua"
 --server_script "debug/sh_scheduler.lua"
+client_script 'server_settings/sh_settings.lua'
 client_script "debug/sh_debug.lua"
 server_script "debug/sh_debug.lua"
 -- Client scripts
@@ -32,6 +33,7 @@ files({
 
 -- Server scripts
 server_script '@mysql-async/lib/MySQL.lua'
+server_script 'server_settings/sh_settings.lua'
 server_script 'initial/server.lua'
 server_script 'money/server.lua'
 server_script 'playermanager/server.lua'
