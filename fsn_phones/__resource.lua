@@ -1,8 +1,11 @@
-resource_manifest_version "05cfa83c-a124-4cfa-a768-c24a5811d8f9"
-
--- GLOBAL UTILS
+--[[/	:FSN:	\]]--
+resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 client_script '@fsn_main/cl_utils.lua'
 server_script '@fsn_main/sv_utils.lua'
+client_script '@fsn_main/server_settings/sh_settings.lua'
+server_script '@fsn_main/server_settings/sh_settings.lua'
+server_script '@mysql-async/lib/MySQL.lua'
+--[[/	:FSN:	\]]--
 
 -- gui stuffs
 ui_page 'html/index.html'
@@ -88,5 +91,4 @@ files({
 
 client_script 'cl_phone.lua'
 client_script 'darkweb/cl_order.lua'
-server_script '@mysql-async/lib/MySQL.lua'
 server_script 'sv_phone.lua'
