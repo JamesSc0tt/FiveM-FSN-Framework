@@ -107,6 +107,20 @@ function ToggleActionMenu()
 	end
 end
 
+function fsn_NearestPlayersS(x, y, z, radius)
+	local players = {}
+	for id = 0, 128 do
+		local ppos = GetEntityCoords(GetPlayerPed(id))
+    if GetPlayerPed(id) ~= GetPlayerPed(-1) then
+  		if GetDistanceBetweenCoords(ppos.x, ppos.y, ppos.z, x, y, z) < radius then
+  			table.insert(players, #players+1, GetPlayerServerId(id))
+  		end
+    end
+	end
+	return players
+end
+
+
 local windows = {
   [1] = false,
   [2] = false,
