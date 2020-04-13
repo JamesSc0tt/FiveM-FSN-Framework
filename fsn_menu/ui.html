@@ -1,0 +1,212 @@
+<!-- 
+
+	ActionMenu 
+	Created by WolfKnight
+	Additional help from lowheartrate, TheStonedTurtle, and Briglair. 
+
+ -->
+
+<html>
+    <head>
+        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+        <script src="ui.js" type="text/javascript"></script>
+        <link href="ui.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+        <div id="actionmenu" style="display: none;">
+        	<!-- 
+        		This mainmenu div should be left as it is, you should change the buttons though.
+
+        		If you want to make a submenu, then you must create a new div, with the ID of the 
+        		div being the data-sub attribute of the button that will open it. For example, the 
+        		below button Example Submenu, has the data-sub attribute of "examplesubmenu", which
+        		is the same id as the div below. All submenus must also have a data-parent attribute. 
+        	 -->
+        	<div id="mainmenu">
+				<button id="phonebutton" class="menuoption" data-action="phone">PHONE</button>
+				<button id="licensebutton" class="menuoption" data-sub="licenses">ID/LICENSES</button>
+				<button id="licensebutton" class="menuoption" data-sub="walktypes">WALKTYPES</button>
+				<button id="vehiclebutton" class="menuoption" data-sub="vehicle">VEHICLE</button>
+				<button id="inventorybutton" class="menuoption" data-action="inventory">INV</button>
+				<button class="menuoption" data-sub="servicesubmenu">SERVICES</button>
+				<button id="policebutton" class="menuoption" data-sub="police" style="background-color:#080155a1">POLICE</button>
+				<button id="pdcommandbutton" class="menuoption" data-sub="police-command" style="background-color:#080155a1">C/HC OPTIONS</button>
+				<button id="emsbutton" class="menuoption" data-sub="ems" style="background-color:#ff8e8e">EMS</button>
+				<button id="emscommandbutton" class="menuoption" data-sub="ems-command" style="background-color:#ff8e8e">C/HC OPTIONS</button>
+			</div>
+			
+			<div id="servicesubmenu" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="service-ems">REQUEST EMS</button>
+				<button class="menuoption" data-action="service-taxi">REQUEST TAXI</button>
+				<button class="menuoption" data-action="service-tow">REQUEST TOW</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>
+			</div>
+			
+			<div id="licenses" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="license-id">SHOW ID</button>
+				<button class="menuoption" data-action="license-driver">SHOW DRIVERS</button>
+				<button class="menuoption" data-action="license-pilot">SHOW PILOTS</button>
+				<button class="menuoption" data-action="license-weapon">SHOW WEAPONS</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>
+			</div>
+			<div id="walktypes" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption double" data-action="walktype-set-default">DEFAULT</button>
+				<button class="menuoption double" data-action="walktype-set-hurry">HURRY</button>
+				<button class="menuoption double" data-action="walktype-set-business">BUSINESS</button>
+				<button class="menuoption double" data-action="walktype-set-brave">brave</button>
+				<button class="menuoption double" data-action="walktype-set-slightlydrunk">slightly drunk</button>
+				<button class="menuoption double" data-action="walktype-set-tough_guy">tough guy</button>
+				<button class="menuoption double" data-action="walktype-set-sassy">sassy</button>
+				<button class="menuoption double" data-action="walktype-set-sad">sad</button>
+				<button class="menuoption double" data-action="walktype-set-posh">posh</button>
+				<button class="menuoption double" data-action="walktype-set-non_chalant">non chalant</button>
+				<button class="menuoption double" data-action="walktype-set-hobo">hobo</button>
+				<button class="menuoption double" data-action="walktype-set-money">money</button>
+				<button class="menuoption double" data-action="walktype-set-swagger">swagger</button>
+				<button class="menuoption double" data-action="walktype-set-joy">joy</button>
+				<button class="menuoption double" data-action="walktype-set-powerwalk">powerwalk</button>
+				<button class="menuoption double" data-action="walktype-set-shadyped">shady</button>
+				<button class="menuoption double" data-action="walktype-set-tired">tired</button>
+				<button class="menuoption double" data-action="walktype-set-sexy">sexy</button>
+				<button class="menuoption double" data-action="walktype-set-maneater">maneater</button>
+				<button class="menuoption double" data-action="walktype-set-chichi">chichi</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>
+			</div>
+			<div id="handcuffs-menu" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="hdc-escort" style="background-color: #c6c6c6;">Escort</button>
+				<button class="menuoption" data-action="hdc-cuff" style="background-color: #c6c6c6;">Toggle Cuffs</button>
+				<button class="menuoption" data-action="hdc-search" style="background-color: #c6c6c6;">Search</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>		
+				<!--
+				<button class="menuoption" data-action="hdc-rob" style="background-color: #c6c6c6;">Rob Person</button>		
+				<button class="menuoption" data-action="hdc-takephone" style="background-color: #c6c6c6;">Take Phone</button>		
+				-->
+			</div>
+			<div id="vehicle" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="vehicle-race" style="background-color:#f372ff">START RACE</button>
+				<button class="menuoption" data-action="vehicle-engine">TOGGLE ENGINE</button>
+				<button class="menuoption" data-action="vehicle-keys">GIVE KEYS</button>
+				<button class="menuoption" data-sub="vehicle-doors">DOORS</button>
+				<button class="menuoption" data-sub="vehicle-windows">WINDOWS</button>
+				<button class="menuoption" data-sub="vehicle-seats">SEATS</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>
+			</div>
+			<div id="vehicleinventory" data-parent="mainmenu" style="display: none;">
+			</div>
+			<div id="vehicle-windows" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="vehicle-window-*">TOGGLE ALL</button>
+				<button class="menuoption" data-action="vehicle-window-1">FRONT DRIVER</button>
+				<button class="menuoption" data-action="vehicle-window-2">FRONT PASSENGER</button>
+				<button class="menuoption" data-action="vehicle-window-3">REAR DRIVER</button>
+				<button class="menuoption" data-action="vehicle-window-4">REAR PASSENGER</button>
+				<button class="menuoption" data-sub="vehicle">Back</button>
+			</div>
+			<div id="vehicle-doors" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="vehicle-door-*">CLOSE ALL</button>
+				<button class="menuoption" data-action="vehicle-door-1">HOOD</button>
+				<button class="menuoption" data-action="vehicle-door-2">FRONT LEFT</button>
+				<button class="menuoption" data-action="vehicle-door-3">FRONT RIGHT</button>
+				<button class="menuoption" data-action="vehicle-door-4">REAR LEFT</button>
+				<button class="menuoption" data-action="vehicle-door-5">REAR RIGHT</button>
+				<button class="menuoption" data-action="vehicle-door-6">TRUNK</button>
+				<button class="menuoption" data-sub="vehicle">Back</button>
+			</div>
+			<div id="vehicle-seats" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="vehicle-seat-1">DRIVER SEAT</button>
+				<button class="menuoption" data-action="vehicle-seat-2">PASSENGER SEAT</button>
+				<button class="menuoption" data-action="vehicle-seat-3">REAR LEFT</button>
+				<button class="menuoption" data-action="vehicle-seat-4">REAR RIGHT</button>
+				<button class="menuoption" data-sub="vehicle">Back</button>
+			</div>
+			
+			<div id="ems" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="ems-escort" style="background-color:#ff8e8e">Escort</button>
+				<button class="menuoption" data-action="ems-vehicle" style="background-color:#ff8e8e">IN/OUT</button>
+				<button class="menuoption" data-action="ems-revive" style="background-color:#ff8e8e">Revive</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>
+			</div>
+			<div id="ems-command" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="ems-command-level" style="background-color:#ff8e8e">Set Player Level</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>
+			</div>
+			
+			<div id="police" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-sub="police-person" >PERSON</button>
+				<button class="menuoption" data-sub="police-vehicle" >VEHICLE</button>
+				<button class="menuoption" data-sub="police-k9" >K9 UNIT</button>
+				<button class="menuoption" data-sub="police-misc" >MISC</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>
+			</div>
+			<div id="police-k9" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="police-k9-toggle" >TOGGLE K9</button>
+				<button class="menuoption" data-action="police-k9-vehicle" >IN/OUT VEHICLE</button>
+				<button class="menuoption" data-sub="police-k9-actions">Actions</button>
+				<button class="menuoption" data-sub="police">Back</button>
+			</div>
+			<div id="police-k9-actions" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="police-k9-action-sit" >SIT</button>
+				<button class="menuoption" data-action="police-k9-action-laydown" >LAYDOWN</button>
+				<button class="menuoption" data-action="police-k9-follow" >FOLLOW / HEEL</button>
+				<button class="menuoption" data-action="police-k9-searchperson" >SEARCH (PERSON)</button>
+				<button class="menuoption" data-sub="police-k9">Back</button>
+			</div>
+			<div id="police-command" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-sub="police-command-licenses">Grant License</button>
+				<button class="menuoption" data-action="police-command-duty" >Sign Self OFF</button>
+				<button class="menuoption" data-action="police-command-duty1" >Toggle Player Duty</button>
+				<button class="menuoption" data-action="police-command-level" >Set Player Level</button>
+				<button class="menuoption" data-sub="mainmenu">Back</button>
+			</div>
+			<div id="police-command-licenses" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="police-command-license-driver" >Grant Drivers ($500)</button>
+				<button class="menuoption" data-action="police-command-license-pilot" >Grant Pilots ($75k)</button>
+				<button class="menuoption" data-action="police-command-license-weapon" >Grant Weapons ($2.5k)</button>
+				<button class="menuoption" data-sub="police-command">Back</button>
+			</div>
+			<div id="police-person" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-sub="police-person-licenses" >Licenses</button>
+				<button class="menuoption" data-sub="police-person-searching" >SEARCHING</button>
+				<!-- <button class="menuoption" data-action="police-escort" >Escort</button> -->
+				<button class="menuoption" data-action="police-putinveh" >IN/OUT Vehicle</button>
+				<!-- <button class="menuoption" data-action="police-handcuffs" >Toggle Handcuffs</button> -->
+				<button class="menuoption" data-action="police-revive" style="background-color:#ff8e8e">Revive</button>
+				<button class="menuoption" data-sub="police">Back</button>
+			</div>
+			<div id="police-person-searching" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="police-search-cpic" style="background-color:#ffc282">CPIC</button>
+				<button class="menuoption" data-action="police-search-all" >Search <b>ALL</b></button>
+				<button class="menuoption" data-action="police-search-inventory" >Search Inventory</button>
+				<button class="menuoption" data-action="police-search-weapons" >Search Weapons</button>
+				<button class="menuoption" data-action="police-search-money" >Search Money</button>
+				<button class="menuoption" data-action="police-search-strip" ><b>STRIP INDIVIDUAL</b></button>
+				<button class="menuoption" data-sub="police-person">Back</button>
+				
+			</div>
+			<div id="police-person-licenses" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="police-licenses-all" >View <b>ALL</b></button>
+				<button class="menuoption" data-action="police-licenses-id" >View ID Card</button>
+				<button class="menuoption" data-action="police-licenses-driver" >View Drivers</button>
+				<button class="menuoption" data-action="police-licenses-pilot" >View Pilots</button>
+				<button class="menuoption" data-action="police-licenses-weapon" >View Weapons</button>
+				<button class="menuoption" data-sub="police-person">Back</button>
+			</div>
+			<div id="police-vehicle" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="police-impound" >Impound (Free)</button>
+				<button class="menuoption" data-action="police-impound2" >Impound ($2.5k)</button>
+				<button class="menuoption" data-action="police-runplate" >Run Plate</button>
+				<button class="menuoption" data-action="police-boot" >Boot</button>
+				<button class="menuoption" data-action="police-unboot" >Unboot</button>
+				<button class="menuoption" data-sub="police">Back</button>
+			</div>
+			
+			<div id="inventorysubmenu" data-parent="mainmenu" style="display: none;">
+				<button class="menuoption" data-action="exit">FOR SOME REASON IT BROKE IM SORRY</button> 
+			</div>
+			
+			<!-- Do not remove this or you will not be able to exit the menu --> 
+			<!-- <button id="exitbutton" class="menuoption" data-action="back">back</button> -->
+			<button id="exitbutton" class="menuoption" data-action="exit">close</button>
+        </div>
+    </body>
+</html>
