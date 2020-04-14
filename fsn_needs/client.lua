@@ -193,11 +193,11 @@ AddEventHandler('fsn_inventory:use:drink', function(relief)
 end)
 
 RegisterNetEvent('fsn_needs:stress:add')
-AddEventHandler('fsn_needs:stress:add', function(anxiety)
-	if stress + anxiety >= 100 then
+AddEventHandler('fsn_needs:stress:add', function(increase)
+	if stress + increase >= 100 then
 		stress = 100
 	else
-		stress = stress + anxiety
+		stress = stress + increase
 	end
 end)
 
