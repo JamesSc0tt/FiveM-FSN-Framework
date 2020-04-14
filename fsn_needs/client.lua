@@ -148,9 +148,9 @@ Citizen.CreateThread(function()
 		Citizen.Wait(10)
 		local playerPed = GetPlayerPed(-1)
 		if IsPedShooting(playerPed)  and not exports.fsn_police:fsn_PDDuty() then
-			TriggerEvent('fsn_stress:stressingOut', 1)
+			TriggerEvent('fsn_needs:stress:add', 1)
 		elseif IsPedShooting(playerPed)  and exports.fsn_police:fsn_PDDuty() then
-			TriggerEvent('fsn_stress:stressingOut', 0.1)
+			TriggerEvent('fsn_needs:stress:add', 0.1)
 		end
 	end
 end)
@@ -192,8 +192,8 @@ AddEventHandler('fsn_inventory:use:drink', function(relief)
   end
 end)
 
-RegisterNetEvent('fsn_stress:stressingOut')
-AddEventHandler('fsn_stress:stressingOut', function(anxiety)
+RegisterNetEvent('fsn_needs:stress:add')
+AddEventHandler('fsn_needs:stress:add', function(anxiety)
 	if stress + anxiety >= 100 then
 		stress = 100
 	else
@@ -201,8 +201,8 @@ AddEventHandler('fsn_stress:stressingOut', function(anxiety)
 	end
 end)
 
-RegisterNetEvent('fsn_stress:removeStress')
-AddEventHandler('fsn_stress:removeStress', function(relief)
+RegisterNetEvent('fsn_needs:stress:remove')
+AddEventHandler('fsn_needs:stress:remove', function(relief)
 	if stress - relief <= 0 then
 		stress = 0
 	else

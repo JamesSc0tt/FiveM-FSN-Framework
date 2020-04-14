@@ -26,11 +26,11 @@ function doScreen(num)
 end
 
 
-AddEventHandler('fsn_criminalmisc:drugs:effects:weed', function(source)
+AddEventHandler('fsn_criminalmisc:drugs:effects:weed', function()
 	ExecuteCommand('me smokes a joint...')
 	smokeAnimation()
 	Citizen.Wait(2000)
-	TriggerEvent('fsn_stress:removeStress', 8)
+	TriggerEvent('fsn_needs:stress:remove', 8)
 	--StartScreenEffect("DrugsMichaelAliensFightOut", 3.0, 0)
 	--Citizen.Wait(6000)
 	--StopScreenEffect("DrugsMichaelAliensFightOut")
@@ -51,11 +51,11 @@ AddEventHandler('fsn_criminalmisc:drugs:effects:cocaine', function()
 	SetRunSprintMultiplierForPlayer(PlayerId(),1.0)
 end)
 
-AddEventHandler('fsn_criminalmisc:drugs:effects:smokeCigarette', function(source)
+AddEventHandler('fsn_criminalmisc:drugs:effects:smokeCigarette', function()
 	ExecuteCommand('me smokes a cigarette...')
 	smokeAnimation()
 	Citizen.Wati(2000)
-	TriggerEvent('fsn_stress:removeStress', 5)
+	TriggerEvent('fsn_needs:stress:remove', 5)
 end)
 
 

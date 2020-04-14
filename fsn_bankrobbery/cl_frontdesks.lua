@@ -36,11 +36,11 @@ Util.Tick(function()
 							local function afterHack(success, timeremaining)
 								if success then
 									TriggerServerEvent('fsn_bankrobbery:desks:endHack', k, key, success)
-									TriggerEvent('fsn_stress:stressingOut', 5)
+									TriggerEvent('fsn_needs:stress:add', 5)
 									TriggerEvent('mhacking:hide')
 								else
 									TriggerServerEvent('fsn_bankrobbery:desks:endHack', k, key, success)
-									TriggerEvent('fsn_stress:stressingOut', 5)
+									TriggerEvent('fsn_needs:stress:add', 5)
 									TriggerEvent('mhacking:hide')
 								end
 							end
