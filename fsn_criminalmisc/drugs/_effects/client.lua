@@ -1,6 +1,7 @@
 RegisterNetEvent('fsn_criminalmisc:drugs:effects:weed')
 RegisterNetEvent('fsn_criminalmisc:drugs:effects:meth')
 RegisterNetEvent('fsn_criminalmisc:drugs:effects:cocaine')
+RegisterNetEvent('fsn_criminalmisc:drugs:effects:smokeCigarette')
 
 function doScreen(num)
 	if num == 1 then
@@ -27,9 +28,12 @@ end
 
 AddEventHandler('fsn_criminalmisc:drugs:effects:weed', function()
 	ExecuteCommand('me smokes a joint...')
-	StartScreenEffect("DrugsMichaelAliensFightOut", 3.0, 0)
-	Citizen.Wait(6000)
-	StopScreenEffect("DrugsMichaelAliensFightOut")
+	smokeAnimation()
+	Citizen.Wait(2000)
+	TriggerEvent('fsn_needs:stress:remove', 8)
+	--StartScreenEffect("DrugsMichaelAliensFightOut", 3.0, 0)
+	--Citizen.Wait(6000)
+	--StopScreenEffect("DrugsMichaelAliensFightOut")
 	AddArmourToPed(GetPlayerPed(-1), 10)
 end)
 
@@ -46,3 +50,21 @@ AddEventHandler('fsn_criminalmisc:drugs:effects:cocaine', function()
 	doScreen(2)
 	SetRunSprintMultiplierForPlayer(PlayerId(),1.0)
 end)
+
+AddEventHandler('fsn_criminalmisc:drugs:effects:smokeCigarette', function()
+	ExecuteCommand('me smokes a cigarette...')
+	smokeAnimation()
+	Citizen.Wati(2000)
+	TriggerEvent('fsn_needs:stress:remove', 5)
+end)
+
+
+--To stop the animation just press f5 then stop animation 
+function smokeAnimation()
+	local playerPed = GetPlayerPed(-1)
+	
+	Citizen.CreateThread(function()
+		TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING", 0, true)
+
+	end)
+end

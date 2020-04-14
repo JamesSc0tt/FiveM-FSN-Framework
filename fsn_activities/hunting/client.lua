@@ -1,0 +1,1 @@
+-- to do I noticed on in fsn_jobs but might move hunting to activities instead. still debating -Crutchie

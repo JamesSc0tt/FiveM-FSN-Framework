@@ -84,6 +84,7 @@ AddEventHandler('fsn_bankrobbery:payout', function(id)
     print(':fsn_bankrobbery: '..source..' robbed bank #'..id..' and took $'..amt..' leaving the bank with $'..banks_payout[id])
     TriggerClientEvent('fsn_inventory:item:add', source, 'dirty_money', amt)
     TriggerClientEvent('fsn_notify:displayNotification', source, 'You got $'..amt..'DM from the vault!!', 'centerRight', 8000, 'error')
+    TriggerClientEvent('fsn_needs:stress:add', 30)
   else
     TriggerClientEvent('fsn_notify:displayNotification', source, 'This bank has no money left!', 'centerRight', 8000, 'error')
   end

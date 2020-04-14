@@ -10,10 +10,13 @@ local opacityBars = 0
 local Addition = 0.0
 
 function getThirst()
-	return exports["fsn_hungerandthirst"]:fsn_thirst()
+	return exports["fsn_needs"]:fsn_thirst()
 end
 function getHunger()
-	return exports["fsn_hungerandthirst"]:fsn_hunger()
+	return exports["fsn_needs"]:fsn_hunger()
+end
+function getStress()
+	return exports["fsn_needs"]:fsn_stress()
 end
 
 -- TODO: Cleanup this code
@@ -53,14 +56,20 @@ Citizen.CreateThread(function()
 		drawRct(0.0865, 0.97, varSet,0.01,115,115,255,177)
 
 		
-		varSet = 0.06938 * (getHunger() / 100)
+		varSet = 0.05848 * (getHunger() / 100)
 		--drawRct(0.016, 0.983, 0.0268,0.01,188,188,188,80)
-		drawRct(0.016, 0.983, 0.06938,0.01,188,188,188,80)
-		drawRct(0.016, 0.983, varSet,0.01,137, 93, 4,177)
+		drawRct(0.016, 0.983, 0.05848,0.01,188,188,188,80)
+		drawRct(0.016, 0.983, varSet,0.01,200, 93, 4,177)
 
-		varSet = 0.06938 * (getThirst() / 100)
+		varSet = 0.05848 * (getThirst() / 100)
 		--drawRct(0.044, 0.983, 0.027,0.01,188,188,188,80)
-		drawRct(0.0865, 0.983, 0.06938,0.01,188,188,188,80)
-		drawRct(0.0865, 0.983, varSet,0.01,91, 255, 238,177)	
+		drawRct(0.0754, 0.983, 0.05848,0.01,188,188,188,80)
+		drawRct(0.0754, 0.983, varSet,0.01,91, 255, 238,177)
+		
+		--stress
+		varSet = 0.02038 * (getStress() / 100)
+		drawRct(0.1352, 0.983, 0.02038, 0.01, 188, 188, 188, 80)
+		drawRct(0.1352, 0.983, varSet,0.01, 230, 255, 0, 177)
+		
 	end
 end)

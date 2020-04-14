@@ -740,6 +740,7 @@ local prices = {
 	["pepsi_max"] = 6,
 	["water"] = 3,
 	["coffee"] = 10,
+	["cigarette"] = 5,
 	["repair_kit"] = 250,
 	["lockpick"] = 200,
 	["zipties"] = 1000,

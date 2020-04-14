@@ -171,6 +171,13 @@ presetItems = {
 			weight = 0.6
 		},
 	},
+	["cigarette"] = {
+		index = 'cigarette',
+		name = 'Cigarette',
+		data = {
+			weight = 0.6
+		},
+	},
 	["acetone"] = {
 		index = 'acetone',
 		name = 'Acetone',
