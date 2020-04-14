@@ -9,6 +9,9 @@ server_script '@mysql-async/lib/MySQL.lua'
 
 ui_page 'gui/ui.html'
 
+client_script 'client.lua'
+server_script 'server.lua'
+
 files({
   'gui/ui.css',
   'gui/ui.html',
