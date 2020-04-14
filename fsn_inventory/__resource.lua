@@ -48,8 +48,8 @@ files {
   -- IMAGES
   "html/img/bullet.png",
   -- ICONS
-  "html/img/items/id.png",
-  "html/img/items/2g_weed.png",
+  "html/img/items/*.png",
+  --[["html/img/items/2g_weed.png",
   "html/img/items/acetone.png",
   "html/img/items/bandage.png",
   "html/img/items/beef_jerky.png",
@@ -91,5 +91,5 @@ files {
   "html/img/items/vpn2.png",
   "html/img/items/water.png",
   "html/img/items/zipties.png",
-  "html/img/items/tuner_chip.png",
+  "html/img/items/tuner_chip.png",]]
 }

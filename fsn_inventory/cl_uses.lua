@@ -165,6 +165,12 @@ itemUses = {
 			TriggerEvent('fsn_evidence:ped:addState', 'Grinding jaw', 'HEAD')
 		end
 	},
+	["cigarette"] = {
+		takeItem = true,
+		use = function(item)
+		TriggerEvent('fsn_criminalmisc:drugs:effects:smokeCigarette')
+		end
+	},
 	["binoculars"] = {
 		takeItem = false,
 		use = function(item)

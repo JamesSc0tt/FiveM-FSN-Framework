@@ -253,6 +253,7 @@ AddEventHandler('fsn_criminalmisc:houserobbery:try', function()
 											searching_id = k
 											searching_start = GetGameTimer()
 											exports["fsn_progress"]:fsn_ProgressBar(58, 133, 255,'Looting',5)
+											TriggerClientEvent('fsn_stress:stressingOut', 3)
 											Citizen.CreateThread(function()
 												while searching do Citizen.Wait(0)
 													local spot = inside[searching_id]

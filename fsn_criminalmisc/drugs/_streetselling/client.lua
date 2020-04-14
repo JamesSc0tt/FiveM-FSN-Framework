@@ -162,6 +162,7 @@ Citizen.CreateThread(function()
 								selling_item = drug
 							else
 							  TriggerEvent('fsn_notify:displayNotification', 'They are not interested...', 'centerLeft', 3000, 'error')
+							  TriggerEvent('fsn_stress:stressingOut', 10)
 							  table.insert(sold_peds, #sold_peds+1, {obj, true})
 							end
 						end
@@ -237,6 +238,7 @@ Citizen.CreateThread(function()
 								TriggerEvent('fsn_notify:displayNotification', 'They bought '..sold_amount..' '..exports["fsn_inventory"]:fsn_GetItemDetails(drug).name..' for '..price..'DM', 'centerLeft', 3000, 'info')
 								TriggerEvent('fsn_inventory:item:add', 'dirty_money', price)
 								TriggerEvent('fsn_inventory:item:take', selling_item, sold_amount)
+								TriggerClientEvent('fsn_stress:stressingOut', 10)
 
 								table.insert(sold_peds, #sold_peds+1, {obj, true})
 								Citizen.Wait(3000)

@@ -1,6 +1,7 @@
 local clienttime = 0
 local hunger = 100
 local thirst = 100
+local stress = 0
 
 function fsn_thirst()
 	return thirst
@@ -8,6 +9,10 @@ end
 
 function fsn_hunger()
 	return hunger
+end
+
+function fsn_stress()
+	return stress
 end
 
 local UI = {
@@ -24,6 +29,7 @@ AddEventHandler('fsn_inventory:initChar', function()
   init = true
 	hunger = 0
 	thirst = 0
+	stress = 0
 end)
 
 --[[
@@ -70,10 +76,10 @@ RegisterNetEvent('fsn_hungerandthirst:pause')
 RegisterNetEvent('fsn_hungerandthirst:unpause')
 AddEventHandler('fsn_hungerandthirst:pause', function()
 	paused = true
-	TriggerEvent('fsn_notify:displayNotification', 'Hunger and thirst usage has been paused', 'centerRight', 3000, 'info')
+	TriggerEvent('fsn_notify:displayNotification', 'Hunger, thirst, and stress usage has been paused', 'centerRight', 3000, 'info')
 end)
 AddEventHandler('fsn_hungerandthirst:unpause', function()
-	TriggerEvent('fsn_notify:displayNotification', 'Hunger and thirst usage has been reactivated', 'centerRight', 3000, 'info')
+	TriggerEvent('fsn_notify:displayNotification', 'Hunger, thirst, and stress usage has been reactivated', 'centerRight', 3000, 'info')
 	paused = false
 end)
 
@@ -133,8 +139,39 @@ Citizen.CreateThread(function()
 		end
 		notifthirst = false
       end
-    end
+    end	
   end
+end)
+
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(10)
+		local playerPed = GetPlayerPed(-1)
+		if IsPedShooting(playerPed)  and not exports.fsn_police:fsn_PDDuty() then
+			TriggerEvent('fsn_stress:stressingOut', 1)
+		elseif IsPedShooting(playerPed)  and exports.fsn_police:fsn_PDDuty() then
+			TriggerEvent('fsn_stress:stressingOut', 0.1)
+		end
+	end
+end)
+
+Citizen.CreateThread(function()
+	while true do
+		Wait(10)
+		if stress >= 100 then
+			Citizen.Wait(2000)
+			ShakeGameplayCam('LARGE_EXPLOSION_SHAKE', 0.10)
+		elseif stress >= 90 then
+			Citizen.Wait(2000)
+			ShakeGameplayCam('MEDIUM_EXPLOSION_SHAKE', 0.06)
+		elseif stress >= 50 then
+			Citizen.Wait(4000)
+			ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.06)
+		elseif stress >= 25 then
+			Citizen.Wait(6000)
+			ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.04)
+		end
+	end
 end)
 
 RegisterNetEvent('fsn_inventory:use:food')
@@ -153,4 +190,22 @@ AddEventHandler('fsn_inventory:use:drink', function(relief)
   else
     thirst = thirst + relief
   end
+end)
+
+RegisterNetEvent('fsn_stress:stressingOut')
+AddEventHandler('fsn_stress:stressingOut', function(anxiety)
+	if stress + anxiety >= 100 then
+		stress = 100
+	else
+		stress = stress + anxiety
+	end
+end)
+
+RegisterNetEvent('fsn_stress:removeStress')
+AddEventHandler('fsn_stress:removeStress', function(relief)
+	if stress - relief <= 0 then
+		stress = 0
+	else
+		stress = stress - relief
+	end
 end)
