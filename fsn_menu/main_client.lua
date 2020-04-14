@@ -47,9 +47,9 @@ function ToggleActionMenu()
 	if ( menuEnabled ) then
 		if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
 			if not IsPedGettingIntoAVehicle(GetPlayerPed(-1)) then
-				FreezeEntityPosition(GetPlayerPed(-1), 0)
-				SetEntityCollision(GetPlayerPed(-1), 1, 1)
-				ClearPedTasks(GetPlayerPed(-1))
+				--FreezeEntityPosition(GetPlayerPed(-1), 0)
+				--SetEntityCollision(GetPlayerPed(-1), 1, 1)
+				--ClearPedTasks(GetPlayerPed(-1))
 			end
 		end
 
@@ -106,6 +106,7 @@ function ToggleActionMenu()
 		})
 	end
 end
+
 function fsn_NearestPlayersS(x, y, z, radius)
 	local players = {}
 	for id = 0, 128 do
@@ -118,6 +119,8 @@ function fsn_NearestPlayersS(x, y, z, radius)
 	end
 	return players
 end
+
+
 local windows = {
   [1] = false,
   [2] = false,
@@ -196,6 +199,9 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
         ExecuteCommand('service request tow')
         ToggleActionMenu()
     end
+    if split[2] == 'back' then
+      ToggleActionMenuBackx()
+  end
   elseif split[1] == 'ems' then
     if split[2] == 'command' then
       if split[3] == 'level' then
@@ -638,7 +644,9 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
 		end
 	elseif ( data == "exit" ) then
 		ToggleActionMenu()
-		return
+    return
+  elseif ( data == "back" ) then
+    ToggleActionMenuBackx()
 	end
 
 end )
@@ -660,19 +668,19 @@ end
 
 
 Citizen.CreateThread( function()
-	SetNuiFocus( false )
-	while true do
-		if IsControlJustPressed( 1,  288 ) then
-			ToggleActionMenu()
-		end
+  SetNuiFocus( false )
+  while true do
+		  if IsControlJustPressed( 0,  288 ) and GetLastInputMethod( 0 ) then --Disables Controller Conflict
+			  ToggleActionMenu()
+      end
 	    if ( menuEnabled ) then
             local ped = GetPlayerPed( -1 )
-            DisableControlAction( 0, 1, true )
-            DisableControlAction( 0, 2, true )
-            DisableControlAction( 0, 24, true )
+           -- DisableControlAction( 0, 1, true )
+            --DisableControlAction( 0, 2, true )
+            --DisableControlAction( 0, 24, true )
             DisablePlayerFiring( ped, true )
-            DisableControlAction( 0, 142, true )
-            DisableControlAction( 0, 106, true )
+            --DisableControlAction( 0, 142, true )
+            --DisableControlAction( 0, 106, true )
         end
 		Citizen.Wait( 0 )
 	end
