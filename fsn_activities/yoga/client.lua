@@ -139,7 +139,7 @@ AddEventHandler('fsn_yoga:checkStress', function()
 	local playerPed = GetPlayerPed(-1)
 	
 	if doingYoga then
-		TriggerEvent('fsn_stress:removeStress', 10)
+		TriggerEvent('fsn_needs:stress:remove', 10)
 		doingYoga = false
 	else
 		doingYoga = false
