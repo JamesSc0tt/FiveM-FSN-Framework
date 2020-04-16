@@ -152,7 +152,7 @@ Util.Tick(function()
 									TestDriveVehicle(key)
 								end
 							else
-								Util.DrawText3D(car.x, car.y, car.z-0.5, '[E] Purchase ~b~||~w~ Talk to an employee to discuss finance!', {255, 255, 255, 255}, 0.25)
+								Util.DrawText3D(car.x, car.y, car.z-0.5, '[E] Purchase ~b~||~w~ Talk to an employee to discuss finance or to test drive!', {255, 255, 255, 255}, 0.25)
 								if IsControlJustPressed(0, 38) then
 									-- [E] Purchase
 									if exports["fsn_main"]:fsn_CanAfford(car.car.buyprice+comm) then
