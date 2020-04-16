@@ -175,6 +175,16 @@ function Util.TableHasValue(table, element)
   return false
 end
 
+--[[
+	Util.GetVecDist(v1,v2)
+	Usage: Util.GetVecDistance(coordinates1, coordinates2)
+	ex: Util.GetVecDist(playerPos, yogaLocation)
+	Gets the vector distance between two entities
+]]
+function Util.GetVecDist(v1,v2)
+    if not v1 or not v2 or not v1.x or not v2.x then return 0; end
+    return math.sqrt(  ( (v1.x or 0) - (v2.x or 0) )*(  (v1.x or 0) - (v2.x or 0) )+( (v1.y or 0) - (v2.y or 0) )*( (v1.y or 0) - (v2.y or 0) )+( (v1.z or 0) - (v2.z or 0) )*( (v1.z or 0) - (v2.z or 0) )  )
+end
 
 --[[
 	?? Util.GetClosestPlayer()
