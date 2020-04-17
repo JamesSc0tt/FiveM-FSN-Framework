@@ -56,6 +56,12 @@ function updateInv(div, data) {
 	if (data.length > 0) {
 		for (var key in data){
 			var item = data[key]
+			var hotkey = Number(key)+1
+			if (hotkey < 6) {
+				hotkey = '<div class="item-num"><span>'+
+							hotkey+
+						'</span></div>'
+			} else { hotkey = '' }
 			if (item.name) {
 				updateString = updateString+
 					'<div class="slot" data-inventory="'+div+'" data-slotid="'+key+'">'+
@@ -65,6 +71,7 @@ function updateInv(div, data) {
 								'<div class="item-amt">'+
 									item.amt+
 								'</div>'+
+								hotkey+
 							'</div>'+
 							'<div class="item-name">'+
 								item.name+

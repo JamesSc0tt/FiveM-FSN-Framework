@@ -174,32 +174,6 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 				end
 			end
 		else
-			--[[
-			if secondInventory_limits[secondInventory_type] then
-				-- check if it can carry
-				local cur_weight = 0
-				for k, v in pairs(secondInventory) do
-					if v.index ~= false and v.data and v.data.weight then
-						local maff = v.data.weight * v.amt
-						cur_weight = cur_weight + maff
-					end
-				end
-				if oldSlot.data and oldSlot.data.weight then
-					local moving_amt = data.amt
-					if data.amt == -99 then moving_amt = oldSlot.amt end
-					local added_weight = oldSlot.data.weight * moving_amt
-					added_weight = cur_weight + added_weight
-					if added_weight > secondInventory_limits[secondInventory_type] then
-						invLog('<span style="color:red">This inventory cannot hold more than: '..secondInventory_limits[secondInventory_type]..'</span>')
-						return
-					else
-						invLog('secondInventory weight: '..cur_weight..', new weight: '..added_weight)	
-					end
-				else
-					invLog('This item does not have any weight or data associated.')		
-				end
-			end
-			]]--
 			if secondInventory_limits[secondInventory_type] then
 				-- check if it can carry
 				local cur_weight = 0
@@ -805,4 +779,71 @@ AddEventHandler('fsn_main:characterSaving', function()
 	else
 		print(':fsn_inventory: [ERROR] Your inventory was not initiated so cannot save.')
 	end	
+end)
+
+
+--[[
+	Weapons as items
+]]--
+local currentWeapon = {}
+local currentHotkey = false
+Util.Tick(function()HideHudComponentThisFrame(19,true);DisableControlAction(0, 37, true);end)
+
+function equipWeapon(hash, item)
+		RemoveAllPedWeapons(GetPlayerPed(-1))
+		if hash then
+			GiveWeaponToPed(GetPlayerPed(-1), hash, 200, 1, 0)
+			SetCurrentPedWeapon(GetPlayerPed(-1), hash, 0)
+		else
+			GiveWeaponToPed(GetPlayerPed(-1), '2725352035', 0, 1, 0)
+			SetCurrentPedWeapon(GetPlayerPed(-1), '2725352035', 0)
+		end
+end
+equipWeapon()
+
+--[[
+	Hotkeys
+]]--
+local hotkeys = {
+	157, -- number 1
+	158, -- number 2
+	160, -- number 3
+	164, -- number 4
+	165  -- number 5
+}
+Util.Tick(function()
+	if not beingused and not gui then -- cant use if gui is open or someone else is using inv
+		for number, control in pairs(hotkeys) do
+			if IsControlJustReleased(1, control) or IsDisabledControlJustReleased(1, control) then
+				print('pressed key '..number)
+				local item = firstInventory[number]
+				if item.index ~= nil and item.index == false then
+					exports['mythic_notify']:DoHudText('error', 'Nothing in slot: '..number)
+					return
+				end
+				if item['customData'] and item['customData'].weapon then
+					print('you cannot use a weapon yet!')
+				else
+					if itemUses[item.index] then
+						itemUses[item.index].use(slot)
+						if itemUses[item.index].takeItem then
+							if firstInventory[number].amt ~= 1 then
+								firstInventory[number].amt = firstInventory[number].amt-1
+							else
+								firstInventory[number] = {}
+							end
+							exports['mythic_notify']:DoHudText('success', 'You used 1: '..item.name)
+							updateGUI()
+						else
+							exports['mythic_notify']:DoHudText('success', 'You used: '..item.name)
+						end
+					else
+						invLog('<span style="color:red">This item does not have a use associated</span>')
+						exports['mythic_notify']:DoHudText('error', 'This item does not have a use associated')
+						return
+					end
+				end
+			end
+		end
+	end
 end)

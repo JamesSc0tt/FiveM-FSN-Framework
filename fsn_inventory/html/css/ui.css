@@ -214,6 +214,24 @@ input[type=number] {
 	margin-top:12px;
 }
 
+.item-num {
+	position: absolute;
+	top:0;
+	left:0;
+	height: 20px;
+	min-width:20px;
+	font-size:14px;
+	text-align:left;
+	line-height:20px;
+	z-index:10;
+    background-color: rgba(255, 255, 255, 0.6);
+	color:black !important;
+}
+
+.item-num span {
+	padding-left:6px;
+}
+
 .item-amt {
 	position: absolute;
 	top:0;
