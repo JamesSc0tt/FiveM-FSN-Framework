@@ -784,7 +784,7 @@ end)
 
 --[[
 	Weapons as items
-]]--
+
 local currentWeapon = {}
 local currentHotkey = false
 Util.Tick(function()HideHudComponentThisFrame(19,true);DisableControlAction(0, 37, true);end)
@@ -800,7 +800,7 @@ function equipWeapon(hash, item)
 		end
 end
 equipWeapon()
-
+]]--
 --[[
 	Hotkeys
 ]]--
