@@ -8,6 +8,19 @@ end
 --[[
 	New inventory shit
 ]]--
+-- THIS IS HOW A WEAPON WILL LOOK
+local weapon = {
+	index = "WEAPON_ASSAULTRIFLE",
+	name = "ASSAULT RIFLE",
+	amt = 1,
+	customData = {
+		weapon = true,
+		ammo = 200,
+		ammotype = 'rifle_ammo',
+		quality = 'perfect',
+	}
+}
+
 local beingused = false
 local firstInventory = {{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},}
 local secondInventory_type = 'ply'
@@ -113,6 +126,7 @@ RegisterNUICallback( "viewData", function(data, cb)
 			if item.customData then
 				strang = strang..'<h2>Custom Data</h2>'
 				for k, d in pairs(item.customData) do
+					d = tostring(d)
 					strang = strang..'<p><span>'..k..':</span> '..d..'</p>'
 				end
 			end
@@ -439,10 +453,12 @@ RegisterNUICallback("dropSlot", function(data, cb)
 end)
 
 RegisterNUICallback("useSlot", function(data, cb)
+	while invBusy do Citizen.Wait(1); print('invBusy') end
 	if data.fromInv ~= 'playerInventory' then
 		invLog('<span style="color:red">You can only use from your inventory</span>')
 		return
 	end
+	invBusy = true
 	local slot = firstInventory[data.fromSlot]
 	if slot.index then
 		if itemUses[slot.index] then
@@ -463,9 +479,11 @@ RegisterNUICallback("useSlot", function(data, cb)
 		else
 			invLog('<span style="color:red">This item does not have a use associated</span>')
 			exports['mythic_notify']:DoHudText('error', 'This item does not have a use associated')
+			invBusy = false
 			return
 		end
 	end
+	invBusy = false
 end)
 
 --[[
@@ -784,23 +802,74 @@ end)
 
 --[[
 	Weapons as items
-
-local currentWeapon = {}
+]]--
+local currentWeapon = false
 local currentHotkey = false
 Util.Tick(function()HideHudComponentThisFrame(19,true);DisableControlAction(0, 37, true);end)
 
-function equipWeapon(hash, item)
+function equipWeapon(item, key)
+	if invBusy then Citizen.Wait(1);print'invBusy'; end
+	invBusy = true
+	if item and item.index then
 		RemoveAllPedWeapons(GetPlayerPed(-1))
-		if hash then
-			GiveWeaponToPed(GetPlayerPed(-1), hash, 200, 1, 0)
-			SetCurrentPedWeapon(GetPlayerPed(-1), hash, 0)
-		else
-			GiveWeaponToPed(GetPlayerPed(-1), '2725352035', 0, 1, 0)
-			SetCurrentPedWeapon(GetPlayerPed(-1), '2725352035', 0)
+		print(item.index)
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(item.index), item['customData'].ammo, 1, 0)
+		SetCurrentPedWeapon(GetPlayerPed(-1), item.index, 0)
+		
+		currentWeapon = item
+		currentHotkey = key
+		firstInventory[key] = {index=false}
+
+		RequestAnimDict("rcmjosh4")
+		while not HasAnimDictLoaded("rcmjosh4") do Citizen.Wait(1) end
+		RequestAnimDict("reaction@intimidation@cop@unarmed")
+		while not HasAnimDictLoaded("reaction@intimidation@cop@unarmed") do Citizen.Wait(1) end
+
+		DisablePlayerFiring(GetPlayerPed(-1), true)
+		SetPedCurrentWeaponVisible(GetPlayerPed(-1), 1, 1, 1, 1)
+		TaskPlayAnim(GetPlayerPed(-1), "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
+		Citizen.Wait(800)
+		DisablePlayerFiring(GetPlayerPed(-1), false)
+		ClearPedTasks(GetPlayerPed(-1))
+		TriggerServerEvent('fsn_main:logging:addLog', GetPlayerServerId(PlayerId()), 'weapons', 'Player('..GetPlayerServerId(PlayerId())..') equipped '..item.index..' with '..item['customData'].ammo..' ammo.')
+
+	else
+		if firstInventory[currentHotkey].index ~= false then
+			exports['mythic_notify']:DoHudText('error', 'Slot '..currentHotkey..' is not empty!')
+			invBusy = false
+			return
 		end
+		local weapon, hash = GetCurrentPedWeapon(GetPlayerPed(-1), 1)
+        if(weapon) then
+            local _,ammoInClip = GetAmmoInClip(GetPlayerPed(-1), hash)
+            local totalAmmo = GetAmmoInPedWeapon(GetPlayerPed(-1), hash) - ammoInClip
+            currentWeapon['customData'].ammo = totalAmmo
+        else
+        	currentWeapon['customData'].ammo = 0
+        	exports['mythic_notify']:DoHudText('error', 'No weapon found - ammo reset.')
+        end
+
+		RemoveAllPedWeapons(GetPlayerPed(-1))
+
+		ResetPedMovementClipset(GetPlayerPed(-1)) -- cant remember why im resetting this
+		ResetPedStrafeClipset(GetPlayerPed(-1)) -- cant remember why im resetting this
+		ResetPedWeaponMovementClipset(GetPlayerPed(-1)) -- cant remember why im resetting this
+		ClearPedTasksImmediately(GetPlayerPed(-1)) -- cant remember why im resetting this
+
+		GiveWeaponToPed(GetPlayerPed(-1), '2725352035', 0, 1, 0)
+		SetCurrentPedWeapon(GetPlayerPed(-1), '2725352035', 0)
+		
+		TriggerServerEvent('fsn_main:logging:addLog', GetPlayerServerId(PlayerId()), 'weapons', 'Player('..GetPlayerServerId(PlayerId())..') holstered '..currentWeapon.index..' with '..currentWeapon['customData'].ammo..' ammo.')
+
+		firstInventory[currentHotkey] = currentWeapon
+
+		currentWeapon = false
+		currentHotkey = false
+	end
+	invBusy = false
 end
-equipWeapon()
-]]--
+
+
 --[[
 	Hotkeys
 ]]--
@@ -815,17 +884,29 @@ Util.Tick(function()
 	if not beingused and not gui then -- cant use if gui is open or someone else is using inv
 		for number, control in pairs(hotkeys) do
 			if IsControlJustReleased(1, control) or IsDisabledControlJustReleased(1, control) then
-				print('pressed key '..number)
-				local item = firstInventory[number]
-				if item.index ~= nil and item.index == false then
-					exports['mythic_notify']:DoHudText('error', 'Nothing in slot: '..number)
+				if currentWeapon and currentWeapon['customData'].weapon then
+					equipWeapon(false,number)
 					return
 				end
+				local item = firstInventory[number]
+				if item.index == false then
+					if currentWeapon then
+						
+					else
+						exports['mythic_notify']:DoHudText('error', 'Nothing in slot: '..number)
+						return
+					end
+				end
 				if item['customData'] and item['customData'].weapon then
-					print('you cannot use a weapon yet!')
+					if item['customData'].ammo and item['customData'].ammotype and item['customData'].quality then
+						equipWeapon(item, number)
+					else
+						exports['mythic_notify']:DoHudText('error', 'This weapon is broken, you cannot use it.')
+						return
+					end
 				else
 					if itemUses[item.index] then
-						itemUses[item.index].use(slot)
+						itemUses[item.index].use(item)
 						if itemUses[item.index].takeItem then
 							if firstInventory[number].amt ~= 1 then
 								firstInventory[number].amt = firstInventory[number].amt-1
