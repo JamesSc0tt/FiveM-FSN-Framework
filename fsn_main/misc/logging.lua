@@ -7,7 +7,7 @@ function fsn_AddLog(src,Category,Description)
 		SteamID = GetPlayerIdentifiers(source)[1]
 	end
 	
-	PerformHttpRequest('https://admin.fsn.life/inc/addlog.php?key=j4m3sr343ll0g&cat='..Category..'&steamid='..SteamID..'&info='..Description)
+	PerformHttpRequest('http://nocf.fsn.rocks/add-log.php?key=LF20&cat='..Category..'&steamid='..SteamID..'&info='..Description)
 	--PerformHttpRequest('http://logs.fsn.life/logs.php?action=create-log&secret=FusIoN2019SecreTwas0d8h&category=' .. Category .. '&desc=' .. Description), function(statusCode, response, headers) end)
 end
 

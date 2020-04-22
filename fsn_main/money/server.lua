@@ -109,7 +109,9 @@ AddEventHandler('fsn_main:money:wallet:Add', function(ply, amt)
 				TriggerClientEvent('fsn_main:money:updateSilent', ply, v.wallet, v.bank)
 				Citizen.Wait(500)
 				TriggerClientEvent('fsn_main:gui:money:addMoney', ply, amt, newamt)
-				TriggerEvent('fsn_main:logging:addLog', ply, 'money', 'Character('..fsn_CharID(ply)..') added $'..amt..' to their CASH')
+				if amt > 0 then
+					TriggerEvent('fsn_main:logging:addLog', ply, 'money', 'Character('..fsn_CharID(ply)..') added $'..amt..' to their CASH')
+				end
 			else
 				print('fsn_main:money:Add tried to add to wallet a non numerical value')
 			end
@@ -128,7 +130,9 @@ AddEventHandler('fsn_main:money:bank:Add', function(ply, amt)
 				TriggerClientEvent('fsn_main:money:updateSilent', ply, v.wallet, v.bank)
 				Citizen.Wait(500)
 				TriggerClientEvent('fsn_main:gui:bank:addMoney', ply, amt, newamt)
-				TriggerEvent('fsn_main:logging:addLog', ply, 'money', 'Character('..fsn_CharID(ply)..') added $'..amt..' to their BANK')
+				if amt > 0 then
+					TriggerEvent('fsn_main:logging:addLog', ply, 'money', 'Character('..fsn_CharID(ply)..') added $'..amt..' to their BANK')
+				end
 			else
 				print('fsn_main:money:bank:Add tried to add to bank a non numerical value')
 			end
@@ -185,3 +189,20 @@ AddEventHandler('fsn_main:money:bank:Minus', function(ply, amt)
 		end
 	end
 end)
+
+
+function fsn_GetWallet( ply )
+	for k, v in pairs(moneystore) do
+		if v.ply_id == ply then
+			return v.wallet
+		end
+	end
+end
+
+function fsn_GetBank( ply )
+	for k, v in pairs(moneystore) do
+		if v.ply_id == ply then
+			return v.bank
+		end
+	end
+end

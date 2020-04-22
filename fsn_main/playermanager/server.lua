@@ -52,6 +52,7 @@ AddEventHandler('playerConnecting', function(playername, setKickReason)
 end)
 
 AddEventHandler('playerDropped', function()
+  TriggerClientEvent('fsn_main:characterSaving', source)
   print(':FSN: '..GetPlayerName(source)..' has disconnected.')
   local steamid = GetPlayerIdentifiers(source)
   steamid = steamid[1]

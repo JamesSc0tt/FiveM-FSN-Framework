@@ -38,6 +38,7 @@ server_script 'initial/server.lua'
 server_script 'money/server.lua'
 server_script 'playermanager/server.lua'
 server_script 'misc/logging.lua'
+server_script 'misc/version.js'
 server_script 'banmanager/sv_bans.lua'
 
 
@@ -56,3 +57,5 @@ server_export 'fsn_GetCharacterInfo'
 server_export 'fsn_GetPlayerFromPhoneNumber'
 server_export 'fsn_GetPlayerPhoneNumber'
 server_export 'fsn_CharID'
+server_export 'fsn_GetWallet'
+server_export 'fsn_GetBank'
