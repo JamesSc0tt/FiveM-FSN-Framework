@@ -197,3 +197,50 @@ AddEventHandler('fsn_doj:judge:toggleLock', function(tf)
 end)
 
 --SetEntityCoords(GetPlayerPed(-1), -458.790, 284.750, 78.521)
+
+RegisterNetEvent('fsn_teleporters:teleport:waypoint')
+AddEventHandler('fsn_teleporters:teleport:waypoint', function(source)
+  local playerPed = PlayerPedId()
+  local WaypointHandle = GetFirstBlipInfoId(8)
+
+  if DoesBlipExist(WaypointHandle) then
+      local waypointCoords = GetBlipInfoIdCoord(WaypointHandle)
+
+      for height = 1, 1000 do
+          SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
+
+          local foundGround, zPos = GetGroundZFor_3dCoord(waypointCoords["x"], waypointCoords["y"], height + 0.0)
+
+          if foundGround then
+              SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
+
+              break
+          end
+
+          Citizen.Wait(5)
+      end
+    else 
+    end
+end)
+
+
+RegisterNetEvent('fsn_teleporters:teleport:coordinates')
+AddEventHandler('fsn_teleporters:teleport:coordinates', function(x, y, z)
+  local playerPed = GetPlayerPed(-1)
+
+
+  -- lua doesnt know floats from tonumbers apperantly so make that number a float otherwise it will crash when trying to tp
+  local coordx = x + .00
+  local coordy = y + .00
+  local coordz = z + .00
+
+
+    print( 'What you entered:', x,y,z, 'What you tped to:', coordx,coordy,coordz)
+
+    SetPedCoordsKeepVehicle(playerPed, coordx, coordy, coordz)
+  
+  
+
+  Citizen.Wait(5)
+
+end)

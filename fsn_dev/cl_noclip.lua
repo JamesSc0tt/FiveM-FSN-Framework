@@ -39,10 +39,17 @@ function noclip(enabled)
 	end
 end
 
+RegisterNetEvent('fsn_dev:noClip')
+AddEventHandler('fsn_dev:noClip', function()
+	noclip(not freecam:IsActive())
+end)
+
 Citizen.CreateThread(function()
 	while true do
 		if IsDisabledControlJustPressed(0, key_toggle) then
-			noclip(not freecam:IsActive())
+			if noclip(enabled) then
+				noclip(not freecam:IsActive())
+			end
 		end
 		Citizen.Wait(0)
 	end
