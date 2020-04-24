@@ -2092,7 +2092,6 @@ Citizen.CreateThread(function()
 										end
 									end
 									if lsc.currentmenu == "tiresmoke" then
-										print(table.unpack(tiresmoke))
 										SetVehicleModKit(veh,0)
 										ToggleVehicleMod(veh,20,true)
 										SetVehicleTyreSmokeColor(veh,button.color[1],button.color[2],button.color[3])
