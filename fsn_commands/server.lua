@@ -739,6 +739,15 @@ AddEventHandler('chatMessage', function(source, auth, msg)
           TriggerClientEvent('fsn_ems:killMe', source)
         end
       end
+      if split[2] == 'tpm' then
+        TriggerClientEvent('fsn_teleporters:teleport:waypoint', source)
+      end
+      if split[2] == 'tpc' then
+        TriggerClientEvent('fsn_teleporters:teleport:coordinates', source, tonumber(split[3]), tonumber(split[4]), tonumber(split[5]))
+      end
+      if split[2] == 'noclip' then
+        TriggerClientEvent('fsn_dev:noClip:enabled', source)
+      end
     end
   end
   -------------------------------------------------------------------------------------------------------------------------------------------------
