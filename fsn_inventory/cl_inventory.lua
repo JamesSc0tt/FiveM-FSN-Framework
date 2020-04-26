@@ -163,6 +163,27 @@ end)
 	Manage slots
 ]]--
 RegisterNUICallback( "dragToSlot", function(data, cb)
+	if secondInventory_type == 'store_gun' then
+		if data.toInv == 'otherInventory' then
+			invLog('<span style="color:red">You cannot put something into a store!</span>')
+			return
+		end
+		data.amt = 1 -- only buy 1 at a time!
+		if secondInventory[data.fromSlot].data.price then
+			if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
+				TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price))
+				-- remove item from gunstore stock
+				TriggerServerEvent('fsn_store_guns:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+			else
+				exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
+				invLog('<span style="color:red">You cannot afford this item</span>')
+				return
+			end
+		else
+			invLog('<span style="color:red">No price associated, returning</span>')
+			return
+		end
+	end
 	if data.toSlot == data.fromSlot and data.fromInv == data.toInv then
 		invLog('<span style="color:red">You cannot move this into itself</span>')
 		return
@@ -251,6 +272,7 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 						name = firstInventory[data.fromSlot].name,
 						amt = data.amt,
 						data = firstInventory[data.fromSlot].data,
+						customData = firstInventory[data.fromSlot].customData,
 					}
 				end
 				firstInventory[data.fromSlot].amt = firstInventory[data.fromSlot].amt - data.amt
@@ -380,6 +402,7 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 						index = secondInventory[data.fromSlot].index,
 						name = secondInventory[data.fromSlot].name,
 						amt = data.amt,
+						customData = secondInventory[data.fromSlot].customData,
 					}
 				end
 				secondInventory[data.fromSlot].amt = secondInventory[data.fromSlot].amt - data.amt
@@ -507,6 +530,9 @@ function toggleGUI()
 		if secondInventory_type == 'pd_locker' then
 			TriggerServerEvent('fsn_inventory:locker:save', secondInventory)
 		end
+		if secondInventory_type == 'store_gun' then
+			TriggerServerEvent('fsn_store_guns:closedStore', secondInventory_id)
+		end
 		secondInventory_type = 'ply'
 		secondInventory_id = 0
 		secondInventory = {}
@@ -623,6 +649,18 @@ AddEventHandler('fsn_inventory:pd_locker:recieve', function(id, tbl)
 	end
 	invLog('received inventory from pd_locker('..id..')')
 end)
+RegisterNetEvent('fsn_inventory:store_gun:recieve')
+AddEventHandler('fsn_inventory:store_gun:recieve', function(storeid, tbl)
+	secondInventory_type = 'store_gun'
+	secondInventory_id = storeid
+	secondInventory = tbl
+	updateGUI()
+	if not gui then
+		toggleGUI()
+	end
+	invLog('received data from gunstore('..storeid..')')
+end)
+
 --[[
 	Manage items
 ]]--
