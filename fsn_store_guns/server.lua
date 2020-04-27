@@ -4,6 +4,7 @@ local stores = {
 		busy = false,
 		stock = {
 			WEAPON_ASSAULTRIFLE = {amt=999,price=10000},
+			ammo = {amt = 999, price = 600},
 		}
 	}
 }
@@ -20,7 +21,16 @@ local weapon = {
 }
 
 local items = {
-	['WEAPON_ASSAULTRIFLE'] = weapon
+	['WEAPON_ASSAULTRIFLE'] = weapon,
+	
+	['ammo'] = {
+        index = "ammo",
+        name = "Ammo",
+        amt = 1,
+        data = {
+            weight = 5
+        }
+    },
 }
 
 --[[

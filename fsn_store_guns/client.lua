@@ -36,6 +36,17 @@ Util.Tick(function()
   end
 end)
 
+Citizen.CreateThread( function()
+  for k, store in pairs(stores) do
+      local blip = AddBlipForCoord(store.x, store.y, store.z)
+      SetBlipSprite(blip, 110)
+      SetBlipAsShortRange(blip, true)
+      BeginTextCommandSetBlipName("STRING")
+      AddTextComponentString("Gun Store")
+      EndTextCommandSetBlipName(blip)
+  end
+end)
+
 -- If you want a spot to buy a wep license leave all this code below here. If not just comment it out or delete it. This sets a spot in the gunstore by PDM
 
 local weaponLicLocation = vector3(14.055945396423, -1105.7650146484, 29.797029495239)

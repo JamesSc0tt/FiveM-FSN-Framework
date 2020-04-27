@@ -920,7 +920,7 @@ function equipWeapon(item, key)
 		local weapon, hash = GetCurrentPedWeapon(GetPlayerPed(-1), 1)
         if(weapon) then
             local _,ammoInClip = GetAmmoInClip(GetPlayerPed(-1), hash)
-            local totalAmmo = GetAmmoInPedWeapon(GetPlayerPed(-1), hash) - ammoInClip
+            local totalAmmo = GetAmmoInPedWeapon(GetPlayerPed(-1), hash)
             currentWeapon['customData'].ammo = totalAmmo
         else
         	currentWeapon['customData'].ammo = 0
@@ -962,9 +962,40 @@ Util.Tick(function()
 	if not beingused and not gui then -- cant use if gui is open or someone else is using inv
 		for number, control in pairs(hotkeys) do
 			if IsControlJustReleased(1, control) or IsDisabledControlJustReleased(1, control) then
-				if currentWeapon and currentWeapon['customData'].weapon then
-					equipWeapon(false,number)
-					return
+
+				--[[For using ammo while the gun is out. 
+				This prevents the gun from being put away if you try to use another item slot. 
+				In this case it will only leave the gun equipped if item.index == ammo
+				]]--
+				local item = firstInventory[number]
+
+				--might add more ammo types and counts later but for now this gets people started with buying ammo instead of a whole new gun
+				local ammocount = 25
+
+				if item.index == 'ammo' then
+					local playerPed = GetPlayerPed(-1)
+					
+					local found, equippedWeapon = GetCurrentPedWeapon(playerPed, true)
+					  if found then
+						  if equippedWeapon ~= nil then
+							  local pedAmmo = GetAmmoInPedWeapon(playerPed, equippedWeapon)
+							  local newAmmo = pedAmmo + ammocount
+							  ClearPedTasks(playerPed)
+							  local found, maxAmmo = GetMaxAmmo(playerPed, equippedWeapon)
+							  if newAmmo < maxAmmo then
+								  TaskReloadWeapon(playerPed)
+								  SetPedAmmo(playerPed, equippedWeapon, newAmmo)
+								  exports['mythic_notify']:DoCustomHudText('success', 'Reloaded')
+							  else
+								  exports['mythic_notify']:DoCustomHudText('error', 'Max Ammo')
+							  end
+						  end
+					  end
+				else
+					if currentWeapon and currentWeapon['customData'].weapon then
+						equipWeapon(false,number)
+						return
+					end
 				end
 				local item = firstInventory[number]
 				if item.index == false then

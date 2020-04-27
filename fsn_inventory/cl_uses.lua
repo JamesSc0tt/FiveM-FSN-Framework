@@ -205,4 +205,10 @@ itemUses = {
 			end
 		end
 	},
+	['ammo'] = {
+		takeItem = true,
+		use = function(item)
+			--Doesnt need a trigger just needed a use. without it it wont remove the ammo or load the weapon
+		end
+	}
 }
