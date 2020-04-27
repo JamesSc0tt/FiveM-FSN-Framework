@@ -1,90 +1,56 @@
-local menuEnabled = false
-function fsn_SplitString(inputstr, sep)
-    if sep == nil then
-        sep = "%s"
-    end
-    local t={} ; i=1
-    for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-        t[i] = str
-        i = i + 1
-    end
-    return t
-end
+local stores = {
+	{id = 'liquorace', xyz = vector3(1392.3483886719, 3604.0036621094, 34.980926513672), blip=true, busy = false},
 
-function fsn_drawText3D(x,y,z, text)
-    local onScreen,_x,_y=World3dToScreen2d(x,y,z)
-    local px,py,pz=table.unpack(GetGameplayCamCoords())
-    if onScreen then
-        SetTextScale(0.3, 0.3)
-        SetTextFont(0)
-        SetTextProportional(1)
-        SetTextColour(255, 255, 255, 255)
-        SetTextDropshadow(0, 0, 0, 0, 55)
-        SetTextEdge(2, 0, 0, 0, 150)
-        SetTextDropShadow()
-        SetTextOutline()
-        SetTextEntry("STRING")
-        SetTextCentre(1)
-        AddTextComponentString(text)
-        DrawText(_x,_y)
-    end
-end
+	{id = 'ltdgas', xyz = vector3(1698.4125976563, 4924.998046875, 42.063678741455), blip=true, busy = false},
+  	{id = 'ltdgas', xyz = vector3(-707.94940185547, -914.28442382813, 19.215589523315), blip=true, busy = false},
+  	{id = 'ltdgas', xyz = vector3(1163.341796875, -323.94161987305, 69.205139160156), blip=true, busy = false},
+	{id = 'ltdgas', xyz = vector3(-48.42569732666, -1757.5212402344, 29.420993804932), blip=true, busy = false},
+	  
+	{id = 'robsliquor', xyz = vector3(-1487.6705322266, -379.61917114258, 40.163394927979), blip=true, busy = false},
+	{id = 'robsliquor', xyz = vector3(-2968.5520019531, 390.56546020508, 15.043312072754), blip=true, busy = false},
+	{id = 'robsliquor', xyz = vector3(1166.4477539063, 2708.3881835938, 38.157699584961), blip=true, busy = false},
+	{id = 'robsliquor', xyz = vector3(1136.1823730469, -981.75445556641, 46.415802001953), blip=true, busy = false},
+	{id = 'robsliquor', xyz = vector3(-1223.4569091797, -906.90423583984, 12.3263463974), blip=true, busy = false},
+	  
+	{id = 'twentyfourseven', xyz = vector3(25.816429138184, -1347.3413085938, 29.497024536133), blip=true, busy = false},
+  	{id = 'twentyfourseven', xyz = vector3(374.22787475586, 326.03570556641, 103.56636810303), blip=true, busy = false},
+  	{id = 'twentyfourseven', xyz = vector3(-3242.7116699219, 1001.4896240234, 12.830704689026), blip=true, busy = false},
+  	{id = 'twentyfourseven', xyz = vector3(1961.62890625, 3741.0764160156, 32.343776702881), blip=true, busy = false},
+  	{id = 'twentyfourseven', xyz = vector3(1730.2172851563, 6415.9599609375, 35.037227630615), blip=true, busy = false},
+  	{id = 'twentyfourseven', xyz = vector3(2678.9938964844, 3281.0151367188, 55.241138458252), blip=true, busy = false},
+  	{id = 'twentyfourseven', xyz = vector3(2557.4074707031, 382.74633789063, 108.62294769287), blip=true, busy = false},
 
-function ToggleActionMenu()
-	menuEnabled = not menuEnabled
-	if ( menuEnabled ) then
-		SetNuiFocus( true, true )
-		SendNUIMessage({
-			showmenu = true
-		})
-	else
-		SetNuiFocus( false )
-		SendNUIMessage({
-			hidemenu = true
-		})
-	end
-end
+  	{id = 'pillbox', xyz = vector3(316.72573852539, -588.17431640625, 43.291801452637), blip=false, busy = false}
+}
 
-RegisterNUICallback( "ButtonClick", function( data, cb )
-	if ( data == "exit" ) then
-		ToggleActionMenu()
-		return
-	else
-		local split = fsn_SplitString(data, '-')
-		if split[1] == 'buy' then
-			local item = split[2]
-			TriggerEvent('fsn_inventory:prebuy', item)
-		else
-			--??
+Util.Tick(function()
+	for k, s in pairs(stores) do
+		local playerPed = GetPlayerPed(-1)
+		local playerPos = GetEntityCoords(playerPed)
+		local storeCoords = s.xyz
+		local dist = Util.GetVecDist(playerPos, storeCoords)
+
+		if dist < 10.0 then
+			DrawMarker(25, s.xyz.x,s.xyz.y,s.xyz.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 255, 255, 150, 0, 0, 2, 0, 0, 0, 0)
+			if dist < 2.0 then
+				if not s.busy then
+					Util.DrawText3D(s.xyz.x, s.xyz.y, s.xyz.z, '[ E ] Access Store',{255,255,255,200}, 0.25)
+					if IsControlJustReleased(0, Util.GetKeyNumber('E')) then
+						TriggerServerEvent('fsn_store:request', s.id)
+					end
+				else
+					Util.DrawText3D(s.xyz.x, s.xyz.y, s.xyz.z, '~r~ Store in use\n Please try again later',{255,255,255,200}, 0.25)
+				end
+			end
 		end
 	end
-end )
-
-local stores = {
-  {x = -707.94940185547, y = -914.28442382813, z = 19.215589523315, blip=true},
-  {x = 25.816429138184, y = -1347.3413085938, z = 29.497024536133, blip=true},
-  {x = -48.42569732666, y = -1757.5212402344, z = 29.420993804932, blip=true},
-  {x = 374.22787475586, y = 326.03570556641, z = 103.56636810303, blip=true},
-  {x = -1487.6705322266, y = -379.61917114258, z = 40.163394927979, blip=true},
-  {x = -2968.5520019531, y = 390.56546020508, z = 15.043312072754, blip=true},
-  {x = -3242.7116699219, y = 1001.4896240234, z = 12.830704689026, blip=true},
-  {x = 1961.62890625, y = 3741.0764160156, z = 32.343776702881, blip=true},
-  {x = 1392.3483886719, y = 3604.0036621094, z = 34.980926513672, blip=true},
-  {x = 1166.4477539063, y = 2708.3881835938, z = 38.157699584961, blip=true},
-  {x = 1698.4125976563, y = 4924.998046875, z = 42.063678741455, blip=true},
-  {x = 1730.2172851563, y = 6415.9599609375, z = 35.037227630615, blip=true},
-  {x = 2678.9938964844, y = 3281.0151367188, z = 55.241138458252, blip=true},
-  {x = 2557.4074707031, y = 382.74633789063, z = 108.62294769287, blip=true},
-  {x = 1136.1823730469, y = -981.75445556641, z = 46.415802001953, blip=true},
-  {x = 1163.341796875, y = -323.94161987305, z = 69.205139160156, blip=true},
-  {x = -1223.4569091797, y = -906.90423583984, z = 12.3263463974, blip=true},
-  {x = 316.72573852539, y = -588.17431640625, z = 43.291801452637, blip=false}
-}
+end)
+		
 
 Citizen.CreateThread( function()
   for k, store in pairs(stores) do
 	if store.blip then 
-		local blip = AddBlipForCoord(store.x, store.y, store.z)
+		local blip = AddBlipForCoord(store.xyz.x, store.xyz.y, store.xyz.z)
 		SetBlipSprite(blip, 52)
 		SetBlipAsShortRange(blip, true)
 		BeginTextCommandSetBlipName("STRING")
@@ -92,22 +58,6 @@ Citizen.CreateThread( function()
 		EndTextCommandSetBlipName(blip)
 	end 
   end
-	while true do
-		Citizen.Wait(0)
-		for k, v in pairs(stores) do
-			if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
-        DrawMarker(1,v.x,v.y,v.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
-          SetTextComponentFormat("STRING")
-        	AddTextComponentString("Press ~INPUT_PICKUP~ to view the ~y~store")
-        	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-          if IsControlJustPressed(0,38) then
-						ToggleActionMenu()
-					end
-				end
-			end
-		end
-	end
 end )
 
 local storekeepers = {

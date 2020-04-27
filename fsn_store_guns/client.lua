@@ -35,3 +35,40 @@ Util.Tick(function()
     end
   end
 end)
+
+-- If you want a spot to buy a wep license leave all this code below here. If not just comment it out or delete it. This sets a spot in the gunstore by PDM
+
+local weaponLicLocation = vector3(14.055945396423, -1105.7650146484, 29.797029495239)
+
+Citizen.CreateThread(function()
+	
+	while true do
+		Citizen.Wait(0)
+		local playerPed = GetPlayerPed(-1)
+		local playerPos = GetEntityCoords(playerPed)
+    local dist = Util.GetVecDist(playerPos, weaponLicLocation)
+    local weaponLicenseprice = 5000
+    local money = 0
+
+    if dist < 2.0 then
+			Util.DrawText3D(weaponLicLocation.x, weaponLicLocation.y, weaponLicLocation.z, 'Press ~g~[ E ] ~s~ to buy a weapon\'s license for ~g~$~w~'..weaponLicenseprice,{255,255,255,200}, 0.25)
+      money = exports.fsn_main:fsn_GetWallet()
+      
+      if IsControlJustPressed(0, 38) then
+        if money >= weaponLicenseprice then
+				  if not exports["fsn_licenses"]:fsn_hasLicense('weapon') then
+					  TriggerEvent('fsn_licenses:police:give', 'weapon')
+					  --TriggerEvent('fsn_notify:displayNotification', 1, 'You were granted a <b>Weapons License</b> with 0 infractions', 'centerRight', 7000, 'info')
+					  exports['mythic_notify']:DoCustomHudText('success', 'You bought a weapons license with 0 infractions!', 4000)
+					  TriggerEvent('fsn_bank:change:walletMinus', weaponLicenseprice)
+				  else
+					  --TriggerEvent('fsn_notify:displayNotification', 1, 'You already have a weapons license', 'centerRight', 7000, 'info')
+					  exports['mythic_notify']:DoCustomHudText('error', 'You already have a weapons license!', 4000)
+          end
+        else
+          exports['mythic_notify']:DoCustomHudText('error', 'You can not afford this!', 5000)
+        end
+			end
+		end
+	end
+end)

@@ -163,6 +163,29 @@ end)
 	Manage slots
 ]]--
 RegisterNUICallback( "dragToSlot", function(data, cb)
+	if secondInventory_type == 'store' then
+		if data.toInv == 'otherInventory' then
+			invLog('<span style="color:red">You cannot put something into a store!</span>')
+			return
+		end
+		--[[ I commented this out to allow you to be able to buy up to 10 items at once instead of just one at a time. Which would be annoying for things like bandages etc
+		--data.amt = 1 -- only buy 1 at a time!
+		]]--
+		if secondInventory[data.fromSlot].data.price then
+			if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
+				TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
+				-- remove item from store stock
+				TriggerServerEvent('fsn_store:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+			else
+				exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
+				invLog('<span style="color:red">You cannot afford this item</span>')
+				return
+			end
+		else
+			invLog('<span style="color:red">No price associated, returning</span>')
+			return
+		end
+	end
 	if secondInventory_type == 'store_gun' then
 		if data.toInv == 'otherInventory' then
 			invLog('<span style="color:red">You cannot put something into a store!</span>')
@@ -533,6 +556,9 @@ function toggleGUI()
 		if secondInventory_type == 'store_gun' then
 			TriggerServerEvent('fsn_store_guns:closedStore', secondInventory_id)
 		end
+		if secondInventory_type == 'store' then
+			TriggerServerEvent('fsn_store:closedStore', secondInventory_id)
+		end
 		secondInventory_type = 'ply'
 		secondInventory_id = 0
 		secondInventory = {}
@@ -661,6 +687,18 @@ AddEventHandler('fsn_inventory:store_gun:recieve', function(storeid, tbl)
 	invLog('received data from gunstore('..storeid..')')
 end)
 
+RegisterNetEvent('fsn_inventory:store:recieve')
+AddEventHandler('fsn_inventory:store:recieve', function(storeid, tbl)
+	secondInventory_type = 'store'
+	secondInventory_id = storeid
+	secondInventory = tbl
+	updateGUI()
+	if not gui then
+		toggleGUI()
+	end
+	invLog('received data from store('..storeid..')')
+end)
+
 --[[
 	Manage items
 ]]--
@@ -761,6 +799,7 @@ end)
 --[[
 	Store stuffs
 ]]--
+--[[ Not needed anymore as store ui was changed
 local prices = {
 	["beef_jerky"] = 4,
 	["cupcake"] = 1,
@@ -787,6 +826,7 @@ AddEventHandler('fsn_inventory:prebuy', function(item)
     TriggerEvent('fsn_inventory:buyItem', item, prices[item], 1)
   end
 end)
+]]--
 --[[
 	CONVERT OLD INV / GIVE ID CARD ON FIRST JOIN
 ]]--
