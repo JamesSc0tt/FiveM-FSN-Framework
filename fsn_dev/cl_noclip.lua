@@ -39,8 +39,8 @@ function noclip(enabled)
 	end
 end
 
-RegisterNetEvent('fsn_dev:noClip')
-AddEventHandler('fsn_dev:noClip', function()
+RegisterNetEvent('fsn_dev:noClip:enabled')
+AddEventHandler('fsn_dev:noClip:enabled', function()
 	noclip(not freecam:IsActive())
 end)
 
