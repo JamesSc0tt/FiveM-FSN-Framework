@@ -168,9 +168,10 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 			invLog('<span style="color:red">You cannot put something into a store!</span>')
 			return
 		end
-		--[[ I commented this out to allow you to be able to buy up to 10 items at once instead of just one at a time. Which would be annoying for things like bandages etc
-		--data.amt = 1 -- only buy 1 at a time!
-		]]--
+		--If someone leaves the inventory amount on all this will default the store amount to 1 item else it will be whatever you change the amount to.
+		if data.amt == -99 then
+			data.amt = 1
+		end
 		if secondInventory[data.fromSlot].data.price then
 			if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
 				TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
