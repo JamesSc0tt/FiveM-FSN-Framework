@@ -833,6 +833,7 @@ end)
 ]]--
 intiiated = false
 function init(charTbl)
+	local firstInventory = {{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},}
 	local inventory	= json.decode(charTbl.char_inventory)
 	if inventory.firstSpawned == true then
 		-- you have the new inv very nice
