@@ -322,7 +322,7 @@ function save()
 	
 	if not player_data.overlays then
 		player_data.overlays = {}
-		player_data.props.drawables = {}
+		player_data.overlays.drawables = {}
 	end
     for i = 0, 12 do
         player_data.overlays.drawables[i+1] = GetPedHeadOverlayValue(GetPlayerPed(-1), i)

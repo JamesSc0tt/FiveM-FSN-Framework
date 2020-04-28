@@ -463,6 +463,8 @@ AddEventHandler('fsn_apartments:characterCreation', function()
 				creating = false
 				DoScreenFadeOut(1000)
 				TriggerServerEvent('fsn_apartments:createApartment', exports["fsn_main"]:fsn_CharID())
+				TriggerEvent('fsn_spawnmanager:start', false)
+				DoScreenFadeIn(1000)
 			end
 			if GetDistanceBetweenCoords(xyz.x, xyz.y, xyz.z, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
 				SetEntityCoords(GetPlayerPed(-1), xyz.x, xyz.y, xyz.z)

@@ -78,7 +78,15 @@ end
 RegisterNetEvent('fsn_spawnmanager:start')
 AddEventHandler('fsn_spawnmanager:start', function(char)
     SetEntityVisible(GetPlayerPed(-1), false, 0)
-	my_char = char
+    if char then
+		my_char = char
+		TriggerEvent("clothes:spawn", json.decode(char.char_model))
+	else
+		print('skipping, charid: '..my_char.char_id)
+		TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
+	end
+	
+
 	DoScreenFadeOut(1000)
 	Citizen.Wait(900)
 	SetEntityCoords(GetPlayerPed(-1),-505.09, -1224.11, 232.2)
@@ -87,7 +95,7 @@ AddEventHandler('fsn_spawnmanager:start', function(char)
 	Citizen.Wait(100)
 	DoScreenFadeIn(1000)
 	Citizen.Wait(1001)
-	openGUI(char)
+	openGUI(my_char)
 end)
 
 RegisterNUICallback('camToLoc', function(data, cb)
@@ -134,14 +142,16 @@ RegisterNUICallback('spawnAtLoc', function(data, cb)
 		FreezeEntityPosition(GetPlayerPed(-1), false)
 
 		--TriggerEvent('fsn->esx:clothing:spawn', json.decode(my_char.char_model))
-		TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
-		
+		--TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
+
 		if spawnloc.name == 'Apartment' then
 			exports['fsn_apartments']:EnterMyApartment()
 			TriggerEvent('spawnme')
+			TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
 		else
 			SetEntityCoords(GetPlayerPed(-1), spawnloc.x, spawnloc.y,spawnloc.z)
 			TriggerEvent('spawnme')
+			TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
 		end
 
 		Citizen.Wait(100)
