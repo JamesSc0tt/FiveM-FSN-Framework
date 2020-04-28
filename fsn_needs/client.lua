@@ -181,6 +181,7 @@ AddEventHandler('fsn_inventory:use:food', function(relief)
   else
     hunger = hunger + hunger
   end
+  eat()
 end)
 
 RegisterNetEvent('fsn_inventory:use:drink')
@@ -190,6 +191,7 @@ AddEventHandler('fsn_inventory:use:drink', function(relief)
   else
     thirst = thirst + relief
   end
+  drink()
 end)
 
 RegisterNetEvent('fsn_needs:stress:add')
@@ -209,3 +211,51 @@ AddEventHandler('fsn_needs:stress:remove', function(relief)
 		stress = stress - relief
 	end
 end)
+
+
+function drink()
+    if not IsAnimated then
+		prop_name = 'prop_ld_flow_bottle'
+		IsAnimated = true
+		Citizen.CreateThread(function()
+			local playerPed = PlayerPedId()
+			local x,y,z = table.unpack(GetEntityCoords(playerPed))
+			local prop = CreateObject(GetHashKey(prop_name), x, y, z + 0.2, true, true, true)
+			local boneIndex = GetPedBoneIndex(playerPed, 18905)
+			AttachEntityToEntity(prop, playerPed, boneIndex, 0.12, 0.032, 0.001, 10.0, 175.0, 0.0, true, true, false, true, 1, true)
+
+		    RequestAnimDict('mp_player_intdrink')
+		    while (not HasAnimDictLoaded('mp_player_intdrink')) do Citizen.Wait(0) end
+		    TaskPlayAnim(playerPed, 'mp_player_intdrink', 'loop_bottle', 1.0, -1.0, 2000, 0, 1, true, true, true)
+
+			Citizen.Wait(3000)
+			IsAnimated = false
+			ClearPedSecondaryTask(playerPed)
+			DeleteObject(prop)
+		end)
+	end
+end
+
+function eat()
+    if not IsAnimated then
+		prop_name = 'prop_cs_burger_01'
+		IsAnimated = true
+
+		Citizen.CreateThread(function()
+			local playerPed = PlayerPedId()
+			local x,y,z = table.unpack(GetEntityCoords(playerPed))
+			local prop = CreateObject(GetHashKey(prop_name), x, y, z + 0.2, true, true, true)
+			local boneIndex = GetPedBoneIndex(playerPed, 18905)
+			AttachEntityToEntity(prop, playerPed, boneIndex, 0.12, 0.028, 0.001, 10.0, 175.0, 0.0, true, true, false, true, 1, true)
+		    RequestAnimDict("mp_player_inteat@burger")
+		    while (not HasAnimDictLoaded("mp_player_inteat@burger")) do 
+		    	Citizen.Wait(0) 
+		    end
+		    TaskPlayAnim(playerPed, 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 1.0, -1.0, 2000, 0, 1, true, true, true)
+			Citizen.Wait(3000)
+			IsAnimated = false
+			ClearPedSecondaryTask(playerPed)
+			DeleteObject(prop)
+		end)
+	end
+end
