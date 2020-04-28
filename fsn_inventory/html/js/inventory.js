@@ -1,5 +1,21 @@
 var canUse = true
 window.addEventListener("message", function (event) {
+	if (event.data.actionbar) {
+		if (event.data.display) {
+			for (i = 1; i < 6; i++) {
+				var ni = i - 1
+				if (event.data.items[ni].index) {
+					$('#actionbaritem-'+ni).attr("src","img/items/"+event.data.items[ni].index+".png")
+					$('#actionbaritem-'+ni).show()
+				} else {
+					$('#actionbaritem-'+ni).hide()
+				}
+			}
+			$('.actionbar').show()
+		} else {
+			$('.actionbar').hide()
+		}
+	}
 	if (event.data.action == 'display') {
 		if (event.data.val) {
 			$('.ui').show()

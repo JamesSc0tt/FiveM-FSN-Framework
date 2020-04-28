@@ -960,6 +960,27 @@ local hotkeys = {
 	165  -- number 5
 }
 Util.Tick(function()
+	if IsDisabledControlJustPressed(0,37) then
+		local itms = {}
+		local count = 1
+		for k, v in ipairs(firstInventory) do
+			if count < 6 then	
+				itms[count] = v
+				count = count + 1
+			end
+		end
+		SendNUIMessage({
+			actionbar = true,
+			display = true,
+			items = itms
+		})
+	end
+	if IsDisabledControlJustReleased(0,37) then
+		SendNUIMessage({
+			actionbar = true,
+			display = false,
+		})
+	end
 	if not beingused and not gui then -- cant use if gui is open or someone else is using inv
 		for number, control in pairs(hotkeys) do
 			if IsControlJustReleased(1, control) or IsDisabledControlJustReleased(1, control) then
