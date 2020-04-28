@@ -133,7 +133,8 @@ RegisterNUICallback('spawnAtLoc', function(data, cb)
 		SetEntityVisible(GetPlayerPed(-1), true)
 		FreezeEntityPosition(GetPlayerPed(-1), false)
 
-		TriggerEvent('fsn->esx:clothing:spawn', json.decode(my_char.char_model))
+		--TriggerEvent('fsn->esx:clothing:spawn', json.decode(my_char.char_model))
+		TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
 		
 		if spawnloc.name == 'Apartment' then
 			exports['fsn_apartments']:EnterMyApartment()

@@ -63,10 +63,14 @@ AddEventHandler('fsn_apartments:stash:take', function(amt)
 	end
 end)
 
+function EnterMyApartment()
+	EnterRoom(myRoomNumber)
+end
+
 RegisterNetEvent('fsn_apartments:sendApartment')
 AddEventHandler('fsn_apartments:sendApartment', function(tbl)
 	if tbl.number then
-		EnterRoom(tbl.number)
+		--EnterRoom(tbl.number)
 		myRoomNumber = tbl.number
 		apptdetails = tbl.apptinfo
 		apptdetails["apt_outfits"] = json.decode(tbl.apptinfo.apt_outfits)
@@ -120,7 +124,7 @@ AddEventHandler('fsn_apartments:sendApartment', function(tbl)
 		TriggerEvent('fsn_notify:displayNotification', 'Your apartment number is: '..tbl.number, 'centerRight', 6000, 'info')
 	else
 		TriggerEvent('chatMessage', '', {255,255,255}, '^1^*:FSN:^0^r IT LOOKS LIKE YOU ARE BROKE I DO NOT HAVE AN APPT NUMBER FOR YOU')
-		EnterRoom(1)
+		--EnterRoom(1)
 		myRoomNumber = 1
 		apptdetails = {}
 		apptdetails["apt_outfits"] = {}

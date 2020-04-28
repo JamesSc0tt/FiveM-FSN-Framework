@@ -24,5 +24,6 @@ server_script 'sv_instancing.lua'
 -- exports
 exports {
 	"inInstance",
-	"isNearStorage"
+	"isNearStorage",
+	"EnterMyApartment"
 }
