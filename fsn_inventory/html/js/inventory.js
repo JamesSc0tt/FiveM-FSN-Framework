@@ -65,6 +65,19 @@ function log(string) {
 	$('.console').prepend('<div class="console_entry">[JS]['+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+'] '+string+'</div>')
 }
 
+$(document).ready(function () {
+    $("#count").focus(function () {
+        $(this).val("")
+    }).blur(function () {
+        if ($(this).val() == "") {
+            $(this).val("1")
+		}
+		if ($(this).val() == "0") {
+            $(this).val("1")
+        }
+	});
+});
+
 function updateInv(div, data) {
 	log('got update from lua') 
 	$('#'+div).html('')
@@ -139,19 +152,19 @@ function init() {
 	$('.slot').droppable({
 		drop: function (event, ui) {
 			hoverClass: 'hoverControl',
-			updateSlot(num, $(this).data("inventory"), $(this).data("slotid"), ui.draggable.data("inventory"), ui.draggable.data("slotid"))	
+			updateSlot(parseInt($("#count").val()), $(this).data("inventory"), $(this).data("slotid"), ui.draggable.data("inventory"), ui.draggable.data("slotid"))	
 		}
 	});
 	$('#drop').droppable({
 		drop: function (event, ui) {
 			hoverClass: 'hoverControl',
-			dropSlot(num, ui.draggable.data("inventory"), ui.draggable.data("slotid"))	
+			dropSlot(parseInt($("#count").val()), ui.draggable.data("inventory"), ui.draggable.data("slotid"))	
 		}
 	});
 	$('#use').droppable({
 		drop: function (event, ui) {
 			hoverClass: 'hoverControl',
-			useSlot(num, ui.draggable.data("inventory"), ui.draggable.data("slotid"))	
+			useSlot(parseInt($("#count").val()), ui.draggable.data("inventory"), ui.draggable.data("slotid"))	
 		}
 	});
 }
@@ -183,29 +196,6 @@ function updateSlot(amt, toInv, toSlot, fromInv, fromSlot) {
 		toInv: toInv,
 		toSlot: toSlot+1
 	}));
-}
-
-var num = -99
-function numChange(up) {
-	if (up) {
-		if (num < 1) {
-			num = 1
-		}
-		num = num + 1
-		if (num > 10) {
-			num = -99
-		}
-	} else {
-		num = num - 1
-		if (num < 1) {
-			num = -99
-		}
-	}
-	if (num == -99) {
-		$('.number').html('ALL')
-	} else {
-		$('.number').html(num)
-	}
 }
 
 document.onkeydown = function(evt) {

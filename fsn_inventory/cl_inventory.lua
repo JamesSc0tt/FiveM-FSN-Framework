@@ -798,37 +798,6 @@ AddEventHandler('fsn_inventory:items:emptyinv', function()
 end)
 
 --[[
-	Store stuffs
-]]--
---[[ Not needed anymore as store ui was changed
-local prices = {
-	["beef_jerky"] = 4,
-	["cupcake"] = 1,
-	["microwave_burrito"] = 8,
-	["panini"] = 6,
-	["pepsi"] = 5,
-	["pepsi_max"] = 6,
-	["water"] = 3,
-	["coffee"] = 10,
-	["cigarette"] = 5,
-	["repair_kit"] = 250,
-	["lockpick"] = 200,
-	["zipties"] = 1000,
-	["phone"] = 250,
-	["binoculars"] = 250,
-	["bandage"] = 250,
-}
-RegisterNetEvent('fsn_inventory:prebuy')
-RegisterNetEvent('fsn_inventory:buyItem')
-AddEventHandler('fsn_inventory:prebuy', function(item)
-  if not fsn_CanCarry(item, 1) then
-    TriggerEvent('fsn_notify:displayNotification', 'You cannot carry this!', 'centerLeft', 3000, 'error')
-  else
-    TriggerEvent('fsn_inventory:buyItem', item, prices[item], 1)
-  end
-end)
-]]--
---[[
 	CONVERT OLD INV / GIVE ID CARD ON FIRST JOIN
 ]]--
 intiiated = false
@@ -1009,6 +978,7 @@ Util.Tick(function()
 								  TaskReloadWeapon(playerPed)
 								  SetPedAmmo(playerPed, equippedWeapon, newAmmo)
 								  exports['mythic_notify']:DoCustomHudText('success', 'Reloaded')
+								  TriggerEvent('fsn_inventory:item:take', 'ammo', 1)
 							  else
 								  exports['mythic_notify']:DoCustomHudText('error', 'Max Ammo')
 							  end
