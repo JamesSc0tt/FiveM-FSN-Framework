@@ -133,8 +133,8 @@ function updateIdentifiers(src)
 	local steamid = GetPlayerIdentifiers(src)[1]
 	if not steamid then print('trying to update identifiers for player('..src..') failed') return else print(':fsn_main: (sv_bans.lua) Updating identifiers for Player('..src..') with SteamID('..steamid..')') end
 	local sql = MySQL.Sync.fetchAll("SELECT * FROM `fsn_users` WHERE `steamid` = '"..steamid.."'")
-	local myIdentifiers = sql[1]['identifiers']
 	if sql[1] then
+        local myIdentifiers = sql[1]['identifiers']
 		if myIdentifiers then
 			myIdentifiers = json.decode(myIdentifiers)
 		else
