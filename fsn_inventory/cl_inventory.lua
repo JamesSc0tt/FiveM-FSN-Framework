@@ -428,6 +428,10 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 						amt = data.amt,
 						customData = secondInventory[data.fromSlot].customData,
 					}
+					if secondInventory[data.fromSlot].data and secondInventory[data.fromSlot].data.weight then
+						if not firstInventory[data.toSlot].data then firstInventory[data.toSlot].data = {} end
+						firstInventory[data.toSlot].data.weight = secondInventory[data.fromSlot].data.weight
+					end
 				end
 				secondInventory[data.fromSlot].amt = secondInventory[data.fromSlot].amt - data.amt
 			else
