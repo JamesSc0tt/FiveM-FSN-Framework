@@ -12,6 +12,9 @@ local weapon = {
 	index = "WEAPON_ASSAULTRIFLE",
 	name = "ASSAULT RIFLE",
 	amt = 1,
+	data = {
+		weight = 5,
+	},
 	customData = {
 		weapon = 'true',
 		ammo = 200,
@@ -47,7 +50,11 @@ AddEventHandler('fsn_store_guns:request', function(store_id)
 			for k, v in pairs(s.stock) do
 				if items[k] then
 					local item = items[k]
-					item.data = {price=s.stock[k].price}
+					if item.data then
+						item.data.price=s.stock[k].price
+					else
+						item.data = {price=s.stock[k].price}
+					end
 					item.amt = s.stock[k].amt
 
 					table.insert(inv, #inv+1, item)
