@@ -72,8 +72,11 @@ $(document).ready(function () {
         if ($(this).val() == "") {
             $(this).val("1")
 		}
-		if ($(this).val() == "0") {
+		if ($(this).val() <= 0) {
             $(this).val("1")
+		}
+		if ($(this).val() > 999999) {
+            $(this).val("999999")
         }
 	});
 });
