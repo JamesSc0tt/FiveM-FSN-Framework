@@ -212,7 +212,7 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 						return
 					end
 				else
-					invLog('<span style="color:blue">To much weight, reduce the amount or your inventory weight</span>'
+					invLog('<span style="color:blue">To much weight, reduce the amount or your inventory weight</span>')
 				end
 			else
 				invLog('<span style="color:red">No price associated, returning</span>')
