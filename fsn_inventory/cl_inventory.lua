@@ -814,29 +814,15 @@ end)
 ]]--
 intiiated = false
 function init(charTbl)
-	local firstInventory = {{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},}
 	local inventory	= json.decode(charTbl.char_inventory)
 	if inventory.firstSpawned == true then
 		-- you have the new inv very nice
 		firstInventory = inventory.table
-		exports['mythic_notify']:DoHudText('success', 'You already got this system fam!', 8000)
 		intiiated = true
 	else
-		exports['mythic_notify']:DoHudText('inform', 'Trying to update your inventory to the new system', 8000)
-		Citizen.Wait(3000)
-		for key, item in pairs(inventory) do
-			if presetItems[key] then
-				if fsn_CanCarry(key, item.amount)	then
-					TriggerEvent('fsn_inventory:items:addPreset', key, item.amount)
-				end
-			else
-				exports['mythic_notify']:DoHudText('error', 'No preset found for: '..key, 10000)
-			end
-		end
+		firstInventory = {{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},}
 		Citizen.Wait(500)
 		TriggerEvent('fsn_licenses:giveID')
-		Citizen.Wait(500)
-		exports['mythic_notify']:DoHudText('success', 'Success', 8000)
 		intiiated = true
 	end
 end
