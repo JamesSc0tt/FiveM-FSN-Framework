@@ -198,8 +198,18 @@ AddEventHandler('fsn_cargarage:receiveVehicles', function(type, vehtbl)
 		})
 	elseif type == 'aircrafts' then
 		myGarage.aircrafts = vehtbl
+		local grg = json.encode(vehtbl)
+		SendNUIMessage({
+			receive = 'aircrafts',
+			garage = grg
+		})
 	elseif type == 'boats' then
 		myGarage.boats = vehtbl
+		local grg = json.encode(vehtbl)
+		SendNUIMessage({
+			receive = 'boats',
+			garage = grg
+		})
 	else
 	end
 end)

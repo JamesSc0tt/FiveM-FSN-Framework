@@ -335,6 +335,35 @@ function IsPDCar(veh)
 		return false
 	end
 end
+
+policeWeapons = {
+	['WEAPON_CARBINERIFLE'] = {
+		index = "WEAPON_CARBINERIFLE",
+		name = "Carbine Rifle",
+		amt = 1,
+		customData = {
+			weapon = 'true',
+			ammo = 200,
+			ammotype = 'rifle_ammo',
+			quality = 'normal',
+			Serial = 'PoliceIssued'
+		}
+	  },
+	  ['WEAPON_PUMPSHOTGUN'] = {
+		index = "WEAPON_PUMPSHOTGUN",
+		name = "Pump Shotgun",
+		amt = 1,
+		customData = {
+			weapon = 'true',
+			ammo = 200,
+			ammotype = 'shotgun_ammo',
+			quality = 'normal',
+			Serial = 'PoliceIssued'
+		}
+	  },
+
+}
+
 RegisterNetEvent('fsn_commands:police:shotgun')
 AddEventHandler('fsn_commands:police:shotgun', function()
 	if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
@@ -368,7 +397,15 @@ AddEventHandler('fsn_commands:police:shotgun', function()
 			Citizen.Wait(6000)
 			FreezeEntityPosition(GetPlayerPed(-1), false)
 			SetVehicleDoorShut(car, 5, false)
-			TriggerEvent('fsn_criminalmisc:weapons:add:police', GetHashKey('WEAPON_PUMPSHOTGUN'), 250)
+			--TriggerEvent('fsn_criminalmisc:weapons:add:police', GetHashKey('WEAPON_PUMPSHOTGUN'), 250)
+			local pweapon
+			for k,v in pairs(policeWeapons) do
+				if k == 'WEAPON_PUMPSHOTGUN' then
+					pweapon = v
+				end		
+			end
+			print(pweapon)
+			TriggerEvent('fsn_inventory:items:add', pweapon, 1)
 		else
 			TriggerEvent('fsn_notify:displayNotification', 'Go to the back of the car', 'centerLeft', 4000, 'error')
 		end
@@ -411,7 +448,15 @@ AddEventHandler('fsn_commands:police:rifle', function()
 				Citizen.Wait(6000)
 				FreezeEntityPosition(GetPlayerPed(-1), false)
 				SetVehicleDoorShut(car, 5, false)
-				TriggerEvent('fsn_criminalmisc:weapons:add:police', GetHashKey('WEAPON_CARBINERIFLE'), 250)
+				--TriggerEvent('fsn_criminalmisc:weapons:add:police', GetHashKey('WEAPON_CARBINERIFLE'), 250)
+				local pweapon
+				for k,v in pairs(policeWeapons) do
+					if k == 'WEAPON_CARBINERIFLE' then
+						pweapon = v
+					end		
+				end
+				print(pweapon)
+				TriggerEvent('fsn_inventory:items:add', pweapon, 1)
 			else
 				TriggerEvent('fsn_notify:displayNotification', 'Go to the back of the car', 'centerLeft', 4000, 'error')
 			end

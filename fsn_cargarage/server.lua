@@ -35,11 +35,31 @@ AddEventHandler('fsn_cargarage:requestVehicles', function(type, charid, grg)
     end)
   elseif type == 'aircrafts' then
     MySQL.Async.fetchAll('SELECT * FROM `fsn_vehicles` WHERE `char_id` = @char_id AND `veh_type` = "a"', {['@char_id'] = charid}, function(vehicles)
-      vehtbl = vehicles
+      vehtbl = {}
+      for k, v in pairs(vehicles) do
+        if v.veh_garage == grg or v.veh_garage == '0' then
+          print(v.veh_garage..' is '..grg)
+          table.insert(vehtbl,#vehtbl+1,v)
+        else
+          print(v.veh_garage..' is not '..grg)
+        end
+          end
+  
+          TriggerClientEvent('fsn_cargarage:receiveVehicles', player, 'aircrafts', vehtbl)
     end)
   elseif type == 'boats' then
     MySQL.Async.fetchAll('SELECT * FROM `fsn_vehicles` WHERE `char_id` = @char_id AND `veh_type` = "b"', {['@char_id'] = charid}, function(vehicles)
-      vehtbl = vehicles
+      vehtbl = {}
+      for k, v in pairs(vehicles) do
+        if v.veh_garage == grg or v.veh_garage == '0' then
+          print(v.veh_garage..' is '..grg)
+          table.insert(vehtbl,#vehtbl+1,v)
+        else
+          print(v.veh_garage..' is not '..grg)
+        end
+          end
+  
+          TriggerClientEvent('fsn_cargarage:receiveVehicles', player, 'boats', vehtbl)
     end)
   else
     TriggerClientEvent('fsn_notify:displayNotification', source, 'Something is wrong with this garage!', 'centerLeft', 3000, 'error')

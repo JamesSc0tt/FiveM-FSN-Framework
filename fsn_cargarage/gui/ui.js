@@ -59,8 +59,80 @@ $( function() {
 				$('#actionmenu').append('<button class="menuoption exit" data-action="exit">Exit</button>')
 				init()
 			}
-		}
-		
+        }
+        if (item.receive == 'boats') {
+            if (item.garage != '[]') {
+                var grg = JSON.parse(item.garage)
+                $('.section').html('')
+                var shit = document.querySelectorAll('[data-spawn="garage"]')
+                for (var i = 0; i < shit.length; i++) {
+                  var item = shit[i]; 
+                  item.remove();
+                }
+                $('.exit').remove()
+                
+                jQuery.each(grg, function(i, val) {
+                    if (val.veh_status == 0) {
+                        var color = 'green'
+                        var stat = 'IN'
+                        var price = 50
+                    } else if (val.veh_status == 1) {
+                        var color = 'orange'
+                        var stat = 'OUT'
+                        var price = 'UNAVAILABLE'
+                    } else if(val.veh_status == 2) {
+                        var color = 'red'
+                        var stat = 'IMPOUNDED'
+                        var price = 2500
+                    } else if (val.veh_status == 3) {
+                        var color = 'black'
+                        var stat = 'REPO/SEIZE'
+                        var price = 'UNAVAILABLE'
+                    }
+                    $('.section').append('<button class="menuoption '+color+'" data-sub="'+val.veh_id+'">['+stat+'] '+val.veh_displayname+'</button>')
+                    $('#actionmenu').append('<div id="'+val.veh_id+'" data-spawn="garage" data-parent="mainmenu" style="display: none;"><button class="menuoption" data-action="spawn-'+val.veh_id+'">SPAWN (<b>'+displayCash(price)+'</b>)</button><button class="menuoption" data-action="sell-'+val.veh_id+'">SELL</button></div>')
+                });
+                $('#actionmenu').append('<button class="menuoption exit" data-action="exit">Exit</button>')
+                init()
+            }
+        }
+        if (item.receive == 'aircrafts') {
+            if (item.garage != '[]') {
+                var grg = JSON.parse(item.garage)
+                $('.section').html('')
+                var shit = document.querySelectorAll('[data-spawn="garage"]')
+                for (var i = 0; i < shit.length; i++) {
+                  var item = shit[i]; 
+                  item.remove();
+                }
+                $('.exit').remove()
+                
+                jQuery.each(grg, function(i, val) {
+                    if (val.veh_status == 0) {
+                        var color = 'green'
+                        var stat = 'IN'
+                        var price = 50
+                    } else if (val.veh_status == 1) {
+                        var color = 'orange'
+                        var stat = 'OUT'
+                        var price = 'UNAVAILABLE'
+                    } else if(val.veh_status == 2) {
+                        var color = 'red'
+                        var stat = 'IMPOUNDED'
+                        var price = 2500
+                    } else if (val.veh_status == 3) {
+                        var color = 'black'
+                        var stat = 'REPO/SEIZE'
+                        var price = 'UNAVAILABLE'
+                    }
+                    $('.section').append('<button class="menuoption '+color+'" data-sub="'+val.veh_id+'">['+stat+'] '+val.veh_displayname+'</button>')
+                    $('#actionmenu').append('<div id="'+val.veh_id+'" data-spawn="garage" data-parent="mainmenu" style="display: none;"><button class="menuoption" data-action="spawn-'+val.veh_id+'">SPAWN (<b>'+displayCash(price)+'</b>)</button><button class="menuoption" data-action="sell-'+val.veh_id+'">SELL</button></div>')
+                });
+                $('#actionmenu').append('<button class="menuoption exit" data-action="exit">Exit</button>')
+                init()
+            }
+        }
+
         // Show the menu 
         if ( item.showmenu ) {
             ResetMenu()

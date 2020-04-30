@@ -23,6 +23,14 @@ local Whitelists = {
 		bank = 0,
 		onduty = {},
 	},
+	[4] = {
+		title = 'Los Santos Marina',
+		id = 4,
+		owner = 1,
+		access = {},
+		bank = 0,
+		onduty = {},
+	},
 }
 
 function isPlayerClockedInWhitelist(ply, id)

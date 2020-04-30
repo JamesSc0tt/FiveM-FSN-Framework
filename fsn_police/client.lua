@@ -171,17 +171,82 @@ function fsn_getCopAmt()
 end
 
 policeWeapons = {
-    "WEAPON_STUNGUN",
-    "WEAPON_FLARE",
-    "WEAPON_NIGHTSTICK",
-    --"WEAPON_CARBINERIFLE",
-    --"WEAPON_PUMPSHOTGUN",
-    "WEAPON_FIREEXTINGUISHER",
-    "WEAPON_COMBATPISTOL",
-    "WEAPON_FLASHLIGHT",
-    "WEAPON_KNIFE"
+  ['WEAPON_STUNGUN'] = {
+    index = "WEAPON_STUNGUN",
+    name = "Stun Gun",
+    amt = 1,
+    customData = {
+        weapon = 'true',
+        ammo = 0,
+        ammotype = 'none',
+        quality = 'normal',
+        Serial = 'PoliceIssued'
+    }
+  },
+  ['WEAPON_FLARE'] = {
+    index = "WEAPON_FLARE",
+    name = "Flare",
+    amt = 1,
+    customData = {
+        weapon = 'true',
+        ammo = 100,
+        ammotype = 'none',
+        quality = 'normal',
+        Serial = 'PoliceIssued'
+    }
+  },
+
+  ['WEAPON_NIGHTSTICK'] = {
+    index = "WEAPON_NIGHTSTICK",
+    name = "Nightstick",
+    amt = 1,
+    customData = {
+        weapon = 'true',
+        ammo = 0,
+        ammotype = 'none',
+        quality = 'normal',
+        Serial = 'PoliceIssued'
+    }
+  },
+  ['WEAPON_FIREEXTINGUISHER'] = {
+    index = "WEAPON_FIREEXTINGUISHER",
+    name = "Fire Extinguisher",
+    amt = 1,
+    customData = {
+        weapon = 'true',
+        ammo = 200,
+        ammotype = 'none',
+        quality = 'normal',
+        Serial = 'PoliceIssued'
+    }
+  },
+  ['WEAPON_PISTOL'] = {
+    index = "WEAPON_PISTOL",
+    name = "Pistol",
+    amt = 1,
+    customData = {
+        weapon = 'true',
+        ammo = 200,
+        ammotype = 'pistol_ammo',
+        quality = 'normal',
+        Serial = 'PoliceIssued'
+    }
+  },
+  ['WEAPON_FLASHLIGHT'] = {
+    index = "WEAPON_FLASHLIGHT",
+    name = "Flashlight",
+    amt = 1,
+    customData = {
+        weapon = 'true',
+        ammo = 0,
+        ammotype = 'none',
+        quality = 'normal',
+        Serial = 'PoliceIssued'
+    }
+  },
 }
 
+-- Leave for now might use this to check inventory if police already have the guns then to just give ammo. Will work on this when i get time -Crutchie
 local function fsn_policeEquipped()
   -- maybe add other loadouts later?
   policeWeapons = {
@@ -307,7 +372,8 @@ Citizen.CreateThread(function()
           if IsControlJustPressed(0,38) then
               for k, v in pairs(policeWeapons) do
                 --GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(v), 1000)
-				TriggerEvent('fsn_criminalmisc:weapons:add:police', GetHashKey(v), 250)
+                --TriggerEvent('fsn_criminalmisc:weapons:add:police', GetHashKey(v), 250)
+                TriggerEvent('fsn_inventory:items:add', v, 1)
               end
 	            GiveWeaponComponentToPed(GetPlayerPed(-1), 0x5EF9FEC4, 0x359B7AAE)-- Combat Pistol Flashlight
               AddArmourToPed(GetPlayerPed(-1), 100)
