@@ -1,5 +1,5 @@
 local admins = {'steam:11000010e0828a9', 'steam:110000106f35cce'}
-local modertators = {}
+local moderators = {}
 function fsn_SplitString(inputstr, sep)
   if sep == nil then
     sep = "%s"
@@ -33,7 +33,7 @@ end
 function fsn_isModerator(src)
   local sid = GetPlayerIdentifiers(src)
   sid = sid[1]
-  for k, v in pairs(modertators) do
+  for k, v in pairs(moderators) do
     if v == sid then
       return true
     end
@@ -43,7 +43,7 @@ end
 function fsn_GetModeratorID(src)
   local sid = GetPlayerIdentifiers(src)
   sid = sid[1]
-  for k, v in pairs(modertators) do
+  for k, v in pairs(moderators) do
     if v == sid then
       return k
     end
