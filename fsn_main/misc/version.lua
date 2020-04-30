@@ -1,4 +1,4 @@
-local current_version = '2.1.2'
+local current_version = '2.1.3'
 local current_release = false
 
 AddEventHandler("onResourceStart", function(resource)
