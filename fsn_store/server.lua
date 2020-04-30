@@ -74,73 +74,97 @@ local stores = {
 
 local items = {
     beef_jerky = {
-		index = 'beef_jerky',
-		name = 'Beef Jerky',
-		weight = 0.5
+      index = 'beef_jerky',
+      name = 'Beef Jerky',
+      data = {
+        weight = 0.5
+      },
     },
     cupcake = {
-		index = 'cupcake',
-        name = 'Cupcake',
+      index = 'cupcake',
+      name = 'Cupcake',
+      data = {
         weight = 0.5
+      }
     },
     microwave_burrito = {
-		index = 'microwave_burrito',
-		name = 'Microwave Burrito',
-		weight = 1.5
+      index = 'microwave_burrito',
+      name = 'Microwave Burrito',
+      data = {
+        weight = 1.5
+      }
     },
     panini = {
-		index = 'panini',
-		name = 'Panini',
-		weight = 1
+      index = 'panini',
+      name = 'Panini',
+      data = {
+        weight = 1
+      }
     },
     pepsi = {
-		index = 'pepsi',
-		name = 'Pepsi',
-		weight = 1
+      index = 'pepsi',
+      name = 'Pepsi',
+      data = {
+        weight = 1
+      }
     },
     pepsi_max = {
-		index = 'pepsi_max',
-		name = 'Pepsi Max',
-		weight = 1
+      index = 'pepsi_max',
+      name = 'Pepsi Max',
+      data = {
+        weight = 1
+      }
     },
     water = {
-		index = 'water',
-		name = 'Water',
-		weight = 1
+      index = 'water',
+      name = 'Water',
+      data = {
+        weight = 1
 
+      }
     },
     coffee = {
-		index = 'coffee',
-		name = 'Coffee',
-		weight = 1
+      index = 'coffee',
+      name = 'Coffee',
+      data = {
+        weight = 1
+      }
     },
     lockpick = {
-		index = 'lockpick',
-		name = 'Lockpick',
-		weight = 1.5
+      index = 'lockpick',
+      name = 'Lockpick',
+      data = {
+        weight = 1.5
+      }
     },
     zipties = {
-		index = 'zipties',
-		name = 'Zip Ties',
-		weight = 3
+      index = 'zipties',
+      name = 'Zip Ties',
+      data = {
+        weight = 3
+      }
     },
     phone = {
-		index = 'phone',
-		name = 'Phone',
-		weight = 1
+      index = 'phone',
+      name = 'Phone',
+      data = {
+        weight = 1
+      }
     },
     bandage = {
-		index = 'bandage',
-		name = 'Bandage',
-		weight = 0.4
+      index = 'bandage',
+      name = 'Bandage',
+      data = {
+        weight = 0.4
+      }
     },
     binoculars = {
-		index = 'binoculars',
-		name = 'Binoculars',
-		weight = 3
-    },
-
-
+      index = 'binoculars',
+      name = 'Binoculars',
+      data ={
+        weight = 3
+      }
+    }
 }
 
 --[[
@@ -157,7 +181,11 @@ AddEventHandler('fsn_store:request', function(store_id)
             for k, v in pairs(s.stock) do
                 if items[k] then
                     local item = items[k]
-                    item.data = {price=s.stock[k].price}
+                    if item.data then
+                      item.data.price = s.stock[k].price
+                    else
+                      item.data = {price=s.stock[k].price}
+                    end
                     item.amt = s.stock[k].amt
 
                     table.insert(inv, #inv+1, item)

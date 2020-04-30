@@ -179,19 +179,19 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 			return
 		end
 		if secondInventory_type == 'store' then
-			--If someone leaves the inventory amount on all this will default the store amount to 1 item else it will be whatever you change the amount to.
-			if data.amt == -99 then
-				data.amt = 1
-			end
 			if secondInventory[data.fromSlot].data.price then
-				if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
-					TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
-					-- remove item from store stock
-					TriggerServerEvent('fsn_store:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+				if syn_CanCarry(secondInventory[data.fromSlot].index, data.amt) then
+					if exports['syn_main']:syn_GetWallet() >= secondInventory[data.fromSlot].data.price then
+						TriggerEvent('syn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
+						-- remove item from store stock
+						TriggerServerEvent('syn_store:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+					else
+						exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
+						invLog('<span style="color:red">You cannot afford this item</span>')
+						return
+					end
 				else
-					exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
-					invLog('<span style="color:red">You cannot afford this item</span>')
-					return
+					invLog('<span style="color:blue">To much weight reduce the amount or your inventory weight</span>')
 				end
 			else
 				invLog('<span style="color:red">No price associated, returning</span>')
@@ -201,14 +201,18 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 		if secondInventory_type == 'store_gun' then
 			data.amt = 1 -- only buy 1 at a time!
 			if secondInventory[data.fromSlot].data.price then
-				if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
-					TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price))
-					-- remove item from gunstore stock
-					TriggerServerEvent('fsn_store_guns:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+				if syn_CanCarry(secondInventory[data.fromSlot].index, data.amt) then
+					if exports['syn_main']:syn_GetWallet() >= secondInventory[data.fromSlot].data.price then
+						TriggerEvent('syn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
+						-- remove item from store stock
+						TriggerServerEvent('syn_store:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+					else
+						exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
+						invLog('<span style="color:red">You cannot afford this item</span>')
+						return
+					end
 				else
-					exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
-					invLog('<span style="color:red">You cannot afford this item</span>')
-					return
+					invLog('<span style="color:blue">To much weight, reduce the amount or your inventory weight</span>'
 				end
 			else
 				invLog('<span style="color:red">No price associated, returning</span>')
