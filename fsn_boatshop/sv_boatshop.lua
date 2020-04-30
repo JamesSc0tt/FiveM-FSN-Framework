@@ -40,7 +40,7 @@ AddEventHandler('fsn_boatshop:floor:Request', function()
 end)
 
 function WorksAtStore(id)
-	return exports["fsn_jobs"]:isPlayerClockedInWhitelist(id, 1)
+	return exports["fsn_jobs"]:isPlayerClockedInWhitelist(id, 4)
 end
 AddEventHandler('chatMessage', function(source, auth, msg)
 	local split = Util.SplitString(msg, ' ')
