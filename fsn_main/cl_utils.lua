@@ -105,7 +105,7 @@ end
 	?? Util.FormatMoneyString(amt: number)
 ]]
 function Util.FormatMoneyString(amt)
-	if exports["arp-core"]:arp_CanAfford(amt) then
+	if exports["fsn_main"]:fsn_CanAfford(amt) then
 		return '(~g~$'..amt..'~w~)'
 	else
 		return '(~r~$'..amt..'~w~)'
