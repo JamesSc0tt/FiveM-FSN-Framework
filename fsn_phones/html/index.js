@@ -241,6 +241,17 @@ document.body.onmousedown = function() {
 	oldY = event.clientY
 }
 
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) {
+        if (currentPage == 'home') {
+		$.post('http://fsn_phones/closePhone', JSON.stringify({}));
+	} else {
+		changePage('home', currentPhone);
+	}
+    }
+};
+
 window.getFunctionFromString = function(string) {
     var scope = window;
     var scopeSplit = string.split('.');
