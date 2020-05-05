@@ -143,13 +143,38 @@ Citizen.CreateThread(function()
   end
 end)
 
+--[[
+	Include your blacklisted weapons here. This means that when shooting or using these weapons you WILL NOT gain stress
+]]
+local blacklistedWeapons = {
+	'WEAPON_FIREEXTINGUISHER',
+	'WEAPON_FLARE'
+}
+
+function blacklisted()
+	local weapon
+	local found, currentWeapon = GetCurrentPedWeapon(GetPlayerPed(-1))
+	if found then
+		for k,w in pairs(blacklistedWeapons) do
+			weaponhash = GetHashKey(w)
+			if currentWeapon == weaponhash then
+				weapon = w
+				break
+			end
+		end
+	end
+	print(currentWeapon)
+	print(weapon)
+	return weapon
+end
+
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(10)
 		local playerPed = GetPlayerPed(-1)
-		if IsPedShooting(playerPed)  and not exports.fsn_police:fsn_PDDuty() then
+		if IsPedShooting(playerPed) and not exports.fsn_police:fsn_PDDuty() and not blacklisted() then -- If its just a civ and they are not using a blacklisted weapon
 			TriggerEvent('fsn_needs:stress:add', 1)
-		elseif IsPedShooting(playerPed)  and exports.fsn_police:fsn_PDDuty() then
+		elseif IsPedShooting(playerPed) and exports.fsn_police:fsn_PDDuty() and not blacklisted() then -- If police are on duty they get less stress and not using a blacklisted weapon
 			TriggerEvent('fsn_needs:stress:add', 0.1)
 		end
 	end
