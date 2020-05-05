@@ -1,5 +1,5 @@
 -- path for live server
-local datastorePath = '/home/fivem/live/1/resources/[fsn]/fsn_phones/datastore/'
+local datastorePath = 'resources/'..GetCurrentResourceName()..'/datastore/'
 
 local dbg = false -- misc notifications for the client
 if dbg then
