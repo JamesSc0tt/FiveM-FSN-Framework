@@ -90,6 +90,24 @@ Citizen.CreateThread(function()
 						drawTxt(UI.x + 0.625, 	UI.y + 1.387, 1.0,1.0,0.64 , "~w~" .. math.floor(fuel_amount), 255, 255, 255, 255)
 						drawTxt(UI.x + 0.647, 	UI.y + 1.395, 1.0,1.0,0.4, "~w~  fuel", 255, 255, 255, 255)
 					end
+				elseif HUD.Speed == 'kmh' then
+					drawRct(UI.x + 0.124, 	UI.y + 0.932, 0.046,0.03,0,0,0,150) -- Speed panel
+					drawTxt(UI.x + 0.625, 	UI.y + 1.42, 1.0,1.0,0.64 , "~w~" .. math.ceil(Speed), 255, 255, 255, 255)
+					if math.ceil(Speed) == 0 then
+						drawTxt(UI.x + 0.647, 	UI.y + 1.428, 1.0,1.0,0.4, "~w~ kmh", 255, 255, 255, 255)
+					elseif math.ceil(Speed) < 73 then
+						drawTxt(UI.x + 0.647, 	UI.y + 1.428, 1.0,1.0,0.4, "~g~ kmh", 255, 255, 255, 255)
+					elseif math.ceil(Speed) < 129 then
+						drawTxt(UI.x + 0.647, 	UI.y + 1.428, 1.0,1.0,0.4, "~o~ kmh", 255, 255, 255, 255)
+					else
+						drawTxt(UI.x + 0.647, 	UI.y + 1.428, 1.0,1.0,0.4, "~r~ kmh", 255, 255, 255, 255)
+					end
+					-- 0.33 difference
+					if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) then
+						drawRct(UI.x + 0.124, 	UI.y + 0.899, 0.046,0.03,0,0,0,150) -- Speed panel
+						drawTxt(UI.x + 0.625, 	UI.y + 1.387, 1.0,1.0,0.64 , "~w~" .. math.floor(fuel_amount), 255, 255, 255, 255)
+						drawTxt(UI.x + 0.647, 	UI.y + 1.395, 1.0,1.0,0.4, "~w~  fuel", 255, 255, 255, 255)
+					end
 				else
 					drawTxt(UI.x + 0.81, 	UI.y + 1.42, 1.0,1.0,0.64 , [[Carhud ~r~ERROR~w~ ~c~in ~w~HUD Speed~c~ config (something else than ~y~'kmh'~c~ or ~y~'mph'~c~)]], 255, 255, 255, 255)
 				end
