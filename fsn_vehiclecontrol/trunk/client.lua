@@ -104,9 +104,26 @@ AddEventHandler('fsn_vehiclecontrol:trunk:forceOut', function()
 	end
 end)
 
+--[[
+	Set vehicle models here that you do NOT want players to be able to get into their trunks. 
+	For example the trash truck Even though it has a trunk it makes no sense to get into it right
+]]
+local blacklistedVehicles = {
+	'trash' -- TrashMaster from the garbage job
+}
+
 Util.Tick(function()
 	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
 			local veh = fsn_lookingAt()
+			-- Check if the vehicle is blacklisted and compare it to the vehicle you are looking at
+			for k, car in pairs(blacklistedVehicles) do
+				blacklistedCar = GetHashKey(car)
+				vehmodel = GetEntityModel(veh)
+				if vehmodel == blacklistedCar then
+					veh = nil
+					break
+				end
+			end
 			if veh and not intrunk then
 				if not DoesVehicleHaveDoor(veh, 6) and DoesVehicleHaveDoor(veh, 5) and IsThisModelACar(GetEntityModel(veh)) and GetVehicleDoorsLockedForPlayer(veh, PlayerId()) == false then
 					local d1,d2 = GetModelDimensions(GetEntityModel(veh))

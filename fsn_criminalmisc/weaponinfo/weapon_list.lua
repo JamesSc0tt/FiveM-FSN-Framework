@@ -38,9 +38,9 @@ hashGunToText = {
 ['324215364'] = {name = "Micro SMG", isweapon = true, ammoType = '9mm', isAuto = false},
 ['736523883'] = {name = "SMG", isweapon = true, ammoType = '9mm', isAuto = false},
 ['4024951519'] = {name = "Assault SMG", isweapon = true, ammoType = '9mm', isAuto = false},
-['3220176749'] = {name = "Assault Rifle", isweapon = true, ammoType = '9mm', isAuto = false},
+['-1074790547'] = {name = "Assault Rifle", isweapon = true, ammoType = '9mm', isAuto = false},
 ['2210333304'] = {name = "Carbine", isweapon = true, ammoType = '5.56', isAuto = false},
- 
+
 ['2937143193'] = {name = "Adv Rifle", isweapon = true, ammoType = '5.56', isAuto = false},
 ['2634544996'] = {name = "MG", isweapon = true, ammoType = '5.56', isAuto = false},
 ['2144741730'] = {name = "Combat MG", isweapon = true, ammoType = '5.56', isAuto = false},
@@ -85,80 +85,80 @@ hashGunToText = {
 ['2741846334'] = {name = "Run Over", isweapon = true, ammoType = '9mm', isAuto = false},
 ['341774354'] = {name = "Heli Crash", isweapon = true, ammoType = '9mm', isAuto = false},
 ['3750660587'] = {name = "Fire", isweapon = true, ammoType = '9mm', isAuto = false},
- 
+
 ----------------DLC Weapons----------------
- 
+    
 ------------------------------------
 ['3218215474'] = {name = "SNS Pistol", isweapon = true, ammoType = '9mm', isAuto = false},
 ['4192643659'] = {name = "Bottle", isweapon = false },
- 
+    
 ------------------------------------
 ['1627465347'] = {name = "Gusenberg", isweapon = true, ammoType = '9mm', isAuto = false},
- 
+    
 ------------------------------------
 ['3231910285'] = {name = "Special Carbine", isweapon = true, ammoType = '5.56', isAuto = false},
 ['3523564046'] = {name = "Heavy Pistol", isweapon = true, ammoType = '9mm', isAuto = false},
- 
+    
 ------------------------------------
 ['2132975508'] = {name = "Bullpup", isweapon = true, ammoType = '5.56', isAuto = false},
- 
- 
+    
+    
 ------------------------------------
 ['2460120199'] = {name = "Dagger", isweapon = false },
 ['137902532'] = {name = "Vintage Pistol", isweapon = true, ammoType = '5.56', isAuto = false},
- 
- 
+    
+    
 ------------------------------------
 ['2138347493'] = {name = "Firework", isweapon = true, ammoType = '9mm', isAuto = false},
 ['2828843422'] = {name = "Musket", isweapon = true, ammoType = '9mm', isAuto = false},
- 
- 
+    
+    
 ------------------------------------
 ['984333226'] = {name = "Heavy Shotgun", isweapon = true, ammoType = '12g', isAuto = false},
 ['3342088282'] = {name = "Mark Rifle", isweapon = true, ammoType = '9mm', isAuto = false},
- 
- 
+    
+    
 ------------------------------------
 ['1672152130'] = {name = "Homing Launcher", isweapon = true, ammoType = '9mm', isAuto = false},
 ['2874559379'] = {name = "Proxi Mine", isweapon = true, ammoType = '9mm', isAuto = false},
 ['126349499'] = {name = "Snowball", isweapon = false },
- 
+    
 ------------------------------------
 ['1198879012'] = {name = "Flaregun", isweapon = false },
 ['3794977420'] = {name = "Garbage Bag", isweapon = true, ammoType = '9mm', isAuto = false},
 ['3494679629'] = {name = "Handcuffs", isweapon = false },
- 
- 
+    
+    
 ------------------------------------
 ['171789620'] = {name = "Combat PDW", isweapon = false, ammoType = '9mm', isAuto = false},
- 
- 
+    
+    
 ------------------------------------
 ['3696079510'] = {name = "Mrk Pistol", isweapon = true, ammoType = '9mm', isAuto = false},
 ['3638508604'] = {name = "Knuckle", isweapon = false },
- 
- 
+    
+    
 ------------------------------------
 ['4191993645'] = {name = "Hatchet", isweapon = false },
 ['1834241177'] = {name = "Railgun", isweapon = true, ammoType = '9mm', isAuto = false},
- 
- 
+    
+    
 ------------------------------------
 ['3713923289'] = {name = "Machete", isweapon = false },
 ['3675956304'] = {name = "Mac Pistol", isweapon = true, ammoType = '9mm', isAuto = false},
- 
- 
+
+
 ------------------------------------
 ['738733437'] = {name = "Air Defence", isweapon = true, ammoType = '9mm', isAuto = false},
 ['3756226112'] = {name = "Switchblade", isweapon = false },
 ['3249783761'] = {name = "Revolver", isweapon = true, ammoType = '.762', isAuto = false},
- 
- 
+
+
 ------------------------------------
 ['4019527611'] = {name = "DB Shotgun", isweapon = true, ammoType = '12g', isAuto = false},
 ['1649403952'] = {name = "Cmp Rifle", isweapon = true, ammoType = '.762', isAuto = false},
- 
- 
+
+
 ------------------------------------
 ['317205821'] = {name = "Auto Shotgun", isweapon = true, ammoType = '12g', isAuto = false},
 ['3441901897'] = {name = "Battle Axe", isweapon = false },

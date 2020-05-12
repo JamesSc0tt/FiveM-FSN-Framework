@@ -46,7 +46,7 @@ local secondInventory_limits = {
 	--["glovebox"] = 20,
 }
 
-function fsn_CanCarry(item, amt)
+function fsn_CanCarry(item, amt, weight)
 	if exports["fsn_police"]:fsn_PDDuty() then return true end -- no weight limit for cops, only slot limit
 	if presetItems[item] and presetItems[item].data and presetItems[item].data.weight then
 		local maff = presetItems[item].data.weight * amt
@@ -56,8 +56,8 @@ function fsn_CanCarry(item, amt)
 			return false
 		end
 	else
-		if item.data and item.data.weight then
-			local maff = item.data.weight * amt
+		if item and weight then
+			local maff = weight * amt
 			if fsn_CurrentWeight() + maff <= max_weight then
 				return true
 			else
@@ -159,6 +159,33 @@ RegisterNUICallback( "viewData", function(data, cb)
 	})
 end)
 
+function makeString(l)
+	if l < 1 then return nil end
+	local s = ""
+	for i = 1, l do
+		s = s .. math.random(32, 126)
+	end
+	return s
+end
+
+local name = ''
+
+AddEventHandler('fsn_main:character', function(character)
+	name = character.char_fname..' '..character.char_lname
+end)
+
+function setItemOwner(shoptype ,weapon, data)
+	if weapon ~= nil  then
+		if secondInventory_type == 'store_gun' then
+			weapon.Serial = makeString(6)
+			weapon.Owner = name
+		else -- set a dark market and call it here for the following to be used for serial and owner
+			weapon.Serial = 'Illegible'
+			weapon.Owner = 'UNKNOWN'
+		end
+	end
+end
+
 --[[
 	Manage slots
 ]]--
@@ -180,7 +207,7 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 		end
 		if secondInventory_type == 'store' then
 			if secondInventory[data.fromSlot].data.price then
-				if fsn_CanCarry(secondInventory[data.fromSlot].index, data.amt) then
+				if fsn_CanCarry(secondInventory[data.fromSlot].index, data.amt, secondInventory[data.fromSlot].data.weight) then
 					if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
 						TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
 						-- remove item from store stock
@@ -191,7 +218,7 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 						return
 					end
 				else
-					invLog('<span style="color:blue">To much weight reduce the amount or your inventory weight</span>')
+					invLog('<span style="color:blue">To much weight, reduce the amount or your inventory weight</span>')
 				end
 			else
 				invLog('<span style="color:red">No price associated, returning</span>')
@@ -201,11 +228,18 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 		if secondInventory_type == 'store_gun' then
 			data.amt = 1 -- only buy 1 at a time!
 			if secondInventory[data.fromSlot].data.price then
-				if fsn_CanCarry(secondInventory[data.fromSlot].index, data.amt) then
+				if fsn_CanCarry(secondInventory[data.fromSlot].index, data.amt, secondInventory[data.fromSlot].data.weight) then
 					if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
 						TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
 						-- remove item from store stock
 						TriggerServerEvent('fsn_store_guns:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+						setItemOwner(secondInventory_type, secondInventory[data.fromSlot].customData)
+						-- Maybe there is a better way to do this in order for serials to not duplicate when buying more than one gun in a session?
+						-- For now this will do though
+						TriggerServerEvent('fsn_store_guns:closedStore', secondInventory_id)
+						TriggerServerEvent('fsn_store_guns:request', secondInventory_id)
+						-- Save the inventory on buying
+						TriggerEvent('fsn_main:characterSaving')
 					else
 						exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
 						invLog('<span style="color:red">You cannot afford this item</span>')
@@ -883,6 +917,7 @@ function equipWeapon(item, key)
 		DisablePlayerFiring(GetPlayerPed(-1), false)
 		ClearPedTasks(GetPlayerPed(-1))
 		TriggerServerEvent('fsn_main:logging:addLog', GetPlayerServerId(PlayerId()), 'weapons', 'Player('..GetPlayerServerId(PlayerId())..') equipped '..item.index..' with '..item['customData'].ammo..' ammo.')
+		TriggerEvent('fsn_evidence:weaponInfo', item.customData)
 
 	else
 		if firstInventory[currentHotkey].index ~= false then

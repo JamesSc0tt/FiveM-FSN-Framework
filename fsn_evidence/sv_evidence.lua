@@ -37,11 +37,13 @@ AddEventHandler('fsn_evidence:drop:casing', function(wep,loc)
 		e_type = 'casing',
 		loc = loc,
 		details = {
-			ammoType = wep.ammoType,
-			serial = wep.owner.serial
+			ammoType = wep.ammotype,
+			serial = wep.Serial,
+			owner = wep.Owner
 		},
 		expire = os.time() + 300,
 	}
+	--print(wep.Serial)
 	--TriggerClientEvent('fsn_evidence:receive', -1, evidence)
 end)
 
