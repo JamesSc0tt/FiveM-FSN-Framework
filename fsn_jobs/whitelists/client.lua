@@ -21,6 +21,7 @@ function isWhitelisted(groupid)
 end
 
 function getWhitelistDetails(groupid)
+	TriggerServerEvent('fsn_jobs:whitelist:request')
 	return Whitelists[groupid]
 end
 
@@ -40,7 +41,7 @@ end
 
 function addToWhitelist(wlid, charid, level)
 	if Whitelists[wlid].owner == exports["fsn_main"]:fsn_CharID() then
-		if level ~= '' then
+		if level > 0 then
 			TriggerServerEvent('fsn_jobs:whitelist:add', wlid, charid, level)
 			exports['mythic_notify']:DoCustomHudText('inform', 'Adding '..charid..' to '..Whitelists[wlid].title..' at '..level, 4000)
 		else

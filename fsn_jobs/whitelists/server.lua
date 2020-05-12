@@ -66,19 +66,23 @@ AddEventHandler('fsn_jobs:whitelist:add', function(wlid, charid, level)
 		table.insert(Whitelists[wlid].access, #Whitelists[wlid].access+1, {charid = charid, level = level})
 	end
 	TriggerClientEvent('fsn_jobs:whitelist:update', -1, Whitelists)
+	save()
 end)
 
 RegisterServerEvent('fsn_jobs:whitelist:remove')
 AddEventHandler('fsn_jobs:whitelist:remove', function(wlid, charid)
 	if Whitelists[wlid] then
 		for k,v in pairs(Whitelists[wlid].access) do
-			if v.charid then
-				Whitelists[wlid].access[k] = nil
+			if v.charid == charid then
 				TriggerClientEvent('fsn_notify:displayNotification', source, 'Removed '..charid..' from: '..Whitelists[wlid].title, 'centerLeft', 5000, 'success')
+				local charid = k
+				print(charid)
+				table.remove(Whitelists[wlid].access, charid)
 			end
 		end
 	end
 	TriggerClientEvent('fsn_jobs:whitelist:update', -1, Whitelists)
+	save()
 end)
 
 RegisterServerEvent('fsn_jobs:whitelist:clock:in')

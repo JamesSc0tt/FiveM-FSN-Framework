@@ -170,8 +170,8 @@ function WLUser(id) {
 	var wl = id+1 // always plus one for lua communication
 	console.log('whitelisting '+usr+' as '+lvl+' in '+datastore['whitelists'][id].title+' ('+id+')')
 	$.post('http://fsn_phones/whitelistUser', JSON.stringify({
-		'charid': usr,
-		'lvl': lvl,
+		'charid': parseInt(usr),
+		'lvl': parseInt(lvl),
 		'wl': wl
 	}));
 }
