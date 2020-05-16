@@ -240,6 +240,16 @@ function fsn_GetVehicleDetails(vehid)
 		end
 	end
 end
+function fsn_GetVehicleVehIDP(plate)
+	for k, v in pairs(myGarage) do
+		for key, value in pairs(v) do
+			if value.plate == plate then
+				print(value.plate)
+			end
+		end
+	end
+	return false
+end
 
 function fsn_SplitString(inputstr, sep)
     if sep == nil then
@@ -320,7 +330,7 @@ function doCarDamages(eh, bh, veh)
 	end
 end
 
-local function fsn_SpawnVehicle(vehid)
+function fsn_SpawnVehicle(vehid)
 	Citizen.CreateThread(function()
 		-- spawn vehicle and get details
 		local veh = fsn_GetVehicleDetails(vehid)
@@ -532,6 +542,15 @@ end
 
 function fsn_IsVehicleOwner(veh1)
 	local plate = GetVehicleNumberPlateText(veh1)
+	for k, v in pairs(myVehicles) do
+		local veh2 = v.plate
+		if plate == veh2 then
+			return true
+		end
+	end
+	return false
+end
+function fsn_IsVehicleOwnerP(plate)
 	for k, v in pairs(myVehicles) do
 		local veh2 = v.plate
 		if plate == veh2 then
