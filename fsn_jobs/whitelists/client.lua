@@ -77,11 +77,33 @@ end
 
 RegisterNetEvent('fsn_jobs:whitelist:clock:in')
 AddEventHandler('fsn_jobs:whitelist:clock:in', function(id)
+	
 	current_clockid = id
+
+	--[[
+	Set your whitelists ids here for example whitelist id 1 is PDM 2 is mechanic etc etc. 
+	This can be found in the whitelists/server.lua and your database under fsn_whitelists
+	]]--
+	if current_clockid == 1 then
+		fsn_SetJob('CarDealer')
+	
+	elseif current_clockid == 2 then
+		fsn_SetJob("Mechanic")
+	
+	elseif current_clockid == 3 then
+		fsn_SetJob('Rancher')
+	
+	elseif current_clockid == 4 then
+		fsn_SetJob('BoatDealer')
+	end
+
 end)
 RegisterNetEvent('fsn_jobs:whitelist:clock:out')
 AddEventHandler('fsn_jobs:whitelist:clock:out', function()
 	current_clockid = 0
+
+	fsn_SetJob('Unemployed')
+
 end)
 
 RegisterNetEvent('fsn_jobs:whitelist:update')

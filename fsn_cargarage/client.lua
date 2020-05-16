@@ -111,7 +111,7 @@ function getCarDetails(veh)
 	details.livery = GetVehicleLivery(veh)
 	
 	-- window tint
-	details.customisations.window = GetVehicleWindowTint(veh)
+	details.customisations.windows = GetVehicleWindowTint(veh)
 	
 	-- plate
 	details.plate = GetVehicleNumberPlateText(veh)

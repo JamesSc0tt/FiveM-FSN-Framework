@@ -590,16 +590,6 @@ local lsc = {
 				{name = "Stock Tires", costs =1500, description = "", centre = 0, font = 0, scale = 0.4},
 				{name = "Custom Tires", costs =1500, description = "", centre = 0, font = 0, scale = 0.4},
 				-- {name = "Bulletproof Tires", costs = 10000, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "White Tire Smoke", color = {254,254,254}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Black Tire Smoke", color = {1,1,1}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Blue Tire Smoke", color = {0,150,255}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Yellow Tire Smoke", color = {255,255,50}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Orange Tire Smoke", color = {255,153,51}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Red Tire Smoke", color = {255,10,10}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Green Tire Smoke", color = {10,255,10}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Purple Tire Smoke", color = {153,10,153}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Pink Tire Smoke", color = {255,102,178}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-				 {name = "Gray Tire Smoke", color = {128,128,128}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
 			}
 		},
 		["respray"] = {
@@ -1193,16 +1183,25 @@ local lsc = {
             title = "tire smoke",
             name = "tiresmoke",
             buttons = {
-                {name = "White Tire Smoke", color = {254,254,254}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "White Tire Smoke", color = {254,254,254}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Gray Tire Smoke", color = {128,128,128}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
                 {name = "Black Tire Smoke", color = {1,1,1}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-                {name = "Blue Tire Smoke", color = {0,150,255}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Blue Tire Smoke", color = {0,0,128}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Red Tire Smoke", color = {128,0,0}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Green Tire Smoke", color = {0,128,0}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Cyan Tire Smoke", color = {10,255,255}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Electric Blue Tire Smoke", color = {0,150,255}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Lime Green Tire Smoke", color = {0,255,0}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Mint Green Tire Smoke", color = {50,255,155}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
                 {name = "Yellow Tire Smoke", color = {255,255,50}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
                 {name = "Orange Tire Smoke", color = {255,153,51}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-                {name = "Red Tire Smoke", color = {255,10,10}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-                {name = "Green Tire Smoke", color = {10,255,10}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-                {name = "Purple Tire Smoke", color = {153,10,153}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-                {name = "Pink Tire Smoke", color = {255,102,178}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
-                {name = "Gray Tire Smoke", color = {128,128,128}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Pink Tire Smoke", color = {255,102,178}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Purple Tire Smoke", color = {153,10,153}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Dark Green Tire Smoke", color = {0,50,0}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Dark Red Tire Smoke", color = {50,0,0}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Dark Blue Tire Smoke", color = {0,0,50}, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+
+
             }
         },
 		["neonkits"] = {
@@ -2272,34 +2271,49 @@ function ButtonSelected(button)
 			OpenMenu("pearlescentmetallic")
 		end
 	elseif lsc.currentmenu == "primarychrome" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[1] = button.colorindex
 	elseif lsc.currentmenu == "primaryclassic" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[1] = button.colorindex
 	elseif lsc.currentmenu == "primarymatte" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[1] = button.colorindex
 	elseif lsc.currentmenu == "primarymetal" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[1] = button.colorindex
 	elseif lsc.currentmenu == "primarymetallic" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[1] = button.colorindex
 	elseif lsc.currentmenu == "secondarychrome" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[2] = button.colorindex
 	elseif lsc.currentmenu == "secondaryclassic" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[2] = button.colorindex
 	elseif lsc.currentmenu == "secondarymatte" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[2] = button.colorindex
 	elseif lsc.currentmenu == "secondarymetal" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[2] = button.colorindex
 	elseif lsc.currentmenu == "secondarymetallic" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		vehiclecol[2] = button.colorindex
 	elseif lsc.currentmenu == "pearlescentchrome" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		extracol[1] = button.colorindex
 	elseif lsc.currentmenu == "pearlescentclassic" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		extracol[1] = button.colorindex
 	elseif lsc.currentmenu == "pearlescentmatte" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		extracol[1] = button.colorindex
 	elseif lsc.currentmenu == "pearlescentmetal" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		extracol[1] = button.colorindex
 	elseif lsc.currentmenu == "pearlescentmetallic" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		extracol[1] = button.colorindex
 	elseif lsc.currentmenu == "bumpers" then
 		if button.name == "Front Bumpers" then
@@ -2327,11 +2341,13 @@ function ButtonSelected(button)
 
 		elseif button.name == "Xenon Lights" and moneycheck(button.costs) then
 			if (moneycheck(button.costs)) then
+				TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 				ToggleVehicleMod(car, 22, true)
 				mods[22].mod = 1;
 			end
 		end
 	elseif lsc.currentmenu == "plate" then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		plateindex = button.plateindex
 	elseif lsc.currentmenu == "chassis" or lsc.currentmenu == "armor" or lsc.currentmenu == "brakes" or lsc.currentmenu == "frontbumper" or lsc.currentmenu == "rearbumper" or lsc.currentmenu == "engine" or lsc.currentmenu == "exhaust" or lsc.currentmenu == "hood" or lsc.currentmenu == "horn" or lsc.currentmenu == "rollcage" or lsc.currentmenu == "roof" or lsc.currentmenu == "skirts" or lsc.currentmenu == "spoiler" or lsc.currentmenu == "suspension" or lsc.currentmenu == "transmission" or lsc.currentmenu == "grille" or lsc.currentmenu == "horn" then
 		if (moneycheck(button.costs)) then
@@ -2378,10 +2394,10 @@ function ButtonSelected(button)
 	elseif lsc.currentmenu == "wheeltype" then
 		if button.name == "Stock" then
 			SetVehicleWheelType(car,-1)
-		elseif button.name == "Front Wheel" and moneycheck(button.costs) then
+		elseif button.name == "Front Wheel" then
 			SetVehicleWheelType(car,button.wtype)
 			OpenMenu("frontwheel")
-		elseif button.name == "Back Wheel" and moneycheck(button.costs) then
+		elseif button.name == "Back Wheel" then
 			SetVehicleWheelType(car,button.wtype)
 			OpenMenu("backwheel")
 		else
@@ -2396,8 +2412,10 @@ function ButtonSelected(button)
 			SetVehicleMod(car,button.modtype,button.mod)
 		end
 	elseif lsc.currentmenu == "wheelcolor" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		extracol[2] = button.colorindex
 	elseif lsc.currentmenu == "windows" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 		windowtint = button.tint
 	elseif lsc.currentmenu == "wheelaccessories" then
 		if button.name == "Stock Tires" and moneycheck(button.costs) then
@@ -2418,8 +2436,8 @@ function ButtonSelected(button)
 				end
 			end
 		end
-    elseif lsc.currentmenu == "tiresmoke" then --and moneycheck(button.costs) then
-        --TriggerEvent('fsn_bank:change:walletMinus', button.costs)
+    elseif lsc.currentmenu == "tiresmoke" and moneycheck(button.costs) then --and moneycheck(button.costs) then
+        TriggerEvent('fsn_bank:change:walletMinus', button.costs)
         tiresmoke[1] = button.color[1]
         tiresmoke[2] = button.color[2]
         tiresmoke[3] = button.color[3]

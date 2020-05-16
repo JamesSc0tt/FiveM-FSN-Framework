@@ -23,25 +23,45 @@ end)
 
 RegisterNetEvent('fsn_jobs:paycheck')
 AddEventHandler('fsn_jobs:paycheck', function()
+  
   if curjob == 'Police' then
     TriggerEvent('fsn_bank:change:bankAdd', 350)
     TriggerEvent('fsn_notify:displayNotification', 'Salary: $350', 'centerLeft', 5000, 'info')
+  
   elseif curjob == 'EMS' then
     TriggerEvent('fsn_bank:change:bankAdd', 350)
     TriggerEvent('fsn_notify:displayNotification', 'Salary: $350', 'centerLeft', 5000, 'info')
+  
   elseif curjob == 'Mechanic' then
     TriggerEvent('fsn_bank:change:bankAdd', 100)
     TriggerEvent('fsn_notify:displayNotification', 'Salary: $100', 'centerLeft', 5000, 'info')
+  
+  elseif curjob == 'CarDealer' then
+    TriggerEvent('fsn_bank:change:bankAdd', 100)
+    TriggerEvent('fsn_notify:displayNotification', 'Salary: $100', 'centerLeft', 5000, 'info')
+  
+  elseif curjob == 'BoatDealer' then
+    TriggerEvent('fsn_bank:change:bankAdd', 100)
+    TriggerEvent('fsn_notify:displayNotification', 'Salary: $100', 'centerLeft', 5000, 'info')
+
+  elseif curjob == 'Rancher' then
+    TriggerEvent('fsn_bank:change:bankAdd', 100)
+    TriggerEvent('fsn_notify:displayNotification', 'Salary: $100', 'centerLeft', 5000, 'info')
+  
   elseif curjob == 'Taxi Driver' then
     TriggerEvent('fsn_bank:change:bankAdd', 150)
     TriggerEvent('fsn_notify:displayNotification', 'Salary: $150', 'centerLeft', 5000, 'info')
+  
   elseif curjob == 'Truck Driver' then
     TriggerEvent('fsn_bank:change:bankAdd', 100)
     TriggerEvent('fsn_notify:displayNotification', 'Salary: $100', 'centerLeft', 5000, 'info')
-  else
+  
+  elseif curjob == 'Unemployed' then
     TriggerEvent('fsn_bank:change:bankAdd', 50)
     TriggerEvent('fsn_notify:displayNotification', 'Salary: $50', 'centerLeft', 5000, 'info')
   end
+
+
 end)
 
 function table.contains(table, element)
