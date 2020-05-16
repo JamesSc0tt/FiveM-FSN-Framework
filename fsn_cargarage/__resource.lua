@@ -20,5 +20,8 @@ files({
 
 exports({
   'fsn_IsVehicleOwner',
+  'fsn_GetVehicleVehIDP',
+  'fsn_SpawnVehicle',
+  'fsn_IsVehicleOwnerP',
   'getCarDetails'
 })

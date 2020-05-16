@@ -229,7 +229,6 @@ Citizen.CreateThread(function()
 				print('^1ERROR - MYSQL SERVER DID NOT RESPOND IN TIME - CHECK "mysql-async" IS INSTALLED AND CONFIGURED')
 			end
 		else
-			ExecuteCommand('restart fsn_main')
 			for k,v in pairs(resources) do
 				 ExecuteCommand('start '..v)
 			end
