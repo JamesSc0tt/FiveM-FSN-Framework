@@ -203,7 +203,7 @@ function updateSlot(amt, toInv, toSlot, fromInv, fromSlot) {
 
 document.onkeydown = function(evt) {
     evt = evt || window.event;
-    if (evt.keyCode == 27 || evt.keyCode == 112) {
+    if (evt.keyCode == 27 || evt.keyCode == 112 || evt.keyCode == 9) {
         $.post('http://fsn_inventory/closeGUI', JSON.stringify({}))
 	}
 };

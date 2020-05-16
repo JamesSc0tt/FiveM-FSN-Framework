@@ -966,21 +966,28 @@ local hotkeys = {
 	164, -- number 4
 	165  -- number 5
 }
+local lastTab = 0
 Util.Tick(function()
 	if IsDisabledControlJustPressed(0,37) then
-		local itms = {}
-		local count = 1
-		for k, v in ipairs(firstInventory) do
-			if count < 6 then	
-				itms[count] = v
-				count = count + 1
+		if lastTab+500 > GetGameTimer() then
+			toggleGUI()
+			lastTab=0
+		else
+			local itms = {}
+			local count = 1
+			for k, v in ipairs(firstInventory) do
+				if count < 6 then	
+					itms[count] = v
+					count = count + 1
+				end
 			end
+			SendNUIMessage({
+				actionbar = true,
+				display = true,
+				items = itms
+			})
 		end
-		SendNUIMessage({
-			actionbar = true,
-			display = true,
-			items = itms
-		})
+		lastTab = GetGameTimer()
 	end
 	if IsDisabledControlJustReleased(0,37) then
 		SendNUIMessage({
