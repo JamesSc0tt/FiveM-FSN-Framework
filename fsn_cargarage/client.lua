@@ -78,6 +78,7 @@ function getCarDetails(veh)
 		customisations = {
 			plate = 0,
 			windows = 0,
+			headlightcolor = -1,
 			colours = {
 				main = {0,0},
 				extras = {0,0},
@@ -122,6 +123,9 @@ function getCarDetails(veh)
 		details.customisations.neons.enabled[i] = IsVehicleNeonLightEnabled(veh, i)
 	end	
 	details.customisations.neons.colours[1],details.customisations.neons.colours[2],details.customisations.neons.colours[3] = GetVehicleNeonLightsColour(veh)
+
+	-- headlightcolor
+	details.customisations.headlightcolor = GetVehicleHeadlightsColour(veh)
 
 	-- colours 
 	details.customisations.colours.main[1],details.customisations.colours.main[2] = GetVehicleColours(veh)
@@ -240,6 +244,7 @@ function fsn_GetVehicleDetails(vehid)
 		end
 	end
 end
+
 function fsn_GetVehicleVehIDP(plate)
 	for k, v in pairs(myGarage) do
 		for key, value in pairs(v) do
@@ -390,6 +395,9 @@ function fsn_SpawnVehicle(vehid)
 			for i = 0, 3 do
 				SetVehicleNeonLightEnabled(personalvehicle, i, details.customisations.neons.enabled[i])
 			end
+
+			-- headlightcolor
+			SetVehicleHeadlightsColour(personalvehicle,details.customisations.headlightcolor)
 			
 			-- wheels
 			SetVehicleWheelType(personalvehicle, details.customisations.wheels.type)

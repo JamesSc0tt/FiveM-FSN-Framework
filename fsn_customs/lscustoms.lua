@@ -1242,8 +1242,36 @@ local lsc = {
 			title = "headlights",
 			name = "headlights",
 			buttons = {
+				{name = "Bulbs", description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Xenon Color", description = "", centre = 0, font = 0, scale = 0.4}
+			}
+		},
+		["bulbs"] = {
+			title = "bulbs",
+			name = "bulbs",
+			buttons = {
 				{name = "Stock Lights",mod = false, modtype = 22,costs = 30, description = "", centre = 0, font = 0, scale = 0.4},
 				{name = "Xenon Lights",mod = true,modtype = 22,costs = 70, description = "", centre = 0, font = 0, scale = 0.4}
+			}
+		},
+		["headlightcolor"] = {
+			title = "headlight color",
+			name = "headlightcolor",
+			buttons = {
+				{name = "Normal", color = -1, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "White", color = 0, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Blue", color = 1, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Electric Blue", color = 2, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Mint Green", color = 3, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Lime Green", color = 4, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Yellow", color = 5, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Golden Shower", color = 6, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Orange", color = 7, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Red", color = 8, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Pony Pink", color = 9, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Hot Pink", color = 10, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Purple", color = 11, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
+				{name = "Blacklight", color = 12, costs = 100, description = "", centre = 0, font = 0, scale = 0.4},
 			}
 		},
 		["plate"] = {
@@ -1334,6 +1362,7 @@ local vehiclecol = {}
 local extracol = {}
 local wheeltype = nil
 local neoncolor = nil
+local headlightcolor = nil
 local tiresmoke = nil
 local plateindex = nil
 local windowtint = nil
@@ -1640,6 +1669,7 @@ function DriveInGarage()
 			vehiclecol = table.pack(GetVehicleColours(veh))
 			extracol = table.pack(GetVehicleExtraColours(veh))
 			neoncolor = table.pack(GetVehicleNeonLightsColour(veh))
+			headlightcolor = GetVehicleHeadlightsColour(veh)
 			plateindex = GetVehicleNumberPlateTextIndex(veh)
 			for i,t in pairs(mods) do
 				t.mod = GetVehicleMod(veh,i)
@@ -1906,7 +1936,7 @@ Citizen.CreateThread(function()
 							end
 							drawMenuButton(button,lsc.menu.x,y,selected)
 							if button.costs ~= nil then
-								if lsc.currentmenu == "headlights" then
+								if lsc.currentmenu == "bulbs" then
 									if button.name == "Stock Lights"  then
 										if not IsToggleModOn(veh, button.modtype)  then
 											drawMenuOwned(lsc.menu.x,y,selected)
@@ -1988,6 +2018,12 @@ Citizen.CreateThread(function()
 									end
 								elseif lsc.currentmenu == "neoncolor" then
 									if button.color[1] == neoncolor[1] and button.color[2] == neoncolor[2] and button.color[3] == neoncolor[3] then
+										drawMenuOwned(lsc.menu.x,y,selected)
+									else
+										drawMenuCost(button,lsc.menu.x,y,selected)
+									end
+								elseif lsc.currentmenu == "headlightcolor" then
+									if button.color == headlightcolor then
 										drawMenuOwned(lsc.menu.x,y,selected)
 									else
 										drawMenuCost(button,lsc.menu.x,y,selected)
@@ -2091,6 +2127,7 @@ Citizen.CreateThread(function()
 										end
 									end
 									if lsc.currentmenu == "tiresmoke" then
+										--print(table.unpack(tiresmoke))
 										SetVehicleModKit(veh,0)
 										ToggleVehicleMod(veh,20,true)
 										SetVehicleTyreSmokeColor(veh,button.color[1],button.color[2],button.color[3])
@@ -2100,6 +2137,10 @@ Citizen.CreateThread(function()
 									end
 									if lsc.currentmenu == "neoncolor" then
 										SetVehicleNeonLightsColour(veh,button.color[1],button.color[2],button.color[3])
+									end
+									if lsc.currentmenu == "headlightcolor" then
+										--print(button.color[1],button.color[2],button.color[3])
+										SetVehicleHeadlightsColour(veh,button.color)
 									end
 									if lsc.currentmenu == "plate" then
 										SetVehicleNumberPlateTextIndex(veh,button.plateindex)
@@ -2335,6 +2376,12 @@ function ButtonSelected(button)
 			OpenMenu('neoncolor')
 		end
 	elseif lsc.currentmenu == "headlights" then
+		if button.name == "Bulbs" then
+			OpenMenu('bulbs')
+		elseif button.name == "Xenon Color" then
+			OpenMenu('headlightcolor')
+		end
+	elseif lsc.currentmenu == "bulbs" then
 		if button.name == "Stock Lights" then
 			ToggleVehicleMod(car, 22, false)
 			mods[22].mod = -1;
@@ -2467,6 +2514,9 @@ function ButtonSelected(button)
 		neoncolor[1] = button.color[1]
 		neoncolor[2] = button.color[2]
 		neoncolor[3] = button.color[3]
+	elseif lsc.currentmenu == "headlightcolor" and moneycheck(button.costs) then
+		TriggerEvent('fsn_bank:change:walletMinus', button.costs)
+		headlightcolor = button.color
 	end
 end
 
@@ -2495,6 +2545,8 @@ function OpenMenu(menu)
 	elseif menu == "lights" then
 		lsc.lastmenu = "main"
 	elseif menu == "neonkits" then
+		lsc.lastmenu = "lights"
+	elseif menu == "headlights" then
 		lsc.lastmenu = "lights"
 	end
 	lsc.menu.from = 1
@@ -2584,6 +2636,9 @@ function Back()
         lsc.lastmenu = "wheels"
 	elseif lsc.currentmenu == "neoncolor" then
 		SetVehicleNeonLightsColour(car,neoncolor[1],neoncolor[2],neoncolor[3])
+		OpenMenu(lsc.lastmenu)
+	elseif lsc.currentmenu == "headlightcolor" then
+		SetVehicleHeadlightsColour(car,headlightcolor)
 		OpenMenu(lsc.lastmenu)
 	elseif lsc.currentmenu == "plate" then
 		SetVehicleNumberPlateTextIndex(car,plateindex)
