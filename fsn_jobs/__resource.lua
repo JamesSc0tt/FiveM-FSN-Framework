@@ -1,62 +1,62 @@
 --[[/	:FSN:	\]]--
 resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
-client_script '@fsn_main/cl_utils.lua'
-server_script '@fsn_main/sv_utils.lua'
-client_script '@fsn_main/server_settings/sh_settings.lua'
-server_script '@fsn_main/server_settings/sh_settings.lua'
-server_script '@mysql-async/lib/MySQL.lua'
+
+--[[/	:Globals:	\]]--
+client_scripts { 
+  '@fsn_main/cl_utils.lua',
+  '@fsn_main/server_settings/sh_settings.lua'
+}
+server_scripts { 
+  '@fsn_main/sv_utils.lua',
+  '@fsn_main/server_settings/sh_settings.lua',
+  '@mysql-async/lib/MySQL.lua'
+}
+--[[/	:Globals:	\]]--
 --[[/	:FSN:	\]]--
 
-client_script 'client.lua'
-server_script 'server.lua'
+client_scripts { 
 
--- whitelists
-client_script 'whitelists/client.lua'
-server_script 'whitelists/server.lua'
+--[[/   :Main:  \]]--
+'client.lua',
+--[[/   :Main:  \]]--
 
--- mechanic job
-client_script 'mechanic/client.lua'
-server_script 'mechanic/server.lua'
+'whitelists/client.lua',
+'mechanic/client.lua',
+'mechanic/mechmenu.lua',
+'trucker/client.lua',
+'hunting/client.lua',
+'farming/client.lua',
+'scrap/client.lua',
+'taxi/client.lua',
+'garbage/client.lua',
+'news/client.lua',
+'tow/client.lua',
+--'delivery/client.lua'
+}
 
--- trucker job
-client_script 'trucker/client.lua'
+server_scripts { 
 
+--[[/ :Main:  \]]--
+'server.lua',
+--[[/ :Main:  \]]--
 
--- hunting job
-client_script 'hunting/client.lua'
+'whitelists/server.lua',
+'mechanic/server.lua',
+'taxi/server.lua',
+'tow/server.lua',
+}
 
--- farming job
-client_script 'farming/client.lua'
+exports {
+'fsn_GetJob',
+'fsn_SetJob',
 
--- scrap job
-client_script 'scrap/client.lua'
+-- [WHITELIST THINGS]
+'isWhitelisted',
+'getWhitelistDetails',
+'inAnyWhitelist',
+'toggleWhitelistClock',
+'isWhitelistClockedIn',
+'addToWhitelist'
+}
 
--- taxi job
-client_script 'taxi/client.lua'
-server_script 'taxi/server.lua'
-
--- garbage job
-client_script 'garbage/client.lua'
-
--- news job
-client_script 'news/client.lua'
-
--- tow job
-client_script 'tow/client.lua'
-server_script 'tow/server.lua'
--- delivery job
---client_script 'delivery/client.lua'
-
-exports({
-  'fsn_GetJob',
-  'fsn_SetJob',
-  
-  -- [WHITELIST THINGS]
-  'isWhitelisted',
-  'getWhitelistDetails',
-  'inAnyWhitelist',
-  'toggleWhitelistClock',
-  'isWhitelistClockedIn',
-  'addToWhitelist'
-})
 server_export 'isPlayerClockedInWhitelist'
