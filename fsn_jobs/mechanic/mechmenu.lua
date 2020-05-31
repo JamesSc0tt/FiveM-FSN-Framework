@@ -1803,7 +1803,7 @@ function table.tostring( tbl )
   return "{" .. table.concat( result, "," ) .. "}"
 end
 
-function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
+function lscdrawTxt(text,font,centre,x,y,scale,r,g,b,a)
 	SetTextFont(font)
 	SetTextProportional(0)
 	SetTextScale(scale, scale)
@@ -1903,7 +1903,7 @@ Citizen.CreateThread(function()
                         --if Util.GetVecDist(playerPos, pos.inside.xyz) <= 5 then
                         if GetDistanceBetweenCoords(pos.inside.x,pos.inside.y,pos.inside.z,GetEntityCoords(ped)) <= 10 then
                             Util.DrawText3D(pos.inside.x, pos.inside.y, pos.inside.z, 'Press ~b~[ ENTER ] ~s~ to enter Mechanic Menu')
-							--drawTxt("Press <font color='#4286f4'>ENTER~w~ to enter <font color='#4286f4'>Los Santos Customs ",4,1,0.5,0.8,1.0,255,255,255,255)
+							--lscdrawTxt("Press <font color='#4286f4'>ENTER~w~ to enter <font color='#4286f4'>Los Santos Customs ",4,1,0.5,0.8,1.0,255,255,255,255)
 							if IsControlJustPressed(1,201) then
 									lsc.currentpos = pos
 									lsc.currentgarage = i
@@ -1920,9 +1920,9 @@ Citizen.CreateThread(function()
 				DriveOutOfGarage();
 			end
 			local menu = lsc.menu[lsc.currentmenu]
-					drawTxt(lsc.title,1,1,lsc.menu.x,lsc.menu.y,1.0, 255,255,255,255)
+					lscdrawTxt(lsc.title,1,1,lsc.menu.x,lsc.menu.y,1.0, 255,255,255,255)
 					drawMenuTitle(menu.title, lsc.menu.x,lsc.menu.y + 0.08)
-					drawTxt(lsc.selectedbutton.."/"..tablelength(menu.buttons),0,0,lsc.menu.x + lsc.menu.width/2 - 0.0328,lsc.menu.y + 0.066,0.4, 255,255,255,255)
+					lscdrawTxt(lsc.selectedbutton.."/"..tablelength(menu.buttons),0,0,lsc.menu.x + lsc.menu.width/2 - 0.0328,lsc.menu.y + 0.066,0.4, 255,255,255,255)
 					local y = lsc.menu.y + 0.12
 					buttoncount = tablelength(menu.buttons)
 					local selected = false
