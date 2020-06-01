@@ -1006,28 +1006,12 @@ Util.Tick(function()
 				local item = firstInventory[number]
 
 				--might add more ammo types and counts later but for now this gets people started with buying ammo instead of a whole new gun
-				local ammocount = 25
 
-				if item.index == 'ammo' then
-					local playerPed = GetPlayerPed(-1)
+				if item.index == 'ammo_pistol' or item.index == 'ammo_shotgun' or item.index == 'ammo_rifle' or item.index == 'ammo_smg' or item.index == 'ammo_sniper' or item.index == 'ammo_pistol_large' or item.index == 'ammo_shotgun_large' or item.index == 'ammo_rifle_large' or item.index == 'ammo_smg_large' or item.index == 'ammo_sniper_large' then
+					--local playerPed = GetPlayerPed(-1)
 					
-					local found, equippedWeapon = GetCurrentPedWeapon(playerPed, true)
-					  if found then
-						  if equippedWeapon ~= nil then
-							  local pedAmmo = GetAmmoInPedWeapon(playerPed, equippedWeapon)
-							  local newAmmo = pedAmmo + ammocount
-							  ClearPedTasks(playerPed)
-							  local found, maxAmmo = GetMaxAmmo(playerPed, equippedWeapon)
-							  if newAmmo < maxAmmo then
-								  TaskReloadWeapon(playerPed)
-								  SetPedAmmo(playerPed, equippedWeapon, newAmmo)
-								  exports['mythic_notify']:DoCustomHudText('success', 'Reloaded')
-								  TriggerEvent('fsn_inventory:item:take', 'ammo', 1)
-							  else
-								  exports['mythic_notify']:DoCustomHudText('error', 'Max Ammo')
-							  end
-						  end
-					  end
+					--TriggerEvent('fsn_inventory:useAmmo', item.index)
+
 				else
 					if currentWeapon and currentWeapon['customData'].weapon then
 						equipWeapon(false,number)
@@ -1071,6 +1055,179 @@ Util.Tick(function()
 					end
 				end
 			end
+		end
+	end
+end)
+
+ammoTypes = {
+    {
+        name = 'ammo_pistol',
+        weapons = {
+            'WEAPON_PISTOL',
+            'WEAPON_APPISTOL',
+			'WEAPON_SNSPISTOL',
+            'WEAPON_COMBATPISTOL',
+            'WEAPON_HEAVYPISTOL',
+            'WEAPON_MACHINEPISTOL',
+            'WEAPON_MARKSMANPISTOL',
+            'WEAPON_PISTOL50',
+            'WEAPON_VINTAGEPISTOL'
+        },
+        count = 30
+    },
+    {
+        name = 'ammo_pistol_large',
+        weapons = {
+            'WEAPON_PISTOL',
+            'WEAPON_APPISTOL',
+			'WEAPON_SNSPISTOL`',
+            'WEAPON_COMBATPISTOL',
+            'WEAPON_HEAVYPISTOL',
+            'WEAPON_MACHINEPISTOL',
+            'WEAPON_MARKSMANPISTOL',
+            'WEAPON_PISTOL50',
+            'WEAPON_VINTAGEPISTOL'
+        },
+        count = 60
+    },
+	{
+        name = 'ammo_shotgun',
+        weapons = {
+            'WEAPON_ASSAULTSHOTGUN',
+	    	'WEAPON_AUTOSHOTGUN',
+            'WEAPON_BULLPUPSHOTGUN',
+	    	'WEAPON_DBSHOTGUN',
+            'WEAPON_HEAVYSHOTGUN',
+            'WEAPON_PUMPSHOTGUN',
+            'WEAPON_SAWNOFFSHOTGUN'
+        },
+        count = 12
+    },
+	{
+        name = 'ammo_shotgun_large',
+        weapons = {
+            'WEAPON_ASSAULTSHOTGUN',
+	    	'WEAPON_AUTOSHOTGUN',
+            'WEAPON_BULLPUPSHOTGUN',
+	    	'WEAPON_DBSHOTGUN',
+            'WEAPON_HEAVYSHOTGUN',
+            'WEAPON_PUMPSHOTGUN',
+            'WEAPON_SAWNOFFSHOTGUN'
+        },
+        count = 18
+    },
+	{
+        name = 'ammo_smg',
+        weapons = {
+            'WEAPON_ASSAULTSMG',
+	    	'WEAPON_MICROSMG',
+            'WEAPON_MINISMG',
+            'WEAPON_SMG'
+        },
+        count = 45
+    },
+	{
+        name = 'ammo_smg_large',
+        weapons = {
+            'WEAPON_ASSAULTSMG',
+	    	'WEAPON_MICROSMG',
+            'WEAPON_MINISMG',
+            'WEAPON_SMG'
+        },
+        count = 65
+    },
+	{
+        name = 'ammo_rifle',
+        weapons = {
+            'WEAPON_ADVANCEDRIFLE',
+	    	'WEAPON_ASSAULTRIFLE',
+            'WEAPON_BULLPUPRIFLE',
+            'WEAPON_CARBINERIFLE',
+	    	'WEAPON_SPECIALCARBINE',
+	    	'WEAPON_COMPACTRIFLE'
+        },
+        count = 45
+    },
+	{
+        name = 'ammo_rifle_large',
+        weapons = {
+            'WEAPON_ADVANCEDRIFLE',
+	    	'WEAPON_ASSAULTRIFLE',
+            'WEAPON_BULLPUPRIFLE',
+            'WEAPON_CARBINERIFLE',
+	    	'WEAPON_SPECIALCARBINE',
+	    	'WEAPON_COMPACTRIFLE'
+        },
+        count = 65
+    },
+	{
+        name = 'ammo_sniper',
+        weapons = {
+            'WEAPON_SNIPERRIFLE',
+	    	'WEAPON_HEAVYSNIPER',
+            'WEAPON_MARKSMANRIFLE'
+        },
+        count = 10
+    },
+	{
+        name = 'ammo_sniper_large',
+        weapons = {
+            'WEAPON_SNIPERRIFLE',
+	    	'WEAPON_HEAVYSNIPER',
+            'WEAPON_MARKSMANRIFLE'
+        },
+        count = 15
+	}
+}
+
+RegisterNetEvent('fsn_inventory:useAmmo')
+AddEventHandler('fsn_inventory:useAmmo', function(ammoType)
+	
+	local playerPed = PlayerPedId()
+	local weapon
+
+	--print(ammoType)
+
+	local found, currentWeapon = GetCurrentPedWeapon(playerPed, true)
+	--print(currentWeapon)
+	if found then
+		for _, ammo in pairs(ammoTypes) do
+			--print(ammo)
+			for _, w in pairs (ammo.weapons) do
+				if currentWeapon == GetHashKey(w) then
+					weapon = w
+					break
+				else
+					weapon = nil
+				end
+			end
+			if ammoType == ammo.name then
+				addAmmo = ammo.count
+				break
+			end
+		end
+
+		--print(addAmmo)
+		--print(weapon)
+
+		if weapon ~= nil then
+			local pedAmmo = GetAmmoInPedWeapon(playerPed, weapon)
+			local newAmmo = pedAmmo + addAmmo
+
+			ClearPedTasks(playerPed)
+
+			local found, maxAmmo = GetMaxAmmo(playerPed, weapon)
+			if newAmmo < maxAmmo then
+				TaskReloadWeapon(playerPed)
+				SetPedAmmo(playerPed, weapon, newAmmo)
+				TriggerEvent('fsn_inventory:item:take', ammoType, 1)
+				exports['mythic_notify']:DoCustomHudText('success', 'Reloaded')
+
+			else
+				exports['mythic_notify']:DoCustomHudText('error', 'Max Ammo')
+			end
+		else
+			exports['mythic_notify']:DoCustomHudText('error', 'Wrong ammo type!')
 		end
 	end
 end)

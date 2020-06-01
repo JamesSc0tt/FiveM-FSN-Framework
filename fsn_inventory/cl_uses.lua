@@ -205,10 +205,64 @@ itemUses = {
 			end
 		end
 	},
-	['ammo'] = {
+	['ammo_pistol'] = {
 		takeItem = false,
 		use = function(item)
-			--Doesnt need a trigger just needed a use. without it it wont remove the ammo or load the weapon
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_pistol')
 		end
-	}
+	},
+	['ammo_pistol_large'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_pistol_large')
+		end
+	},
+	['ammo_shotgun'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_shotgun')
+		end
+	},
+	['ammo_shotgun_large'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_shotgun_large')
+		end
+	},
+	['ammo_rifle'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_rifle')
+		end
+	},
+	['ammo_rifle_large'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_rifle_large')
+		end
+	},
+	['ammo_smg'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_smg')
+		end
+	},
+	['ammo_smg_large'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_smg_large')
+		end
+	},
+	['ammo_sniper'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_sniper')
+		end
+	},
+	['ammo_sniper_large'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useAmmo', 'ammo_sniper_large')
+		end
+	},
 }

@@ -4,7 +4,10 @@ local stores = {
 		busy = false,
 		stock = {
 			WEAPON_ASSAULTRIFLE = {amt=999,price=10000},
-			ammo = {amt = 999, price = 600},
+            ammo_pistol = {amt = 999, price = 600},
+            ammo_pistol_large = {amt = 999, price = 800},
+            ammo_smg = {amt = 999, price = 600},
+            ammo_smg_large = {amt = 999, price = 800},
 		}
 	}
 }
@@ -25,14 +28,75 @@ local weapon = {
 
 local items = {
 	['WEAPON_ASSAULTRIFLE'] = weapon,
-	
-	['ammo'] = {
-        index = "ammo",
-        name = "Ammo",
-        amt = 1,
-        data = {
-            weight = 5
-        }
+    ammo_pistol = {
+        index = 'ammo_pistol',
+        name = "Pistol Ammo",
+		data = {
+			weight = 5.5
+		},
+    },
+    ammo_pistol_large = {
+        index = 'ammo_pistol_large',
+        name = "Large Pistol Ammo",
+		data = {
+			weight = 8.5
+		},
+    },
+    ammo_smg = {
+        index = 'ammo_smg',
+        name = "SMG Ammo",
+		data = {
+			weight = 5.5
+		},
+    },
+    ammo_smg_large = {
+        index = 'ammo_smg_large',
+        name = "Large SMG Ammo",
+		data = {
+			weight = 8.5
+		},
+    },
+    ammo_shotgun = {
+        index = 'ammo_shotgun',
+        name = "Shotgun Ammo",
+		data = {
+			weight = 6.5
+		},
+    },
+    ammo_shotgun_large = {
+        index = 'ammo_shotgun_large',
+        name = "Large Shotgun Ammo",
+		data = {
+			weight = 9.5
+		},
+    },
+    ammo_rifle = {
+        index = 'ammo_rifle',
+        name = "Rifle Ammo",
+		data = {
+			weight = 6.5
+		},
+    },
+    ammo_rifle_large = {
+        index = 'ammo_rifle_large',
+        name = "Large Rifle Ammo",
+		data = {
+			weight = 9.5
+		},
+    },
+    ammo_sniper = {
+        index = 'ammo_sniper',
+        name = "Sniper Ammo",
+		data = {
+			weight = 6.5
+		},
+    },
+    ammo_sniper_large = {
+        index = 'ammo_sniper_large',
+        name = "Large Sniper Ammo",
+		data = {
+			weight = 9.5
+		},
     },
 }
 
