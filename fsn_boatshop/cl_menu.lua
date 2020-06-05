@@ -1,4 +1,4 @@
-local vehshop = {
+local boatshop = {
 	opened = false,
 	title = "Boat Shop",
 	currentmenu = "main",
@@ -24,7 +24,7 @@ local vehshop = {
 			}
 		},
 		["boats"] = {
-			title = "BOATS",
+			title = "boats",
 			name = "boats",
 			buttons = {
 				{name = "Dinghy 4 Seater", costs = 85000, rentalprice = 17000, description = {}, model = "dinghy"},
@@ -44,13 +44,13 @@ local vehshop = {
 		},
 	}
 }
-local fakecar = {model = '', car = nil}
-local vehshop_locations = {}
+local fakeboat = {model = '', boat = nil}
+local boatshop_locations = {}
 
-local vehshop_blips ={}
-local inrangeofvehshop = false
+local boatshop_blips ={}
+local inrangeofboatshop = false
 local currentlocation = nil
-local boughtcar = false
+local boughtboat = false
 local ibought = ''
 
 local function LocalPed()
@@ -72,11 +72,11 @@ function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
 	DrawText(x , y)
 end
 
-function IsPlayerInRangeOfVehshop()
-return inrangeofvehshop
+function IsPlayerInRangeOfboatshop()
+return inrangeofboatshop
 end
 
-function ShowVehshopBlips(bool)
+function ShowboatshopBlips(bool)
 end
 
 function f(n)
@@ -97,10 +97,10 @@ function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
 end
 --local veh = nil
-local carIamChanging = 0
-function OpenCreator(changingCar)
-	carIamChanging = changingCar
-	boughtcar = false
+local boatIamChanging = 0
+function OpenCreator(changingBoat)
+	boatIamChanging = changingBoat
+	boughtboat = false
 	local ped = LocalPed()
 	local pos = {-803.65118408203, -1469.5137939453, -0.47453951835632, 131.9475402832}
 	FreezeEntityPosition(ped,true)
@@ -108,16 +108,16 @@ function OpenCreator(changingCar)
 	local g = Citizen.InvokeNative(0xC906A7DAB05C8D2B,pos[1],pos[2],pos[3],Citizen.PointerValueFloat(),0)
 	SetEntityCoords(ped,pos[1],pos[2],g)
 	SetEntityHeading(ped,pos[4])
-	vehshop.currentmenu = "main"
-	vehshop.opened = true
-	vehshop.selectedbutton = 0
+	boatshop.currentmenu = "main"
+	boatshop.opened = true
+	boatshop.selectedbutton = 0
 end
 
 local vehicle_price = 0
 function CloseCreator()
 	Citizen.CreateThread(function()
 		local ped = LocalPed()
-		if not boughtcar then
+		if not boughtboat then
 			local pos = {-718.85162353516, -1325.6365966797, 1.596290230751, 0.0}
 			SetEntityCoords(ped,pos[1],pos[2],pos[3])
 			FreezeEntityPosition(ped,false)
@@ -129,17 +129,19 @@ function CloseCreator()
 			SetEntityCoords(ped,pos[1],pos[2],pos[3])
 			FreezeEntityPosition(ped,false)
 			SetEntityVisible(ped,true)
+
+			--print(boatIamChanging .. ibought)
 			
-			TriggerServerEvent('fsn_boatshop:floor:ChangeCar', carIamChanging, ibought)
+			TriggerServerEvent('fsn_boatshop:floor:ChangeBoat', boatIamChanging, ibought)
 		end
-		vehshop.opened = false
-		vehshop.menu.from = 1
-		vehshop.menu.to = 10
+		boatshop.opened = false
+		boatshop.menu.from = 1
+		boatshop.menu.to = 10
 	end)
 end
 
 function drawMenuButton(button,x,y,selected)
-	local menu = vehshop.menu
+	local menu = boatshop.menu
 	SetTextFont(menu.font)
 	SetTextProportional(0)
 	SetTextScale(menu.scale, menu.scale)
@@ -160,7 +162,7 @@ function drawMenuButton(button,x,y,selected)
 end
 
 function drawMenuInfo(text)
-	local menu = vehshop.menu
+	local menu = boatshop.menu
 	SetTextFont(menu.font)
 	SetTextProportional(0)
 	SetTextScale(0.45, 0.45)
@@ -173,7 +175,7 @@ function drawMenuInfo(text)
 end
 
 function drawMenuRight(txt,x,y,selected)
-	local menu = vehshop.menu
+	local menu = boatshop.menu
 	SetTextFont(menu.font)
 	SetTextProportional(0)
 	SetTextScale(menu.scale, menu.scale)
@@ -190,7 +192,7 @@ function drawMenuRight(txt,x,y,selected)
 end
 
 function drawMenuTitle(txt,x,y)
-local menu = vehshop.menu
+local menu = boatshop.menu
 	SetTextFont(2)
 	SetTextProportional(0)
 	SetTextScale(0.5, 0.5)
@@ -213,11 +215,11 @@ end
 
 function DoesPlayerHaveVehicle(model,button,y,selected)
 		local t = false
-		--TODO:check if player own car
+		--TODO:check if player own boat
 		if t then
-			drawMenuRight("OWNED",vehshop.menu.x,y,selected)
+			drawMenuRight("OWNED",boatshop.menu.x,y,selected)
 		else
-			drawMenuRight(button.costs.."$",vehshop.menu.x,y,selected)
+			drawMenuRight(button.costs.."$",boatshop.menu.x,y,selected)
 		end
 end
 
@@ -225,45 +227,45 @@ local backlock = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if IsControlJustPressed(1,201) and IsPlayerInRangeOfVehshop() then
-			if vehshop.opened then
+		if IsControlJustPressed(1,201) and IsPlayerInRangeOfboatshop() then
+			if boatshop.opened then
 				CloseCreator()
 			else
 				OpenCreator()
 			end
 		end
-		if vehshop.opened then
+		if boatshop.opened then
 			local ped = LocalPed()
-			local menu = vehshop.menu[vehshop.currentmenu]
-			drawTxt(vehshop.title,1,1,vehshop.menu.x,vehshop.menu.y,1.0, 255,255,255,255)
-			drawMenuTitle(menu.title, vehshop.menu.x,vehshop.menu.y + 0.08)
-			drawTxt(vehshop.selectedbutton.."/"..tablelength(menu.buttons),0,0,vehshop.menu.x + vehshop.menu.width/2 - 0.0385,vehshop.menu.y + 0.067,0.4, 255,255,255,255)
-			local y = vehshop.menu.y + 0.12
+			local menu = boatshop.menu[boatshop.currentmenu]
+			drawTxt(boatshop.title,1,1,boatshop.menu.x,boatshop.menu.y,1.0, 255,255,255,255)
+			drawMenuTitle(menu.title, boatshop.menu.x,boatshop.menu.y + 0.08)
+			drawTxt(boatshop.selectedbutton.."/"..tablelength(menu.buttons),0,0,boatshop.menu.x + boatshop.menu.width/2 - 0.0385,boatshop.menu.y + 0.067,0.4, 255,255,255,255)
+			local y = boatshop.menu.y + 0.12
 			buttoncount = tablelength(menu.buttons)
 			local selected = false
 
 			for i,button in pairs(menu.buttons) do
-				if i >= vehshop.menu.from and i <= vehshop.menu.to then
+				if i >= boatshop.menu.from and i <= boatshop.menu.to then
 
-					if i == vehshop.selectedbutton then
+					if i == boatshop.selectedbutton then
 						selected = true
 					else
 						selected = false
 					end
-					drawMenuButton(button,vehshop.menu.x,y,selected)
+					drawMenuButton(button,boatshop.menu.x,y,selected)
 					if button.costs ~= nil then
-						if vehshop.currentmenu == "boats"  then
+						if boatshop.currentmenu == "boats"  then
 							DoesPlayerHaveVehicle(button.model,button,y,selected)
 						else
-						drawMenuRight(button.costs.."$",vehshop.menu.x,y,selected)
+						drawMenuRight(button.costs.."$",boatshop.menu.x,y,selected)
 						end
 					end
 					y = y + 0.04
-					if vehshop.currentmenu == "boats" then
+					if boatshop.currentmenu == "boats" then
 						if selected then
-							if fakecar.model ~= button.model then
-								if DoesEntityExist(fakecar.car) then
-									Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(fakecar.car))
+							if fakeboat.model ~= button.model then
+								if DoesEntityExist(fakeboat.boat) then
+									Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(fakeboat.boat))
 								end
 								local pos = {-803.65118408203, -1469.5137939453, -0.47453951835632, 131.9475402832}
 								local hash = GetHashKey(button.model)
@@ -287,7 +289,7 @@ Citizen.CreateThread(function()
 									SetVehicleModKit(veh,0)
 									RemoveVehicleMod(veh,i)
 								end
-								fakecar = { model = button.model, car = veh}
+								fakeboat = { model = button.model, boat = veh}
 							end
 						end
 					end
@@ -297,7 +299,7 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if vehshop.opened then
+		if boatshop.opened then
 			if IsControlJustPressed(1,202) then
 				Back()
 			end
@@ -305,20 +307,20 @@ Citizen.CreateThread(function()
 				backlock = false
 			end
 			if IsControlJustPressed(1,188) then
-				if vehshop.selectedbutton > 1 then
-					vehshop.selectedbutton = vehshop.selectedbutton -1
-					if buttoncount > 10 and vehshop.selectedbutton < vehshop.menu.from then
-						vehshop.menu.from = vehshop.menu.from -1
-						vehshop.menu.to = vehshop.menu.to - 1
+				if boatshop.selectedbutton > 1 then
+					boatshop.selectedbutton = boatshop.selectedbutton -1
+					if buttoncount > 10 and boatshop.selectedbutton < boatshop.menu.from then
+						boatshop.menu.from = boatshop.menu.from -1
+						boatshop.menu.to = boatshop.menu.to - 1
 					end
 				end
 			end
 			if IsControlJustPressed(1,187)then
-				if vehshop.selectedbutton < buttoncount then
-					vehshop.selectedbutton = vehshop.selectedbutton +1
-					if buttoncount > 10 and vehshop.selectedbutton > vehshop.menu.to then
-						vehshop.menu.to = vehshop.menu.to + 1
-						vehshop.menu.from = vehshop.menu.from + 1
+				if boatshop.selectedbutton < buttoncount then
+					boatshop.selectedbutton = boatshop.selectedbutton +1
+					if buttoncount > 10 and boatshop.selectedbutton > boatshop.menu.to then
+						boatshop.menu.to = boatshop.menu.to + 1
+						boatshop.menu.from = boatshop.menu.from + 1
 					end
 				end
 			end
@@ -337,7 +339,7 @@ function round(num, idp)
 end
 function ButtonSelected(button)
 	local ped = GetPlayerPed(-1)
-	local this = vehshop.currentmenu
+	local this = boatshop.currentmenu
 	local btn = button.name
 	if this == "main" then
 		if btn == "Boats" then
@@ -346,7 +348,7 @@ function ButtonSelected(button)
 	elseif this == "boats" then
 		--if tonumber(exports.fsn_main:fsn_GetWallet()) >= button.costs then
 			vehicle_price = button.costs
-			boughtcar = true
+			boughtboat = true
 			ibought = button.model
 			--TriggerEvent('fsn_bank:change:walletMinus', button.costs)
 			CloseCreator()
@@ -357,15 +359,15 @@ function ButtonSelected(button)
 end
 
 function OpenMenu(menu)
-	fakecar = {model = '', car = nil}
-	vehshop.lastmenu = vehshop.currentmenu
+	fakeboat = {model = '', boat = nil}
+	boatshop.lastmenu = boatshop.currentmenu
 	if menu == "boats" then
-		vehshop.lastmenu = "main"
+		boatshop.lastmenu = "main"
 	end
-	vehshop.menu.from = 1
-	vehshop.menu.to = 10
-	vehshop.selectedbutton = 0
-	vehshop.currentmenu = menu
+	boatshop.menu.from = 1
+	boatshop.menu.to = 10
+	boatshop.selectedbutton = 0
+	boatshop.currentmenu = menu
 end
 
 
@@ -374,16 +376,16 @@ function Back()
 		return
 	end
 	backlock = true
-	if vehshop.currentmenu == "main" then
+	if boatshop.currentmenu == "main" then
 		CloseCreator()
-	elseif vehshop.currentmenu == "boats" then
-		if DoesEntityExist(fakecar.car) then
-			Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(fakecar.car))
+	elseif boatshop.currentmenu == "boats" then
+		if DoesEntityExist(fakeboat.boat) then
+			Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(fakeboat.boat))
 		end
-		fakecar = {model = '', car = nil}
-		OpenMenu(vehshop.lastmenu)
+		fakeboat = {model = '', boat = nil}
+		OpenMenu(boatshop.lastmenu)
 	else
-		OpenMenu(vehshop.lastmenu)
+		OpenMenu(boatshop.lastmenu)
 	end
 
 end

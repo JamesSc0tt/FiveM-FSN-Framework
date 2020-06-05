@@ -31,7 +31,7 @@ AddEventHandler('fsn_boatshop:floor:Request', function()
 			local boat = boats[math.random(1, #boats)]
 			-- no vehicle is set, adding default value!
 			v.boat = { model = boat.model, name = boat.name, buyprice = boat.costs, rentalprice = boat.rentalprice, commission = 15, color = {math.random(1, 159),math.random(1,159)}, object = false, updated = false }
-			print('setting boat '..k..' to '..boat.model)
+			print(':fsn_boatstore: setting boat '..k..' to '..boat.model)
 			--i = i+1
 		end
 	end
@@ -79,11 +79,9 @@ AddEventHandler('chatMessage', function(source, auth, msg)
 end)
 
 function getVehicleFromModel(mdl)
-	for k, v in pairs(boats) do
-		for key, boat in pairs(v) do
-			if boat.model == mdl then
-				return boat
-			end
+	for k, boat in pairs(boats) do
+		if boat.model == mdl then
+			return boat
 		end
 	end
 end
@@ -109,8 +107,8 @@ AddEventHandler('fsn_boatshop:floor:commission', function(boatnum, amt)
 	TriggerClientEvent('fsn_boatshop:floor:Updateboat', -1, boatnum, boat_spots[boatnum])
 	print('Player('..source..') is updating '..boat_spots[boatnum]['boat']['model']..' commission to '..amt)
 end)
-RegisterServerEvent('fsn_boatshop:floor:Changeboat')
-AddEventHandler('fsn_boatshop:floor:Changeboat', function(boatnum, mdl)
+RegisterServerEvent('fsn_boatshop:floor:ChangeBoat')
+AddEventHandler('fsn_boatshop:floor:ChangeBoat', function(boatnum, mdl)
 	local newboat = getVehicleFromModel(mdl)
 	boat_spots[boatnum]['boat']['model'] = newboat.model
 	boat_spots[boatnum]['boat']['name'] = newboat.name
