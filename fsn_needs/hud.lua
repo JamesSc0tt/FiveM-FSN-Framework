@@ -73,3 +73,22 @@ Citizen.CreateThread(function()
 		
 	end
 end)
+
+RegisterNetEvent('fsn_inventory:useArmor')
+AddEventHandler('fsn_inventory:useArmor', function()
+	local playerPed = PlayerPedId()
+	print(armortype)
+	if GetPedArmour(playerPed) < 100 then
+		exports["fsn_progress"]:fsn_ProgressBar(58, 133, 255,'Putting on armor', 10)
+		Citizen.Wait(10000)
+		TriggerEvent('fsn_inventory:item:take', 'armor', 1)
+		AddArmourToPed(playerPed, 100)
+	else
+		exports['mythic_notify']:DoCustomHudText('error', 'You already have full armor', 5000)
+	end
+
+	if GetPedArmour(playerPed) >= 100 then
+		SetPedArmour(playerPed, 100)
+	end
+
+end)
