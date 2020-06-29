@@ -186,6 +186,15 @@ function setItemOwner(shoptype ,weapon, data)
 	end
 end
 
+function setItemPolice(armoryid ,weapon)
+	if weapon ~= nil then
+		if weapon.PDIssued ~= nil then
+				weapon.PDIssued = Util.MakeString(6)
+				weapon.Owner = 'Police: '..name
+		end
+	end
+end
+
 --[[
 	Manage slots
 ]]--
@@ -252,6 +261,34 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 				invLog('<span style="color:red">No price associated, returning</span>')
 				return
 			end
+		end
+	end
+	if secondInventory_type == 'armories' then
+		data.amt = 1 -- only buy 1 at a time!
+		if secondInventory[data.fromSlot].amt then
+			if fsn_CanCarry(secondInventory[data.fromSlot].index, data.amt, secondInventory[data.fromSlot].data.weight) then
+				--if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
+					--TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
+					-- remove item from store stock
+					TriggerServerEvent('fsn_police:armory:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+					setItemPolice(secondInventory_id, secondInventory[data.fromSlot].customData)
+					-- Maybe there is a better way to do this in order for serials to not duplicate when buying more than one gun in a session?
+					-- For now this will do though
+					TriggerServerEvent('fsn_police:armory:closedArmory', secondInventory_id)
+					TriggerEvent('fsn_police:armory:request', secondInventory_id)
+					-- Save the inventory on buying
+					TriggerEvent('fsn_main:characterSaving')
+				--else
+					--exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
+					--invLog('<span style="color:red">You cannot afford this item</span>')
+					--return
+				--end
+			else
+				invLog('<span style="color:blue">To much weight, reduce the amount or your inventory weight</span>')
+			end
+		else
+			invLog('<span style="color:red">No amount associated, returning</span>')
+			return
 		end
 	end
 	if data.toSlot == data.fromSlot and data.fromInv == data.toInv then
@@ -607,6 +644,9 @@ function toggleGUI()
 		if secondInventory_type == 'store_gun' then
 			TriggerServerEvent('fsn_store_guns:closedStore', secondInventory_id)
 		end
+		if secondInventory_type == 'armories' then
+			TriggerServerEvent('fsn_police:armory:closedArmory', secondInventory_id)
+		end
 		if secondInventory_type == 'store' then
 			TriggerServerEvent('fsn_store:closedStore', secondInventory_id)
 		end
@@ -748,6 +788,19 @@ AddEventHandler('fsn_inventory:store:recieve', function(storeid, tbl)
 		toggleGUI()
 	end
 	invLog('received data from store('..storeid..')')
+end)
+
+RegisterNetEvent('fsn_inventory:police_armory:recieve')
+AddEventHandler('fsn_inventory:police_armory:recieve', function(armoryid, tbl)
+	print(armoryid)
+	secondInventory_type = 'armories'
+	secondInventory_id = armoryid
+	secondInventory = tbl
+	updateGUI()
+	if not gui then
+		toggleGUI()
+	end
+	invLog('received data from armories('..armoryid..')')
 end)
 
 --[[
@@ -998,60 +1051,61 @@ Util.Tick(function()
 	if not beingused and not gui then -- cant use if gui is open or someone else is using inv
 		for number, control in pairs(hotkeys) do
 			if IsControlJustReleased(1, control) or IsDisabledControlJustReleased(1, control) then
-
-				--[[For using ammo while the gun is out. 
-				This prevents the gun from being put away if you try to use another item slot. 
-				In this case it will only leave the gun equipped if item.index == ammo
-				]]--
-				local item = firstInventory[number]
-
-				--might add more ammo types and counts later but for now this gets people started with buying ammo instead of a whole new gun
-
-				if item.index == 'ammo_pistol' or item.index == 'ammo_shotgun' or item.index == 'ammo_rifle' or item.index == 'ammo_smg' or item.index == 'ammo_sniper' or item.index == 'ammo_pistol_large' or item.index == 'ammo_shotgun_large' or item.index == 'ammo_rifle_large' or item.index == 'ammo_smg_large' or item.index == 'ammo_sniper_large' then
-					--local playerPed = GetPlayerPed(-1)
-					
-					--TriggerEvent('fsn_inventory:useAmmo', item.index)
-
+				if exports['fsn_phones']:isPhoneActive() then
 				else
-					if currentWeapon and currentWeapon['customData'].weapon then
-						equipWeapon(false,number)
-						return
-					end
-				end
-				local item = firstInventory[number]
-				if item.index == false then
-					if currentWeapon then
+
+					--[[For using ammo while the gun is out. 
+					This prevents the gun from being put away if you try to use another item slot. 
+					In this case it will only leave the gun equipped if item.index == ammo
+					]]--
+					local item = firstInventory[number]
+
+					if item.index == 'ammo_pistol' or item.index == 'ammo_shotgun' or item.index == 'ammo_rifle' or item.index == 'ammo_smg' or item.index == 'ammo_pistol_large' or item.index == 'ammo_shotgun_large' or item.index == 'ammo_rifle_large' or item.index == 'ammo_smg_large' then
+						--local playerPed = GetPlayerPed(-1)
 						
+						--TriggerEvent('fsn_inventory:useAmmo', item.index)
+
 					else
-						exports['mythic_notify']:DoHudText('error', 'Nothing in slot: '..number)
-						return
+						if currentWeapon and currentWeapon['customData'].weapon then
+							equipWeapon(false,number)
+							return
+						end
 					end
-				end
-				if item['customData'] and item['customData'].weapon then
-					if item['customData'].ammo and item['customData'].ammotype and item['customData'].quality then
-						equipWeapon(item, number)
-					else
-						exports['mythic_notify']:DoHudText('error', 'This weapon is broken, you cannot use it.')
-						return
-					end
-				else
-					if itemUses[item.index] then
-						itemUses[item.index].use(item)
-						if itemUses[item.index].takeItem then
-							if firstInventory[number].amt ~= 1 then
-								firstInventory[number].amt = firstInventory[number].amt-1
-							else
-								firstInventory[number] = {}
-							end
-							exports['mythic_notify']:DoHudText('success', 'You used 1: '..item.name)
-							updateGUI()
+					local item = firstInventory[number]
+					if item.index == false then
+						if currentWeapon then
+							
 						else
-							exports['mythic_notify']:DoHudText('success', 'You used: '..item.name)
+							exports['mythic_notify']:DoHudText('error', 'Nothing in slot: '..number)
+							return
+						end
+					end
+					if item['customData'] and item['customData'].weapon then
+						if item['customData'].ammo and item['customData'].ammotype and item['customData'].quality then
+							equipWeapon(item, number)
+						else
+							exports['mythic_notify']:DoHudText('error', 'This weapon is broken, you cannot use it.')
+							return
 						end
 					else
-						invLog('<span style="color:red">This item does not have a use associated</span>')
-						exports['mythic_notify']:DoHudText('error', 'This item does not have a use associated')
-						return
+						if itemUses[item.index] then
+							itemUses[item.index].use(item)
+							if itemUses[item.index].takeItem then
+								if firstInventory[number].amt ~= 1 then
+									firstInventory[number].amt = firstInventory[number].amt-1
+								else
+									firstInventory[number] = {}
+								end
+								exports['mythic_notify']:DoHudText('success', 'You used 1: '..item.name)
+								updateGUI()
+							else
+								exports['mythic_notify']:DoHudText('success', 'You used: '..item.name)
+							end
+						else
+							invLog('<span style="color:red">This item does not have a use associated</span>')
+							exports['mythic_notify']:DoHudText('error', 'This item does not have a use associated')
+							return
+						end
 					end
 				end
 			end

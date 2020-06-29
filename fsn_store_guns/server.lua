@@ -4,10 +4,13 @@ local stores = {
 		busy = false,
 		stock = {
 			WEAPON_ASSAULTRIFLE = {amt=999,price=10000},
+			WEAPON_COMBATPISTOL = {amt=999,price=500},
+			WEAPON_SMG = {amt=999,price=500},
             ammo_pistol = {amt = 999, price = 600},
             ammo_pistol_large = {amt = 999, price = 800},
             ammo_smg = {amt = 999, price = 600},
-            ammo_smg_large = {amt = 999, price = 800},
+			ammo_smg_large = {amt = 999, price = 800},
+			armor = {amt = 999, price = 1000},
 		}
 	}
 }
@@ -28,6 +31,34 @@ local weapon = {
 
 local items = {
 	['WEAPON_ASSAULTRIFLE'] = weapon,
+	['WEAPON_COMBATPISTOL'] = {
+        index = "WEAPON_COMBATPISTOL",
+        name = "Combat Pistol",
+        data = {
+            weight = 9,
+        },
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = 'ammo_pistol',
+            quality = 'normal',
+            Serial = ''
+        }
+	},
+	['WEAPON_SMG'] = {
+        index = "WEAPON_SMG",
+        name = "SMG",
+        data = {
+            weight = 9,
+        },
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = 'ammo_smg',
+            quality = 'normal',
+            Serial = ''
+        }
+    },
     ammo_pistol = {
         index = 'ammo_pistol',
         name = "Pistol Ammo",
@@ -96,6 +127,13 @@ local items = {
         name = "Large Sniper Ammo",
 		data = {
 			weight = 9.5
+		},
+	},
+	armor = {
+        index = 'armor',
+        name = "Kevlar",
+		data = {
+			weight = 13.5
 		},
     },
 }

@@ -23,20 +23,21 @@ end
 RegisterNetEvent('fsn_phones:UTIL:displayNumber')
 AddEventHandler('fsn_phones:UTIL:displayNumber', function()
 	if init() and myNumber ~= '000-000-000' then
-		local pos = GetEntityCoords(GetPlayerPed(-1))
+		local pos = GetEntityCoords(PlayerPedId())
 	  TriggerServerEvent('fsn_phones:UTIL:chat', '^*^3phone# |^0^r '..myNumber, fsn_NearestPlayersC(pos.x, pos.y, pos.z, 5))
 	else
-		TriggerEvent('fsn_notify:displayNotification', 'You do not have a phone number!<br>Goto Lifeinvader to get one', 'centerLeft', 8000, 'error')
+		TriggerEvent('fsn_notify:displayNotification', 'You do not have a phone number!<br>Goto Lifeinvader to get a SIM Card!', 'centerLeft', 8000, 'error')
 	end
 end)
 
 function init() -- function to check if the character has init'd
 	if myNumber == '000-000-000' then
-		exports['mythic_notify']:DoCustomHudText('error', 'init() == false - head to life invader to get a phone number', 4000)
+		--exports['mythic_notify']:DoCustomHudText('error', 'init() == false - head to life invader to get a phone number', 4000)
+		print('init() == false - head to life invader to get a phone number')
 		return true -- change to false before live
 	elseif myUsername == 'unset'  then
 		exports['mythic_notify']:DoCustomHudText('error', 'init() == false - your character has not been loaded properly, rejoin the server', 4000)
-		return true -- change to false before live
+		return false -- change to false before live
 	else
 		return true
 	end
@@ -124,6 +125,7 @@ AddEventHandler('fsn_phones:SYS:receiveGarage', function(vehtbl)
 end)
 
 local phoneEnabled = false
+local messageActive = false
 
 function sendDataStore()
 	-- whitelist stuff
@@ -152,22 +154,34 @@ function sendDataStore()
 	})
 end
 
+function isPhoneActive()
+	if phoneEnabled then
+		return true
+	else
+		return false
+	end
+end
+
 function togglePhone()
 	if not init() then return end -- character has not been initiated
+	local playerPed = PlayerPedId()
 	if phoneEnabled then
-		ClearPedTasks(GetPlayerPed(-1))
+		ClearPedTasks(playerPed)
 		SetNuiFocus( false )
+		SetNuiFocusKeepInput(false)
 		SendNUIMessage({
 			type = 'status',
 			display = false,
 		})
+		--SetPauseMenuActive(true)
 	else
 
-		if not exports.fsn_inventory:fsn_HasPhone() then -- if does not have phone return jack shit
+		if not fsn_HasPhone() then -- if does not have phone return jack shit
 			TriggerEvent('fsn_notify:displayNotification', 'You do not have a phone!<br>Visit a general store to get one.', 'centerLeft', 5000, 'error')
 		return end
-
-		SetNuiFocus( true, true )
+		
+		SetNuiFocus( true, false )
+		SetNuiFocusKeepInput(true)
 		SendNUIMessage({
 			type = 'status',
 			display = true,
@@ -175,8 +189,9 @@ function togglePhone()
 			phonenumber = myNumber,
 			username = myUsername,
 		})
-		if not IsPedInAnyVehicle(GetPlayerPed(-1),  false) then
-			TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_STAND_MOBILE", 0, true);
+		if not IsPedInAnyVehicle(playerPed,  false) then
+			PhonePlayIn()
+			--TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_STAND_MOBILE", 0, true);
 		end
 		TriggerServerEvent('fsn_phones:SYS:requestGarage')
 		sendDataStore()
@@ -184,8 +199,89 @@ function togglePhone()
 	phoneEnabled = not phoneEnabled
 end
 
+function GetMouseXY()
+	local screenWidth, screenHeight = GetActiveScreenResolution()
+	local x = GetDisabledControlNormal(2, 239)
+	local y = GetDisabledControlNormal(2, 240)
+	return screenWidth * x, screenHeight * y
+  end
+  
+  local lastX, lastY
+  Citizen.CreateThread(function()
+	while true do
+		--print(messageActive)
+	  if phoneEnabled then
+		SetPauseMenuActive(false)
+		DisableControlAction(0,24, true) -- disable attack
+		DisableControlAction(0,25, true) -- disable aim
+		DisableControlAction(0, 1, true) -- LookLeftRight
+		DisableControlAction(0, 2, true) -- LookUpDown
+		DisableControlAction(0, 322, true) -- ESCAPE
+		DisableControlAction(0,157, true) -- 1
+		DisableControlAction(0,158, true) -- 2
+		DisableControlAction(0,160, true) -- 3
+		DisableControlAction(0,164, true) -- 4
+		DisableControlAction(0,165, true) -- 5
+		DisableControlAction(0,81, true) -- Radio Stations
+		DisableControlAction(0,82, true) -- Radio Stations
+		DisableControlAction(0,261, true) -- Weapons
+		DisableControlAction(0,262, true) -- Weapons
+		DisableControlAction(0,115, true) -- Weapons
+		DisableControlAction(0,99, true) -- Weapons
+		DisableControlAction(0,16, true) -- Weapons
+		DisableControlAction(0,17, true) -- Weapons
+		if messageActive then
+			DisableControlAction(0,31, true) -- d
+			DisableControlAction(0,32, true) -- w
+			DisableControlAction(0,30, true) -- s
+			DisableControlAction(0,34, true) -- a
+			DisableControlAction(0,157, true) -- 1
+			DisableControlAction(0,158, true) -- 2
+			DisableControlAction(0,160, true) -- 3
+			DisableControlAction(0,164, true) -- 4
+			DisableControlAction(0,165, true) -- 5
+			DisableControlAction(0,245, true) -- T
+			DisableControlAction(0,305, true) -- B
+			DisableControlAction(0,29, true) -- Backspace
+		end
+
+
+		
+		local x, y = GetMouseXY()
+		if IsControlJustPressed(2, 237) then
+			print(x)
+		  SendNUIMessage({
+			action = 'Mouse',
+			type = 'mouseclick',
+			x = x,
+			y = y
+		  })
+		elseif IsControlJustReleased(2, 237) then
+		  SendNUIMessage({
+			action = 'Mouse',
+			type = 'mouseup',
+			x = x,
+			y = y
+		  })
+		end
+		if x ~= lastX or y ~= lastY then
+		  SendNUIMessage({
+			action = 'Mouse',
+			type = 'mousemove',
+			x = x,
+			y = y
+		  })
+		  lastX = x
+		  lastY = y
+		end
+		end
+	  Wait(0)
+	end
+  end)
+
 -- disable nui focus every time the script is restarted 
 SetNuiFocus( false )
+SetNuiFocusKeepInput(false)
 
 RegisterNUICallback( "callContact", function(data, cb)
 	ExecuteCommand('call '..data.pn)
@@ -239,9 +335,11 @@ RegisterNUICallback( "sendToServer", function(data, cb)
 			tweet = data.tweet
 		}
 		TriggerServerEvent('fsn_phones:SYS:sendTweet', twt)
+		messageActive = false
 	elseif data.message then
 		-- do datastore stuff on client then send to update
 		data.message.from = myNumber
+		messageActive = false
 		if datastore['messages'][data.message.to] then
 			table.insert(datastore['messages'][data.message.to]['texts'], #datastore['messages'][data.message.to]['texts']+1, {
 				datetime = 999,
@@ -275,9 +373,29 @@ RegisterNUICallback( "sendToServer", function(data, cb)
 	end
 end)
 
+function toggleMessage()
+	if not messageActive then
+		messageActive = true
+	else
+		messageActive = false
+	end
+end
+
+function toggleMessageInactive()
+		messageActive = false
+end
 
 RegisterNUICallback( "closePhone", function(data, cb)
 	togglePhone()
+	PhonePlayOut()
+end)
+
+RegisterNUICallback('messageactive', function(data, cb)
+	toggleMessage()
+end)
+
+RegisterNUICallback('messageinactive', function(data, cb)
+	toggleMessageInactive()
 end)
 
 RegisterNetEvent('fsn_phones:GUI:notification')
@@ -454,7 +572,7 @@ end)
 		Used to purchase a new number
 ]]--
 local stores = {
-	{x = -1082.1314697266, y = -247.65126037598, z = 37.763290405273}
+	vector3(-1082.1314697266, -247.65126037598, 37.763290405273)
 }
 Citizen.CreateThread( function()
 	for k, store in pairs(stores) do
@@ -467,13 +585,18 @@ Citizen.CreateThread( function()
 	end
 	while true do
 		Citizen.Wait(0)
+		local playerPed = PlayerPedId()
+		local playerPos = GetEntityCoords(playerPed)
 		for k, v in pairs(stores) do
-			if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
-				DrawMarker(1,v.x,v.y,v.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-				if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
-					SetTextComponentFormat("STRING")
-					AddTextComponentString("Press ~INPUT_PICKUP~ to get a ~b~simcard~w~ ($250)")
-					DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+			--if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(PlayerPedId()), true) < 10 then
+			if Util.GetVecDist(playerPos, v.xyz) < 2 then
+				--DrawMarker(1,v.x,v.y,v.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
+				Util.DrawText3D(v.x,v.y,v.z, 'Press ~g~[ E ] ~w~ to get a new simcard!')
+				--if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(PlayerPedId()), true) < 1 then
+				 if Util.GetVecDist(playerPos, v.xyz) < 1 then 
+					--SetTextComponentFormat("STRING")
+					--AddTextComponentString("Press ~INPUT_PICKUP~ to get a ~b~simcard~w~ ($250)")
+					--DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 					if IsControlJustPressed(0,38) then
 						if exports["fsn_main"]:fsn_CanAfford(250) then
 							TriggerServerEvent('fsn_phones:SYS:newNumber', myChar)
@@ -486,3 +609,139 @@ Citizen.CreateThread( function()
 		end
 	end
 end)
+
+function fsn_HasPhone()
+	return exports['fsn_inventory']:fsn_HasItem('phone')
+end
+
+-- Animation shit
+
+local myPedId = nil
+
+local phoneProp = 0
+local phoneModel = "prop_amb_phone"
+-- OR "prop_npc_phone"
+-- OR "prop_npc_phone_02"
+-- OR "prop_cs_phone_01"
+
+local currentStatus = 'out'
+local lastDict = nil
+local lastAnim = nil
+local lastIsFreeze = false
+
+function PhonePlayText ()
+	PhonePlayAnim('text')
+end
+
+function PhonePlayOut ()
+	PhonePlayAnim('out')
+end
+
+function PhonePlayIn () 
+	if currentStatus == 'out' then
+		PhonePlayText()
+	end
+end
+
+function PhonePlayCall ()
+	PhonePlayAnim('call')
+end
+
+local ANIMS = {
+	['cellphone@'] = {
+		['out'] = {
+			['text'] = 'cellphone_text_in',
+			['call'] = 'cellphone_call_listen_base',
+		},
+		['text'] = {
+			['out'] = 'cellphone_text_out',
+			['text'] = 'cellphone_text_in',
+			['call'] = 'cellphone_text_to_call',
+		},
+		['call'] = {
+			['out'] = 'cellphone_call_out',
+			['text'] = 'cellphone_call_to_text',
+			['call'] = 'cellphone_text_to_call',
+		}
+	},
+	['anim@cellphone@in_car@ps'] = {
+		['out'] = {
+			['text'] = 'cellphone_text_in',
+			['call'] = 'cellphone_call_in',
+		},
+		['text'] = {
+			['out'] = 'cellphone_text_out',
+			['text'] = 'cellphone_text_in',
+			['call'] = 'cellphone_text_to_call',
+		},
+		['call'] = {
+			['out'] = 'cellphone_horizontal_exit',
+			['text'] = 'cellphone_call_to_text',
+			['call'] = 'cellphone_text_to_call',
+		}
+	}
+}
+
+function newPhoneProp()
+	deletePhone()
+	RequestModel(phoneModel)
+	while not HasModelLoaded(phoneModel) do
+		Citizen.Wait(1)
+	end
+	phoneProp = CreateObject(GetHashKey(phoneModel), 1.0, 1.0, 1.0, 1, 1, 0)
+	local bone = GetPedBoneIndex(myPedId, 28422)
+	AttachEntityToEntity(phoneProp, myPedId, bone, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 1, 0, 0, 2, 1)
+end
+
+function deletePhone ()
+	if phoneProp ~= 0 then
+		Citizen.InvokeNative(0xAE3CBE5BF394C9C9 , Citizen.PointerValueIntInitialized(phoneProp))
+		--DeleteEntity(GetHashKey(phoneProp))
+		phoneProp = 0
+	end
+end
+
+--[[
+	out || text || Call ||
+--]]
+function PhonePlayAnim (status, freeze, force)
+	if currentStatus == status and force ~= true then
+		return
+	end
+
+	myPedId = GetPlayerPed(-1)
+	local freeze = freeze or false
+
+	local dict = "cellphone@"
+	if IsPedInAnyVehicle(myPedId, false) then
+		dict = "anim@cellphone@in_car@ps"
+	end
+	Util.LoadAnimDict(dict)
+
+	local anim = ANIMS[dict][currentStatus][status]
+	if currentStatus ~= 'out' then
+		StopAnimTask(myPedId, lastDict, lastAnim, 1.0)
+	end
+	local flag = 50
+	if freeze == true then
+		flag = 14
+	end
+	TaskPlayAnim(myPedId, dict, anim, 3.0, -1, -1, flag, 0, false, false, false)
+
+	if status ~= 'out' and currentStatus == 'out' then
+		Citizen.Wait(380)
+		newPhoneProp()
+	end
+
+	lastDict = dict
+	lastAnim = anim
+	lastIsFreeze = freeze
+	currentStatus = status
+
+	if status == 'out' then
+		Citizen.Wait(180)
+		deletePhone()
+		StopAnimTask(myPedId, lastDict, lastAnim, 1.0)
+	end
+
+end

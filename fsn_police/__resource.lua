@@ -16,6 +16,9 @@ client_script 'dispatch/client.lua'
 client_script 'pedmanagement/client.lua'
 client_script 'evidencelocker/client.lua'
 
+client_script 'armory/cl_armory.lua'
+server_script 'armory/sv_armory.lua'
+
 client_script 'MDT/mdt_client.lua'
 server_script 'MDT/mdt_server.lua'
 ui_page 'MDT/gui/index.html'

@@ -58,6 +58,14 @@ function changePage(page, phone) { // simple function that disables the css from
 	}
 }
 
+function messageAreaActive() {
+	$.post('http://fsn_phones/messageactive', JSON.stringify({}));
+}
+
+function messageAreaInActive() {
+	$.post('http://fsn_phones/messageinactive', JSON.stringify({}));
+}
+
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
     decimalCount = Math.abs(decimalCount);
@@ -176,7 +184,13 @@ function WLUser(id) {
 	}));
 }
 
+function Click(x, y) {
+    var element = $(document.elementFromPoint(x, y));
+    element.focus().click();
+}
+
 $(function () {
+	hoveredElement = null;
 	window.addEventListener('message', function (event) {
 		if (event.data.type == 'notification') {
 			log('adding notification from lua')
@@ -201,11 +215,13 @@ $(function () {
 			if (event.data.display) {
 				if (event.data.phoneType == 'iphone') {
 					$('#phone-iphone').show();
+					$('#cursor').show();
 					changePage('home', 'iphone');
 					currentPhone = 'iphone';
 				} else {
 					$('#phone-samsung').show();
 					changePage('home', 'samsung');
+					$('#cursor').show();
 					currentPhone = 'samsung';
 				}
 				
@@ -215,10 +231,40 @@ $(function () {
 			} else {
 				$('#phone-iphone').hide();
 				$('#phone-samsung').hide();
+				$('#cursor').hide();
 			}
 			return;
 		}
-	})
+		if (event.data.action == 'Mouse') {
+			//Simulate mouse events from Lua
+			var ev = document.createEvent("MouseEvent");
+			var el = document.elementFromPoint(event.data.x, event.data.y);
+			ev.initMouseEvent(
+				event.data.type,
+				true /* bubble */, true /* cancelable */,
+				window, null,
+				event.data.x, event.data.y, 0, 0, /* coordinates */
+				false, false, false, false, /* modifier keys */
+				0 /*left*/, null
+			);
+			el.dispatchEvent(ev);
+		}
+		if (event.data.type == 'mouseclick') {
+			Click(event.data.x - 1, event.data.y -1)
+		}
+	});
+	
+});
+
+
+$(document).ready(function() {  
+  document.body.addEventListener("mousemove", function(event) {
+        var cursor = document.getElementById("cursor");
+        var x = event.screenX;
+        var y = event.screenY;
+        cursor.style.left = `${x}px`;
+        cursor.style.top = `${y}px`;
+  });
 });
 
 var oldY = 0
@@ -232,6 +278,7 @@ document.body.onmouseup = function() {
 				$.post('http://fsn_phones/closePhone', JSON.stringify({}));
 			} else {
 				changePage('home', currentPhone);
+				messageAreaInActive()
 			}
 		}
 	}
@@ -246,10 +293,11 @@ document.onkeydown = function(evt) {
     if (evt.keyCode == 27) {
         if (currentPage == 'home') {
 		$.post('http://fsn_phones/closePhone', JSON.stringify({}));
-	} else {
-		changePage('home', currentPhone);
+		} else {
+			changePage('home', currentPhone);
+			messageAreaInActive()
+		}
 	}
-    }
 };
 
 window.getFunctionFromString = function(string) {
@@ -526,30 +574,40 @@ function processgarage() {
 		for (var key in datastore['vehicles']){
 			var veh = datastore['vehicles'][key]
 			var finance = ''
-			veh.veh_finance = JSON.parse(veh.veh_finance)
-			if (veh.veh_finance.length > 0) {
-				if (veh.veh_finance.outright == false) {
+			veh.finance = JSON.parse(veh.veh_finance)
+			//if (veh.veh_finance.timeleft > 0) {
+				if (veh.finance.outright == false) {
 					finance = '<p><b>Payment Information</b></p>'+
 					'<table class="wl-table">'+
 						'<thead>'+
 							'<tr>'+
-								'<th>Date</th>'+
-								'<th>Amount</th>'+
+								'<th>Time Left</th>'+
+								'<th>Amount Left</th>'+
 								'<th>Status</th>'+
 							'</tr>'+
 						'</thead>'+
 						'<tbody>'+
-							'<td>nil</td>'+
-							'<td>price</td>'+
-							'<td><span class="paid">PAID</span></td>'+
+							'<td>'+veh.finance.loanprice+'</td>'+
+							'<td>'+veh.finance.priceleft+'</td>'+
+							'<td><span class = "notpaid">NOT PAID</span></td>'+
 						'</tbody>'+
 					'</table>'
 				} else {
-					finance = '<p><b>Purchased outright</b>: '+veh.veh_finance.buyprice+'</p>';
+					finance = '<p><b>Payment Information</b></p>'+
+					'<table class="wl-table">'+
+						'<thead>'+
+							'<tr>'+
+								'<th>Status</th>'+
+							'</tr>'+
+						'</thead>'+
+						'<tbody>'+
+							'<td><span class = "paid">PAID OFF</span></td>'+
+						'</tbody>'+
+					'</table>'
 				}
-			} else {
-				finance = 'No finance information available for this vehicle.'
-			}
+			//} //else {
+				//finance = 'No finance information available for this vehicle.'
+			//}
 			insertString = insertString+
 				'<div class="vehicle">'+
 					'<h1>'+veh.veh_displayname+'</h1>'+

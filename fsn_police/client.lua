@@ -134,6 +134,7 @@ local clockInStations = {
     z = 31.720394424438
   }
 }
+--[[
 local armoryStations = {
   {
     name = "Mission Row Armory",
@@ -154,6 +155,7 @@ local armoryStations = {
     z = 31.720390609741
   }
 }
+]]
 
 local onduty_police = {}
 RegisterNetEvent('fsn_police:update')
@@ -170,6 +172,7 @@ function fsn_getCopAmt()
   return #onduty_police
 end
 
+--[[
 policeWeapons = {
   ['WEAPON_STUNGUN'] = {
     index = "WEAPON_STUNGUN",
@@ -267,7 +270,7 @@ local function fsn_policeEquipped()
   end
   return true
 end
-
+]]
 local pdCarBlips = {}
 
 Citizen.CreateThread(function()
@@ -362,7 +365,7 @@ Citizen.CreateThread(function()
         end
       end
     end
-    for k, stn in pairs(armoryStations) do
+    --[[for k, stn in pairs(armoryStations) do
       if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 and pdonduty then
         DrawMarker(1,stn.x,stn.y,stn.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
         if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
@@ -381,7 +384,7 @@ Citizen.CreateThread(function()
             end
           end
         end
-      end
+      end]]
     end
 end)
 RegisterNetEvent('fsn_police:command:duty')

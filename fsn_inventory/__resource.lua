@@ -8,7 +8,6 @@ server_script '@mysql-async/lib/MySQL.lua'
 --[[/ :FSN: \]]--
 
 exports({
-  'fsn_HasPhone',
   'fsn_HasItem',
   'fsn_GetItemAmount',
   'fsn_GetItemDetails',

@@ -186,6 +186,24 @@ function Util.GetVecDist(v1,v2)
     return math.sqrt(  ( (v1.x or 0) - (v2.x or 0) )*(  (v1.x or 0) - (v2.x or 0) )+( (v1.y or 0) - (v2.y or 0) )*( (v1.y or 0) - (v2.y or 0) )+( (v1.z or 0) - (v2.z or 0) )*( (v1.z or 0) - (v2.z or 0) )  )
 end
 
+function Util.PositionCheck(playerPos, xyz)
+
+	local nearestDist,nearestPos
+	
+	--for k, v in pairs(table) do
+		--print(xyz)
+		local curDist = Util.GetVecDist(playerPos, xyz)
+		if not nearestDist or curDist < nearestDist then
+			nearestDist = curDist
+			nearestPos = v
+		end
+	--end
+	
+	if not nearestDist then return false; end
+	return nearestDist,nearestPos
+	
+end
+
 --[[
 	?? Util.GetClosestPlayer()
 	*  Stolen from Frazzle in #scripting-gated, returns the closest player + how far away they are 
@@ -211,6 +229,31 @@ function Util.GetClosestPlayer()
     end
     
     return ClosestPlayer, ClosestDistance
+end
+
+--[[
+	Load Anim Dictionaries
+]]
+function Util.LoadAnimDict(dict)
+	if not HasAnimDictLoaded(dict) then
+		RequestAnimDict(dict)
+
+		while not HasAnimDictLoaded(dict) do
+			Citizen.Wait(1)
+		end
+	end
+end
+
+--[[
+	Make Strings!!
+]]
+function Util.MakeString(length)
+	if length < 1 then return nil end
+	local string = ""
+	for i = 1, length do
+		string = string .. math.random(32, 126)
+	end
+	return string
 end
 
 --[[

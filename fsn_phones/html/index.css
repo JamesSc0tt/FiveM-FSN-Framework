@@ -29,6 +29,18 @@
 ::-webkit-scrollbar-thumb {
     background: #FF0000;
 }
+
+.cursor {
+	height: 20px;
+	width: 20px;
+	/*background-color: #f00;*/
+	border-radius: 50%;
+	display: inline-block;
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;      
+  }
+
 .notifications {
 	position:fixed;
 	top: 20px;

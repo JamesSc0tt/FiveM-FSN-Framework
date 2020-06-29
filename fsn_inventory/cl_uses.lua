@@ -265,4 +265,10 @@ itemUses = {
 			TriggerEvent('fsn_inventory:useAmmo', 'ammo_sniper_large')
 		end
 	},
+	['armor'] = {
+		takeItem = false,
+		use = function(item)
+			TriggerEvent('fsn_inventory:useArmor')
+		end
+	},
 }

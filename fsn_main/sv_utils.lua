@@ -19,3 +19,12 @@ function Util.GetSteamID(src)
 	end
 	return GetPlayerIdentifiers(src)[1]
 end
+
+function Util.MakeString(length)
+	if length < 1 then return nil end
+	local string = ""
+	for i = 1, length do
+		string = string .. math.random(32, 126)
+	end
+	return string
+end
