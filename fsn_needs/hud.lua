@@ -77,7 +77,7 @@ end)
 RegisterNetEvent('fsn_inventory:useArmor')
 AddEventHandler('fsn_inventory:useArmor', function()
 	local playerPed = PlayerPedId()
-	print(armortype)
+	--print(armortype)
 	if GetPedArmour(playerPed) < 100 then
 		exports["fsn_progress"]:fsn_ProgressBar(58, 133, 255,'Putting on armor', 10)
 		Citizen.Wait(10000)
