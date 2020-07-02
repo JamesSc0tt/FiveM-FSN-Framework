@@ -297,6 +297,10 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 	end
 	if data.fromInv == 'playerInventory' then
 		local oldSlot = firstInventory[data.fromSlot]
+		if oldSlot.inuse then 
+			invLog('<span style="color:red">You cannot move a weapon you are using!</span>')
+			return
+		end
 		if data.amt > oldSlot.amt or data.amt == -99 then
 			data.amt = oldSlot.amt
 		end
@@ -401,6 +405,10 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 	elseif data.fromInv == 'otherInventory' then
 		-- moving something from their inv
 		local oldSlot = secondInventory[data.fromSlot]
+		if oldSlot.inuse then 
+			invLog('<span style="color:red">You cannot move a weapon you are using!</span>')
+			return
+		end
 		if data.amt > oldSlot.amt then
 			data.amt = oldSlot.amt
 		end
@@ -909,6 +917,11 @@ function init(charTbl)
 	if inventory.firstSpawned == true then
 		-- you have the new inv very nice
 		firstInventory = inventory.table
+		for k, v in pairs(firstInventory) do
+			if firstInventory[k].inuse then
+				firstInventory[k].inuse = false
+			end
+		end
 		intiiated = true
 	else
 		firstInventory = {{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},}
@@ -948,7 +961,7 @@ Util.Tick(function()HideHudComponentThisFrame(19,true);DisableControlAction(0, 3
 function equipWeapon(item, key)
 	if invBusy then Citizen.Wait(1);print'invBusy'; end
 	invBusy = true
-	if item and item.index then
+	if item and item.index and not item.inuse then
 		RemoveAllPedWeapons(GetPlayerPed(-1))
 		print(item.index)
 		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(item.index), item['customData'].ammo, 1, 0)
@@ -956,7 +969,7 @@ function equipWeapon(item, key)
 		
 		currentWeapon = item
 		currentHotkey = key
-		firstInventory[key] = {index=false}
+		firstInventory[key].inuse = true
 
 		RequestAnimDict("rcmjosh4")
 		while not HasAnimDictLoaded("rcmjosh4") do Citizen.Wait(1) end
@@ -971,10 +984,9 @@ function equipWeapon(item, key)
 		ClearPedTasks(GetPlayerPed(-1))
 		TriggerServerEvent('fsn_main:logging:addLog', GetPlayerServerId(PlayerId()), 'weapons', 'Player('..GetPlayerServerId(PlayerId())..') equipped '..item.index..' with '..item['customData'].ammo..' ammo.')
 		TriggerEvent('fsn_evidence:weaponInfo', item.customData)
-
 	else
-		if firstInventory[currentHotkey].index ~= false then
-			exports['mythic_notify']:DoHudText('error', 'Slot '..currentHotkey..' is not empty!')
+		if firstInventory[currentHotkey].inuse == false then
+			exports['mythic_notify']:DoHudText('error', 'Slot '..currentHotkey..' is not empty! Rejoin to fix inventory!')
 			invBusy = false
 			return
 		end
@@ -1000,7 +1012,7 @@ function equipWeapon(item, key)
 		
 		TriggerServerEvent('fsn_main:logging:addLog', GetPlayerServerId(PlayerId()), 'weapons', 'Player('..GetPlayerServerId(PlayerId())..') holstered '..currentWeapon.index..' with '..currentWeapon['customData'].ammo..' ammo.')
 
-		firstInventory[currentHotkey] = currentWeapon
+		firstInventory[currentHotkey].inuse = false
 
 		currentWeapon = false
 		currentHotkey = false
@@ -1019,7 +1031,67 @@ local hotkeys = {
 	164, -- number 4
 	165  -- number 5
 }
+local ammo_table = {
+	'ammo_pistol',
+	'ammo_shotgun',
+	'ammo_rifle',
+	'ammo_smg',
+	'ammo_pistol_large',
+	'ammo_shotgun_large',
+	'ammo_rifle_large',
+	'ammo_smg_large'
+}
 local lastTab = 0
+
+function handleHotkeys( number )
+	if not exports['fsn_phones']:isPhoneActive() then
+		local used_item = firstInventory[number]
+		if currentWeapon then
+			-- if weapon is equipped, put it away
+			equipWeapon(false,number)
+			return
+		end
+		if used_item and used_item.index ~= false then
+			if Util.TableHasValue(ammo_table, used_item.index) then
+				-- it is an ammo
+				itemUses[used_item.index].use(used_item)
+			elseif used_item['customData'] and used_item['customData'].weapon then
+				-- it is a weapon
+				if used_item['customData'].ammo and used_item['customData'].ammotype and used_item['customData'].quality then
+					equipWeapon(used_item, number)
+				else
+					exports['mythic_notify']:DoHudText('error', 'ERROR: Old weapon')
+					return
+				end
+			else
+				-- is not ammo is not weapon
+				if itemUses[used_item.index] then
+					itemUses[used_item.index].use(used_item)
+					if itemUses[used_item.index].takeItem then
+						if firstInventory[number].amt ~= 1 then
+							firstInventory[number].amt = firstInventory[number].amt-1
+						else
+							firstInventory[number] = {}
+						end
+						exports['mythic_notify']:DoHudText('success', 'You used 1: '..used_item.name)
+						updateGUI()
+					else
+						exports['mythic_notify']:DoHudText('success', 'You used: '..used_item.name)
+					end
+				else
+					invLog('<span style="color:red">This item does not have a use associated</span>')
+					exports['mythic_notify']:DoHudText('error', 'This item does not have a use associated')
+					return
+				end
+			end
+		else
+			invLog('<span style="color:red">Missing item</span>')
+			exports['mythic_notify']:DoHudText('error', 'Missing item')
+			return
+		end
+	end
+end
+
 Util.Tick(function()
 	if IsDisabledControlJustPressed(0,37) then
 		if lastTab+500 > GetGameTimer() then
@@ -1051,63 +1123,7 @@ Util.Tick(function()
 	if not beingused and not gui then -- cant use if gui is open or someone else is using inv
 		for number, control in pairs(hotkeys) do
 			if IsControlJustReleased(1, control) or IsDisabledControlJustReleased(1, control) then
-				if exports['fsn_phones']:isPhoneActive() then
-				else
-
-					--[[For using ammo while the gun is out. 
-					This prevents the gun from being put away if you try to use another item slot. 
-					In this case it will only leave the gun equipped if item.index == ammo
-					]]--
-					local item = firstInventory[number]
-
-					if item.index == 'ammo_pistol' or item.index == 'ammo_shotgun' or item.index == 'ammo_rifle' or item.index == 'ammo_smg' or item.index == 'ammo_pistol_large' or item.index == 'ammo_shotgun_large' or item.index == 'ammo_rifle_large' or item.index == 'ammo_smg_large' then
-						--local playerPed = GetPlayerPed(-1)
-						
-						--TriggerEvent('fsn_inventory:useAmmo', item.index)
-
-					else
-						if currentWeapon and currentWeapon['customData'].weapon then
-							equipWeapon(false,number)
-							return
-						end
-					end
-					local item = firstInventory[number]
-					if item.index == false then
-						if currentWeapon then
-							
-						else
-							exports['mythic_notify']:DoHudText('error', 'Nothing in slot: '..number)
-							return
-						end
-					end
-					if item['customData'] and item['customData'].weapon then
-						if item['customData'].ammo and item['customData'].ammotype and item['customData'].quality then
-							equipWeapon(item, number)
-						else
-							exports['mythic_notify']:DoHudText('error', 'This weapon is broken, you cannot use it.')
-							return
-						end
-					else
-						if itemUses[item.index] then
-							itemUses[item.index].use(item)
-							if itemUses[item.index].takeItem then
-								if firstInventory[number].amt ~= 1 then
-									firstInventory[number].amt = firstInventory[number].amt-1
-								else
-									firstInventory[number] = {}
-								end
-								exports['mythic_notify']:DoHudText('success', 'You used 1: '..item.name)
-								updateGUI()
-							else
-								exports['mythic_notify']:DoHudText('success', 'You used: '..item.name)
-							end
-						else
-							invLog('<span style="color:red">This item does not have a use associated</span>')
-							exports['mythic_notify']:DoHudText('error', 'This item does not have a use associated')
-							return
-						end
-					end
-				end
+				handleHotkeys(number)
 			end
 		end
 	end

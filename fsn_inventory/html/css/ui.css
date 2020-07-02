@@ -372,3 +372,7 @@ input[type=number] {
 	height:70%;
 	margin-left: 9%;
 }
+
+.inuse {
+	background-color: rgba(255,0,0,0.3) !important;
+}

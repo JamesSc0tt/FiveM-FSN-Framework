@@ -6,6 +6,11 @@ window.addEventListener("message", function (event) {
 				var ni = i - 1
 				if (event.data.items[ni].index) {
 					$('#actionbaritem-'+ni).attr("src","img/items/"+event.data.items[ni].index+".png")
+					if (event.data.items[ni].inuse) {
+						$('#actionbaritem-'+ni).addClass('inuse');
+					} else {
+						$('#actionbaritem-'+ni).removeClass('inuse');
+					}
 					$('#actionbaritem-'+ni).show()
 				} else {
 					$('#actionbaritem-'+ni).hide()
@@ -95,8 +100,12 @@ function updateInv(div, data) {
 						'</span></div>'
 			} else { hotkey = '' }
 			if (item.name) {
+				var busy = ''
+				if (item.inuse) {
+					busy = 'inuse';
+				}
 				updateString = updateString+
-					'<div class="slot" data-inventory="'+div+'" data-slotid="'+key+'">'+
+					'<div class="slot '+busy+'" data-inventory="'+div+'" data-slotid="'+key+'">'+
 						'<div class="item" data-inventory="'+div+'" data-slotid="'+key+'" onclick="viewData(\''+div+'/'+key+'\')">'+
 							'<div class="item-icon">'+
 								'<img src="img/items/'+item.index+'.png"/>'+
