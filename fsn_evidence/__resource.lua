@@ -7,6 +7,16 @@ server_script '@fsn_main/server_settings/sh_settings.lua'
 server_script '@mysql-async/lib/MySQL.lua'
 --[[/	:FSN:	\]]--
 
+client_script '__descriptions-male.lua'
+client_script '__descriptions-female.lua'
+client_script '__descriptions.lua'
+exports({
+	'getSex',
+	'getJacket',
+	'getTop',
+	'getPants',
+})
+
 client_script 'cl_evidence.lua'
 server_script 'sv_evidence.lua'
 

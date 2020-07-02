@@ -26417,6 +26417,8 @@ local json_pants = [[
 }
 ]]
 
+
+
 Citizen.CreateThread(function()
     MALE.undershirts = json.decode(json_undershirts)
     MALE.tops = json.decode(json_tops)
