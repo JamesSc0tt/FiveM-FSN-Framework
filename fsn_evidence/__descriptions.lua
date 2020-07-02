@@ -22,7 +22,7 @@ function getJacket()
 
 	if sex then
 		if sex == 'm' then
-			print(comp[1]..comp[2])
+			--print(comp[1]..comp[2])
 			jacket = tostring(MALE.tops[tostring(comp[1])][tostring(comp[2])].Localized)
 		elseif sex == 'f' then
 			jacket = tostring(FEMALE.tops[tostring(comp[1])][tostring(comp[2])].Localized)
@@ -43,10 +43,10 @@ function getTop()
 
 	if sex then
 		if sex == 'm' then
-			print(comp[1]..comp[2])
-			top = tostring(MALE.undershirt[tostring(comp[1])][tostring(comp[2])].Localized)
+			--print(comp[1]..comp[2])
+			top = tostring(MALE.undershirts[tostring(comp[1])][tostring(comp[2])].Localized)
 		elseif sex == 'f' then
-			top = tostring(FEMALE.undershirt[tostring(comp[1])][tostring(comp[2])].Localized)
+			top = tostring(FEMALE.undershirts[tostring(comp[1])][tostring(comp[2])].Localized)
 		end
 	end
 
@@ -64,7 +64,7 @@ function getPants()
 
 	if sex then
 		if sex == 'm' then
-			print(comp[1]..comp[2])
+			--print(comp[1]..comp[2])
 			pants = tostring(MALE.pants[tostring(comp[1])][tostring(comp[2])].Localized)
 		elseif sex == 'f' then
 			pants = tostring(FEMALE.pants[tostring(comp[1])][tostring(comp[2])].Localized)
@@ -77,23 +77,19 @@ end
 
 Citizen.CreateThread(function()
 	while not MALE.tops do
-		--print'notready'
 		Citizen.Wait(1)
 	end
 	ready = true
-	--for k,v in pairs(MALE.tops) do
-		--print(k..' => '..tostring(v))
-		--[[
-		for key, value in pairs(v) do
-			print("> "..key.." => "..tostring(value))
-			for kee, val in pairs(value) do
-				print(">> "..kee.." > "..tostring(value))
-				for kk, vv in pairs(value) do
-					print(">>> "..kk.." > "..tostring(vv))
-				end
-			end
-		end
-		]]
-	--end
-	print("Jacket: ".. getJacket())
+end)
+
+RegisterCommand('evi_clothing', function()
+	local sex = "Sex: "..getSex()
+	local jacket = "Jacket: "..getJacket()
+	local top = "Top: "..getTop()
+	local pants = "Pants: "..getPants()
+
+	print(sex)
+	print(jacket)
+	print(top)
+	print(pants)
 end)
