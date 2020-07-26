@@ -1046,17 +1046,22 @@ local lastTab = 0
 function handleHotkeys( number )
 	if not exports['fsn_phones']:isPhoneActive() then
 		local used_item = firstInventory[number]
-		if currentWeapon then
+		--[[if currentWeapon then
 			-- if weapon is equipped, put it away
 			equipWeapon(false,number)
 			return
-		end
+		end]]
 		if used_item and used_item.index ~= false then
 			if Util.TableHasValue(ammo_table, used_item.index) then
 				-- it is an ammo
 				itemUses[used_item.index].use(used_item)
 			elseif used_item['customData'] and used_item['customData'].weapon then
 				-- it is a weapon
+				if currentWeapon then
+					-- if weapon is equipped, put it away
+					equipWeapon(false,number)
+					return
+				end
 				if used_item['customData'].ammo and used_item['customData'].ammotype and used_item['customData'].quality then
 					equipWeapon(used_item, number)
 				else
@@ -1064,6 +1069,11 @@ function handleHotkeys( number )
 					return
 				end
 			else
+				if currentWeapon then
+					-- if weapon is equipped, put it away
+					equipWeapon(false,number)
+					return
+				end
 				-- is not ammo is not weapon
 				if itemUses[used_item.index] then
 					itemUses[used_item.index].use(used_item)

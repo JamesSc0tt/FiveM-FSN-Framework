@@ -58,6 +58,9 @@ function customise(title)
         subComponentScroller = GetPedDrawableVariation(GetPlayerPed(-1), componentScroller)
         textureScroller = GetPedTextureVariation(GetPlayerPed(-1), componentScroller)
         paletteScroller = GetPedPaletteVariation(GetPlayerPed(-1), componentScroller)
+        if not player_data.clothing then
+            player_data.clothing = {}
+        end
         Menu.addOption("clothing_customise", function()
             if(Menu.ScrollBarString({"Head","Mask","Hair","Arms","Pants","Parachutes","Shoes","Necklace & Ties","Undershirt","Body Armour","Decals","Shirts"}, componentScroller, function(cb)  componentScroller = cb end)) then
                 subComponentScroller = GetPedDrawableVariation(GetPlayerPed(-1), componentScroller)
