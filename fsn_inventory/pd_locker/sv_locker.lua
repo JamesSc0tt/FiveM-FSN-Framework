@@ -1,5 +1,5 @@
 -- path for live server
-local datastorePath = '/home/fivem/live/1/resources/[fsn]/fsn_inventory/pd_locker/datastore.txt'
+local datastorePath = 'resources/'..GetCurrentResourceName()..'/pd_locker/datastore.txt'
 
 local dbg = false
 if dbg then
