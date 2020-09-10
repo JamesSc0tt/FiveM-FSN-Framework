@@ -22,64 +22,64 @@ function fsn_SplitString(inputstr, sep)
     return t
 end
 local ems_cars = {
-  [1] = "ALS5",
-  [2] = "fire_ambulance2",
-  [3] = "fire1",
-  [4] = "Pump",
-  [5] = "eng5",
-  [6] = "chief",
-  [7] = "newtahoe2",
-  [8] = "batallionf350",
-  [9] = "fiheavy2",
-  [10] = "supervolito",
+  [1] = "Ambulance",
+  [2] = "FireTruck",
+  [3] = "supervolito",
+  [4] = "Add_own_here",
+  [5] = "Add_own_here",
+  [6] = "Add_own_here",
+  [7] = "Add_own_here",
+  [8] = "Add_own_here",
+  [9] = "Add_own_here",
+  [10] = "Add_own_here",
 }
 local pd_cars = {
   --------------------
-  -- LSPD
+  -- LSPD			-- for ingame models: https://wiki.gtanet.work/index.php?title=Vehicle_Models
   --------------------
-  [101] = "vic",
-  [102] = "taurus",
-  [103] = "caprice",
-  [104] = "fusion",
-  [105] = "explorer13",
-  [106] = "explorer16",
-  [107] = "tahoe",
-  [108] = "charger14",
-  [109] = "charger18",
-  [110] = "pdbike",
-  [111] = "pbus",
-  [112] = "PoliceT",
-  [113] = "Predator",
-  [114] = "eheli",
-  [115] = "1raptor",
-  [116] = "ram",
+  [101] = "police",
+  [102] = "police1",
+  [103] = "police2",
+  [104] = "police4",
+  [105] = "PoliceOld1",
+  [106] = "PoliceOld2",
+  [107] = "PoliceT",
+  [108] = "Policeb",
+  [109] = "Polmav",
+  [110] = "Add_own_here",
+  [111] = "Add_own_here",
+  [112] = "Add_own_here",
+  [113] = "Add_own_here",
+  [114] = "Add_own_here",
+  [115] = "Add_own_here",
+  [116] = "Add_own_here",
   --------------------
   -- SASP
   --------------------
-  [201] = "vicb",
-  [202] = "taurusb",
-  [203] = "capriceb",
-  [204] = "fusionb",
-  [205] = "explorer13b",
-  [206] = "explorer16b",
-  [207] = "tahoeb",
-  [208] = "charger14b",
-  [209] = "charger18b",
-  [210] = "f150s",
-  [211] = "f150",
-  [212] = "bmwbike",
+  [201] = "sheriff",
+  [202] = "sheriff2",
+  [203] = "sheriff3",
+  [204] = "Polmav",
+  [205] = "Add_own_here",
+  [206] = "Add_own_here",
+  [207] = "Add_own_here",
+  [208] = "Add_own_here",
+  [209] = "Add_own_here",
+  [210] = "Add_own_here",
+  [211] = "Add_own_here",
+  [212] = "Add_own_here",
   --------------------
   -- UNMARKED
   --------------------
   [1001] = "fbi",
   [1002] = "fbi2",
-  [1003] = "polschafter3",
-  [1004] = "plimo",
+  [1003] = "Add_own_here",
+  [1004] = "Add_own_here",
   --------------------
   -- SUPERCARS
   --------------------
-  [2001] = "2015polstang",
-  [2002] = "chaleo",
+  [2001] = "Add_own_here",
+  [2002] = "Add_own_here",
 }
 
 local emotes = {
