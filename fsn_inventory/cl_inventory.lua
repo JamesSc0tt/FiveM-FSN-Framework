@@ -8,24 +8,13 @@ end
 --[[
 	New inventory shit
 ]]--
--- THIS IS HOW A WEAPON WILL LOOK
-local weapon = {
-	index = "WEAPON_ASSAULTRIFLE",
-	name = "ASSAULT RIFLE",
-	amt = 1,
-	customData = {
-		weapon = true,
-		ammo = 200,
-		ammotype = 'rifle_ammo',
-		quality = 'perfect',
-	}
-}
 
 local beingused = false
 local firstInventory = {{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},{index=false},}
 local secondInventory_type = 'ply'
 local secondInventory_id = 0
 local secondInventory = {}
+local isGunstore
 function updateGUI()
 	SendNUIMessage({
 		action = 'update',
@@ -159,14 +148,9 @@ RegisterNUICallback( "viewData", function(data, cb)
 	})
 end)
 
-function makeString(l)
-	if l < 1 then return nil end
-	local s = ""
-	for i = 1, l do
-		s = s .. math.random(32, 126)
-	end
-	return s
-end
+--[[
+	Gun Ownership
+]]
 
 local name = ''
 
@@ -174,26 +158,44 @@ AddEventHandler('fsn_main:character', function(character)
 	name = character.char_fname..' '..character.char_lname
 end)
 
-function setItemOwner(shoptype ,weapon, data)
-	if weapon ~= nil  then
-		if secondInventory_type == 'store_gun' then
-			weapon.Serial = makeString(6)
-			weapon.Owner = name
-		else -- set a dark market and call it here for the following to be used for serial and owner
-			weapon.Serial = 'Illegible'
-			weapon.Owner = 'UNKNOWN'
+function setItemOwner(shoptype , item)
+	if item.customData ~= nil  then
+		if item.index == 'WEAPON_STUNGUN' or item.customData.ammotype ~= 'none' then
+			if secondInventory_type == 'store_gun' then
+				item.customData.Serial = Util.MakeString(6)
+				item.customData.Owner = name
+			else -- set a dark market and call it here for the following to be used for serial and owner
+				item.customData.Serial = 'Illegible'
+				item.customData.Owner = 'UNKNOWN'
+			end
 		end
 	end
 end
 
-function setItemPolice(armoryid ,weapon)
-	if weapon ~= nil then
-		if weapon.PDIssued ~= nil then
-				weapon.PDIssued = Util.MakeString(6)
-				weapon.Owner = 'Police: '..name
+function setItemPolice(armoryid , item)
+	if item.customData ~= nil then
+		print(item.customData.ammotype)
+		print(item.index)
+		if item.index == 'WEAPON_STUNGUN' or item.customData.ammotype ~= 'none' then
+			item.customData.PDIssued = Util.MakeString(6)
+			item.customData.Owner = 'Police: '..name
 		end
 	end
 end
+
+function fsn_setDevWeapon(item)
+	print(item)
+	if item.customData ~= nil then
+		if item.index == 'weapon_stungun' or item.customData.ammotype ~= 'none' then
+			item.customData.Serial = 'DEV GUN'
+			item.customData.Owner = 'DEV: ' .. name
+		end
+	end
+end
+
+--[[
+	End Gun Ownership
+]]
 
 --[[
 	Manage slots
@@ -221,6 +223,7 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 						TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
 						-- remove item from store stock
 						TriggerServerEvent('fsn_store:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+						TriggerEvent('fsn_main:characterSaving')
 					else
 						exports['mythic_notify']:DoHudText('error', 'You cannot afford this!')
 						invLog('<span style="color:red">You cannot afford this item</span>')
@@ -241,12 +244,13 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 					if exports['fsn_main']:fsn_GetWallet() >= secondInventory[data.fromSlot].data.price then
 						TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
 						-- remove item from store stock
-						TriggerServerEvent('fsn_store_guns:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
-						setItemOwner(secondInventory_type, secondInventory[data.fromSlot].customData)
+						TriggerServerEvent('fsn_store:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
+						setItemOwner(secondInventory_type, secondInventory[data.fromSlot])
 						-- Maybe there is a better way to do this in order for serials to not duplicate when buying more than one gun in a session?
 						-- For now this will do though
-						TriggerServerEvent('fsn_store_guns:closedStore', secondInventory_id)
-						TriggerServerEvent('fsn_store_guns:request', secondInventory_id)
+						TriggerServerEvent('fsn_store:closedStore', secondInventory_id)
+						TriggerServerEvent('fsn_store:request', secondInventory_id, isGunstore)
+						isGunstore = false
 						-- Save the inventory on buying
 						TriggerEvent('fsn_main:characterSaving')
 					else
@@ -271,7 +275,7 @@ RegisterNUICallback( "dragToSlot", function(data, cb)
 					--TriggerEvent('fsn_bank:change:walletMinus', tonumber(secondInventory[data.fromSlot].data.price * data.amt))
 					-- remove item from store stock
 					TriggerServerEvent('fsn_police:armory:boughtOne', secondInventory_id, secondInventory[data.fromSlot].index)
-					setItemPolice(secondInventory_id, secondInventory[data.fromSlot].customData)
+					setItemPolice(secondInventory_id, secondInventory[data.fromSlot])
 					-- Maybe there is a better way to do this in order for serials to not duplicate when buying more than one gun in a session?
 					-- For now this will do though
 					TriggerServerEvent('fsn_police:armory:closedArmory', secondInventory_id)
@@ -570,7 +574,7 @@ RegisterNUICallback("dropSlot", function(data, cb)
 	end
 	if data.amt == slot.amt then
 		-- start dropping -- 
-		local coords = GetEntityCoords(GetPlayerPed(-1))
+		local coords = GetEntityCoords(PlayerPedId())
 		local xyz = {x=coords.x, y=coords.y, z=coords.z}
 		TriggerServerEvent('fsn_inventory:drops:drop', xyz, slot)
 		-- end dropping --
@@ -586,7 +590,7 @@ RegisterNUICallback("dropSlot", function(data, cb)
 		}
 		firstInventory[data.fromSlot].amt = firstInventory[data.fromSlot].amt - data.amt
 		-- start dropping -- 
-		local coords = GetEntityCoords(GetPlayerPed(-1))
+		local coords = GetEntityCoords(PlayerPedId())
 		local xyz = {x=coords.x, y=coords.y, z=coords.z}
 		TriggerServerEvent('fsn_inventory:drops:drop', xyz, item)
 		-- end dropping --
@@ -650,7 +654,7 @@ function toggleGUI()
 			TriggerServerEvent('fsn_inventory:locker:save', secondInventory)
 		end
 		if secondInventory_type == 'store_gun' then
-			TriggerServerEvent('fsn_store_guns:closedStore', secondInventory_id)
+			TriggerServerEvent('fsn_store:closedStore', secondInventory_id)
 		end
 		if secondInventory_type == 'armories' then
 			TriggerServerEvent('fsn_police:armory:closedArmory', secondInventory_id)
@@ -787,15 +791,30 @@ AddEventHandler('fsn_inventory:store_gun:recieve', function(storeid, tbl)
 end)
 
 RegisterNetEvent('fsn_inventory:store:recieve')
-AddEventHandler('fsn_inventory:store:recieve', function(storeid, tbl)
-	secondInventory_type = 'store'
-	secondInventory_id = storeid
-	secondInventory = tbl
-	updateGUI()
-	if not gui then
-		toggleGUI()
+AddEventHandler('fsn_inventory:store:recieve', function(storeid, tbl, gunstore)
+	if not gunstore then
+		secondInventory_type = 'store'
+		secondInventory_id = storeid
+		secondInventory = tbl
+		isGunstore = false
+		updateGUI()
+		if not gui then
+			toggleGUI()
+		end
+		invLog('received data from store('..storeid..')')
+		print('your basic ass store bby')
+	elseif gunstore then
+		secondInventory_type = 'store_gun'
+		secondInventory_id = storeid
+		secondInventory = tbl
+		isGunstore = true
+		updateGUI()
+		if not gui then
+			toggleGUI()
+		end
+		invLog('received data from gunstore('..storeid..')')
+		print('Gun store bby')
 	end
-	invLog('received data from store('..storeid..')')
 end)
 
 RegisterNetEvent('fsn_inventory:police_armory:recieve')
@@ -878,7 +897,7 @@ AddEventHandler('fsn_inventory:items:add', function(item)
 		exports['mythic_notify']:DoHudText('error', 'You do not have a slot free for this!')
 		
 		-- start dropping -- 
-		local coords = GetEntityCoords(GetPlayerPed(-1))
+		local coords = GetEntityCoords(PlayerPedId())
 		local xyz = {x=coords.x, y=coords.y, z=coords.z}
 		TriggerServerEvent('fsn_inventory:drops:drop', xyz, item)
 		-- end dropping --
@@ -892,9 +911,19 @@ AddEventHandler('fsn_inventory:items:addPreset', function(item, amt)
 	if presetItems[item] then
 		local insert = presetItems[item]
 		insert.amt = amt
-		TriggerEvent('fsn_inventory:items:add', insert)
+		if insert.customData ~= nil then
+			if insert.customData.weapon == 'true' then
+				fsn_setDevWeapon(insert)
+				TriggerEvent('fsn_inventory:items:add', insert)
+			end
+		else
+			TriggerEvent('fsn_inventory:items:add', insert)
+		end
 	else
-		exports['mythic_notify']:DoHudText('error', 'Item reset '..item..' seems to be missing')
+		for k,v in pairs(presetItems) do
+		print('please')
+		end
+		exports['mythic_notify']:DoHudText('error', 'Item preset '..item..' seems to be missing')
 	end
 end)
 RegisterNetEvent('fsn_inventory:item:add')
@@ -962,10 +991,10 @@ function equipWeapon(item, key)
 	if invBusy then Citizen.Wait(1);print'invBusy'; end
 	invBusy = true
 	if item and item.index and not item.inuse then
-		RemoveAllPedWeapons(GetPlayerPed(-1))
+		RemoveAllPedWeapons(PlayerPedId())
 		print(item.index)
-		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(item.index), item['customData'].ammo, 1, 0)
-		SetCurrentPedWeapon(GetPlayerPed(-1), item.index, 0)
+		GiveWeaponToPed(PlayerPedId(), GetHashKey(item.index), item['customData'].ammo, 1, 0)
+		SetCurrentPedWeapon(PlayerPedId(), item.index, 0)
 		
 		currentWeapon = item
 		currentHotkey = key
@@ -976,12 +1005,12 @@ function equipWeapon(item, key)
 		RequestAnimDict("reaction@intimidation@cop@unarmed")
 		while not HasAnimDictLoaded("reaction@intimidation@cop@unarmed") do Citizen.Wait(1) end
 
-		DisablePlayerFiring(GetPlayerPed(-1), true)
-		SetPedCurrentWeaponVisible(GetPlayerPed(-1), 1, 1, 1, 1)
-		TaskPlayAnim(GetPlayerPed(-1), "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
+		DisablePlayerFiring(PlayerPedId(), true)
+		SetPedCurrentWeaponVisible(PlayerPedId(), 1, 1, 1, 1)
+		TaskPlayAnim(PlayerPedId(), "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
 		Citizen.Wait(800)
-		DisablePlayerFiring(GetPlayerPed(-1), false)
-		ClearPedTasks(GetPlayerPed(-1))
+		DisablePlayerFiring(PlayerPedId(), false)
+		ClearPedTasks(PlayerPedId())
 		TriggerServerEvent('fsn_main:logging:addLog', GetPlayerServerId(PlayerId()), 'weapons', 'Player('..GetPlayerServerId(PlayerId())..') equipped '..item.index..' with '..item['customData'].ammo..' ammo.')
 		TriggerEvent('fsn_evidence:weaponInfo', item.customData)
 	else
@@ -990,25 +1019,25 @@ function equipWeapon(item, key)
 			invBusy = false
 			return
 		end
-		local weapon, hash = GetCurrentPedWeapon(GetPlayerPed(-1), 1)
+		local weapon, hash = GetCurrentPedWeapon(PlayerPedId(), 1)
         if(weapon) then
-            local _,ammoInClip = GetAmmoInClip(GetPlayerPed(-1), hash)
-            local totalAmmo = GetAmmoInPedWeapon(GetPlayerPed(-1), hash)
+            local _,ammoInClip = GetAmmoInClip(PlayerPedId(), hash)
+            local totalAmmo = GetAmmoInPedWeapon(PlayerPedId(), hash)
             currentWeapon['customData'].ammo = totalAmmo
         else
         	currentWeapon['customData'].ammo = 0
         	exports['mythic_notify']:DoHudText('error', 'No weapon found - ammo reset.')
         end
 
-		RemoveAllPedWeapons(GetPlayerPed(-1))
+		RemoveAllPedWeapons(PlayerPedId())
 
-		ResetPedMovementClipset(GetPlayerPed(-1)) -- cant remember why im resetting this
-		ResetPedStrafeClipset(GetPlayerPed(-1)) -- cant remember why im resetting this
-		ResetPedWeaponMovementClipset(GetPlayerPed(-1)) -- cant remember why im resetting this
-		ClearPedTasksImmediately(GetPlayerPed(-1)) -- cant remember why im resetting this
+		ResetPedMovementClipset(PlayerPedId()) -- cant remember why im resetting this
+		ResetPedStrafeClipset(PlayerPedId()) -- cant remember why im resetting this
+		ResetPedWeaponMovementClipset(PlayerPedId()) -- cant remember why im resetting this
+		ClearPedTasksImmediately(PlayerPedId()) -- cant remember why im resetting this
 
-		GiveWeaponToPed(GetPlayerPed(-1), '2725352035', 0, 1, 0)
-		SetCurrentPedWeapon(GetPlayerPed(-1), '2725352035', 0)
+		GiveWeaponToPed(PlayerPedId(), '2725352035', 0, 1, 0)
+		SetCurrentPedWeapon(PlayerPedId(), '2725352035', 0)
 		
 		TriggerServerEvent('fsn_main:logging:addLog', GetPlayerServerId(PlayerId()), 'weapons', 'Player('..GetPlayerServerId(PlayerId())..') holstered '..currentWeapon.index..' with '..currentWeapon['customData'].ammo..' ammo.')
 
@@ -1044,7 +1073,6 @@ local ammo_table = {
 local lastTab = 0
 
 function handleHotkeys( number )
-	if not exports['fsn_phones']:isPhoneActive() then
 		local used_item = firstInventory[number]
 		--[[if currentWeapon then
 			-- if weapon is equipped, put it away
@@ -1099,7 +1127,6 @@ function handleHotkeys( number )
 			exports['mythic_notify']:DoHudText('error', 'Missing item')
 			return
 		end
-	end
 end
 
 Util.Tick(function()

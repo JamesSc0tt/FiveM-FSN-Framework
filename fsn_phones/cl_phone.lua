@@ -136,7 +136,7 @@ function sendDataStore()
 			table.insert(myWhitelists, #myWhitelists+1, exports['fsn_jobs']:getWhitelistDetails(v))
 		end
 	end
-		
+
 	SendNUIMessage({
 		type = 'update',
 		messages = datastore['messages'],
@@ -154,6 +154,7 @@ function sendDataStore()
 	})
 end
 
+--[[
 function isPhoneActive()
 	if phoneEnabled then
 		return true
@@ -161,6 +162,7 @@ function isPhoneActive()
 		return false
 	end
 end
+]]
 
 function togglePhone()
 	if not init() then return end -- character has not been initiated
@@ -168,7 +170,6 @@ function togglePhone()
 	if phoneEnabled then
 		ClearPedTasks(playerPed)
 		SetNuiFocus( false )
-		SetNuiFocusKeepInput(false)
 		SendNUIMessage({
 			type = 'status',
 			display = false,
@@ -180,8 +181,7 @@ function togglePhone()
 			TriggerEvent('fsn_notify:displayNotification', 'You do not have a phone!<br>Visit a general store to get one.', 'centerLeft', 5000, 'error')
 		return end
 		
-		SetNuiFocus( true, false )
-		SetNuiFocusKeepInput(true)
+		SetNuiFocus( true, true )
 		SendNUIMessage({
 			type = 'status',
 			display = true,
@@ -199,89 +199,8 @@ function togglePhone()
 	phoneEnabled = not phoneEnabled
 end
 
-function GetMouseXY()
-	local screenWidth, screenHeight = GetActiveScreenResolution()
-	local x = GetDisabledControlNormal(2, 239)
-	local y = GetDisabledControlNormal(2, 240)
-	return screenWidth * x, screenHeight * y
-  end
-  
-  local lastX, lastY
-  Citizen.CreateThread(function()
-	while true do
-		--print(messageActive)
-	  if phoneEnabled then
-		SetPauseMenuActive(false)
-		DisableControlAction(0,24, true) -- disable attack
-		DisableControlAction(0,25, true) -- disable aim
-		DisableControlAction(0, 1, true) -- LookLeftRight
-		DisableControlAction(0, 2, true) -- LookUpDown
-		DisableControlAction(0, 322, true) -- ESCAPE
-		DisableControlAction(0,157, true) -- 1
-		DisableControlAction(0,158, true) -- 2
-		DisableControlAction(0,160, true) -- 3
-		DisableControlAction(0,164, true) -- 4
-		DisableControlAction(0,165, true) -- 5
-		DisableControlAction(0,81, true) -- Radio Stations
-		DisableControlAction(0,82, true) -- Radio Stations
-		DisableControlAction(0,261, true) -- Weapons
-		DisableControlAction(0,262, true) -- Weapons
-		DisableControlAction(0,115, true) -- Weapons
-		DisableControlAction(0,99, true) -- Weapons
-		DisableControlAction(0,16, true) -- Weapons
-		DisableControlAction(0,17, true) -- Weapons
-		if messageActive then
-			DisableControlAction(0,31, true) -- d
-			DisableControlAction(0,32, true) -- w
-			DisableControlAction(0,30, true) -- s
-			DisableControlAction(0,34, true) -- a
-			DisableControlAction(0,157, true) -- 1
-			DisableControlAction(0,158, true) -- 2
-			DisableControlAction(0,160, true) -- 3
-			DisableControlAction(0,164, true) -- 4
-			DisableControlAction(0,165, true) -- 5
-			DisableControlAction(0,245, true) -- T
-			DisableControlAction(0,305, true) -- B
-			DisableControlAction(0,29, true) -- Backspace
-		end
-
-
-		
-		local x, y = GetMouseXY()
-		if IsControlJustPressed(2, 237) then
-			print(x)
-		  SendNUIMessage({
-			action = 'Mouse',
-			type = 'mouseclick',
-			x = x,
-			y = y
-		  })
-		elseif IsControlJustReleased(2, 237) then
-		  SendNUIMessage({
-			action = 'Mouse',
-			type = 'mouseup',
-			x = x,
-			y = y
-		  })
-		end
-		if x ~= lastX or y ~= lastY then
-		  SendNUIMessage({
-			action = 'Mouse',
-			type = 'mousemove',
-			x = x,
-			y = y
-		  })
-		  lastX = x
-		  lastY = y
-		end
-		end
-	  Wait(0)
-	end
-  end)
-
 -- disable nui focus every time the script is restarted 
 SetNuiFocus( false )
-SetNuiFocusKeepInput(false)
 
 RegisterNUICallback( "callContact", function(data, cb)
 	ExecuteCommand('call '..data.pn)
@@ -373,6 +292,7 @@ RegisterNUICallback( "sendToServer", function(data, cb)
 	end
 end)
 
+--[[
 function toggleMessage()
 	if not messageActive then
 		messageActive = true
@@ -384,12 +304,14 @@ end
 function toggleMessageInactive()
 		messageActive = false
 end
+]]
 
 RegisterNUICallback( "closePhone", function(data, cb)
 	togglePhone()
 	PhonePlayOut()
 end)
 
+--[[
 RegisterNUICallback('messageactive', function(data, cb)
 	toggleMessage()
 end)
@@ -397,7 +319,7 @@ end)
 RegisterNUICallback('messageinactive', function(data, cb)
 	toggleMessageInactive()
 end)
-
+]]
 RegisterNetEvent('fsn_phones:GUI:notification')
 AddEventHandler('fsn_phones:GUI:notification', function(icon, app, html, sound)
 	if sound then

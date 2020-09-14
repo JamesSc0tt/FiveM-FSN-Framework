@@ -166,8 +166,9 @@ end)
 
 local resources = {
 	'fsn_spawnmanager',
-	'fsn_admin',
-	'fsn_apartments',
+  'fsn_admin',
+  'fsn_apartments',
+  'fsn_activities',
 	'fsn_bank',
 	'fsn_bankrobbery',
 	'fsn_bennys',
@@ -211,7 +212,7 @@ local resources = {
 	'fsn_steamlogin',
 	'fsn_storagelockers',
 	'fsn_store',
-	'fsn_store_guns',
+	--'fsn_store_guns',
 	'fsn_stripclub',
 	'fsn_teleporters',
 	'fsn_timeandweather',

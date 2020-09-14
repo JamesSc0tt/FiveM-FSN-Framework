@@ -1,179 +1,112 @@
 -- These will restock every restart, unless you make something so it doesn't.
 local stores = {
-    ['liquorace'] = {
-		busy = false,
-		stock = {
-            beef_jerky = {amt=999,price=4},
-            cupcake = {amt = 999, price = 1},
-            microwave_burrito = {amt = 999, price = 8},
-            panini = {amt = 999, price = 6},
-            pepsi = {amt = 999, price = 5},
-            phone = {amt = 999, price = 250},
-            bandage = {amt = 1500, price = 250},
-            binoculars = {amt = 999, price = 250}
 
-		}
+  --[[
+    YOUR BASIC ASS STORES
+  ]]
+
+    ['liquorace'] = {
+      busy = false,
+      stock = {
+        beef_jerky        = {amt=999,price=4},
+        cupcake           = {amt = 999, price = 1},
+        microwave_burrito = {amt = 999, price = 8},
+        panini            = {amt = 999, price = 6},
+        pepsi             = {amt = 999, price = 5},
+        phone             = {amt = 999, price = 250},
+        bandage           = {amt = 1500, price = 250},
+        binoculars        = {amt = 999, price = 250}
+
+      }
     },
+
     ['ltdgas'] = {
 		busy = false,
-		stock = {
-            beef_jerky = {amt=999,price=4},
-            cupcake = {amt = 999, price = 1},
-            microwave_burrito = {amt = 999, price = 8},
-            panini = {amt = 999, price = 6},
-            pepsi = {amt = 999, price = 5},
-            phone = {amt = 999, price = 250},
-            bandage = {amt = 1500, price = 250},
-            binoculars = {amt = 999, price = 250}
+      stock = {
+        beef_jerky        = {amt=999,price=4},
+        cupcake           = {amt = 999, price = 1},
+        microwave_burrito = {amt = 999, price = 8},
+        panini            = {amt = 999, price = 6},
+        pepsi             = {amt = 999, price = 5},
+        phone             = {amt = 999, price = 250},
+        bandage           = {amt = 1500, price = 250},
+        binoculars         = {amt = 999, price = 250}
 
-		}
+      }
     },
 	
     ['robsliquor'] = {
-		busy = false,
-		stock = {
-            beef_jerky = {amt=999,price=4},
-            cupcake = {amt = 999, price = 1},
-            microwave_burrito = {amt = 999, price = 8},
-            panini = {amt = 999, price = 6},
-            pepsi = {amt = 999, price = 5},
-            phone = {amt = 999, price = 250},
-            bandage = {amt = 1500, price = 250},
-            binoculars = {amt = 999, price = 250}
-		}
+      busy = false,
+      stock = {
+        beef_jerky        = {amt=999,price=4},
+        cupcake           = {amt = 999, price = 1},
+        microwave_burrito = {amt = 999, price = 8},
+        panini            = {amt = 999, price = 6},
+        pepsi             = {amt = 999, price = 5},
+        phone             = {amt = 999, price = 250},
+        bandage           = {amt = 1500, price = 250},
+        binoculars        = {amt = 999, price = 250}
+      }
     },
+
     ['twentyfourseven'] = {
-		busy = false,
-		stock = {
-            beef_jerky = {amt=999,price=4},
-            cupcake = {amt = 999, price = 1},
-            microwave_burrito = {amt = 999, price = 8},
-            panini = {amt = 999, price = 6},
-            pepsi = {amt = 999, price = 5},
-            phone = {amt = 999, price = 250},
-            bandage = {amt = 1500, price = 250},
-            binoculars = {amt = 999, price = 250}
+      busy = false,
+      stock = {
+        beef_jerky        = {amt=999,price=4},
+        cupcake           = {amt = 999, price = 1},
+        microwave_burrito = {amt = 999, price = 8},
+        panini            = {amt = 999, price = 6},
+        pepsi             = {amt = 999, price = 5},
+        phone             = {amt = 999, price = 250},
+        bandage           = {amt = 1500, price = 250},
+        binoculars        = {amt = 999, price = 250}
 
-		}
+      }
     },
+
     ['pillbox'] = {
-		busy = false,
-		stock = {
-            beef_jerky = {amt=999,price=4},
-            cupcake = {amt = 999, price = 1},
-            microwave_burrito = {amt = 999, price = 8},
-            panini = {amt = 999, price = 6},
-            pepsi = {amt = 999, price = 5},
-            phone = {amt = 999, price = 250},
-            bandage = {amt = 1500, price = 250},
-            binoculars = {amt = 999, price = 250}
-
-		}
-    },
-}
-
-local items = {
-    beef_jerky = {
-      index = 'beef_jerky',
-      name = 'Beef Jerky',
-      data = {
-        weight = 0.5
-      },
-    },
-    cupcake = {
-      index = 'cupcake',
-      name = 'Cupcake',
-      data = {
-        weight = 0.5
-      }
-    },
-    microwave_burrito = {
-      index = 'microwave_burrito',
-      name = 'Microwave Burrito',
-      data = {
-        weight = 1.5
-      }
-    },
-    panini = {
-      index = 'panini',
-      name = 'Panini',
-      data = {
-        weight = 1
-      }
-    },
-    pepsi = {
-      index = 'pepsi',
-      name = 'Pepsi',
-      data = {
-        weight = 1
-      }
-    },
-    pepsi_max = {
-      index = 'pepsi_max',
-      name = 'Pepsi Max',
-      data = {
-        weight = 1
-      }
-    },
-    water = {
-      index = 'water',
-      name = 'Water',
-      data = {
-        weight = 1
+      busy = false,
+      stock = {
+        beef_jerky        = {amt=999,price=4},
+        cupcake           = {amt = 999, price = 1},
+        microwave_burrito = {amt = 999, price = 8},
+        panini            = {amt = 999, price = 6},
+        pepsi             = {amt = 999, price = 5},
+        phone             = {amt = 999, price = 250},
+        bandage           = {amt = 1500, price = 250},
+        binoculars        = {amt = 999, price = 250}
 
       }
     },
-    coffee = {
-      index = 'coffee',
-      name = 'Coffee',
-      data = {
-        weight = 1
-      }
-    },
-    lockpick = {
-      index = 'lockpick',
-      name = 'Lockpick',
-      data = {
-        weight = 1.5
-      }
-    },
-    zipties = {
-      index = 'zipties',
-      name = 'Zip Ties',
-      data = {
-        weight = 3
-      }
-    },
-    phone = {
-      index = 'phone',
-      name = 'Phone',
-      data = {
-        weight = 1
-      }
-    },
-    bandage = {
-      index = 'bandage',
-      name = 'Bandage',
-      data = {
-        weight = 0.4
-      }
-    },
-    binoculars = {
-      index = 'binoculars',
-      name = 'Binoculars',
-      data ={
-        weight = 3
+
+    --[[
+      GUN STORES HELL YEAH!
+    ]]
+    ['ply_owner'] = {
+      busy = false,
+      stock = {
+        weapon_assaultrifle   	= {amt = 999, price = 10000},
+        weapon_combatpistol 	  = {amt = 999, price = 500},
+        weapon_smg 			      	= {amt = 999, price = 500},
+        weapon_fireextinguisher = {amt = 999, price = 500},
+        ammo_pistol 			      = {amt = 999, price = 600},
+        ammo_pistol_large 		  = {amt = 999, price = 800},
+        ammo_smg 				        = {amt = 999, price = 600},
+        ammo_smg_large 			    = {amt = 999, price = 800},
+        armor 					        = {amt = 999, price = 1000},
       }
     }
 }
+
+local items = {}
 
 --[[
 	Hint: you could add some code here to make players own stores and put stock in??
 ]]--
 
 RegisterServerEvent('fsn_store:request')
-AddEventHandler('fsn_store:request', function(store_id)
-	local s = stores[store_id]
+AddEventHandler('fsn_store:request', function(store_id, gunstore)
+  local s = stores[store_id]
     if s then
         if s.busy == false then
             s.busy = source
@@ -194,7 +127,7 @@ AddEventHandler('fsn_store:request', function(store_id)
                 end
             end
 
-            TriggerClientEvent('fsn_inventory:store:recieve', source, store_id, inv)
+            TriggerClientEvent('fsn_inventory:store:recieve', source, store_id, inv, gunstore)
          else
             TriggerClientEvent('fsn_notify:displayNotification', source, 'This store is in use by another player: '..s.busy, 'centerRight', 8000, 'error')
         end
@@ -228,10 +161,25 @@ AddEventHandler('fsn_store:closedStore', function(store_id)
 	end
 end)
 
+RegisterNetEvent('fsn_store:recieveItemsForStore')
+AddEventHandler('fsn_store:recieveItemsForStore', function(presetItems)
+
+  items = presetItems
+
+end)
+
 AddEventHandler('playerDropped', function()
 	for k,v in pairs(stores) do
 		if v.busy == source then
 			v.busy = false
 		end
 	end
+end)
+
+AddEventHandler('onResourceStart', function(resourceName)
+  if (GetCurrentResourceName() ~= resourceName) then
+      return
+  end
+  print('^6' .. resourceName .. ' has started. Recieving presetItems for stock^0')
+  TriggerEvent('fsn_inventory:sendItemsToStore')
 end)

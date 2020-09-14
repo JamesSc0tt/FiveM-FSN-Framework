@@ -4,6 +4,10 @@ local armories = {
     {pos = vector3(-438.38093896484, 6001.0734375, 31.720390609741), id = 'paleto_armory', busy = false}
 }
 
+--[[
+    Draw the fuckin markers my guy
+]]
+
 Util.Tick(function()
     local playerPed = PlayerPedId()
     local playerPos = GetEntityCoords(playerPed, true)
@@ -38,6 +42,10 @@ Util.Tick(function()
         end
     end
 end)
+
+--[[
+    Trigger that sexy ass inventory
+]]
 
 RegisterNetEvent('fsn_police:armory:request')
 AddEventHandler('fsn_police:armory:request', function (armory_id)

@@ -15,6 +15,10 @@ exports({
   'EnumerateObjects'
 })
 
+server_exports({
+  'fsn_itemStock'
+})
+
 -- Item scripts
 client_script '_item_misc/binoculars.lua'
 client_script '_item_misc/dm_laundering.lua'
@@ -22,7 +26,8 @@ client_script '_item_misc/burger_store.lua'
 client_script '_item_misc/cl_breather.lua'
 
 ---------------------------------------------------- new script stuff below
-	client_script 'cl_presets.lua'
+  client_script 'cl_presets.lua'
+  server_script 'sv_presets.lua'
 	client_script 'cl_uses.lua'
 	client_script 'cl_inventory.lua'
 	client_script 'pd_locker/cl_locker.lua'

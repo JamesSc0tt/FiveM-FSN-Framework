@@ -1,5 +1,9 @@
 policelevel = 0
 
+--[[
+    Armory locations
+]]
+
 local armories = {
     ['lspd_armory'] = {
         id = 'lspd_armory',
@@ -18,253 +22,77 @@ local armories = {
     },
 }
 
+--[[
+    Begin the stock for the armories based on pd level
+]]
+
 local recruitStock = {
-    WEAPON_STUNGUN = {amt = 999, price = 1},
-    WEAPON_FLARE = {amt = 999, price = 1},
-    WEAPON_NIGHTSTICK = {amt = 999, price = 1},
-    WEAPON_FLASHLIGHT = {amt = 999, price = 1},
-    WEAPON_FIREEXTINGUISHER = {amt = 999, price = 1},
-    armor = {amt = 999, price = 1},
+    weapon_stungun          = {amt = 999, price = 1},
+    weapon_flare            = {amt = 999, price = 1},
+    weapon_nightstick       = {amt = 999, price = 1},
+    weapon_flashlight       = {amt = 999, price = 1},
+    weapon_fireextinguisher = {amt = 999, price = 1},
+    armor                   = {amt = 999, price = 1},
 }
 
 local officerStock = {
-    WEAPON_STUNGUN = {amt = 999, price = 1},
-    WEAPON_FLARE = {amt = 999, price = 1},
-    WEAPON_NIGHTSTICK = {amt = 999, price = 1},
-    WEAPON_FLASHLIGHT = {amt = 999, price = 1},
-    WEAPON_FIREEXTINGUISHER = {amt = 999, price = 1},
-    WEAPON_PISTOL = {amt = 999, price = 1},
-    armor = {amt = 999, price = 1},
-    ammo_pistol = {amt = 999, price = 1},
-    ammo_pistol_large = {amt = 999, price = 1},
-    ammo_shotgun = {amt = 999, price = 1},
-    ammo_shotgun_large = {amt = 999, price = 1},
-    ammo_rifle = {amt = 999, price = 1},
-    ammo_rifle_large = {amt = 999, price = 1},
-    scuba_gear = {amt = 999, price = 1},
+    weapon_stungun          = {amt = 999, price = 1},
+    weapon_flare            = {amt = 999, price = 1},
+    weapon_nightstick       = {amt = 999, price = 1},
+    weapon_flashlight       = {amt = 999, price = 1},
+    weapon_fireextinguisher = {amt = 999, price = 1},
+    weapon_pistol           = {amt = 999, price = 1},
+    armor                   = {amt = 999, price = 1},
+    ammo_pistol             = {amt = 999, price = 1},
+    ammo_pistol_large       = {amt = 999, price = 1},
+    ammo_shotgun            = {amt = 999, price = 1},
+    ammo_shotgun_large      = {amt = 999, price = 1},
+    ammo_rifle              = {amt = 999, price = 1},
+    ammo_rifle_large        = {amt = 999, price = 1},
+    scuba_gear              = {amt = 999, price = 1},
 }
 
 local sergeantStock = {
-    WEAPON_STUNGUN = {amt = 999, price = 1},
-    WEAPON_FLARE = {amt = 999, price = 1},
-    WEAPON_NIGHTSTICK = {amt = 999, price = 1},
-    WEAPON_FLASHLIGHT = {amt = 999, price = 1},
-    WEAPON_FIREEXTINGUISHER = {amt = 999, price = 1},
-    WEAPON_PISTOL = {amt = 999, price = 1},
-    WEAPON_CARBINERIFLE = {amt = 999, price = 1},
-    WEAPON_PUMPSHOTGUN = {amt = 999, price = 1},
-    armor = {amt = 999, price = 1},
-    ammo_pistol = {amt = 999, price = 1},
-    ammo_pistol_large = {amt = 999, price = 1},
-    ammo_shotgun = {amt = 999, price = 1},
-    ammo_shotgun_large = {amt = 999, price = 1},
-    ammo_rifle = {amt = 999, price = 1},
-    ammo_rifle_large = {amt = 999, price = 1},
-    scuba_gear = {amt = 999, price = 1},
+    weapon_stungun          = {amt = 999, price = 1},
+    weapon_flare            = {amt = 999, price = 1},
+    weapon_nightstick       = {amt = 999, price = 1},
+    weapon_flashlight       = {amt = 999, price = 1},
+    weapon_fireextinguisher = {amt = 999, price = 1},
+    weapon_pistol           = {amt = 999, price = 1},
+    weapon_carbinerifle     = {amt = 999, price = 1},
+    weapon_pumpshotgun      = {amt = 999, price = 1},
+    armor                   = {amt = 999, price = 1},
+    ammo_pistol             = {amt = 999, price = 1},
+    ammo_pistol_large       = {amt = 999, price = 1},
+    ammo_shotgun            = {amt = 999, price = 1},
+    ammo_shotgun_large      = {amt = 999, price = 1},
+    ammo_rifle              = {amt = 999, price = 1},
+    ammo_rifle_large        = {amt = 999, price = 1},
+    scuba_gear              = {amt = 999, price = 1},
 
 }
 
-local items = {
-    ['WEAPON_STUNGUN'] = {
-        index = "WEAPON_STUNGUN",
-        name = "Stun Gun",
-        amt = 1,
-        customData = {
-            weapon = 'true',
-            ammo = 0,
-            ammotype = 'none',
-            quality = 'normal',
-            PDIssued = Util.MakeString(6)
-        }
-    },
+--[[
+    End the stock
 
-    ['WEAPON_FLARE'] = {
-        index = "WEAPON_FLARE",
-        name = "Flare",
-        amt = 1,
-        customData = {
-            weapon = 'true',
-            ammo = 100,
-            ammotype = 'none',
-            quality = 'normal',
-        }
-    },
+    Begin the actual item clarification
+]]
 
-    ['WEAPON_NIGHTSTICK'] = {
-        index = "WEAPON_NIGHTSTICK",
-        name = "Nightstick",
-        amt = 1,
-        customData = {
-            weapon = 'true',
-            ammo = 0,
-            ammotype = 'none',
-            quality = 'normal',
-        }
-    },
+local items = {}
 
-    ['WEAPON_FIREEXTINGUISHER'] = {
-        index = "WEAPON_FIREEXTINGUISHER",
-        name = "Fire Extinguisher",
-        amt = 1,
-        customData = {
-            weapon = 'true',
-            ammo = 200,
-            ammotype = 'none',
-            quality = 'normal',
-        }
-    },
+--[[
+    End items
+]]
 
-    ['WEAPON_PISTOL'] = {
-        index = "WEAPON_PISTOL",
-        name = "Pistol",
-        amt = 1,
-        customData = {
-            weapon = 'true',
-            ammo = 200,
-            ammotype = 'pistol_ammo',
-            quality = 'normal',
-            PDIssued = Util.MakeString(6)
-        }
-    },
 
-    ['WEAPON_FLASHLIGHT'] = {
-        index = "WEAPON_FLASHLIGHT",
-        name = "Flashlight",
-        amt = 1,
-        customData = {
-            weapon = 'true',
-            ammo = 0,
-            ammotype = 'none',
-            quality = 'normal',
-        }
-    },
-
-    ['WEAPON_PUMPSHOTGUN'] = {
-        index = "WEAPON_PUMPSHOTGUN",
-        name = "Pump Shotgun",
-        amt = 1,
-        customData = {
-            weapon = 'true',
-            ammo = 200,
-            ammotype = '12gauge_ammo',
-            quality = 'normal',
-            PDIssued = Util.MakeString(6)
-        }
-    },
-    
-    ['WEAPON_CARBINERIFLE'] = {
-        index = "WEAPON_CARBINERIFLE",
-        name = "Carbine Rifle",
-        amt = 1,
-        customData = {
-            weapon = 'true',
-            ammo = 200,
-            ammotype = 'rifle_ammo',
-            quality = 'normal',
-            PDIssued = Util.MakeString(6)
-        }
-    },
-
-    ammo_pistol = {
-        index = 'ammo_pistol',
-        name = "Pistol Ammo",
-		data = {
-			weight = 5.5
-		},
-    },
-
-    ammo_pistol_large = {
-        index = 'ammo_pistol_large',
-        name = "Large Pistol Ammo",
-		data = {
-			weight = 8.5
-		},
-    },
-
-    ammo_smg = {
-        index = 'ammo_smg',
-        name = "SMG Ammo",
-		data = {
-			weight = 5.5
-		},
-    },
-
-    ammo_smg_large = {
-        index = 'ammo_smg_large',
-        name = "Large SMG Ammo",
-		data = {
-			weight = 8.5
-		},
-    },
-
-    ammo_shotgun = {
-        index = 'ammo_shotgun',
-        name = "Shotgun Ammo",
-		data = {
-			weight = 6.5
-		},
-    },
-
-    ammo_shotgun_large = {
-        index = 'ammo_shotgun_large',
-        name = "Large Shotgun Ammo",
-		data = {
-			weight = 9.5
-		},
-    },
-
-    ammo_rifle = {
-        index = 'ammo_rifle',
-        name = "Rifle Ammo",
-		data = {
-			weight = 6.5
-		},
-    },
-
-    ammo_rifle_large = {
-        index = 'ammo_rifle_large',
-        name = "Large Rifle Ammo",
-		data = {
-			weight = 9.5
-		},
-    },
-
-    ammo_sniper = {
-        index = 'ammo_sniper',
-        name = "Sniper Ammo",
-		data = {
-			weight = 6.5
-		},
-    },
-
-    ammo_sniper_large = {
-        index = 'ammo_sniper_large',
-        name = "Large Sniper Ammo",
-		data = {
-			weight = 9.5
-		},
-    },
-
-    armor = {
-        index = 'armor',
-        name = "Kevlar",
-		data = {
-			weight = 13.5
-		},
-    },
-
-    scuba_gear = {
-        index = 'scuba',
-        name = 'Scuba Gear',
-        data = {
-            weight = 6.0
-        },
-    },
-}
+--[[
+    Begin Events
+]]
 
 RegisterNetEvent('fsn_police:armory:request')
 AddEventHandler('fsn_police:armory:request', function(armory_id, policelevel)
     --local policelevel = policelevel
+    print(items)
     local a = armories[armory_id]
     if a then
         if a.busy == false then
@@ -374,6 +202,11 @@ AddEventHandler('fsn_police:armory:closedArmory', function(armory_id)
 	end
 end)
 
+RegisterNetEvent('fsn_police:armory:recieveItemsForArmory')
+AddEventHandler('fsn_police:armory:recieveItemsForArmory', function(presetItems)
+    items = presetItems
+end)
+
 AddEventHandler('playerDropped', function()
 	for k,v in pairs(armories) do
 		if v.busy == source then
@@ -381,4 +214,15 @@ AddEventHandler('playerDropped', function()
 		end
 	end
 end)
-                
+
+AddEventHandler('onResourceStart', function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+    end
+    print('^6' .. resourceName .. ' has started. Recieving presetItems for stock^0')
+    TriggerEvent('fsn_inventory:sendItemsToArmory')
+  end)
+
+--[[
+    End Events
+]]

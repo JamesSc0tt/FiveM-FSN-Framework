@@ -57,7 +57,7 @@ function changePage(page, phone) { // simple function that disables the css from
 		}
 	}
 }
-
+/*
 function messageAreaActive() {
 	$.post('http://fsn_phones/messageactive', JSON.stringify({}));
 }
@@ -65,6 +65,7 @@ function messageAreaActive() {
 function messageAreaInActive() {
 	$.post('http://fsn_phones/messageinactive', JSON.stringify({}));
 }
+*/
 
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
   try {
@@ -215,13 +216,11 @@ $(function () {
 			if (event.data.display) {
 				if (event.data.phoneType == 'iphone') {
 					$('#phone-iphone').show();
-					$('#cursor').show();
 					changePage('home', 'iphone');
 					currentPhone = 'iphone';
 				} else {
 					$('#phone-samsung').show();
 					changePage('home', 'samsung');
-					$('#cursor').show();
 					currentPhone = 'samsung';
 				}
 				
@@ -231,32 +230,14 @@ $(function () {
 			} else {
 				$('#phone-iphone').hide();
 				$('#phone-samsung').hide();
-				$('#cursor').hide();
 			}
 			return;
-		}
-		if (event.data.action == 'Mouse') {
-			//Simulate mouse events from Lua
-			var ev = document.createEvent("MouseEvent");
-			var el = document.elementFromPoint(event.data.x, event.data.y);
-			ev.initMouseEvent(
-				event.data.type,
-				true /* bubble */, true /* cancelable */,
-				window, null,
-				event.data.x, event.data.y, 0, 0, /* coordinates */
-				false, false, false, false, /* modifier keys */
-				0 /*left*/, null
-			);
-			el.dispatchEvent(ev);
-		}
-		if (event.data.type == 'mouseclick') {
-			Click(event.data.x - 1, event.data.y -1)
 		}
 	});
 	
 });
 
-
+/*
 $(document).ready(function() {  
   document.body.addEventListener("mousemove", function(event) {
         var cursor = document.getElementById("cursor");
@@ -266,7 +247,7 @@ $(document).ready(function() {
         cursor.style.top = `${y}px`;
   });
 });
-
+*/
 var oldY = 0
 var buffer = 100
 document.body.onmouseup = function() {
@@ -278,7 +259,7 @@ document.body.onmouseup = function() {
 				$.post('http://fsn_phones/closePhone', JSON.stringify({}));
 			} else {
 				changePage('home', currentPhone);
-				messageAreaInActive()
+				//messageAreaInActive()
 			}
 		}
 	}
@@ -295,7 +276,7 @@ document.onkeydown = function(evt) {
 		$.post('http://fsn_phones/closePhone', JSON.stringify({}));
 		} else {
 			changePage('home', currentPhone);
-			messageAreaInActive()
+			//messageAreaInActive()
 		}
 	}
 };

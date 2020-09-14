@@ -1,36 +1,13 @@
-presetItems = {}
-
 --[[
-	Begin Functions
+    Item presets to be used globally
 ]]
 
-function fsn_itemStock()
-    return presetItems
-end
-
---[[
-	End functions
-]]
-
---[[
-	Begin Events
-]]
-
-RegisterNetEvent('fsn_inventory:recieveItems')
-AddEventHandler('fsn_inventory:recieveItems', function(items)
-
-	presetItems = items
-
-end)
-
-TriggerServerEvent('fsn_inventory:sendItems')
-
---[[
-	End Events
-]]
-
---[[ OLD DATA
 presetItems = {
+
+    --[[
+        YOUR BASIC ASS ITEMS
+    ]]
+
 	["bandage"] = {
 		index = 'bandage',
 		name = 'Bandage',
@@ -321,7 +298,157 @@ presetItems = {
 		data = {
 			weight = 5
 		},
+    },
+
+    ['scuba_gear'] = {
+        index = 'scuba',
+        name = 'Scuba Gear',
+        data = {
+            weight = 6.0
+        },
+    },
+    --[[
+        END YOUR BASIC ASS ITEMS
+    ]]
+
+    --[[
+        WEAPONS AND AMMO AND ARMOR
+    ]]
+    ['weapon_stungun'] = {
+        index = "weapon_stungun",
+        name = "Stun Gun",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 0,
+            ammotype = 'none',
+            quality = 'normal'
+        }
+    },
+
+    ['weapon_flashlight'] = {
+        index = "weapon_flashlight",
+        name = "Flashlight",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 0,
+            ammotype = 'none',
+            quality = 'normal'
+        }
+    },
+
+    ['weapon_flare'] = {
+        index = "weapon_flare",
+        name = "Flare",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 100,
+            ammotype = 'none',
+            quality = 'normal'
+        }
+    },
+
+    ['weapon_nightstick'] = {
+        index = "weapon_nightstick",
+        name = "Nightstick",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 0,
+            ammotype = 'none',
+            quality = 'normal'
+        }
+    },
+
+    ['weapon_fireextinguisher'] = {
+        index = "weapon_fireextinguisher",
+        name = "Fire Extinguisher",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = 'none',
+            quality = 'normal'
+        }
+    },
+
+    ['weapon_pistol'] = {
+        index = "weapon_pistol",
+        name = "Pistol",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = 'pistol_ammo',
+            quality = 'normal'
+        }
+    },
+
+	['weapon_combatpistol'] = {
+        index = "weapon_combatpistol",
+        name = "Combat Pistol",
+        data = {
+            weight = 9,
+        },
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = 'ammo_pistol',
+            quality = 'normal'
+        }
 	},
+	['weapon_smg'] = {
+        index = "weapon_smg",
+        name = "SMG",
+        data = {
+            weight = 9,
+        },
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = 'ammo_smg',
+            quality = 'normal'
+        }
+    },
+
+    ['weapon_pumpshotgun'] = {
+        index = "weapon_pumpshotgun",
+        name = "Pump Shotgun",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = '12gauge_ammo',
+            quality = 'normal'
+        }
+    },
+    
+    ['weapon_assaultrifle'] = {
+        index = "weapon_assaultrifle",
+        name = "Assault Rifle",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = 'rifle_ammo',
+            quality = 'normal'
+        }
+    },
+
+    ['weapon_carbinerifle'] = {
+        index = "weapon_carbinerifle",
+        name = "Carbine Rifle",
+        amt = 1,
+        customData = {
+            weapon = 'true',
+            ammo = 200,
+            ammotype = 'rifle_ammo',
+            quality = 'normal'
+        }
+    },
+
 	['ammo_pistol'] = {
         index = 'ammo_pistol',
         name = "Pistol Ammo",
@@ -392,56 +519,67 @@ presetItems = {
 			weight = 9.5
 		},
     },
+
+    ['armor'] = {
+        index = 'armor',
+        name = "Kevlar",
+		data = {
+			weight = 13.5
+		},
+    },
+
+    --[[
+        END WEAPONS AND AMMO AND ARMOR
+    ]]
+
+
 }
+
+
+--[[
+    Begin Functions
+]]
+
+function fsn_itemStock()
+    return presetItems
+end
+
+--[[
+    End Functions
 ]]
 
 --[[
-local firstInventory = {
-	{
-		index='evidence',
-		name='Unsealed Evidence',
-		amt=1,
-		data = {
-			weight = 1,
-		},
-		customData = {
-			location = 'Elgin Ave',
-			call = '10-13',
-			notes = 'Shots fired',
-			contents = '[1X] 9mm casing (S:147y1721)'
-		}
-	},
-	{
-		index="id",
-		name='ID Card (Logan Whitehead)',
-		amt=1,
-		data = {
-		
-		},
-		customData = {
-			Name = 'Logan Whitehead',
-			Occupation = 'Police Officer',
-			DOB = '14/06/1998',
-			Issue = '18/08/2019'
-		},
-	},
-	{
-		index = 'bandage',
-		name = 'Bandage',
-		amt = 4
-	},
-	{
-		index = 'sandwich',
-		name = 'Sandwich',
-		amt = 2,
-		data = {
-			ass = 'i am a sandwich baby'
-		}
-	},
-	{
-		index = 'bandage',
-		name = 'Bandage',
-		amt = 4
-	},
-}
-]]--
+    Begin Events
+]]
+
+RegisterServerEvent('fsn_inventory:sendItems')
+AddEventHandler('fsn_inventory:sendItems', function(source)
+	print('^5Sending presetItems over to cl_presets^0')
+	TriggerClientEvent('fsn_inventory:recieveItems', -1, presetItems)
+end)
+
+RegisterNetEvent('fsn_inventory:sendItemsToStore')
+AddEventHandler('fsn_inventory:sendItemsToStore', function()
+	print('^6Sending the pesky items to the store^0')
+    TriggerEvent('fsn_store:recieveItemsForStore', presetItems)
+end)
+
+RegisterNetEvent('fsn_inventory:sendItemsToArmory')
+AddEventHandler('fsn_inventory:sendItemsToArmory', function()
+	print('^6Sending the pesky items to the police armory^0')
+    TriggerEvent('fsn_police:armory:recieveItemsForArmory', presetItems)
+end)
+
+--[[
+AddEventHandler('onResourceStart', function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+	end
+	print('^5' .. resourceName .. ' has started. Requesting presetsItems for clients^0')
+	--sendItems(presetItems)
+	--TriggerEvent('fsn_inventory:sendItems')
+end)
+]]
+--[[
+    End Events
+]]

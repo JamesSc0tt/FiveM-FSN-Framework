@@ -51,7 +51,7 @@
 		<!-- PUT CONTENT FOR IPHONE HERE -->
 		
 		<div id="phone-iphone">
-			<img id="cursor" class="cursor" src ='img/cursor.png'> <!-- z-index 0 -->
+			<!--<img id="cursor" class="cursor" src ='img/cursor.png'> --> <!-- z-index 0 -->
 			<div class="iphone-frame"></div> <!-- z-index 1 -->
 			<div class="iphone-wallpaper"></div> <!-- z-index -1 -->
 			<div class="iphone-toolbar"><!-- z-index 0 -->
@@ -400,14 +400,14 @@
 								Text a friend...
 								<input type="text" id="dialog_number"></input>
 								<textarea id="dialog_text"></textarea>
-								<div class="minusbutton" onclick="$('.writemessage').toggle();$('.msgplusbutton').toggle();messageAreaActive();"> <!-- z-index 3 -->
+								<div class="minusbutton" onclick="$('.writemessage').toggle();$('.msgplusbutton').toggle();"> <!-- z-index 3 -->
 									-
 								</div>
 								<div class="addbutton" onclick="sendText($('#dialog_number').val(), $('#dialog_text').val());$('#dialog_text').val('');changePage('home','iphone');"> <!-- z-index 3 -->
 									+
 								</div>
 							</div>			
-							<div class="msgplusbutton" onclick="$('.writemessage').toggle();$('.msgplusbutton').toggle();messageAreaActive();"> <!-- z-index 3 -->
+							<div class="msgplusbutton" onclick="$('.writemessage').toggle();$('.msgplusbutton').toggle();"> <!-- z-index 3 -->
 								+
 							</div>
 						</div>
@@ -476,14 +476,14 @@
 						<div class="writeadvert"> <!-- z-index 3 -->
 							Write an advert...
 							<textarea id="advert_textarea"></textarea>
-							<div class="minusbutton" onclick="$('.writeadvert').toggle();$('.plusbutton').toggle();messageAreaActive();"> <!-- z-index 3 -->
+							<div class="minusbutton" onclick="$('.writeadvert').toggle();$('.plusbutton').toggle();"> <!-- z-index 3 -->
 								-
 							</div>
 							<div class="addbutton" onclick="addAdvert()"> <!-- z-index 3 -->
 								+
 							</div>
 						</div>
-						<div class="plusbutton" onclick="$('.writeadvert').toggle();$('.plusbutton').toggle();messageAreaActive();"> <!-- z-index 3 -->
+						<div class="plusbutton" onclick="$('.writeadvert').toggle();$('.plusbutton').toggle();"> <!-- z-index 3 -->
 							+
 						</div>
 					</div>
@@ -516,14 +516,14 @@
 						<div class="writetweet"> <!-- z-index 3 -->
 							Write a tweet...
 							<textarea id="tweet_textarea"></textarea>
-							<div class="minusbutton" onclick="$('.writetweet').toggle();$('.plusbutton').toggle();messageAreaActive();"> <!-- z-index 3 -->
+							<div class="minusbutton" onclick="$('.writetweet').toggle();$('.plusbutton').toggle();"> <!-- z-index 3 -->
 								-
 							</div>
 							<div class="addbutton" onclick="sendTweet()"> <!-- z-index 3 -->
 								+
 							</div>
 						</div>			
-						<div class="plusbutton" onclick="$('.writetweet').toggle();$('.plusbutton').toggle();messageAreaActive();"> <!-- z-index 3 -->
+						<div class="plusbutton" onclick="$('.writetweet').toggle();$('.plusbutton').toggle();"> <!-- z-index 3 -->
 							+
 						</div>
 					</div>
