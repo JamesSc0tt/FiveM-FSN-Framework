@@ -20,8 +20,10 @@ Citizen.CreateThread(function()
 					Util.DrawText3D(d.loc.x,d.loc.y,d.loc.z, '[ALT+E] Pickup~y~\n'..d.item.name, {255,255,255,200}, 0.25)
 					if IsControlPressed(0, 19) then
 						if IsControlJustPressed(0,38) then
-							TriggerServerEvent('fsn_inventory:drops:collect', i)
-							PickupAnimation()
+							if exports['fsn_inventory']:fsn_CanCarry(d.item.index, d.item.amt) then
+								TriggerServerEvent('fsn_inventory:drops:collect', i)
+								PickupAnimation()
+							end
 						end
 					end
 				end
