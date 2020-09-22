@@ -23,7 +23,9 @@ Citizen.CreateThread(function()
 							if exports['fsn_inventory']:fsn_CanCarry(d.item.index, d.item.amt) then
 								TriggerServerEvent('fsn_inventory:drops:collect', i)
 								PickupAnimation()
-							end
+							else
+								TriggerEvent('fsn_notify:displayNotification', 'You can not carry this item. (Max Weight Limit: 40)', 'centerLeft', 3000, 'error')
+							end	
 						end
 					end
 				end
