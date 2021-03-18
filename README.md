@@ -11,7 +11,7 @@ ensure fsn_main
 [ENSURE ALL NON FSN_* RESOURCES HERE]
 ```
 
-The framework is designed to create all the tables for you in your DB upon successful connection to your database. If your database is not connected or you are not running mysql=-async or have no clue how to do that then search it. We wont provide support on correctly and succesfully connecting to your database
+The framework is designed to create all the tables for you in your DB upon successful connection to your database. If your database is not connected or you are not running mysql-async or have no clue how to do that then search it. We wont provide support on correctly and succesfully connecting to your database
 
 #### Alongside the FSN [resources](https://github.com/jamessc0tt/FiveM-FSN-Framework/blob/master/fsn_main/resources.txt), the "framework" is built to work with the below publicly available resources.
 - mysql-async (https://github.com/brouznouf/fivem-mysql-async)
