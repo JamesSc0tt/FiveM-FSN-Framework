@@ -198,6 +198,7 @@ end)
 
 RegisterNUICallback('spawnCharacter', function(data, cb)
   TriggerServerEvent('fsn_main:getCharacter', data.character_id)
+  TriggerServerEvent('fsn:playerReady')
 end)
 
 RegisterNUICallback('createCharacter', function(data, cb)

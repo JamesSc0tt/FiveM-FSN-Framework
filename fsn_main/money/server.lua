@@ -22,6 +22,7 @@ AddEventHandler('fsn_main:money:initChar', function(src, cid, cash, balance)
 	end
 	Citizen.Wait(500)
 	TriggerClientEvent('fsn_main:money:update', src, cash, balance)
+	TriggerEvent('fsn_main:updateMoneyStore', moneystore)
 end)
 
 RegisterServerEvent('fsn_main:money:wallet:GiveCash')
