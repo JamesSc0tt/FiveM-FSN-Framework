@@ -56,3 +56,37 @@ AddEventHandler('fsn_licenses:id:display', function(plytbl, name, job, dob, issu
 		TriggerClientEvent('chatMessage', ply, '', {0,0,0}, '^6*-----------------------------------------------------------')
 	end
 end)
+
+local function fsn_setDevWeapon(user, item)
+	--print(item)
+	local name = ''
+	local charID = exports['fsn_main']:fsn_CharID(user)
+	local character = exports['fsn_main']:fsn_GetCharacterInfo(charID)
+	if item.customData ~= nil then
+		if item.index == 'weapon_stungun' or item.customData.ammotype ~= 'none' then
+			name = character.char_fname .. ' ' ..character.char_lname
+			item.customData.Serial = 'DEV GUN'
+			item.customData.Owner = 'DEV: ' .. name
+		end
+	end
+end
+
+RegisterServerEvent('fsn_inventory:item:add')
+AddEventHandler('fsn_inventory:item:add', function(source, item, amt)
+	local player = source
+	--print(player.. ' ' .. item .. ' ' .. amt)
+	if presetItems[item] then
+		local insert = presetItems[item]
+		insert.amt = amt
+		if insert.customData ~= nil then
+			if insert.customData.weapon == 'true' then
+				fsn_setDevWeapon(player, insert)
+				TriggerClientEvent('fsn_inventory:items:add', player, insert)
+			end
+		else
+			TriggerClientEvent('fsn_inventory:items:add', player, insert)
+		end
+	else
+		TriggerClientEvent('mythic_notify:SendAlert', player, { type = 'error', text = 'Item preset '..item..' seems to be missing' })
+	end
+end)

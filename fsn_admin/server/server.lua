@@ -589,6 +589,8 @@ AddEventHandler('fsn:playerReady', function()
 
     local playerId  = source
 
+    Wait(1000)
+
     if isAdmin(playerId) then
         TriggerEvent('fsn_admin:enableAdminCommands', playerId)
     end
@@ -596,7 +598,6 @@ AddEventHandler('fsn:playerReady', function()
     if isModerator(playerId) then
         TriggerEvent('fsn_admin:enableModeratorCommands', playerId)
     end
-
 
 end)
 
