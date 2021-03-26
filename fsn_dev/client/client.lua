@@ -131,7 +131,7 @@ AddEventHandler('fsn_developer:fixVehicle', function()
     local playerPed     = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(playerPed)
 
-    if vehicle ~= nil then
+    if vehicle ~= 0 then
 
         TriggerEvent('fsn_fuel:update', vehicle)
 		SetVehicleEngineHealth(vehicle, 1000)
@@ -150,7 +150,7 @@ AddEventHandler('fsn_developer:getKeys', function()
     local playerPed     = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(playerPed)
 
-    if vehicle ~= nil then
+    if vehicle ~= 0 then
 
 		TriggerEvent('fsn_cargarage:makeMine', vehicle, GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)), GetVehicleNumberPlateText(vehicle))
 		TriggerEvent('fsn_notify:displayNotification', 'You now own this vehicle!', 'centerLeft', 4000, 'success')
