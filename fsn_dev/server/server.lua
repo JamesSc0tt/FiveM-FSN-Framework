@@ -413,6 +413,21 @@ function registerDeveloperCommands(source)
 
     end)
 
+    RegisterCommand('dv', function(source, args, rawCommand)
+
+        if source == 0 then
+            return
+        end
+
+        local playerId = source
+        if not isDeveloper(playerId) then
+            return
+        end
+
+        TriggerClientEvent('fsn_developer:deleteVehicle', playerId)
+
+    end)
+
     RegisterCommand('giveitem', function(source, args, rawCommand)
 
         if source == 0 then
@@ -583,6 +598,12 @@ function registerDeveloperCommands(source)
 
         TriggerClientEvent('chat:addSuggestion', playerId, '/spawnveh', 'Spawn the specified model.', {
             { name = 'model', help = 'Model of the car you want to spawn' },
+        })
+
+        TriggerClientEvent('chat:addSuggestion', playerId, '/getkeys', 'Get the keys of the current vehicle you are in.', {
+        })
+
+        TriggerClientEvent('chat:addSuggestion', playerId, '/dv', 'Delete the current vehicle you are looking at.', {
         })
 
         TriggerClientEvent('chat:addSuggestion', playerId, '/fixveh', 'Fix your current vehicle.', {
