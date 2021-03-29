@@ -133,7 +133,7 @@ AddEventHandler('fsn_developer:fixVehicle', function()
 
     if vehicle ~= 0 then
 
-        TriggerEvent('fsn_fuel:update', vehicle)
+        TriggerEvent('fsn_fuel:update', vehicle, 100)
 		SetVehicleEngineHealth(vehicle, 1000)
 		SetVehicleEngineOn( vehicle, true, true )
 		SetVehicleFixed(vehicle)
