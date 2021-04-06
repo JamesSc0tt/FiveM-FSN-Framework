@@ -9,6 +9,10 @@ server_script '@mysql-async/lib/MySQL.lua'
 
 client_script 'client.lua'
 
+-- ODOMETER
+client_script 'odometer/client.lua'
+server_script 'odometer/server.lua'
+
 -- FUEL
 client_script 'fuel/client.lua'
 server_script 'fuel/server.lua'
