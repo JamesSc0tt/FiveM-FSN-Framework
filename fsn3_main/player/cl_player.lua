@@ -10,6 +10,7 @@ PLY.init = function()
 	SetEntityCoords(GetPlayerPed(-1), 5348.1, -5183.1, 83.1) -- load area
 	Citizen.Wait(500)
 	SetEntityCoords(GetPlayerPed(-1), 5307.44, -5190.38, 83.51) -- send to char select area
+	SetEntityHeading(GetPlayerPed(-1), 35.5) -- look away from the corner
 	DoScreenFadeIn(500)
 	--[[
 	SetEntityVisible(GetPlayerPed(-1), false)
