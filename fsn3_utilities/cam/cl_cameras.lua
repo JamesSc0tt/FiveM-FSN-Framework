@@ -1,6 +1,6 @@
 
  -- camera stuff
-local CAM = {}
+CAM = {}
 
 CAM.presets = {}
 CAM.presets.head = function()
