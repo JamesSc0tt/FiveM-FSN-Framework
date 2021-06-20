@@ -86,6 +86,8 @@ function toggle_dev()
 				for obj in EnumeratePeds() do
 					if GetDistanceBetweenCoords(GetEntityCoords(obj), GetEntityCoords(GetPlayerPed(-1))) < 30 then
 						drawtextinloc(GetEntityCoords(obj).x, GetEntityCoords(obj).y, GetEntityCoords(obj).z, 'Model: ~g~'..GetEntityModel(obj)..'\n~w~X: ~b~'..GetEntityCoords(obj).x..'\n ~w~Y: ~b~'..GetEntityCoords(obj).y..'\n ~w~Z: ~b~'..GetEntityCoords(obj).z)
+						drawtextinloc(GetEntityCoords(obj).x, GetEntityCoords(obj).y, GetEntityCoords(obj).z-0.2, '~w~H: ~b~'..GetEntityHeading(obj))
+					
 					end
 				end
 			end
