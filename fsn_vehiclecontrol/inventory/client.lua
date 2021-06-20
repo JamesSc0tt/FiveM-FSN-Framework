@@ -1,3 +1,0 @@
-function GetVehicleInventory()
-  return {}
-end

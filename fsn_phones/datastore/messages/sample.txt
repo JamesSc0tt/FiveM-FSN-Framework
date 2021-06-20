@@ -1,1 +1,0 @@
-you can delete me. only needed for github to see this folder. alot easier than just having the script make these folders on start

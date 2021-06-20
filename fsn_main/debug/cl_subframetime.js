@@ -1,1 +1,0 @@
-exports('sub_frame_time', (arg) => new Date().getTime())
