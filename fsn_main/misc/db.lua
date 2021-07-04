@@ -154,6 +154,10 @@ CREATE TABLE IF NOT EXISTS `fsn_whitelists` (
 
 ALTER TABLE `fsn_vehicles` ADD IF NOT EXISTS `odometer` FLOAT(9,2) zerofill NOT NULL AFTER `veh_plate`
 
+INSERT INTO `fsn_whitelists` (`wl_id`, `wl_title`, `wl_owner`, `wl_access`, `wl_bank`) VALUES ('1', 'Premium Deluxe Motorsports', '-1', '{}', '0');
+INSERT INTO `fsn_whitelists` (`wl_id`, `wl_title`, `wl_owner`, `wl_access`, `wl_bank`) VALUES ('2', 'Mechanics', '-1', '{}', '0');
+INSERT INTO `fsn_whitelists` (`wl_id`, `wl_title`, `wl_owner`, `wl_access`, `wl_bank`) VALUES ('3', 'La Fuente Blanca', '-1', '{}', '0');
+INSERT INTO `fsn_whitelists` (`wl_id`, `wl_title`, `wl_owner`, `wl_access`, `wl_bank`) VALUES ('4', 'Los Santos Marina', '-1', '{}', '0');
 
 ]]
 
