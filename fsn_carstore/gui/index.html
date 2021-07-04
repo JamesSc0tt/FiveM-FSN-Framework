@@ -1,0 +1,172 @@
+<style>
+	.window * {
+		font-family: Arial, Helvetica, sans-serif;
+		color: #EEEEEE;
+	}
+	.window {
+		position: fixed;
+		width: 90%;
+		height: 90%;
+		top: 5%;
+		left: 5%;
+		background-color: #222831;
+		border-radius: 10px;
+		display:none;
+	}
+	.header {
+		width: 100%;
+		height: 7%;
+		color: #EEEEEE;
+		font-weight: bold;
+		font-size: 24px;
+		line-height: 55px;
+		border-bottom: 1px solid #393E46;
+		text-transform: uppercase;
+	}
+	.logo {
+		width: 55px;
+		height: 100%;
+		float:left;
+		margin-right: 20px;
+	}
+	.logo img {
+		width: 55px;
+		height: 100%;
+	}
+	.close {
+		float:right;
+		width: 55px;
+		height: 100%;
+		padding: 12px;
+		padding-right:10px;
+	}
+	.close_button {
+		border-radius: 10px;
+		width: auto;
+		height: 30px;
+		line-height: 30px;
+		padding: 3px;
+		font-size: 12px;
+		text-align: center;
+		font-weight: bolder;
+		color: #EEEEEE;
+		background-color: red
+	}
+	.ok_button {
+		border-radius: 10px;
+		width: auto;
+		height: 30px;
+		line-height: 30px;
+		padding: 3px;
+		font-size: 12px;
+		text-align: center;
+		font-weight: bolder;
+		color: #EEEEEE;
+		background-color: limegreen
+	}
+	.menu {
+		color: #EEEEEE;
+		float:left;
+		height: 93%;
+		width: 20%;
+		border-right: 2px solid #393E46;
+	}
+	.item {
+		height: 80px;
+		width: 100%;
+		float:right;
+		line-height: 80px;
+		padding-left: 15px;
+		-moz-box-sizing: border-box; 
+		-webkit-box-sizing: border-box; 
+		box-sizing: border-box;
+		font-weight:bold;
+		border-bottom: 1px solid #393E46;
+
+	}
+	.item .ok {
+		width: 20%;
+		height: 100%;
+		float:right;
+		padding-top: 20px;
+		padding-right: 10px;
+		font-size: 12px;
+		font-weight: normal
+	}
+	.pane {
+		float:right;
+		height: 93%;
+		width: calc(80% - 2px);
+	}
+	.subheader {
+		width: 100%;
+		height: 7%;
+		color: #D65A31;
+		font-weight: bold;
+		font-size: 18px;
+		line-height: 50px;
+		border-bottom: 1px solid #393E46;
+		padding-left: 20px;
+		-moz-box-sizing: border-box; 
+		-webkit-box-sizing: border-box; 
+		box-sizing: border-box;
+		margin-top:-20px;
+		text-transform: uppercase;
+	}
+	.content {
+		padding: 15px;
+		-moz-box-sizing: border-box; 
+		-webkit-box-sizing: border-box; 
+		box-sizing: border-box;
+	}
+</style>
+
+<div class="window">
+	<div class="header">
+		<div class="logo">
+			<img src="logo.png">
+		</div>
+		PDM - Premium Deluxe Motorsports
+		<div class="close">
+			<div class="close_button">
+				CLOSE
+			</div>
+		</div>
+	</div>
+	<div class="menu">
+		<div class="item">
+			ITEM
+			<div class="ok">
+				<div class="ok_button">
+					GO
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			ITEM2
+			<div class="ok">
+				<div class="ok_button">
+					GO
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			ITEM2
+			<div class="ok">
+				<div class="ok_button">
+					GO
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="pane">
+		<div class="pane_content" id="pg1">
+			<div class="subheader">
+				ITEM
+			</div>
+			<div class="content">
+				<h5>Banking information</h5>
+			</div>
+		</div>
+	</div>
+</div>

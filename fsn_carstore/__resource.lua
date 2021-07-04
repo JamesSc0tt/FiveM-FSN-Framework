@@ -14,3 +14,10 @@ server_script 'sv_carstore.lua'
 
 export 'ShowVehshopBlips'
 
+ui_page 'gui/index.html'
+files({
+  'gui/index.html',
+  'gui/index.js',
+  'gui/index.css',
+  'gui/logo.png',
+})
