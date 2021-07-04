@@ -391,3 +391,92 @@
 	color: #fff;
 	padding-right: 3px;
 }
+
+
+#loan-main * { 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+     box-sizing: border-box; 
+}
+
+#loan-main {
+	width: 40%;
+	padding-top:20px;
+	max-height: 80%;
+	background-color: white;
+	float:right;
+	margin-right: 10%;
+	margin-top: 5%;
+	padding-bottom: 30px;
+	display: none;
+}
+.loan_header {
+	width: 100%;
+	font-weight: bold;
+	font-size: 24px;
+	padding: 10px;
+	text-align: center;
+}
+.loan_first {
+	width: 50%;
+	max-width: 50%;
+	float:left;
+	display: block;
+	padding: 10px;
+	font-weight: bold;
+	padding-left: 20px;
+}
+.loan_second {
+	width: 40%;
+	max-width: 40%;
+	float:left;
+	display: block;
+	padding: 10px;
+	text-align: center;
+	padding-right: 20px;
+	border-bottom: 2px dotted black;
+}
+.loan_center {
+	width: 100%;
+	max-width: 100%;
+	float:left;
+	display: block;
+	padding: 30px;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.loan_agreement {
+	margin-top: 100px;
+}
+.loan_agree {
+	position: fixed;
+	right: 10%;
+	bottom: 8%;
+	width: 40%;
+}
+.loan_agree button {
+	margin-top: 10px;
+}
+
+.loan_button {
+  display: block;
+  width: 80%;
+  border-radius: 6px;
+  border: none;
+  background-color: #04AA6D;
+  padding: 14px 28px;
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.loan_button_agree {
+  background-color: #04AA6D;
+}
+.loan_button_disagree {
+	background-color: red;
+}

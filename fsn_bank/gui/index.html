@@ -4,6 +4,68 @@
 		<link href="index.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+    	<!-- temp here for loan -->
+    	<style>
+    		
+    	</style>
+
+    	<div id="loan-main">
+    		<div class="loan_paper">
+	    		<div class="loan_header">
+	    			Loan Agreement
+	    		</div>
+	    		<div class="loan_lender">
+	    			<div class="loan_first">
+	    				Lender:
+	    			</div>
+	    			<div class="loan_second">
+	    				{LENDER}
+	    			</div>
+	    		</div>
+	    		<div class="loan_lendee">
+	    			<div class="loan_first">
+	    				Lendee:
+	    			</div>
+	    			<div class="loan_second">
+	    				{LENDEE}
+	    			</div>
+	    		</div>
+	    		<div class="loan_agreement">
+		    		<div class="loan_header">
+		    			Your Agreement
+		    		</div>
+	    			<div class="loan_center">
+	    				The <b>lender</b> promises to loan $<b>{AMOUNT}</b> to the <b>lendee</b>, the <b>lendee</b> promises to repay this principle amount to the <b>lender</b> with interest payable at the rate of <b>2.50</b> percent per annum, calculated yearly not in advance.
+	    			</div>
+	    			<div class="loan_center">
+	    				The loan will be repayable in weekly installments for a term of <b>{NUM_WEEKS}</b> on the 1st day (Monday) of each week, with the amount due being <b>({AMOUNT}-{DEPOSIT}+{INTEREST}/{NUM_WEEKS})-({AMOUNT}-{DEPOSIT}+{INTEREST}/{NUM_WEEKS})</b> with a final payment of <b>{AMOUNT}-{DEPOSIT}+{INTEREST}/{NUM_WEEKS}</b> due on <b>{FINAL_DATE}</b>.
+	    			</div>
+	    			<div class="loan_center">
+	    				If the <b>lendee</b> misses any scheduled payments any security object (vehicle, home, item purchase) will be available for repossesion by any authorised reposession agent who can retrieve the security object without permission of the <b>lendee<b/>.
+	    			</div>
+	    		</div>
+	    		<div class="loan_lendee">
+	    			<div class="loan_first">
+	    				Signed Lender:
+	    			</div>
+	    			<div class="loan_second">
+	    				{LENDER_SIGN}
+	    			</div>
+	    		</div>
+	    		<div class="loan_lendee">
+	    			<div class="loan_first">
+	    				Signed Lendee:
+	    			</div>
+	    			<div class="loan_second signhere">
+	    				SIGN HERE
+	    			</div>
+	    		</div>
+    		</div>
+    		<div class="loan_agree">
+    			<button class="loan_button loan_button_agree">Agree / Pay Deposit</button>
+    			<button class="loan_button loan_button_disagree">Disagree / Decline</button>
+    		</div>
+    	</div>
 		<div id="atm_main" class="atm_main">
 			<div class="buttons_left">
 				<button id="button_1" class="main_button"></button>
