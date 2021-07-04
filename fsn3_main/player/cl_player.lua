@@ -7,10 +7,8 @@ PLY.id = 'ERR'
 PLY.init = function()
 	-- freeze, hide & move player
 	DoScreenFadeOut(500)
-	SetEntityCoords(GetPlayerPed(-1), 5348.1, -5183.1, 83.1) -- load area
-	Citizen.Wait(500)
-	SetEntityCoords(GetPlayerPed(-1), 5307.44, -5190.38, 82.51) -- send to char select area
-	SetEntityHeading(GetPlayerPed(-1), 35.5) -- look away from the corner
+	SetEntityCoords(GetPlayerPed(-1), 228.2057, -1006.487, -98.999) -- send to char select area
+	SetEntityHeading(GetPlayerPed(-1), 171.173) -- look away from the corner
 	PlaceObjectOnGroundProperly(GetPlayerPed(-1))
 	DoScreenFadeIn(500)
 	
