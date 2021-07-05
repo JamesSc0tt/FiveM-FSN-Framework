@@ -179,7 +179,7 @@ function registerDeveloperCommands(source)
 
             if target then
                 if amount then
-                    TriggerClientEvent('fsn_bank:change:walletAdd', source, targetId, amount)
+                    TriggerClientEvent('fsn_bank:change:walletAdd', source, amount, targetId)
                 else
                     print('^8You need to specify and amount.')
                 end
@@ -200,7 +200,7 @@ function registerDeveloperCommands(source)
 
             if target then
                 if amount then
-                    TriggerClientEvent('fsn_bank:change:walletAdd', playerId, targetId, amount)
+                    TriggerClientEvent('fsn_bank:change:walletAdd', playerId, amount, targetId)
                 else
                     TriggerClientEvent('chat:addMessage', players[j], {
                         template = '<div style="padding: 0.5vw; background-color: rgba(44, 44, 44, 0.6); border-radius: 3px;"><strong>^8SYSTEM: ^7</strong><br>You need to specify an amount!</div>',
@@ -567,8 +567,8 @@ function registerDeveloperCommands(source)
         })
 
         TriggerClientEvent('chat:addSuggestion', playerId, '/addmoney', 'Add money to a player.', {
-            { name = 'ID', help = 'The server ID of the target.' },
             { name = 'Amount', help = 'The amount of money to add to their wallet' },
+            { name = 'ID', help = 'The server ID of the target.' },
         })
 
         TriggerClientEvent('chat:addSuggestion', playerId, '/pdduty', 'Force the on duty status of a player for police', {
