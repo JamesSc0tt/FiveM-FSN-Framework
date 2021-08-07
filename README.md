@@ -35,4 +35,4 @@ This project is in active development, I intend to cover major/minor bugs and al
 - MySQL Server
 
 #### License
-You are free to use/modify the "framework" in any way you see fit, remember to contribute any worthwile changes to the project with a merge request. Please do not distribute the project without my explicit permission. Do **NOT** remove the ":FSN: Framework by JamesSc0tt" on the character selection/creation screen.
+You are free to use/modify the "framework" in any way you see fit, remember to contribute any worthwile changes to the project with a merge request. Please do not distribute the project without my explicit permission. Do **NOT** remove the "FSN Framework v2.1.4 by JamesSc0tt & iTzCrutchie" on the character selection/creation screen.
