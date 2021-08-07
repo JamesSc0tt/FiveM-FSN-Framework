@@ -1,5 +1,5 @@
 -- path for live server
-local datastorePath = 'resources/'..GetCurrentResourceName()..'/datastore/'
+local datastorePath = 'resources/[fsn]/'..GetCurrentResourceName()..'/datastore/'
 
 local dbg = false -- misc notifications for the client
 if dbg then
