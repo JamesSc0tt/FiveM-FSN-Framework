@@ -81,7 +81,7 @@ Citizen.CreateThread(function()
               end
             
               TaskPlayAnim(playerPed, "mini@repair", "fixing_a_player", 8.0, -8, -1, 16, 0, 0, 0, 0)
-              TriggerEvent('fsn_notify:displayNotification', 'Inspecting...', 'centerLeft', 5000, 'info')
+	      exports["fsn_progress"]:fsn_ProgressBar(58, 133, 255,'Inspecting...',5)						
               Citizen.Wait(5000)
               ClearPedTasksImmediately(playerPed)
               InspectVehicle()
@@ -102,7 +102,7 @@ Citizen.CreateThread(function()
                   end
 
                   TaskPlayAnim(playerPed, "mini@repair", "fixing_a_player", 8.0, -8, -1, 16, 0, 0, 0, 0)
-                  TriggerEvent('fsn_notify:displayNotification', 'Repairing...', 'centerLeft', 5000, 'info')
+		  exports["fsn_progress"]:fsn_ProgressBar(58, 133, 255,'Repairing...',5)	
                   Citizen.Wait(5000)
                   ClearPedTasksImmediately(playerPed)  
                   RepairVehicle()
