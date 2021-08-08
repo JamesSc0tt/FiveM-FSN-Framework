@@ -50,7 +50,7 @@ player_data  = {
     },
 }
 
-local blips = {
+local blips = { -- These are the blips that are going on the map
     {name="Clothing Store", id=73, x=1693.26, y=4822.27, z=42.06},
     {name="Clothing Store", id=73, x=125.83, y=-223.16, z=54.55},
     {name="Clothing Store", id=73, x=-710.16, y=-153.26, z=37.41},
@@ -66,7 +66,7 @@ local blips = {
     {name="Clothing Store", id=73, x=-1447.61, y=-242.013, z=49.820},
 }
 
-local clothing_shops = {
+local clothing_shops = { -- These are the zones
     {name="Sheriff Office", id=60, x=1861.200, y=3689.937, z=34.20}, --Sandy Station Station
     {name="Clothing Store", id=73, x=1693.26, y=4822.27, z=42.06},
     {name="Clothing Store", id=73, x=125.83, y=-223.16, z=54.55},
