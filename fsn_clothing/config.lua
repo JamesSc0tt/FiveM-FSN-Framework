@@ -49,6 +49,23 @@ player_data  = {
         },
     },
 }
+
+local blips = {
+    {name="Clothing Store", id=73, x=1693.26, y=4822.27, z=42.06},
+    {name="Clothing Store", id=73, x=125.83, y=-223.16, z=54.55},
+    {name="Clothing Store", id=73, x=-710.16, y=-153.26, z=37.41},
+    {name="Clothing Store", id=73, x=-821.69, y=-1073.90, z=11.32},
+    {name="Clothing Store", id=73, x=-1192.81, y=-768.24, z=17.31},
+    {name="Clothing Store", id=73, x=4.25, y=6512.88, z=31.87},
+    {name="Clothing Store", id=73, x =71.7163, y =-1399.1944, z =29.3761},
+    {name="Clothing Store", id=73, x=425.471, y=-806.164, z=29.4911},
+    {name="Clothing Store", id=73, x=-167.043, y=-299.794, z=39.733},
+    {name="Clothing Store", id=73, x=-1108.658, y=2709.473, z=19.107},
+    {name="Clothing Store", id=73, x=-3175.478, y=1042.252, z=20.863},
+    {name="Clothing Store", id=73, x=1190.321, y=2714.405, z=38.222},
+    {name="Clothing Store", id=73, x=-1447.61, y=-242.013, z=49.820},
+}
+
 local clothing_shops = {
     {name="Sheriff Office", id=60, x=1861.200, y=3689.937, z=34.20}, --Sandy Station Station
     {name="Clothing Store", id=73, x=1693.26, y=4822.27, z=42.06},
@@ -59,7 +76,7 @@ local clothing_shops = {
     {name="Clothing Store", id=73, x=4.25, y=6512.88, z=31.87},
     {name="Clothing Store", id=73, x =71.7163, y =-1399.1944, z =29.3761},
     {name="Police Station", id=60, x =456.7221, y =-990.9374, z =30.6896}, --Mission Row PD
-    {name="", id=NULL, x =268.7404, y =-1363.3614, z =24.5377}, --Hostpial Clothing
+    {name="Hospital Clothing", id=NULL, x =268.7404, y =-1363.3614, z =24.5377}, --Hostpial Clothing
     {name="Clothing Store", id=73, x=425.471, y=-806.164, z=29.4911},
     {name="Clothing Store", id=73, x=-167.043, y=-299.794, z=39.733},
     {name="Clothing Store", id=73, x=-1108.658, y=2709.473, z=19.107},
@@ -70,7 +87,7 @@ local clothing_shops = {
 }
 incircle = false
 Citizen.CreateThread(function()
-    for _, item in pairs(clothing_shops) do
+    for _, item in pairs(blips) do
       item.blip = AddBlipForCoord(item.x, item.y, item.z)
       SetBlipSprite(item.blip, item.id)
       SetBlipColour(item.blip, item.colour)
