@@ -4,5 +4,5 @@ function AddTextEntry(key, value)
 end
 
 Citizen.CreateThread(function()
-  AddTextEntry('FE_THDR_GTAO', 'FusionRP: https://fsn.life/')
+  AddTextEntry('FE_THDR_GTAO', ':FSN Framework: https://fsn.rocks/ ')
 end)
