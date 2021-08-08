@@ -566,7 +566,17 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
+
+local blips = {
+    {title="Sheriff Office", id=60, x=-452.683, y=6013.973, z=31.716},
+    {title="Police Station", id=60, x =456.7221, y =-990.9374, z =30.6896},
+    {title="Sheriff Office", id=60, x=1861.200, y=3689.937, z=34.20}, 
+  }
+
 Citizen.CreateThread(function()
+	for _, info in pairs(blips) do
+		Util.CreateBlip(info.title, info.id, info.colour, {info.x, info.y, info.z}, true)
+	end
 	while true do
 		Citizen.Wait(0)
 		-- cuff stuff
@@ -709,26 +719,4 @@ function fsn_getIllegalItems()
 end
 
 SetNuiFocus(true,true)
-
--- BLIPS  
-
-local blips = {
-    {title="Sheriff Office", id=60, x=-452.683, y=6013.973, z=31.716},
-    {title="Police Station", id=60, x =456.7221, y =-990.9374, z =30.6896},
-    {title="Sheriff Office", id=60, x=1861.200, y=3689.937, z=34.20}, 
-  }
       
-Citizen.CreateThread(function()
-
-    for _, info in pairs(blips) do
-      info.blip = AddBlipForCoord(info.x, info.y, info.z)
-      SetBlipSprite(info.blip, info.id)
-      SetBlipDisplay(info.blip, 4)
-      SetBlipScale(info.blip, 1.0)
-      SetBlipColour(info.blip, info.colour)
-      SetBlipAsShortRange(info.blip, true)
-	  BeginTextCommandSetBlipName("STRING")
-      AddTextComponentString(info.title)
-      EndTextCommandSetBlipName(info.blip)
-    end
-end)
