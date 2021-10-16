@@ -9,7 +9,12 @@ server_script '@fsn_main/server_settings/sh_settings.lua'
 server_script '@mysql-async/lib/MySQL.lua'
 --[[/	:FSN:	\]]--
 
--- Noclipping, inspired by
--- https://github.com/blattersturm/expeditious-execution/blob/master/resources/%5Bexpeditious%5D/execution-noclip
-dependency "freecam"
-client_script "cl_noclip.lua"
+client_script 'client.lua'
+
+-- judge
+client_script 'judges/client.lua'
+server_script 'judges/server.lua'
+
+-- attorney
+client_script 'attorneys/client.lua'
+server_script 'attorneys/server.lua'
