@@ -54,7 +54,7 @@ local boughtboat = false
 local ibought = ''
 
 local function LocalPed()
-return GetPlayerPed(-1)
+return PlayerPedId()
 end
 
 function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
@@ -84,7 +84,7 @@ return n + 0.0001
 end
 
 function LocalPed()
-return GetPlayerPed(-1)
+return PlayerPedId()
 end
 
 function try(f, catch_f)
@@ -338,7 +338,7 @@ function round(num, idp)
   return math.floor(num + 0.5)
 end
 function ButtonSelected(button)
-	local ped = GetPlayerPed(-1)
+	local ped = PlayerPedId()
 	local this = boatshop.currentmenu
 	local btn = button.name
 	if this == "main" then

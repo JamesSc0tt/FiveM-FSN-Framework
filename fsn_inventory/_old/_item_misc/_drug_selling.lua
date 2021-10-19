@@ -32,7 +32,7 @@ end
 
 Citizen.CreateThread(function()
 	while true do Citizen.Wait(0)
-		if fsn_getPlayerDrugs() ~= false and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+		if fsn_getPlayerDrugs() ~= false and not IsPedInAnyVehicle(PlayerPedId()) then
 			local obj = exports['fsn_main']:fsn_FindNearbyPed(2)
 			if obj and IsPedHuman(obj) and not table.contains(sold_peds, obj) and not IsEntityDead(obj) then
 				if not selling then
@@ -40,7 +40,7 @@ Citizen.CreateThread(function()
 					if IsControlJustPressed(0, 38) then
 						if math.random(0,100) > 58 then
 							selling = true
-							TaskLookAtEntity(obj, GetPlayerPed(-1), 9000, 2084, 3)
+							TaskLookAtEntity(obj, PlayerPedId(), 9000, 2084, 3)
 							TaskStandStill(obj, 9000)
 							startsale = curtime
 							selling_item = fsn_getPlayerDrugs()
@@ -87,7 +87,7 @@ Citizen.CreateThread(function()
 							RequestAnimDict('mp_safehouselost@')
 							Citizen.Wait(5)
 						end
-						TaskPlayAnim(GetPlayerPed(-1), 'mp_safehouselost@', 'package_dropoff', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
+						TaskPlayAnim(PlayerPedId(), 'mp_safehouselost@', 'package_dropoff', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
 						TaskPlayAnim(obj, 'mp_safehouselost@', 'package_dropoff', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
 						if finishtime < curtime then
 							selling = false

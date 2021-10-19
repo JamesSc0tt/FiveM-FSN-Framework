@@ -9,9 +9,9 @@ end)
 
 Citizen.CreateThread(function()
 	while true do Citizen.Wait(0)
-		if IsPedShooting(GetPlayerPed(-1)) and exports["fsn_criminalmisc"]:HoldingWeapon() and not exports["fsn_police"]:fsn_PDDuty() then
+		if IsPedShooting(PlayerPedId()) and exports["fsn_criminalmisc"]:HoldingWeapon() and not exports["fsn_police"]:fsn_PDDuty() then
 			--print(wep)
-			local pos = GetEntityCoords(GetPlayerPed(-1))
+			local pos = GetEntityCoords(PlayerPedId())
 			local coords = {
 			 x = pos.x,
 			 y = pos.y,

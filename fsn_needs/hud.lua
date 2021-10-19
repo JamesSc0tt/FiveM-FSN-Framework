@@ -37,11 +37,11 @@ Citizen.CreateThread(function()
 		if not IsPedInAnyVehicle(GetPlayerPed( -1 ), true) then 
 			HideHudComponentThisFrame(0)
 		end
-		SetPedMinGroundTimeForStungun(GetPlayerPed(-1), 8000)
+		SetPedMinGroundTimeForStungun(PlayerPedId(), 8000)
 					
 		drawRct(0.015, 0.9677, 0.1418,0.028,81,81,84,165)
 
-		local health = GetEntityHealth(GetPlayerPed(-1)) - 100
+		local health = GetEntityHealth(PlayerPedId()) - 100
 		--if health < 1 then health = 100 end
 		local varSet = 0.06938 * (health / 100)
 		
@@ -49,7 +49,7 @@ Citizen.CreateThread(function()
 
 		drawRct(0.016, 0.97, varSet,0.01,55,185,55,177)
 
-		armor = GetPedArmour(GetPlayerPed(-1))
+		armor = GetPedArmour(PlayerPedId())
 		if armor > 100.0 then armor = 100.0 end
 		local varSet = 0.06938 * (armor / 100)
 		drawRct(0.0865, 0.97, 0.06938,0.01,188,188,188,80)

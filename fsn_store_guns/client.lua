@@ -16,9 +16,9 @@ local requireLicense = false
 
 Util.Tick(function()
   for k, s in pairs(stores) do
-    if GetDistanceBetweenCoords(s.x,s.y,s.z,GetEntityCoords(GetPlayerPed(-1)),true) < 10 then
+    if GetDistanceBetweenCoords(s.x,s.y,s.z,GetEntityCoords(PlayerPedId()),true) < 10 then
       DrawMarker(25, s.x,s.y,s.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 255, 255, 150, 0, 0, 2, 0, 0, 0, 0)
-      if GetDistanceBetweenCoords(s.x,s.y,s.z,GetEntityCoords(GetPlayerPed(-1)),true) < 1 then
+      if GetDistanceBetweenCoords(s.x,s.y,s.z,GetEntityCoords(PlayerPedId()),true) < 1 then
         if not s.busy then
           Util.DrawText3D(s.x,s.y,s.z, '[E] Access Store', {255,255,255,200}, 0.25)
           if IsControlJustReleased(0, Util.GetKeyNumber('E')) then
@@ -55,7 +55,7 @@ Citizen.CreateThread(function()
 	
 	while true do
 		Citizen.Wait(0)
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		local playerPos = GetEntityCoords(playerPed)
     local dist = Util.GetVecDist(playerPos, weaponLicLocation)
     local weaponLicenseprice = 5000

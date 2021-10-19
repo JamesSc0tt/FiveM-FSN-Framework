@@ -364,7 +364,7 @@ local function fsn_StartLaundering()
   while not HasModelLoaded(vehicle) do
     Wait(1)
   end
-  local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+  local coords = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 5.0, 0)
   local spawned_car = CreateVehicle(vehicle, garagepos.x, garagepos.y, garagepos.z+2, 319.79782104492, true, true)
   SetVehicleOnGroundProperly(spawned_car)
   SetModelAsNoLongerNeeded(vehicle)
@@ -388,7 +388,7 @@ local function fsn_StartLaundering()
 end
 
 local function fsn_NextLaundering(trig)
-  if GetEntityModel(GetVehiclePedIsIn(GetPlayerPed(-1), true)) ~= GetHashKey("burrito") then
+  if GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), true)) ~= GetHashKey("burrito") then
     TriggerEvent('fsn_notify:displayNotification', 'Deliveries must be completed in the vehicle provided', 'centerRight', 4000, 'error')
     return
   end
@@ -470,9 +470,9 @@ Citizen.CreateThread(function()
   EndTextCommandSetBlipName(blip)
   while true do
     Citizen.Wait(0)
-    local pos = GetEntityCoords(GetPlayerPed(-1))
+    local pos = GetEntityCoords(PlayerPedId())
     if laundering then
-      if GetDistanceBetweenCoords(launder_deliveries[current_delivery].x, launder_deliveries[current_delivery].y, launder_deliveries[current_delivery].z, GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z) < 5 then
+      if GetDistanceBetweenCoords(launder_deliveries[current_delivery].x, launder_deliveries[current_delivery].y, launder_deliveries[current_delivery].z, GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z) < 5 then
         SetTextComponentFormat("STRING")
         AddTextComponentString("Press ~INPUT_PICKUP~ to deliver the ~r~drugs~w~.")
         DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -482,9 +482,9 @@ Citizen.CreateThread(function()
       end
     end
     if fsn_hasDirtyMoney() then
-      if GetDistanceBetweenCoords(salepos.x, salepos.y, salepos.z, GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z) < 10 then
+      if GetDistanceBetweenCoords(salepos.x, salepos.y, salepos.z, GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z) < 10 then
         DrawMarker(1, salepos.x, salepos.y, salepos.z - 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.8, 0.8, 2.0, 255, 255, 0, 75, 0, 0, 2, 0, 0, 0, 0)
-        if GetDistanceBetweenCoords(salepos.x, salepos.y, salepos.z, GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z) < 1 then
+        if GetDistanceBetweenCoords(salepos.x, salepos.y, salepos.z, GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z) < 1 then
           if not abletolaunder then
             SetTextComponentFormat("STRING")
             AddTextComponentString("~r~Come back later, I\'m not dealing right now.")

@@ -28,7 +28,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		for obj in EnumerateObjects() do
-			if GetDistanceBetweenCoords(GetEntityCoords(obj), GetEntityCoords(GetPlayerPed(-1))) < 1 then
+			if GetDistanceBetweenCoords(GetEntityCoords(obj), GetEntityCoords(PlayerPedId())) < 1 then
 				if GetEntityModel(obj) == -742198632 then
 					SetTextComponentFormat("STRING")
 					AddTextComponentString("Press ~INPUT_PICKUP~ to drink ~b~water~w~ ($2)")
@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
 							RequestAnimDict('amb@code_human_in_car_mp_actions@drink@std@rps@base')
 							Citizen.Wait(5)
 						end
-						TaskPlayAnim(GetPlayerPed(-1), 'amb@code_human_in_car_mp_actions@drink@std@rps@base', 'idle_a', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
+						TaskPlayAnim(PlayerPedId(), 'amb@code_human_in_car_mp_actions@drink@std@rps@base', 'idle_a', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
 						TriggerEvent('fsn_inventory:use:drink', 15)
 						TriggerEvent('fsn_bank:change:walletMinus', 2)
 					end
@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
 							RequestAnimDict('amb@code_human_in_car_mp_actions@drink@std@rps@base')
 							Citizen.Wait(5)
 						end
-						TaskPlayAnim(GetPlayerPed(-1), 'amb@code_human_in_car_mp_actions@drink@std@rps@base', 'idle_a', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
+						TaskPlayAnim(PlayerPedId(), 'amb@code_human_in_car_mp_actions@drink@std@rps@base', 'idle_a', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
 						TriggerEvent('fsn_inventory:use:drink', 17)
 						TriggerEvent('fsn_bank:change:walletMinus', 3)
 					end

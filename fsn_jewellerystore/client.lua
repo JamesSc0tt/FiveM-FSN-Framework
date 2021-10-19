@@ -183,7 +183,7 @@ local doors = {
 }
 RegisterNetEvent('fsn_commands:police:lock')
 AddEventHandler('fsn_commands:police:lock', function()
-	if GetDistanceBetweenCoords(doors[1].x, doors[1].y, doors[1].z, GetEntityCoords(GetPlayerPed(-1)), true) < 3 or GetDistanceBetweenCoords(doors[2].x, doors[2].y, doors[2].z, GetEntityCoords(GetPlayerPed(-1)), true) < 3 then
+	if GetDistanceBetweenCoords(doors[1].x, doors[1].y, doors[1].z, GetEntityCoords(PlayerPedId()), true) < 3 or GetDistanceBetweenCoords(doors[2].x, doors[2].y, doors[2].z, GetEntityCoords(PlayerPedId()), true) < 3 then
 		print 'you can lock/unlock the door at jewellerystore'
 		TriggerServerEvent('fsn_jewellerystore:doors:toggle')
 	end
@@ -218,7 +218,7 @@ function TriggerGuardAttack()
 		if guard.ped then
 			--SetBlockingOfNonTemporaryEvents(guard.ped, false)
 			GiveWeaponToPed(guard.ped, GetHashKey(guardWeapon), 200, true, true)
-			TaskCombatPed(guard.ped, GetPlayerPed(-1), 0, 16)
+			TaskCombatPed(guard.ped, PlayerPedId(), 0, 16)
 			SetPedCombatRange(guard.ped, 2)
 			SetPedCombatMovement(guard.ped, 2)
 			SetCanAttackFriendly(guard.ped, false, false)
@@ -263,7 +263,7 @@ AddEventHandler('fsn_jewellerystore:case:startrob', function(caseid)
 		RequestAnimDict('missheist_jewel')
 		return
 	end
-	local pos = GetEntityCoords(GetPlayerPed(-1))
+	local pos = GetEntityCoords(PlayerPedId())
 	local coords = {
 		x = pos.x,
 		y = pos.y,
@@ -276,13 +276,13 @@ AddEventHandler('fsn_jewellerystore:case:startrob', function(caseid)
 	while not HasAnimDictLoaded('missheist_jewel') do
 		Citizen.Wait(1)
 	end
-	TaskPlayAnim(GetPlayerPed(-1), "missheist_jewel", anims[math.random(1,#anims)], 4.0, -4, -1, 1, 0, 0, 0, 0)
+	TaskPlayAnim(PlayerPedId(), "missheist_jewel", anims[math.random(1,#anims)], 4.0, -4, -1, 1, 0, 0, 0, 0)
 	robbing = true
 	Citizen.Wait(7500)
-	ClearPedTasks(GetPlayerPed(-1))
+	ClearPedTasks(PlayerPedId())
 	robbing = false
 	TriggerEvent('fsn_inventory:item:add', 'dirty_money', math.random(400,1000))
-	FreezeEntityPosition(GetPlayerPed(-1), false)
+	FreezeEntityPosition(PlayerPedId(), false)
 end)
 
 function fsn_drawText3D(x,y,z, text)
@@ -305,7 +305,7 @@ function fsn_drawText3D(x,y,z, text)
 end
 
 function IsPedDriving()
-	if IsPedInAnyVehicle(GetPlayerPed(-1)) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) then
+	if IsPedInAnyVehicle(PlayerPedId()) and GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() then
 		return true
 	else
 		return false
@@ -315,15 +315,15 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if GetDistanceBetweenCoords(outside.x, outside.y, outside.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(outside.x, outside.y, outside.z, GetEntityCoords(PlayerPedId()), true) < 10 then
 			if not exports["fsn_police"]:fsn_PDDuty() and IsPedDriving() then
-				local pos = GetEntityCoords(GetPlayerPed(-1))
+				local pos = GetEntityCoords(PlayerPedId())
 				local coords = {
 					x = pos.x,
 					y = pos.y,
 					z = pos.z
 				}
-				local holdingcar = GetVehiclePedIsIn(GetPlayerPed(-1))
+				local holdingcar = GetVehiclePedIsIn(PlayerPedId())
 				local colour = table.pack(GetVehicleColours(holdingcar))
 				colour = colour[1]
 				colour = vehicle_colours[colour+1]
@@ -339,7 +339,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if GetDistanceBetweenCoords(doors[1].x, doors[1].y, doors[1].z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 or GetDistanceBetweenCoords(doors[2].x, doors[2].y, doors[2].z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(doors[1].x, doors[1].y, doors[1].z, GetEntityCoords(PlayerPedId()), true) < 10 or GetDistanceBetweenCoords(doors[2].x, doors[2].y, doors[2].z, GetEntityCoords(PlayerPedId()), true) < 10 then
 			if amilocked then
 				for k, v in pairs(doors) do
 					local door = GetClosestObjectOfType(v.x,v.y,v.z, 1.0, v.mdl, false, false, false)
@@ -353,7 +353,7 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if GetDistanceBetweenCoords(gasdoor.loc.x,gasdoor.loc.y,gasdoor.loc.z, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(gasdoor.loc.x,gasdoor.loc.y,gasdoor.loc.z, GetEntityCoords(PlayerPedId()), true) < 5 then
 			if isgasdoorLocked then
 				fsn_drawText3D(gasdoor.txt.x,gasdoor.txt.y,gasdoor.txt.z, '~r~LOCKED\n~w~[E] Scan Card')
 				local door = GetClosestObjectOfType(gasdoor.loc.x,gasdoor.loc.y,gasdoor.loc.z, 1.0, gasdoor.mdl, false, false, false)
@@ -368,17 +368,17 @@ Citizen.CreateThread(function()
 				FreezeEntityPosition(door, false)
 			end
 		end
-		if GetDistanceBetweenCoords(3563.146484375, 3673.47265625, 28.121885299683, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(3563.146484375, 3673.47265625, 28.121885299683, GetEntityCoords(PlayerPedId()), true) < 10 then
 			DrawMarker(1,3563.146484375, 3673.47265625, 28.121885299683-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(3563.146484375, 3673.47265625, 28.121885299683, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(3563.146484375, 3673.47265625, 28.121885299683, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("HINT: Use 'Empty Canister'")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 			end
 		end
-		if GetDistanceBetweenCoords(1660.0181884766, 6.2703385353088, 166.11819458008, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(1660.0181884766, 6.2703385353088, 166.11819458008, GetEntityCoords(PlayerPedId()), true) < 10 then
 			DrawMarker(1,1660.0181884766, 6.2703385353088, 166.11819458008-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(1660.0181884766, 6.2703385353088, 166.11819458008, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(1660.0181884766, 6.2703385353088, 166.11819458008, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("~INPUT_PICKUP~ grab canister")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -387,17 +387,17 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if GetDistanceBetweenCoords(gasuse.x, gasuse.y, gasuse.z, GetEntityCoords(GetPlayerPed(-1)), true) < 30 then
+		if GetDistanceBetweenCoords(gasuse.x, gasuse.y, gasuse.z, GetEntityCoords(PlayerPedId()), true) < 30 then
 			DrawMarker(1,gasuse.x,gasuse.y,gasuse.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(gasuse.x, gasuse.y, gasuse.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(gasuse.x, gasuse.y, gasuse.z, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("HINT: Use 'Gas Canister'")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 			end
 		end
-		if GetDistanceBetweenCoords(centre.x, centre.y, centre.z, GetEntityCoords(GetPlayerPed(-1)), true) < 30 then
+		if GetDistanceBetweenCoords(centre.x, centre.y, centre.z, GetEntityCoords(PlayerPedId()), true) < 30 then
 			-------- RING SHIT
-			--if GetDistanceBetweenCoords(-622.29168701172, -229.90211486816, 38.057048797607,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			--if GetDistanceBetweenCoords(-622.29168701172, -229.90211486816, 38.057048797607,GetEntityCoords(PlayerPedId()), true) < 1 then
 			--	fsn_drawText3D(-622.29168701172, -229.90211486816, 38.057048797607, '[E] ~g~Purchase:~w~ Ring\n~y~($100,000)')
 			--end
 			-------- NEW GUARD SHIT
@@ -453,7 +453,7 @@ Citizen.CreateThread(function()
 							for k,v in pairs(guardlocs) do 
 								TaskSetBlockingOfNonTemporaryEvents(v.ped, false)
 								GiveWeaponToPed(v.ped, GetHashKey(guardWeapon), 50, true, true)
-								TaskCombatPed(v.ped, GetPlayerPed(-1), 0, 18)
+								TaskCombatPed(v.ped, PlayerPedId(), 0, 18)
 							end
 						end						
 					end
@@ -484,13 +484,13 @@ Citizen.CreateThread(function()
 			end
 			for key, case in pairs(cases) do
 				--local inzone = false
-				if GetDistanceBetweenCoords(case[1],case[2],case[3], GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+				if GetDistanceBetweenCoords(case[1],case[2],case[3], GetEntityCoords(PlayerPedId()), true) < 1 then
 					--inzone = true
 					if robbing then
 						--print'robbing'
 						DisableControlAction(0,288)
-						fsn_drawText3D(GetEntityCoords(GetPlayerPed(-1)).x,GetEntityCoords(GetPlayerPed(-1)).y,GetEntityCoords(GetPlayerPed(-1)).z, 'Looting...')
-						FreezeEntityPosition(GetPlayerPed(-1), true)
+						fsn_drawText3D(GetEntityCoords(PlayerPedId()).x,GetEntityCoords(PlayerPedId()).y,GetEntityCoords(PlayerPedId()).z, 'Looting...')
+						FreezeEntityPosition(PlayerPedId(), true)
 					elseif case.robbed == false then 
 						if exports["fsn_police"]:fsn_getCopAmt() > 2 then
 							fsn_drawText3D(case[1],case[2],case[3], '[E] Loot Case')
@@ -509,8 +509,8 @@ Citizen.CreateThread(function()
 					--if robbing then
 					--	print'robbing'
 					--	DisableControlAction(0,288)
-					--	fsn_drawText3D(GetEntityCoords(GetPlayerPed(-1)).x,GetEntityCoords(GetPlayerPed(-1)).y,GetEntityCoords(GetPlayerPed(-1)).z, 'Looting...')
-					--	FreezeEntityPosition(GetPlayerPed(-1), true)
+					--	fsn_drawText3D(GetEntityCoords(PlayerPedId()).x,GetEntityCoords(PlayerPedId()).y,GetEntityCoords(PlayerPedId()).z, 'Looting...')
+					--	FreezeEntityPosition(PlayerPedId(), true)
 					--end
 				end
 			end

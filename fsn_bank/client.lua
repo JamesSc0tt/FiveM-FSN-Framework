@@ -111,7 +111,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     for k, atm in pairs(atms) do
-      if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, atm.x, atm.y, atm.z) < 1 then
+      if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, atm.x, atm.y, atm.z) < 1 then
         if not atmDisplay then
           SetTextComponentFormat("STRING")
           AddTextComponentString("Press ~INPUT_PICKUP~ to access the "..atm.name)
@@ -122,9 +122,9 @@ Citizen.CreateThread(function()
               RequestAnimDict('amb@prop_human_atm@male@base')
               Citizen.Wait(5)
             end
-            if not IsEntityPlayingAnim(GetPlayerPed(-1), 'amb@prop_human_atm@male@base', 'base', 3) then
-              FreezeEntityPosition(GetPlayerPed(-1), 1)
-              TaskPlayAnim(GetPlayerPed(-1), 'amb@prop_human_atm@male@base', 'base', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
+            if not IsEntityPlayingAnim(PlayerPedId(), 'amb@prop_human_atm@male@base', 'base', 3) then
+              FreezeEntityPosition(PlayerPedId(), 1)
+              TaskPlayAnim(PlayerPedId(), 'amb@prop_human_atm@male@base', 'base', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
             end
             SetNuiFocus(true,true)
             SendNUIMessage({
@@ -140,9 +140,9 @@ Citizen.CreateThread(function()
   end
 end)
 local function fsn_closeATM()
-  FreezeEntityPosition(GetPlayerPed(-1), 0)
-  SetEntityCollision(GetPlayerPed(-1), 1, 1)
-	ClearPedTasks(GetPlayerPed(-1))
+  FreezeEntityPosition(PlayerPedId(), 0)
+  SetEntityCollision(PlayerPedId(), 1, 1)
+	ClearPedTasks(PlayerPedId())
   SetNuiFocus(false,false)
   TriggerEvent('fsn_main:displayBankandMoney')
   SendNUIMessage({

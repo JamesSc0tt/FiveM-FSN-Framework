@@ -219,8 +219,8 @@ AddEventHandler('fsn_cargarage:receiveVehicles', function(type, vehtbl)
 end)
 
 function fsn_ToggleGarageMenu()
-	FreezeEntityPosition(GetPlayerPed(-1), 0)
-  SetEntityCollision(GetPlayerPed(-1), 1, 1)
+	FreezeEntityPosition(PlayerPedId(), 0)
+  SetEntityCollision(PlayerPedId(), 1, 1)
 	menuEnabled = not menuEnabled
 	if ( menuEnabled ) then
 		SetNuiFocus( true, true )
@@ -308,7 +308,7 @@ function doCarDamages(eh, bh, veh)
 	
 	print('fsn_cargarage: details eh('..eh..') bh('..bh..') smash('..tostring(smash)..') damageOutside('..tostring(damageOutside)..') damageOutside2('..tostring(damageOutside2)..')')
 	
-	local currentVehicle = (veh and IsEntityAVehicle(veh)) and veh or GetVehiclePedIsIn(GetPlayerPed(-1), false)
+	local currentVehicle = (veh and IsEntityAVehicle(veh)) and veh or GetVehiclePedIsIn(PlayerPedId(), false)
 
 	Citizen.Wait(100)
 	SetVehicleEngineHealth(currentVehicle, engine)
@@ -352,13 +352,13 @@ function fsn_SpawnVehicle(vehid)
 		end
 
 		local model = GetHashKey(veh.veh_spawnname)
-		local pos = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+		local pos = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 5.0, 0)
 
 		RequestModel(model)
 		while not HasModelLoaded(model) do
 			Wait(1)
 		end
-		local personalvehicle = CreateVehicle(model, pos.x, pos.y, pos.z, GetEntityHeading(GetPlayerPed(-1)), true, false)
+		local personalvehicle = CreateVehicle(model, pos.x, pos.y, pos.z, GetEntityHeading(PlayerPedId()), true, false)
 		SetModelAsNoLongerNeeded(model)
 		SetVehicleOnGroundProperly(personalvehicle)
 		SetVehicleHasBeenOwnedByPlayer(personalvehicle, true)
@@ -427,7 +427,7 @@ function fsn_SpawnVehicle(vehid)
 		------------------------------
 		-- finish spawning
 		------------------------------
-		TaskWarpPedIntoVehicle(GetPlayerPed(-1), personalvehicle, -1)
+		TaskWarpPedIntoVehicle(PlayerPedId(), personalvehicle, -1)
 		table.insert(myVehicles, #myVehicles+1, {
 			ent = personalvehicle,
 			plate = veh.veh_plate,
@@ -472,13 +472,13 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		for key, grg in pairs(garages) do
-			if GetDistanceBetweenCoords(grg.pos.x,grg.pos.y,grg.pos.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+			if GetDistanceBetweenCoords(grg.pos.x,grg.pos.y,grg.pos.z,GetEntityCoords(PlayerPedId()), true) < 10 then
         DrawMarker(1,grg.pos.x,grg.pos.y,grg.pos.z-1,0,0,0,0,0,0,5.8, 5.8, 0.5,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(grg.pos.x,grg.pos.y,grg.pos.z,GetEntityCoords(GetPlayerPed(-1)), true) < 5.8 then
+        if GetDistanceBetweenCoords(grg.pos.x,grg.pos.y,grg.pos.z,GetEntityCoords(PlayerPedId()), true) < 5.8 then
 					local vehicle = false
-					if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-						if GetVehiclePedIsUsing(GetPlayerPed(-1)) then
-							vehicle = GetVehiclePedIsUsing(GetPlayerPed(-1))		
+					if IsPedInAnyVehicle(PlayerPedId()) then
+						if GetVehiclePedIsUsing(PlayerPedId()) then
+							vehicle = GetVehiclePedIsUsing(PlayerPedId())		
 						end
 					else
 						vehicle = fsn_IsVehicleHere(grg.pos.x,grg.pos.y,grg.pos.z,5.8)
@@ -580,8 +580,8 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(300000)
-		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-			local deets = getCarDetails(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+		if IsPedInAnyVehicle(PlayerPedId()) then
+			local deets = getCarDetails(GetVehiclePedIsIn(PlayerPedId(), false))
 			TriggerServerEvent('fsn_garages:vehicle:update', deets)
 		end
 	end

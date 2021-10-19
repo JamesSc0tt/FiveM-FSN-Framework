@@ -38,13 +38,13 @@ end
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-    if radarEnabled and pdonduty and IsPedInAnyVehicle(GetPlayerPed(-1)) then
+    if radarEnabled and pdonduty and IsPedInAnyVehicle(PlayerPedId()) then
       if IsControlJustPressed(1, 135) then
         freezeRadar = not freezeRadar
       end
       -- I stole this from github lol
       -- https://github.com/Abreezy70/BrockALPR/blob/master/BrockALPR/speed.lua
-      local veh = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+      local veh = GetVehiclePedIsIn(PlayerPedId(), false)
 			local coordA = GetOffsetFromEntityInWorldCoords(veh, 0.0, 1.0, 1.0)
 			local coordB = GetOffsetFromEntityInWorldCoords(veh, 0.0, 105.0, 0.0)
 			local frontcar = StartShapeTestCapsule(coordA, coordB, 3.0, 10, veh, 7)

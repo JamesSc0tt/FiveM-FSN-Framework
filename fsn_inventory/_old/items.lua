@@ -40,15 +40,15 @@ items_table = {
 			  TriggerEvent('fsn_ems:ad:stopBleeding')
 			  
 		TriggerEvent('fsn_evidence:ped:addState', 'Has bandage', 'UPPER_BODY', 20)
-		  if GetEntityHealth(GetPlayerPed(-1)) < 131 then
+		  if GetEntityHealth(PlayerPedId()) < 131 then
 			  TriggerEvent('fsn_inventory:item:take', 'bandage', 1)
 			  while ( not HasAnimDictLoaded( "oddjobs@assassinate@guard" ) ) do
 				  RequestAnimDict( "oddjobs@assassinate@guard" )
 				  Citizen.Wait( 5 )
 			  end
-			  TaskPlayAnim(GetPlayerPed(-1), "oddjobs@assassinate@guard", "unarmed_fold_arms", 8.0, 1.0, 2500, 2, 0, 0, 0, 0 )  
+			  TaskPlayAnim(PlayerPedId(), "oddjobs@assassinate@guard", "unarmed_fold_arms", 8.0, 1.0, 2500, 2, 0, 0, 0, 0 )  
 			  Citizen.Wait(1500)
-			  SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1))+15)
+			  SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId())+15)
 			  
 	  else
 		TriggerEvent('fsn_notify:displayNotification', 'You don\'t need to use a bandage!<br>Visit an EMS personnel or a hospital to heal more.', 'centerLeft', 3500, 'error')
@@ -76,7 +76,7 @@ items_table = {
       --    RequestAnimDict( "mini@safe_cracking" )
       --    Citizen.Wait( 5 )
      -- end
-      --TaskPlayAnim(GetPlayerPed(-1), "mini@safe_cracking", "idle_base", 8.0, 1.0, 2500, 2, 0, 0, 0, 0 )
+      --TaskPlayAnim(PlayerPedId(), "mini@safe_cracking", "idle_base", 8.0, 1.0, 2500, 2, 0, 0, 0, 0 )
       TriggerEvent('fsn_vehiclecontrol:damage:repairkit')
     end,
     modelhash = -1674314660,
@@ -426,7 +426,7 @@ items_table = {
     weight = 5,
     desc = 'you dodgy guy',
     use = function()
-		if GetDistanceBetweenCoords(3563.146484375, 3673.47265625, 28.121885299683, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+		if GetDistanceBetweenCoords(3563.146484375, 3673.47265625, 28.121885299683, GetEntityCoords(PlayerPedId()), true) < 1 then
 			TriggerEvent('fsn_inventory:item:take', 'empty_canister', 1)
 			TriggerEvent('fsn_inventory:item:add', 'gas_canister', 1)
 		else
@@ -440,7 +440,7 @@ items_table = {
     desc = 'you dodgy guy',
     use = function()
 		local gasuse = {x = -628.78393554688, y = -226.52185058594, z = 55.901119232178}
-		if GetDistanceBetweenCoords(gasuse.x, gasuse.y, gasuse.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+		if GetDistanceBetweenCoords(gasuse.x, gasuse.y, gasuse.z, GetEntityCoords(PlayerPedId()), true) < 1 then
 			TriggerEvent('fsn_notify:displayNotification', 'It looks like the vent is locked, you\'ll need to find another way to do this', 'centerLeft', 3000, 'info')
 		else
 			TriggerEvent('fsn_notify:displayNotification', 'Nothing to do with that here', 'centerLeft', 3000, 'error')

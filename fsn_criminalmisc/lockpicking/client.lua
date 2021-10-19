@@ -165,15 +165,15 @@ local vehicle_colours = {
 }
 
 function getVehicleInDirection(coordFrom, coordTo)
-	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
+	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, PlayerPedId(), 0)
 	local a, b, c, d, vehicle = GetRaycastResult(rayHandle)
 	return vehicle
 end
 function fsn_lookingAt()
 	local targetVehicle = false
 
-	local coordA = GetEntityCoords(GetPlayerPed(-1), 1)
-	local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, -1.0)
+	local coordA = GetEntityCoords(PlayerPedId(), 1)
+	local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, -1.0)
 	targetVehicle = getVehicleInDirection(coordA, coordB)
 
 	return targetVehicle
@@ -189,18 +189,18 @@ RegisterNetEvent('fsn_criminalmisc:lockpicking')
 AddEventHandler('fsn_criminalmisc:lockpicking', function()
 	if not picklocking then
 		for k, v in pairs(desks) do
-			if GetDistanceBetweenCoords(v.door.x, v.door.y, v.door.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+			if GetDistanceBetweenCoords(v.door.x, v.door.y, v.door.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 				picklocking = true
 				TriggerEvent('fsn_commands:me', 'Begins smashing at the bank door lock...')
 				while ( not HasAnimDictLoaded( "mini@safe_cracking" ) ) do
 					RequestAnimDict( "mini@safe_cracking" )
 					Citizen.Wait( 5 )
 				end
-				TaskPlayAnim(GetPlayerPed(-1), "mini@safe_cracking", "idle_base", 8.0, 1.0, 12000, 2, 0, 0, 1, 1 )
+				TaskPlayAnim(PlayerPedId(), "mini@safe_cracking", "idle_base", 8.0, 1.0, 12000, 2, 0, 0, 1, 1 )
 				Citizen.Wait( 12000 )
 				if exports["fsn_police"]:fsn_getCopAmt() > 0 then
 					TriggerServerEvent('fsn_bankrobbery:desks:doorUnlock', k)
-					local pos = GetEntityCoords(GetPlayerPed(-1))
+					local pos = GetEntityCoords(PlayerPedId())
 					local coords = {
 					 x = pos.x,
 					 y = pos.y,
@@ -217,7 +217,7 @@ AddEventHandler('fsn_criminalmisc:lockpicking', function()
 			end
 		end
 		local lost_safe = {x = 977.23968505859, y = -104.10308074951, z = 74.845184326172}
-		if GetDistanceBetweenCoords(lost_safe.x, lost_safe.y, lost_safe.z, GetEntityCoords(GetPlayerPed(-1))) < 2 then
+		if GetDistanceBetweenCoords(lost_safe.x, lost_safe.y, lost_safe.z, GetEntityCoords(PlayerPedId())) < 2 then
 			print(exports['fsn_police']:fsn_getCopAmt()..' are online')
 			if exports['fsn_police']:fsn_getCopAmt() < 3 then
 				--TriggerEvent('fsn_bankrobbery:LostMC:spawn')
@@ -228,7 +228,7 @@ AddEventHandler('fsn_criminalmisc:lockpicking', function()
 					RequestAnimDict( "mini@safe_cracking" )
 					Citizen.Wait( 5 )
 				end
-				TaskPlayAnim(GetPlayerPed(-1), "mini@safe_cracking", "idle_base", 8.0, 1.0, 12000, 2, 0, 0, 1, 1 )
+				TaskPlayAnim(PlayerPedId(), "mini@safe_cracking", "idle_base", 8.0, 1.0, 12000, 2, 0, 0, 1, 1 )
 				Citizen.Wait( 12000 )
 				if math.random(1,100) > 50 then
 					TriggerEvent('fsn_bankrobbery:LostMC:spawn')
@@ -248,7 +248,7 @@ AddEventHandler('fsn_criminalmisc:lockpicking', function()
 						if math.random(1, 100) > 50 then TriggerEvent('fsn_inventory:item:add', 'joint', math.random(1,10)) end
 						if math.random(1, 100) > 70 then TriggerEvent('fsn_inventory:item:add', 'packaged_cocaine', math.random(1,5)) end
 						--TriggerEvent('fsn_bankrobbery:LostMC:spawn')
-						local pos = GetEntityCoords(GetPlayerPed(-1))
+						local pos = GetEntityCoords(PlayerPedId())
 						local coords = {
 						 x = pos.x,
 						 y = pos.y,
@@ -280,9 +280,9 @@ function doLockpick()
 		RequestAnimDict( "mini@safe_cracking" )
 		Citizen.Wait( 5 )
 	end
-	TaskPlayAnim(GetPlayerPed(-1), "mini@safe_cracking", "idle_base", 8.0, 1.0, 1000, 2, 0, 0, 1, 1 )
-	if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-		lockpicking_vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+	TaskPlayAnim(PlayerPedId(), "mini@safe_cracking", "idle_base", 8.0, 1.0, 1000, 2, 0, 0, 1, 1 )
+	if IsPedInAnyVehicle(PlayerPedId()) then
+		lockpicking_vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
 		TriggerEvent('fsn_commands:me', 'attempts to hotwire the vehicle...')
 		lockpicking_car = true
 	else
@@ -310,13 +310,13 @@ function doLockpick()
 			Citizen.Wait(0)
 			local maff = lockpicking_start + lockpicking_length
 			if maff >= exports["fsn_main"]:fsn_GetTime() then
-				if GetDistanceBetweenCoords(GetEntityCoords(lockpicking_vehicle), GetEntityCoords(GetPlayerPed(-1))) > 5 or IsControlJustPressed( 1,  288 ) then
+				if GetDistanceBetweenCoords(GetEntityCoords(lockpicking_vehicle), GetEntityCoords(PlayerPedId())) > 5 or IsControlJustPressed( 1,  288 ) then
 					picklocking = false
 					exports["fsn_progress"]:removeBar()
 					lockpicking_car = false
 				end
-				if not IsEntityPlayingAnim(GetPlayerPed(-1), "mini@safe_cracking", "idle_base", 3) then
-					TaskPlayAnim(GetPlayerPed(-1), "mini@safe_cracking", "idle_base", 8.0, 1.0, 1000, 2, 0, 0, 1, 1 )
+				if not IsEntityPlayingAnim(PlayerPedId(), "mini@safe_cracking", "idle_base", 3) then
+					TaskPlayAnim(PlayerPedId(), "mini@safe_cracking", "idle_base", 8.0, 1.0, 1000, 2, 0, 0, 1, 1 )
 				end
 			else
 				-- i finished
@@ -335,7 +335,7 @@ end
 
 function dispatchAlert(veh)
 	if math.random(1,100) < 40 then
-		local pos = GetEntityCoords(GetPlayerPed(-1))
+		local pos = GetEntityCoords(PlayerPedId())
 		local coords = {
 			x = pos.x,
 			y = pos.y,

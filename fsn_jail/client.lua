@@ -73,9 +73,9 @@ AddEventHandler('fsn_jail:sendme', function(time)
 	jailtime = time
 	totaltime = time
   isinjail = true
-  RemoveAllPedWeapons(GetPlayerPed(-1))
+  RemoveAllPedWeapons(PlayerPedId())
   local jail = {x = 1653.5433349609, y = 2603.8093261719, z = 45.564876556396}
-  SetEntityCoords(GetPlayerPed(-1), jail.x, jail.y,jail.z+1)
+  SetEntityCoords(PlayerPedId(), jail.x, jail.y,jail.z+1)
   TriggerEvent('pNotify:SendNotification', {text = "You've been sent to jail for: ".. math.floor(tonumber(jailtime) / 60) .." minutes",
     layout = "centerRight",
     timeout = 600,
@@ -89,7 +89,7 @@ RegisterNetEvent('fsn_jail:releaseme')
 AddEventHandler('fsn_jail:releaseme', function()
 	jailtime = 0
   isinjail = false
-  SetEntityCoords(GetPlayerPed(-1), 1852.42, 2603.44,45.672)
+  SetEntityCoords(PlayerPedId(), 1852.42, 2603.44,45.672)
   TriggerServerEvent('fsn_jail:update:database', jailtime)
   TriggerEvent('pNotify:SendNotification', {text = "You've been released from jail",
     layout = "centerRight",
@@ -125,14 +125,14 @@ Citizen.CreateThread(function()
 		if myjob ~= 0 then
 			local job = jobs[myjob]
 			DrawMarker(1,job.x, job.y, job.z-1,0,0,0,0,0,0,1.0,1.0,90.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(job.x, job.y, job.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(job.x, job.y, job.z, GetEntityCoords(PlayerPedId()), true) < 1 then
 				--amb@world_human_welding@male@idle_a
 				--idle_a
 				RequestAnimDict('amb@world_human_welding@male@idle_a')
 				while not HasAnimDictLoaded('amb@world_human_welding@male@idle_a') do
 					Citizen.Wait(1)
 				end
-				TaskPlayAnim(GetPlayerPed(-1), "amb@world_human_welding@male@idle_a", 'idle_a', 4.0, -4, -1, 1, 0, 0, 0, 0)
+				TaskPlayAnim(PlayerPedId(), "amb@world_human_welding@male@idle_a", 'idle_a', 4.0, -4, -1, 1, 0, 0, 0, 0)
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("~g~working...")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -156,8 +156,8 @@ Citizen.CreateThread(function()
       Citizen.Wait(1000)
 	  timetick = timetick + 1
       jailtime = jailtime - 1
-	  if GetDistanceBetweenCoords(1691.8676757813, 2606.4614257813, 45.560329437256,GetEntityCoords(GetPlayerPed(-1)), true) > 330 then
-		SetEntityCoords(GetPlayerPed(-1), 1654.0007324219, 2601.3422851563, 45.564872741699)
+	  if GetDistanceBetweenCoords(1691.8676757813, 2606.4614257813, 45.560329437256,GetEntityCoords(PlayerPedId()), true) > 330 then
+		SetEntityCoords(PlayerPedId(), 1654.0007324219, 2601.3422851563, 45.564872741699)
 		TriggerEvent('fsn_notify:displayNotification', 'You must stay in jail for the entirity of your sentence!', 'centerRight', 6000, 'error')
 	  end
       if jailtime <= 0 then

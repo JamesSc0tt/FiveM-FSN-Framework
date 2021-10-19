@@ -2,12 +2,12 @@ local last_health = 0
 
 Citizen.CreateThread(function()
 	while true do Citizen.Wait(0)
-		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-			local cur_health = GetVehicleBodyHealth(GetVehiclePedIsIn(GetPlayerPed(-1)))
+		if IsPedInAnyVehicle(PlayerPedId()) then
+			local cur_health = GetVehicleBodyHealth(GetVehiclePedIsIn(PlayerPedId()))
 			if cur_health < last_health then
 				local difference = last_health - cur_health
-				if difference > 40 and IsPointOnRoad(GetEntityCoords(GetPlayerPed(-1)), GetVehiclePedIsIn(GetPlayerPed(-1))) then
-					local pos = GetEntityCoords(GetPlayerPed(-1))
+				if difference > 40 and IsPointOnRoad(GetEntityCoords(PlayerPedId()), GetVehiclePedIsIn(PlayerPedId())) then
+					local pos = GetEntityCoords(PlayerPedId())
 					local coords = {
 					 x = pos.x,
 					 y = pos.y,
@@ -16,7 +16,7 @@ Citizen.CreateThread(function()
 				   TriggerServerEvent('fsn_police:dispatch', coords, 16)
 				end
 			end
-			last_health = GetVehicleBodyHealth(GetVehiclePedIsIn(GetPlayerPed(-1)))
+			last_health = GetVehicleBodyHealth(GetVehiclePedIsIn(PlayerPedId()))
 		end
 	end
 end)

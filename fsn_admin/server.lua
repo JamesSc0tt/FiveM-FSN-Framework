@@ -155,14 +155,14 @@ end)
 
 RegisterNetEvent('fsn_admin:spawnCar')
 AddEventHandler('fsn_admin:spawnCar', function(car)
-  local myPed = GetPlayerPed(-1)
+  local myPed = PlayerPedId()
   local player = PlayerId()
   local vehicle = GetHashKey(car)
   RequestModel(vehicle)
   while not HasModelLoaded(vehicle) do
     Wait(1)
   end
-  local coords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 5.0, 0)
+  local coords = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 5.0, 0)
   local spawned_car = CreateVehicle(vehicle, coords, GetEntityHeading(myPed), true, true)
   SetVehicleOnGroundProperly(spawned_car)
   SetModelAsNoLongerNeeded(vehicle)
@@ -175,8 +175,8 @@ end)
 
 RegisterNetEvent('fsn_admin:fix')
 AddEventHandler('fsn_admin:fix', function()
-	if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-		local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+	if IsPedInAnyVehicle(PlayerPedId(), false) then
+		local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
 		SetVehicleEngineHealth(vehicle, 1000)
 		SetVehicleEngineOn( vehicle, true, true )
 		SetVehicleFixed(vehicle)

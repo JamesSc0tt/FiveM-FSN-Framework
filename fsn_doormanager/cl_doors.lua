@@ -24,8 +24,8 @@ TriggerServerEvent('fsn_doormanager:request')
 
 function LookingAt(id, x,y,z)
 	if doors[id].lookingat == false then return true end
-	local coordA = GetEntityCoords(GetPlayerPed(-1), 1)
-	local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 1.0, 0.0)
+	local coordA = GetEntityCoords(PlayerPedId(), 1)
+	local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 1.0, 0.0)
     --DrawMarker(1,coordB,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
 	if GetDistanceBetweenCoords(x,y,z,coordB,false) < 1.0 then
 		return true
@@ -48,7 +48,7 @@ function ToggleLock(id)
 	locking_id = id
 	locking_start = GetGameTimer()
 	LoadAnimDict( "gestures@f@standing@casual" )
-	TaskPlayAnim(GetPlayerPed(-1), "gestures@f@standing@casual", "gesture_hand_down", 8.0, 1.0, 3, 2, 0, 0, 0, 0 )
+	TaskPlayAnim(PlayerPedId(), "gestures@f@standing@casual", "gesture_hand_down", 8.0, 1.0, 3, 2, 0, 0, 0, 0 )
 	TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 5, 'door-lock', 0.1)
 end
 
@@ -66,7 +66,7 @@ Citizen.CreateThread(function()
 		else	
 			for k, d in pairs(doors) do
 				if d.double then
-					local dist = GetDistanceBetweenCoords(d.disp.x, d.disp.y,d.disp.z,GetEntityCoords(GetPlayerPed(-1)),true)
+					local dist = GetDistanceBetweenCoords(d.disp.x, d.disp.y,d.disp.z,GetEntityCoords(PlayerPedId()),true)
 					if dist < 20 then
 						local door_one = GetClosestObjectOfType(d.ents[1].x, d.ents[1].y,d.ents[1].z, 0.5, d.ents[1].mdl, false, false, false)
 						local door_two = GetClosestObjectOfType(d.ents[2].x, d.ents[2].y,d.ents[2].z, 0.5, d.ents[2].mdl, false, false, false)
@@ -107,7 +107,7 @@ Citizen.CreateThread(function()
 						end
 					end
 				else
-					local dist = GetDistanceBetweenCoords(d.ents[1].x, d.ents[1].y,d.ents[1].z,GetEntityCoords(GetPlayerPed(-1)),true)
+					local dist = GetDistanceBetweenCoords(d.ents[1].x, d.ents[1].y,d.ents[1].z,GetEntityCoords(PlayerPedId()),true)
 					if dist < 20 then
 						local door = GetClosestObjectOfType(d.ents[1].x, d.ents[1].y,d.ents[1].z, 0.1, d.ents[1].mdl, false, false, false)
 						if door then
@@ -149,7 +149,7 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
---SetEntityCoords(GetPlayerPed(-1), -774.10675, -9.47164536, 10.1702633)
+--SetEntityCoords(PlayerPedId(), -774.10675, -9.47164536, 10.1702633)
 
 function IsDoorLocked(id)
 	if doors[id] then

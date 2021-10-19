@@ -16,9 +16,9 @@ Citizen.CreateThread(function()
   --EndTextCommandSetBlipName(blip)
   while true do
     Citizen.Wait(0)
-    if GetDistanceBetweenCoords(dropoff.x, dropoff.y, dropoff.z, GetEntityCoords(GetPlayerPed(-1)), true) < 3 and required then
-      if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-        local car = GetVehiclePedIsUsing(GetPlayerPed(-1))
+    if GetDistanceBetweenCoords(dropoff.x, dropoff.y, dropoff.z, GetEntityCoords(PlayerPedId()), true) < 3 and required then
+      if IsPedInAnyVehicle(PlayerPedId()) then
+        local car = GetVehiclePedIsUsing(PlayerPedId())
         if GetEntityModel(car) == GetHashKey(required) then
           SetTextComponentFormat("STRING")
           AddTextComponentString("Press ~INPUT_PICKUP~ to scrap this vehicle")
@@ -27,7 +27,7 @@ Citizen.CreateThread(function()
 			if exports["fsn_cargarage"]:fsn_IsVehicleOwner(car) then
 				TriggerEvent('chatMessage', '', {255,255,255}, '^5^*DARK WEB |^0^r You want to scrap your own car? Fuck off on that traceable shit.')
 			else 
-				TaskLeaveVehicle(GetPlayerPed(-1), car, 1)
+				TaskLeaveVehicle(PlayerPedId(), car, 1)
 				SetVehicleDoorsLockedForAllPlayers(car, true)
 				SetVehicleEngineHealth(car, -4000)
 				SetVehicleEngineOn(car, false, true, false)
@@ -97,9 +97,9 @@ Citizen.CreateThread(function()
         end
       end
     end
-    if GetDistanceBetweenCoords(laptop.x, laptop.y, laptop.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+    if GetDistanceBetweenCoords(laptop.x, laptop.y, laptop.z, GetEntityCoords(PlayerPedId()), true) < 10 then
       DrawMarker(1,laptop.x, laptop.y, laptop.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-      if GetDistanceBetweenCoords(laptop.x, laptop.y, laptop.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+      if GetDistanceBetweenCoords(laptop.x, laptop.y, laptop.z, GetEntityCoords(PlayerPedId()), true) < 1 then
         if required == false then
           SetTextComponentFormat("STRING")
           AddTextComponentString("Press ~INPUT_PICKUP~ to request a job.")

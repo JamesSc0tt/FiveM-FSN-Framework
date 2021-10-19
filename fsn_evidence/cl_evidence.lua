@@ -14,22 +14,22 @@ Util.Tick(function()
 		if start + tiime < GetGameTimer() then
 			TriggerServerEvent('fsn_evidence:collect', id)
 			start = 0
-			FreezeEntityPosition(GetPlayerPed(-1),false)
-			ClearPedTasks(GetPlayerPed(-1))
+			FreezeEntityPosition(PlayerPedId(),false)
+			ClearPedTasks(PlayerPedId())
 			collecting = false
 		else
-			FreezeEntityPosition(GetPlayerPed(-1),true)
+			FreezeEntityPosition(PlayerPedId(),true)
 		
 		end
 	elseif destroying then
 		if start + tiime < GetGameTimer() then
 			TriggerServerEvent('fsn_evidence:destroy', id)
 			start = 0
-			FreezeEntityPosition(GetPlayerPed(-1),false)
-			ClearPedTasks(GetPlayerPed(-1))
+			FreezeEntityPosition(PlayerPedId(),false)
+			ClearPedTasks(PlayerPedId())
 			destroying = false
 		else
-			FreezeEntityPosition(GetPlayerPed(-1),true)
+			FreezeEntityPosition(PlayerPedId(),true)
 			
 			local dict = 'weapons@first_person@aim_rng@generic@projectile@thermal_charge@'
 			local anim = 'plant_floor'
@@ -39,8 +39,8 @@ Util.Tick(function()
 					Wait(0)
 				end
 			end
-			if not IsEntityPlayingAnim(GetPlayerPed(-1), dict, anim, 3) and not IsPedRagdoll(GetPlayerPed(-1)) then
-				TaskPlayAnim(GetPlayerPed(-1), dict, anim, 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
+			if not IsEntityPlayingAnim(PlayerPedId(), dict, anim, 3) and not IsPedRagdoll(PlayerPedId()) then
+				TaskPlayAnim(PlayerPedId(), dict, anim, 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
 			end
 		end
 	end
@@ -68,9 +68,9 @@ Citizen.CreateThread(function()
 		end
 		for k, e in ipairs(evidence) do
 			if e.e_type == 'blood' then
-				if e.loc and GetDistanceBetweenCoords(e.loc.x, e.loc.y, e.loc.z, GetEntityCoords(GetPlayerPed(-1)), true) < 50 then
+				if e.loc and GetDistanceBetweenCoords(e.loc.x, e.loc.y, e.loc.z, GetEntityCoords(PlayerPedId()), true) < 50 then
 					DrawMarker(25,e.loc.x, e.loc.y, e.loc.z - 0.95, 0, 0, 0, 0, 0, 0, 0.2, 0.2, 0.2, 255, 255, 255, 150, 0, 0, 2, 0, 0, 0, 0)
-					if GetDistanceBetweenCoords(e.loc.x, e.loc.y, e.loc.z, GetEntityCoords(GetPlayerPed(-1)), false) < 0.5 then
+					if GetDistanceBetweenCoords(e.loc.x, e.loc.y, e.loc.z, GetEntityCoords(PlayerPedId()), false) < 0.5 then
 						if not exports["fsn_ems"]:isCrouching() then
 							Util.DrawText3D(e.loc.x, e.loc.y, e.loc.z, '~r~Crouch to interact', {255,255,255,50}, 0.2)
 						else
@@ -102,9 +102,9 @@ Citizen.CreateThread(function()
 				end
 			end
 			if e.e_type == 'casing' then
-				if GetDistanceBetweenCoords(e.loc.x, e.loc.y, e.loc.z, GetEntityCoords(GetPlayerPed(-1)), true) < 50 then
+				if GetDistanceBetweenCoords(e.loc.x, e.loc.y, e.loc.z, GetEntityCoords(PlayerPedId()), true) < 50 then
 					DrawMarker(25,e.loc.x, e.loc.y, e.loc.z - 0.95, 0, 0, 0, 0, 0, 0, 0.2, 0.2, 0.2, 255, 255, 255, 150, 0, 0, 2, 0, 0, 0, 0)
-					if GetDistanceBetweenCoords(e.loc.x, e.loc.y, e.loc.z, GetEntityCoords(GetPlayerPed(-1)), false) < 0.5 then
+					if GetDistanceBetweenCoords(e.loc.x, e.loc.y, e.loc.z, GetEntityCoords(PlayerPedId()), false) < 0.5 then
 						if not exports["fsn_ems"]:isCrouching() then
 							Util.DrawText3D(e.loc.x, e.loc.y, e.loc.z, '~r~Crouch to interact', {255,255,255,50}, 0.2)
 						else

@@ -21,7 +21,7 @@ Citizen.CreateThread(function()
 	EndTextCommandSetBlipName(ch_blip)
 	
 	while true do Citizen.Wait(0)
-		if GetDistanceBetweenCoords(-517.01586914063, -196.01460266113, 38.219631195068, GetEntityCoords(GetPlayerPed(-1)),false) < 50 then
+		if GetDistanceBetweenCoords(-517.01586914063, -196.01460266113, 38.219631195068, GetEntityCoords(PlayerPedId()),false) < 50 then
 			if not DoesBlipExist(cr_blip) then
 				CreateCRBlip()
 			end

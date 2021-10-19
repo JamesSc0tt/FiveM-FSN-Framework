@@ -16,9 +16,9 @@ Citizen.CreateThread(function()
 				AddTextComponentString("Pawn Store")
 				EndTextCommandSetBlipName(bleep)
 			end
-			if GetDistanceBetweenCoords(loc.x, loc.y, loc.z, GetEntityCoords(GetPlayerPed(-1)), false) < 10 then
+			if GetDistanceBetweenCoords(loc.x, loc.y, loc.z, GetEntityCoords(PlayerPedId()), false) < 10 then
 				DrawMarker(25,loc.x, loc.y, loc.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 255, 255, 150, 0, 0, 2, 0, 0, 0, 0)
-				if GetDistanceBetweenCoords(loc.x, loc.y, loc.z, GetEntityCoords(GetPlayerPed(-1)), false) < 1 then
+				if GetDistanceBetweenCoords(loc.x, loc.y, loc.z, GetEntityCoords(PlayerPedId()), false) < 1 then
 					Util.DrawText3D(loc.x, loc.y, loc.z, '[E] Sell ~y~stolen items', {255,255,255,200}, 0.25)
 					if IsControlJustPressed(0,38) then
 						for k,v in pairs(unique_items) do

@@ -23,14 +23,14 @@ local cam = 0
 function SetupTrunkCam()
     if(not DoesCamExist(cam)) then
         cam = CreateCam('DEFAULT_SCRIPTED_CAMERA', true)
-        SetCamCoord(cam, GetEntityCoords(GetPlayerPed(-1)))
+        SetCamCoord(cam, GetEntityCoords(PlayerPedId()))
         SetCamRot(cam, 0.0, 0.0, 0.0)
         SetCamActive(cam,  true)
         RenderScriptCams(true,  false,  0,  true,  true)
-        SetCamCoord(cam, GetEntityCoords(GetPlayerPed(-1)))
+        SetCamCoord(cam, GetEntityCoords(PlayerPedId()))
     end
-    AttachCamToEntity(cam, GetPlayerPed(-1), 1.5, -3.5, 2.0, true)
-    SetCamRot(cam, -20.0, 0.0, GetEntityHeading(GetPlayerPed(-1)) )
+    AttachCamToEntity(cam, PlayerPedId(), 1.5, -3.5, 2.0, true)
+    SetCamRot(cam, -20.0, 0.0, GetEntityHeading(PlayerPedId()) )
 end
 
 function DestroyTrunkCam()
@@ -40,7 +40,7 @@ function DestroyTrunkCam()
 end
 
 function GetInTrunk(veh)
-	DetachEntity(GetPlayerPed(-1))
+	DetachEntity(PlayerPedId())
 	local d1,d2 = GetModelDimensions(GetEntityModel(veh))
 	if d2["z"] > 1.4 then
 		return
@@ -53,21 +53,21 @@ function GetInTrunk(veh)
 		Citizen.Wait(0)
 	end
 		
-	SetBlockingOfNonTemporaryEvents(GetPlayerPed(-1), true)      
-	SetPedSeeingRange(GetPlayerPed(-1), 0.0)     
-	SetPedHearingRange(GetPlayerPed(-1), 0.0)        
-	SetPedFleeAttributes(GetPlayerPed(-1), 0, false)     
-	SetPedKeepTask(GetPlayerPed(-1), true)   
-	DetachEntity(GetPlayerPed(-1))
-	ClearPedTasks(GetPlayerPed(-1))
+	SetBlockingOfNonTemporaryEvents(PlayerPedId(), true)      
+	SetPedSeeingRange(PlayerPedId(), 0.0)     
+	SetPedHearingRange(PlayerPedId(), 0.0)        
+	SetPedFleeAttributes(PlayerPedId(), 0, false)     
+	SetPedKeepTask(PlayerPedId(), true)   
+	DetachEntity(PlayerPedId())
+	ClearPedTasks(PlayerPedId())
 	
-	TaskPlayAnim(GetPlayerPed(-1), "fin_ext_p1-7", "cs_devin_dual-7", 8.0, 8.0, -1, 1, 999.0, 0, 0, 0)
+	TaskPlayAnim(PlayerPedId(), "fin_ext_p1-7", "cs_devin_dual-7", 8.0, 8.0, -1, 1, 999.0, 0, 0, 0)
 	
 	local OffSet = TrunkOffset(veh)
 	if OffSet > 0 then
-		AttachEntityToEntity(GetPlayerPed(-1), veh, 0, -0.1,(d1["y"]+0.85) + offsets[OffSet]["yoffset"],(d2["z"]-0.87) + offsets[OffSet]["zoffset"], 0, 0, 40.0, 1, 1, 1, 1, 1, 1)
+		AttachEntityToEntity(PlayerPedId(), veh, 0, -0.1,(d1["y"]+0.85) + offsets[OffSet]["yoffset"],(d2["z"]-0.87) + offsets[OffSet]["zoffset"], 0, 0, 40.0, 1, 1, 1, 1, 1, 1)
 	else
-		AttachEntityToEntity(GetPlayerPed(-1), veh, 0, -0.1,d1["y"]+0.85,d2["z"]-0.87, 0, 0, 40.0, 1, 1, 1, 1, 1, 1)
+		AttachEntityToEntity(PlayerPedId(), veh, 0, -0.1,d1["y"]+0.85,d2["z"]-0.87, 0, 0, 40.0, 1, 1, 1, 1, 1, 1)
 	end
 	SetupTrunkCam()
 	DoScreenFadeIn(1000)
@@ -93,11 +93,11 @@ AddEventHandler('fsn_vehiclecontrol:trunk:forceOut', function()
 		local troonk = GetOffsetFromEntityInWorldCoords(invehtrunk, 0.0,d1["y"]-0.2,0.0)
 	
 		DoScreenFadeOut(500)
-		DetachEntity(GetPlayerPed(-1))
-		ClearPedTasks(GetPlayerPed(-1))
-		SetEntityCoords(GetPlayerPed(-1), troonk.x, troonk.y, troonk.z)
+		DetachEntity(PlayerPedId())
+		ClearPedTasks(PlayerPedId())
+		SetEntityCoords(PlayerPedId(), troonk.x, troonk.y, troonk.z)
 		if GetEntitySpeed(veh) > 5 then
-			SetPedToRagdoll(GetPlayerPed(-1), 1, 5000, 0, 0, 0, 0)
+			SetPedToRagdoll(PlayerPedId(), 1, 5000, 0, 0, 0, 0)
 		end
 		intrunk = false
 		DestroyTrunkCam()
@@ -113,7 +113,7 @@ local blacklistedVehicles = {
 }
 
 Util.Tick(function()
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 			local veh = fsn_lookingAt()
 			-- Check if the vehicle is blacklisted and compare it to the vehicle you are looking at
 			for k, car in pairs(blacklistedVehicles) do
@@ -128,7 +128,7 @@ Util.Tick(function()
 				if not DoesVehicleHaveDoor(veh, 6) and DoesVehicleHaveDoor(veh, 5) and IsThisModelACar(GetEntityModel(veh)) and GetVehicleDoorsLockedForPlayer(veh, PlayerId()) == false then
 					local d1,d2 = GetModelDimensions(GetEntityModel(veh))
 					local troonk = GetOffsetFromEntityInWorldCoords(veh, 0.0,d1["y"]-0.2,0.0)
-					if GetDistanceBetweenCoords(troonk.x, troonk.y, troonk.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+					if GetDistanceBetweenCoords(troonk.x, troonk.y, troonk.z, GetEntityCoords(PlayerPedId()), true) < 1 then
 						if exports["fsn_ems"]:carryingWho() ~= 0  then
 							Util.DrawText3D(troonk.x, troonk.y, troonk.z, '[E] Put '..exports["fsn_ems"]:carryingWho()..' in trunk', {255, 255, 255, 140}, 0.3)
 							if IsControlJustPressed(0,38) then
@@ -155,11 +155,11 @@ Util.Tick(function()
 				Util.DrawText3D(troonk.x, troonk.y, troonk.z, '[E] Get Out', {255, 255, 255, 140}, 0.3)
 				if IsControlJustPressed(0,38) then
 					DoScreenFadeOut(500)
-					DetachEntity(GetPlayerPed(-1))
-					ClearPedTasks(GetPlayerPed(-1))
-					SetEntityCoords(GetPlayerPed(-1), troonk.x, troonk.y, troonk.z)
+					DetachEntity(PlayerPedId())
+					ClearPedTasks(PlayerPedId())
+					SetEntityCoords(PlayerPedId(), troonk.x, troonk.y, troonk.z)
 					if GetEntitySpeed(veh) > 5 then
-						SetPedToRagdoll(GetPlayerPed(-1), 1, 5000, 0, 0, 0, 0)
+						SetPedToRagdoll(PlayerPedId(), 1, 5000, 0, 0, 0, 0)
 					end
 					intrunk = false
 					DestroyTrunkCam()

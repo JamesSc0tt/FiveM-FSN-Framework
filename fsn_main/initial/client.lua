@@ -135,7 +135,7 @@ function fsn_mainSpawn()
   DoScreenFadeOut(500)
   --NetworkResurrectLocalPlayer(spawncoords.x, spawncoords.y, spawncoords.z, Citizen.PointerValueVector(), true, true, false)
   --TriggerEvent('PlayerSpawned')
-  SetEntityCoords(GetPlayerPed(-1), spawncoords.x, spawncoords.y, spawncoords.z)
+  SetEntityCoords(PlayerPedId(), spawncoords.x, spawncoords.y, spawncoords.z)
   freezePlayer(-1, true)
   --Citizen.CreateThread(function()
     Citizen.Wait(2000)
@@ -226,7 +226,7 @@ end)
 -------------------------------------------------------------
 
 NetworkSetFriendlyFireOption(true)
-SetCanAttackFriendly(GetPlayerPed(-1), true, true)
+SetCanAttackFriendly(PlayerPedId(), true, true)
 ------------------------------------------------------------- character changer
 --[[llocal function char_change_timeout()
 	local when = GetGameTimer() + 30*1000
@@ -254,7 +254,7 @@ end
 
 local char_changer = vector3(-219.72131347656, -1054.1688232422, 30.14019203186)
 Util.Tick(function()
-	local dist = #(char_changer-GetEntityCoords(GetPlayerPed(-1)))
+	local dist = #(char_changer-GetEntityCoords(PlayerPedId()))
 
 	if dist < 10 then
 		DrawMarker(1,pos-vector3(0,0,1),0,0,0,0,0,0,3.001,3.0001,0.4001,0,155,255,175,0,0,0,0)
@@ -277,7 +277,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
 
-    local dist = #(char_changer-GetEntityCoords(GetPlayerPed(-1)))
+    local dist = #(char_changer-GetEntityCoords(PlayerPedId()))
     if dist < 10 then
       DrawMarker(1,char_changer-vector3(0,0,1),0,0,0,0,0,0,3.001,3.0001,0.4001,0,155,255,175,0,0,0,0)
       if dist < 3 then

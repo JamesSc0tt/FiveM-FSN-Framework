@@ -250,7 +250,7 @@ RegisterNetEvent('fsn_bankrobbery:openDoor')
 AddEventHandler('fsn_bankrobbery:openDoor', function(id)
   local door = bankdoors[id]
   local _door = GetClosestObjectOfType(door.x, door.y, door.z, 1.0, door.hash, false, false, false)
-  if GetDistanceBetweenCoords(GetEntityCoords(_door), GetEntityCoords(GetPlayerPed(-1))) < 10 then
+  if GetDistanceBetweenCoords(GetEntityCoords(_door), GetEntityCoords(PlayerPedId())) < 10 then
     --PlaySound(-1, "DOOR_OPEN", "CABLE_CAR_SOUNDS", 0, 0, 1)
     PlaySoundFromEntity(-1, "DOOR_OPEN", _door, 'CABLE_CAR_SOUNDS', 0,0 )
   end
@@ -263,7 +263,7 @@ RegisterNetEvent('fsn_bankrobbery:closeDoor')
 AddEventHandler('fsn_bankrobbery:closeDoor', function(id)
   local door = bankdoors[id]
   local _door = GetClosestObjectOfType(door.x, door.y, door.z, 1.0, door.hash, false, false, false)
-  if GetDistanceBetweenCoords(GetEntityCoords(_door), GetEntityCoords(GetPlayerPed(-1))) < 10 then
+  if GetDistanceBetweenCoords(GetEntityCoords(_door), GetEntityCoords(PlayerPedId())) < 10 then
     --PlaySound(-1, "DOOR_OPEN", "CABLE_CAR_SOUNDS", 0, 0, 1)
     PlaySoundFromEntity(-1, "DOOR_CLOSE", _door, 'CABLE_CAR_SOUNDS', 0,0 )
   end
@@ -287,9 +287,9 @@ Citizen.CreateThread(function()
     if cracking then
       local rem = start_time + 750
       if rem < current_time then
-        TaskPlayAnim(GetPlayerPed(-1), 'mp_heists@keypad@', 'exit', 8.0, 1.0, -1, 0, 1.0, 0, 0, 0)
+        TaskPlayAnim(PlayerPedId(), 'mp_heists@keypad@', 'exit', 8.0, 1.0, -1, 0, 1.0, 0, 0, 0)
         cracking = false
-        FreezeEntityPosition(GetPlayerPed(-1), false)
+        FreezeEntityPosition(PlayerPedId(), false)
         local code = ''
         local door = bankdoors[cracking_id]
         for i=1,door.keypad.difficulty do
@@ -313,7 +313,7 @@ Citizen.CreateThread(function()
               else
                 resultDisplay(false)
                 if door.keypad.crackattempts > 3 then
-                  local pos = GetEntityCoords(GetPlayerPed(-1))
+                  local pos = GetEntityCoords(PlayerPedId())
                   local coords = {
                     x = pos.x,
                     y = pos.y,
@@ -335,10 +335,10 @@ Citizen.CreateThread(function()
       end
     end
     for k, door in pairs(bankdoors) do
-      if GetDistanceBetweenCoords(door.x, door.y, door.z, GetEntityCoords(GetPlayerPed(-1)), true) < 40 then
-        if GetDistanceBetweenCoords(door.vault.x, door.vault.y, door.vault.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 and door.unlocked then
+      if GetDistanceBetweenCoords(door.x, door.y, door.z, GetEntityCoords(PlayerPedId()), true) < 40 then
+        if GetDistanceBetweenCoords(door.vault.x, door.vault.y, door.vault.z, GetEntityCoords(PlayerPedId()), true) < 10 and door.unlocked then
           DrawMarker(1,door.vault.x, door.vault.y, door.vault.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-          if GetDistanceBetweenCoords(door.vault.x, door.vault.y, door.vault.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+          if GetDistanceBetweenCoords(door.vault.x, door.vault.y, door.vault.z, GetEntityCoords(PlayerPedId()), true) < 2 then
             if door.vault.robbed == false then
               SetTextComponentFormat("STRING")
             	AddTextComponentString("Press ~INPUT_PICKUP~ to ~r~rob~w~ the vault")
@@ -390,7 +390,7 @@ Citizen.CreateThread(function()
           TriggerServerEvent('fsn_bankrobbery:vault:close', k)
         end
       end
-      if GetDistanceBetweenCoords(door.x, door.y, door.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+      if GetDistanceBetweenCoords(door.x, door.y, door.z, GetEntityCoords(PlayerPedId()), true) < 10 then
         local _door = GetClosestObjectOfType(door.x, door.y, door.z, 1.0, door.hash, false, false, false)
         local CurrentHeading = GetEntityHeading(_door)
         if door.unlocked == true or exports.fsn_police:fsn_PDDuty() then
@@ -401,7 +401,7 @@ Citizen.CreateThread(function()
   					CurrentHeading = GetEntityHeading(_door)
           end
           ]]
-          if GetDistanceBetweenCoords(door.x, door.y, door.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+          if GetDistanceBetweenCoords(door.x, door.y, door.z, GetEntityCoords(PlayerPedId()), true) < 2 then
             if door.status.status == 'open' then
               fsn_drawText3D(door.tx,door.ty,door.tz, 'Press [E] to ~r~close~w~ the vault!')
               if IsControlJustPressed(1,51) then
@@ -415,7 +415,7 @@ Citizen.CreateThread(function()
             end
           end
         else
-          if GetDistanceBetweenCoords(door.keypad.x, door.keypad.y, door.keypad.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+          if GetDistanceBetweenCoords(door.keypad.x, door.keypad.y, door.keypad.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
             if exports['fsn_police']:fsn_getCopAmt() >= 3 then
 				if not canrob then
 					SetTextComponentFormat("STRING")
@@ -453,7 +453,7 @@ Citizen.CreateThread(function()
                       else
                         resultDisplay(false)
                         if door.keypad.crackattempts > 3 then
-                          local pos = GetEntityCoords(GetPlayerPed(-1))
+                          local pos = GetEntityCoords(PlayerPedId())
                           local coords = {
                             x = pos.x,
                             y = pos.y,
@@ -471,7 +471,7 @@ Citizen.CreateThread(function()
           	    end
               end
               if IsControlJustPressed(1, 26) and not cracking then
-          			local pos = GetEntityCoords(GetPlayerPed(-1))
+          			local pos = GetEntityCoords(PlayerPedId())
           			local coords = {
           				x = pos.x,
           				y = pos.y,
@@ -487,11 +487,11 @@ Citizen.CreateThread(function()
                 while ( not HasAnimSetLoaded( "move_ped_crouched" ) ) do
                     Citizen.Wait( 100 )
                 end
-                SetPedMovementClipset( GetPlayerPed(-1), "move_ped_crouched", 0.25 )
-                FreezeEntityPosition(GetPlayerPed(-1), true)
-                TaskPlayAnim(GetPlayerPed(-1), 'mp_heists@keypad@', 'enter', 8.0, 1.0, -1, 0, 1.0, 0, 0, 0)
+                SetPedMovementClipset( PlayerPedId(), "move_ped_crouched", 0.25 )
+                FreezeEntityPosition(PlayerPedId(), true)
+                TaskPlayAnim(PlayerPedId(), 'mp_heists@keypad@', 'enter', 8.0, 1.0, -1, 0, 1.0, 0, 0, 0)
                 Citizen.Wait(1)
-                TaskPlayAnim(GetPlayerPed(-1), 'mp_heists@keypad@', 'idle_a', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
+                TaskPlayAnim(PlayerPedId(), 'mp_heists@keypad@', 'idle_a', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
                 start_time = current_time
                 cracking_id = k
                 cracking = true
@@ -540,7 +540,7 @@ local safe = {x = 977.23968505859, y = -104.10308074951, z = 74.845184326172}
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if GetDistanceBetweenCoords(safe.x, safe.y, safe.z, GetEntityCoords(GetPlayerPed(-1))) < 2 then
+		if GetDistanceBetweenCoords(safe.x, safe.y, safe.z, GetEntityCoords(PlayerPedId())) < 2 then
 			SetTextComponentFormat("STRING")
             AddTextComponentString("HINT: Use your lockpick")
             DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -574,7 +574,7 @@ AddEventHandler('fsn_bankrobbery:LostMC:spawn', function()
 		local ped = CreatePed(4, mdl, v.x, v.y, v.z+1, true, true)
 		table.insert(mypeds, #mypeds+1, ped)
 		GiveWeaponToPed(ped, "WEAPON_PISTOL", 200, false, true)
-		TaskCombatPed(ped, GetPlayerPed(-1), 0, 16)
+		TaskCombatPed(ped, PlayerPedId(), 0, 16)
 		SetPedCombatRange(ped, 2)
 		SetPedCombatMovement(ped, 2)
 	end
@@ -589,7 +589,7 @@ AddEventHandler('fsn_bankrobbery:LostMC:spawn', function()
 		local ped = CreatePed(4, mdl, v.x, v.y, v.z+1, true, true)	
 		table.insert(mypeds, #mypeds+1, ped)
 		GiveWeaponToPed(ped, "WEAPON_PISTOL", 200, false, true)
-		TaskCombatPed(ped, GetPlayerPed(-1), 0, 16)
+		TaskCombatPed(ped, PlayerPedId(), 0, 16)
 		SetPedCombatRange(ped, 2)
 		SetPedCombatMovement(ped, 2)
 		SetCanAttackFriendly(ped, false, false)
@@ -600,7 +600,7 @@ AddEventHandler('fsn_bankrobbery:LostMC:spawn', function()
 		Citizen.Wait(0)
 		local ped = exports["fsn_entfinder"]:getPedNearCoords(LostMC.x, LostMC.y, LostMC.z, 100)
 		ClearPedTasksImmediately(ped)
-		TaskCombatPed(ped, GetPlayerPed(-1), 0, 16)
+		TaskCombatPed(ped, PlayerPedId(), 0, 16)
 		local maff = start + 30
 		if maff < current_time then
 			for k, v in pairs(mypeds) do
@@ -647,7 +647,7 @@ local lockpicked = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if GetDistanceBetweenCoords(hardware_loc.x, hardware_loc.y, hardware_loc.z, GetEntityCoords(GetPlayerPed(-1))) < 50 then
+		if GetDistanceBetweenCoords(hardware_loc.x, hardware_loc.y, hardware_loc.z, GetEntityCoords(PlayerPedId())) < 50 then
 			for obj in EnumerateVehicles() do
 				if GetDistanceBetweenCoords(hardware_loc.x, hardware_loc.y, hardware_loc.z, GetEntityCoords(obj)) < 5 then
 					if GetEntityModel(obj) == GetHashKey(truck) then
@@ -657,7 +657,7 @@ Citizen.CreateThread(function()
 			end
 			if exploded_truck then
 				if DoesEntityExist(exploded_truck) then
-					if GetDistanceBetweenCoords(2698.2124023438, 3453.1557617188, 56.79305267334, GetEntityCoords(GetPlayerPed(-1))) < 0.5 then
+					if GetDistanceBetweenCoords(2698.2124023438, 3453.1557617188, 56.79305267334, GetEntityCoords(PlayerPedId())) < 0.5 then
 						if not lockpicked then
 							SetTextComponentFormat("STRING")
 							AddTextComponentString("Press ~INPUT_PICKUP~ to ~r~lockpick~w~ the ~y~truck")
@@ -668,16 +668,16 @@ Citizen.CreateThread(function()
 								RequestAnimDict( "mini@safe_cracking" )
 								Citizen.Wait( 5 )
 							end
-							TaskPlayAnim(GetPlayerPed(-1), "mini@safe_cracking", "idle_base", 8.0, 1.0, 12000, 2, 0, 0, 1, 1 )
-							FreezeEntityPosition(GetPlayerPed(-1), true)
+							TaskPlayAnim(PlayerPedId(), "mini@safe_cracking", "idle_base", 8.0, 1.0, 12000, 2, 0, 0, 1, 1 )
+							FreezeEntityPosition(PlayerPedId(), true)
 							Citizen.Wait(12000)
-							FreezeEntityPosition(GetPlayerPed(-1), false)
+							FreezeEntityPosition(PlayerPedId(), false)
 							SetVehicleDoorOpen(exploded_truck, 2, false, false)
 							SetVehicleDoorOpen(exploded_truck, 3, false, false)
 							lockpicked = true
 						end
 					end
-					if GetDistanceBetweenCoords(2701.4072265625, 3454.7998046875, 56.821979522705, GetEntityCoords(GetPlayerPed(-1))) < 0.5 and lockpicked then
+					if GetDistanceBetweenCoords(2701.4072265625, 3454.7998046875, 56.821979522705, GetEntityCoords(PlayerPedId())) < 0.5 and lockpicked then
 						SetTextComponentFormat("STRING")
 						AddTextComponentString("Press ~INPUT_PICKUP~ to pickup the drill")
 						DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -686,10 +686,10 @@ Citizen.CreateThread(function()
 								RequestAnimDict('pickup_object')
 								Citizen.Wait(5)
 							end
-							TaskPlayAnim(GetPlayerPed(-1), 'pickup_object', 'pickup_low', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
+							TaskPlayAnim(PlayerPedId(), 'pickup_object', 'pickup_low', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
 							DeleteObject(obj)
 							Citizen.Wait(1000)
-							ClearPedTasks(GetPlayerPed(-1))
+							ClearPedTasks(PlayerPedId())
 							TriggerEvent('fsn_inventory:item:add', 'drill', 1)
 						end
 					end

@@ -23,7 +23,7 @@ AddEventHandler('fsn_criminalmisc:racing:createRace', function()
 			  if UpdateOnscreenKeyboard() == 1 then
 				if tonumber(GetOnscreenKeyboardResult()) then
 					signup = tonumber(GetOnscreenKeyboardResult())
-					local pos = GetEntityCoords(GetPlayerPed(-1))
+					local pos = GetEntityCoords(PlayerPedId())
 					local ex = pos.x
 					local why = pos.y
 					local zed = pos.z
@@ -85,10 +85,10 @@ Citizen.CreateThread(function()
 				racestarted = false
 			end
 		end
-		if IsPedInAnyVehicle(GetPlayerPed(-1)) then --and IsPedDiving(GetPlayerPed(-1)) then
+		if IsPedInAnyVehicle(PlayerPedId()) then --and IsPedDiving(PlayerPedId()) then
 			for key, race in ipairs(races) do
 				if race.state == 1 then -- waiting for people
-					if GetDistanceBetweenCoords(race.start.x, race.start.y, race.start.z, GetEntityCoords(GetPlayerPed(-1)), false) < 20 then
+					if GetDistanceBetweenCoords(race.start.x, race.start.y, race.start.z, GetEntityCoords(PlayerPedId()), false) < 20 then
 						if inrace then
 							-- already in the race
 							fsn_drawText3D(race.start.x, race.start.y, race.start.z, '~y~Waiting~w~ for other racers...\nMoving too far will ~r~forfeit~w~ your signup fee ($'..race.start.price..')! ')
@@ -114,7 +114,7 @@ Citizen.CreateThread(function()
 						end
 					end
 				elseif race.state == 2 and key == myrace then -- race starting 
-					if GetDistanceBetweenCoords(race.start.x, race.start.y, race.start.z, GetEntityCoords(GetPlayerPed(-1)), false) < 20 then
+					if GetDistanceBetweenCoords(race.start.x, race.start.y, race.start.z, GetEntityCoords(PlayerPedId()), false) < 20 then
 						if inrace then
 							-- already in the race
 							fsn_drawText3D(race.start.x, race.start.y, race.start.z, '~g~The race will begin in less than 20 seconds!~w~\nMoving too far will ~r~forfeit~w~ your signup fee ($'..race.start.price..')! ')
@@ -132,7 +132,7 @@ Citizen.CreateThread(function()
 					end
 				elseif race.state == 3 and key == myrace then -- race ongoing
 					fsn_drawText3D(race.finish.x, race.finish.y, race.start.z, 'Race End')
-					if GetDistanceBetweenCoords(race.finish.x, race.finish.y, GetEntityCoords(GetPlayerPed(-1))['x'], GetEntityCoords(GetPlayerPed(-1)), false) < 2 then
+					if GetDistanceBetweenCoords(race.finish.x, race.finish.y, GetEntityCoords(PlayerPedId())['x'], GetEntityCoords(PlayerPedId()), false) < 2 then
 						 TriggerServerEvent('fsn_criminalmisc:racing:win', key)
 						 if raceblip then
 							RemoveBlip(raceblip)

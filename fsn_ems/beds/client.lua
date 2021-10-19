@@ -83,17 +83,17 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(10000)
 		if inbed then
-			local newhealth =GetEntityHealth(GetPlayerPed(-1))+10 
+			local newhealth =GetEntityHealth(PlayerPedId())+10 
 			if newhealth >= 200 then
-				SetEntityHealth(GetPlayerPed(-1), GetEntityMaxHealth(GetPlayerPed(-1)))
+				SetEntityHealth(PlayerPedId(), GetEntityMaxHealth(PlayerPedId()))
 				TriggerEvent('fsn_notify:displayNotification', 'You are fully healed', 'centerLeft', 2000, 'error')
 				TriggerEvent('mythic_hospital:client:ResetLimbs')
 				TriggerEvent('mythic_hospital:client:RemoveBleed')
 			else
-				SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1))+10)
+				SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId())+10)
 				TriggerEvent('fsn_notify:displayNotification', 'Healing...', 'centerLeft', 2000, 'error')
 			end
-			TriggerServerEvent('fsn_ems:bed:health', mybed, GetEntityHealth(GetPlayerPed(-1)), GetEntityHealth(GetPlayerPed(-1)))
+			TriggerServerEvent('fsn_ems:bed:health', mybed, GetEntityHealth(PlayerPedId()), GetEntityHealth(PlayerPedId()))
 		end
 	end
 end)
@@ -116,7 +116,7 @@ Citizen.CreateThread(function()
 					TriggerServerEvent('fsn_ems:bed:occupy', mybed)
 					DoScreenFadeOut(1000)
 					Citizen.Wait(1010)
-					SetEntityCoords(GetPlayerPed(-1), beds[mybed].enter.x, beds[mybed].enter.y, beds[mybed].enter.z)
+					SetEntityCoords(PlayerPedId(), beds[mybed].enter.x, beds[mybed].enter.y, beds[mybed].enter.z)
 					inbed = false
 					mybed = 0
 					Citizen.Wait(1500)
@@ -129,9 +129,9 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if GetDistanceBetweenCoords(305.85437011719,-595.95141601563,43.291790008545, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(305.85437011719,-595.95141601563,43.291790008545, GetEntityCoords(PlayerPedId()), true) < 10 then
 			DrawMarker(1,305.85437011719,-595.95141601563,43.291790008545-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(305.85437011719,-595.95141601563,43.291790008545,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(305.85437011719,-595.95141601563,43.291790008545,GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				if #onduty_ems <= 0 then
 					AddTextComponentString("Press ~INPUT_PICKUP~ to check in")
@@ -144,8 +144,8 @@ Citizen.CreateThread(function()
 								end
 								DoScreenFadeOut(1000)
 								Citizen.Wait(1010)
-								SetEntityCoords(GetPlayerPed(-1), v.bed.x, v.bed.y, v.bed.z)
-								SetEntityHeading(GetPlayerPed(-1), v.bed.h)
+								SetEntityCoords(PlayerPedId(), v.bed.x, v.bed.y, v.bed.z)
+								SetEntityHeading(PlayerPedId(), v.bed.h)
 								ExecuteCommand("e sleep")
 								inbed = true
 								mybed = k
@@ -164,8 +164,8 @@ Citizen.CreateThread(function()
 			end
 		end
 		for k, v in pairs(beds) do
-			if GetDistanceBetweenCoords(v.enter.x, v.enter.y, v.enter.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
-				if GetDistanceBetweenCoords(v.enter.x, v.enter.y, v.enter.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(v.enter.x, v.enter.y, v.enter.z, GetEntityCoords(PlayerPedId()), true) < 10 then
+				if GetDistanceBetweenCoords(v.enter.x, v.enter.y, v.enter.z, GetEntityCoords(PlayerPedId()), true) < 1 then
 					if v.occupied[1] then
 						fsn_drawText3D(v.enter.x, v.enter.y, v.enter.z-0.6, v.occupied[4][1].." / "..v.occupied[4][2], 255, 255, 255)
 						DrawMarker(25,v.enter.x, v.enter.y, v.enter.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 10.3, 255, 0, 0, 10, 0, 0, 2, 0, 0, 0, 0)
@@ -178,7 +178,7 @@ Citizen.CreateThread(function()
 										RequestAnimDict('mp_arresting')
 										Citizen.Wait(5)
 									end
-									TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'a_arrest_on_floor', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
+									TaskPlayAnim(PlayerPedId(), 'mp_arresting', 'a_arrest_on_floor', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
 									TriggerServerEvent('fsn_ems:bed:restraintoggle', k)
 								end
 							else
@@ -188,7 +188,7 @@ Citizen.CreateThread(function()
 										RequestAnimDict('mp_arresting')
 										Citizen.Wait(5)
 									end
-									TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'a_arrest_on_floor', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
+									TaskPlayAnim(PlayerPedId(), 'mp_arresting', 'a_arrest_on_floor', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
 									TriggerServerEvent('fsn_ems:bed:restraintoggle', k)
 								end
 							end 
@@ -209,8 +209,8 @@ Citizen.CreateThread(function()
 							end
 							DoScreenFadeOut(1000)
 							Citizen.Wait(1010)
-							SetEntityCoords(GetPlayerPed(-1), v.bed.x, v.bed.y, v.bed.z)
-							SetEntityHeading(GetPlayerPed(-1), v.bed.h)
+							SetEntityCoords(PlayerPedId(), v.bed.x, v.bed.y, v.bed.z)
+							SetEntityHeading(PlayerPedId(), v.bed.h)
 							ExecuteCommand("e sleep")
 							inbed = true
 							mybed = k

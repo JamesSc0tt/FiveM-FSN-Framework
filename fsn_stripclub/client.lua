@@ -42,8 +42,8 @@ function StartLapDance(id)
     curbooth = id
     TriggerServerEvent('fsn_stripclub:server:claimBooth', id)
     local pos = positions[id]
-    SetEntityHeading(GetPlayerPed(-1), pos.sitpos.h)
-    SetEntityCoords(GetPlayerPed(-1), pos.sitpos.x, pos.sitpos.y, pos.sitpos.z, true, true, true, false)
+    SetEntityHeading(PlayerPedId(), pos.sitpos.h)
+    SetEntityCoords(PlayerPedId(), pos.sitpos.x, pos.sitpos.y, pos.sitpos.z, true, true, true, false)
     TriggerEvent('fsn_emotecontrol:play', 'anim', 'switch@michael@sitting', 'idle')
 
     local mdl = -1360365899
@@ -63,7 +63,7 @@ function StartLapDance(id)
 
     Citizen.Wait(500)
     DoScreenFadeIn(1000)
-    FreezeEntityPosition(GetPlayerPed(-1), true)
+    FreezeEntityPosition(PlayerPedId(), true)
   end
 end
 DoScreenFadeIn(1000)
@@ -84,9 +84,9 @@ Citizen.CreateThread(function()
 
     else
       for k, v in pairs(positions) do
-        if GetDistanceBetweenCoords(v.pos.x, v.pos.y, v.pos.z, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+        if GetDistanceBetweenCoords(v.pos.x, v.pos.y, v.pos.z, GetEntityCoords(PlayerPedId()), true) < 5 then
           DrawMarker(1,v.pos.x, v.pos.y, v.pos.z-1,0,0,0,0,0,0,1.0, 1.0, 0.5,0,155,255,175,0,0,0,0)
-          if GetDistanceBetweenCoords(v.pos.x, v.pos.y, v.pos.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+          if GetDistanceBetweenCoords(v.pos.x, v.pos.y, v.pos.z, GetEntityCoords(PlayerPedId()), true) < 1 then
             if v.inuse then
               SetTextComponentFormat("STRING")
               AddTextComponentString("~r~This booth is already in use")

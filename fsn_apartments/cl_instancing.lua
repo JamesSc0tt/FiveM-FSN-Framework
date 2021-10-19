@@ -15,7 +15,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		if instance_debug then
-			local xyz = GetEntityCoords(GetPlayerPed(-1))
+			local xyz = GetEntityCoords(PlayerPedId())
 			if instanced then
 				Util.DrawText3D(xyz.x, xyz.y, xyz.z, 'InstanceID: '..myinstance.id..'\nPlayers: '..table.concat(myinstance.players, ', ')..'\nCreated: '..myinstance.created, {0,255,0,255}, 0.3)
 			else
@@ -34,7 +34,7 @@ Citizen.CreateThread(function()
 				else
 					-- cannot see/hear
 					local ped = GetPlayerPed(id)
-					if ped ~= GetPlayerPed(-1) then
+					if ped ~= PlayerPedId() then
 						SetEntityVisible(ped, false, 0)
 						SetEntityCollision(ped, false, false)
 					end
@@ -43,7 +43,7 @@ Citizen.CreateThread(function()
 				SetVehicleDensityMultiplierThisFrame(0.2)
 				SetRandomVehicleDensityMultiplierThisFrame(0.2)
 				local ped = GetPlayerPed(id)
-				if ped ~= GetPlayerPed(-1) then
+				if ped ~= PlayerPedId() then
 					SetEntityVisible(ped, true, 0)
 					SetEntityCollision(ped, true, true)
 				end

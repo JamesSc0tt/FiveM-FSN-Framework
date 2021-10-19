@@ -285,7 +285,7 @@ function scenarios3()
 end
 
 function scenarioPlayer(scenario)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 TaskStartScenarioInPlace(lPed, scenario, 0, 1)
 end
 
@@ -604,7 +604,7 @@ halfanimPlayer("switch@trevor@jerking_off", "trev_jerking_off_loop")
 end
 
 function fapf(animDict)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict(animDict)
@@ -619,8 +619,8 @@ local lPed = GetPlayerPed(-1)
 				drawNotification("Anim Stopped.")
 			else
 				ClearPedTasks(lPed)
-				x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1) , true))
-				SetEntityCoords(GetPlayerPed(-1), x, y, z - 1.77, 0, 0, 10, 1)
+				x, y, z = table.unpack(GetEntityCoords(PlayerPedId() , true))
+				SetEntityCoords(PlayerPedId(), x, y, z - 1.77, 0, 0, 10, 1)
 				FreezeEntityPosition(lPed, 1)
 				SetEntityCollision(lPed, 0, 1)
 				TaskPlayAnim(lPed, animDict, "ig_6_base", 4.0, -4, -1, 1, 0, 0, 0, 0)
@@ -631,7 +631,7 @@ local lPed = GetPlayerPed(-1)
 end
 
 function sex(animName)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict("rcmpaparazzo_2")
@@ -656,7 +656,7 @@ local lPed = GetPlayerPed(-1)
 end
 
 function sexv(animName)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict("misslamar1leadinout")
@@ -681,7 +681,7 @@ local lPed = GetPlayerPed(-1)
 end
 
 function carsex1(animDict)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict(animDict)
@@ -708,7 +708,7 @@ local lPed = GetPlayerPed(-1)
 end
 
 function carbj1(animDict)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict(animDict)
@@ -735,7 +735,7 @@ local lPed = GetPlayerPed(-1)
 end
 
 function carsex2(animDict)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict(animDict)
@@ -760,7 +760,7 @@ local lPed = GetPlayerPed(-1)
 end
 
 function carbj2(animDict)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict(animDict)
@@ -799,7 +799,7 @@ function others()
 end
 
 function animPlayer(animDict, animName)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict(animDict)
@@ -820,7 +820,7 @@ local lPed = GetPlayerPed(-1)
 end
 
 function halfanimPlayer(animDict, animName)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict(animDict)
@@ -864,22 +864,22 @@ function ChangeToSkin(skin)
 			Citizen.Wait(0)
 		end
 		SetPlayerModel(PlayerId(), model)
-		SetPedRandomComponentVariation(GetPlayerPed(-1), true)
+		SetPedRandomComponentVariation(PlayerPedId(), true)
 		drawNotification('New skin is: '..skin)
 		SetModelAsNoLongerNeeded(model)
-		DecorSetInt(GetPlayerPed(-1), "charID", tonumber(CharacterDBID))
+		DecorSetInt(PlayerPedId(), "charID", tonumber(CharacterDBID))
 	else
 		drawNotification("Model not found")
 	end
 end
 
 function pedvar1()
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 SetPedDefaultComponentVariation(lPed)
 end
 
 function pedvar2()
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 SetPedComponentVariation(lPed, 2, 2, 0, 0)
 SetPedComponentVariation(lPed, 3, 1, 0, 0)
 SetPedComponentVariation(lPed, 8, 1, 0, 0)
@@ -910,7 +910,7 @@ function MainFunction()
 end
 
 function stopAnim()
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	FreezeEntityPosition(lPed, 0)
 	SetEntityCollision(lPed, 1, 1)
 	ClearPedTasks(lPed)
@@ -949,24 +949,24 @@ end
 -----------------------
 RegisterNetEvent('fsn_emotecontrol:phone:call1')
 AddEventHandler('fsn_emotecontrol:phone:call1', function()
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if not IsPedInAnyVehicle(PlayerPedId()) then
 		while not HasAnimDictLoaded('cellphone@') do
 			RequestAnimDict('cellphone@')
 			Citizen.Wait(5)
 		end
-		ClearPedTasksImmediately(GetPlayerPed(-1))
-		TaskPlayAnim(GetPlayerPed(-1), 'cellphone@', 'cellphone_call_listen_base', 8.0, 1.0, 3000, 49, 1.0, 0, 0, 0)
+		ClearPedTasksImmediately(PlayerPedId())
+		TaskPlayAnim(PlayerPedId(), 'cellphone@', 'cellphone_call_listen_base', 8.0, 1.0, 3000, 49, 1.0, 0, 0, 0)
 	end
 end)
 RegisterNetEvent('fsn_emotecontrol:dice:roll')
 AddEventHandler('fsn_emotecontrol:dice:roll', function()
-    if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+    if not IsPedInAnyVehicle(PlayerPedId()) then
         while not HasAnimDictLoaded('mp_player_intwank') do
             RequestAnimDict('mp_player_intwank')
             Citizen.Wait(5)
         end
-        ClearPedTasksImmediately(GetPlayerPed(-1))
-        TaskPlayAnim(GetPlayerPed(-1), 'mp_player_intwank', "mp_player_int_wank", 8.0, 1.0, -1, 120, 0, 0, 0, 0 )
+        ClearPedTasksImmediately(PlayerPedId())
+        TaskPlayAnim(PlayerPedId(), 'mp_player_intwank', "mp_player_int_wank", 8.0, 1.0, -1, 120, 0, 0, 0, 0 )
     end
 end)
 RegisterNetEvent('fsn_emotecontrol:police:ticket')
@@ -975,42 +975,42 @@ AddEventHandler('fsn_emotecontrol:police:ticket', function()
 	--	RequestAnimDict('amb@medic@timeofdeath')
 	--	Citizen.Wait(5)
 	--end
-	--ClearPedTasksImmediately(GetPlayerPed(-1))
-	--TaskPlayAnim(GetPlayerPed(-1), 'amb@medic@timeofdeath', 'idle_b_timeofdeath', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
-	TaskStartScenarioInPlace(GetPlayerPed(-1), "CODE_HUMAN_MEDIC_TIME_OF_DEATH", 0, false)
+	--ClearPedTasksImmediately(PlayerPedId())
+	--TaskPlayAnim(PlayerPedId(), 'amb@medic@timeofdeath', 'idle_b_timeofdeath', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
+	TaskStartScenarioInPlace(PlayerPedId(), "CODE_HUMAN_MEDIC_TIME_OF_DEATH", 0, false)
 end)
 RegisterNetEvent('fsn_emotecontrol:police:tablet')
 AddEventHandler('fsn_emotecontrol:police:tablet', function(status)
 	local prop_name = prop_name or 'hei_prop_dlc_tablet'
 
 	if status == "open" then
-		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+		if IsPedInAnyVehicle(PlayerPedId()) then
 			TriggerEvent('fsn_commands:me', 'uses the onboard computer...')
 		else
 		while not HasAnimDictLoaded('amb@code_human_in_bus_passenger_idles@female@tablet@idle_a') do
 			RequestAnimDict('amb@code_human_in_bus_passenger_idles@female@tablet@idle_a')
 			Citizen.Wait(5)
 		end
-		ClearPedTasksImmediately(GetPlayerPed(-1))
-		local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1)))
+		ClearPedTasksImmediately(PlayerPedId())
+		local x,y,z = table.unpack(GetEntityCoords(PlayerPedId()))
 		prop = CreateObject(GetHashKey(prop_name), x, y, z+0.2,  true,  true, true)
-		AttachEntityToEntity(prop, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 60309), 0.0, -0.01, -0.04, 0.0, 0.0, 0.0, true, true, false, true, 1, true)
-		TaskPlayAnim(GetPlayerPed(-1), 'amb@code_human_in_bus_passenger_idles@female@tablet@idle_a', 'idle_b', 3.0, -8, -1, 63, 0, 0, 0, 0 )
+		AttachEntityToEntity(prop, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 60309), 0.0, -0.01, -0.04, 0.0, 0.0, 0.0, true, true, false, true, 1, true)
+		TaskPlayAnim(PlayerPedId(), 'amb@code_human_in_bus_passenger_idles@female@tablet@idle_a', 'idle_b', 3.0, -8, -1, 63, 0, 0, 0, 0 )
 		tabletOpen = true
 	end
 	else
-		TaskPlayAnim(GetPlayerPed(-1), 'amb@code_human_in_bus_passenger_idles@female@tablet@idle_a', 'exit', 3.0, 1.0, -1, 49, 0, 0, 0, 0 )
+		TaskPlayAnim(PlayerPedId(), 'amb@code_human_in_bus_passenger_idles@female@tablet@idle_a', 'exit', 3.0, 1.0, -1, 49, 0, 0, 0, 0 )
 		DetachEntity(prop, 1, 1)
 		DeleteObject(prop)
 		Wait(1000)
-		ClearPedSecondaryTask(GetPlayerPed(-1))
+		ClearPedSecondaryTask(PlayerPedId())
 		tabletOpen = false
 	end
 end)
 -----------------------
 DecorRegister("player:handsup", 2)
 function halfanimPlayer(animDict, animName)
-local lPed = GetPlayerPed(-1)
+local lPed = PlayerPedId()
 	if DoesEntityExist(lPed) then
 		Citizen.CreateThread(function()
 			RequestAnimDict(animDict)
@@ -1020,12 +1020,12 @@ local lPed = GetPlayerPed(-1)
 
 			if IsEntityPlayingAnim(lPed, animDict, animName, 3) then
 				ClearPedTasks(lPed)
-				DecorSetBool(GetPlayerPed(-1), "player:handsup", false)
+				DecorSetBool(PlayerPedId(), "player:handsup", false)
 				--drawNotification("Anim Stopped.")
 			else
 				--ClearPedTasks(lPed)
 				TaskPlayAnim(lPed, animDict, animName, 4.0, -4, -1, 49, 0, 0, 0, 0)
-				DecorSetBool(GetPlayerPed(-1), "player:handsup", true)
+				DecorSetBool(PlayerPedId(), "player:handsup", true)
 				--drawNotification("Anim Started, press it again to cancel/continue it.")
 			end
 		end)
@@ -1074,11 +1074,11 @@ Citizen.CreateThread( function()
                     if ( crouched == true ) then
                         ResetPedMovementClipset( ped, 0 )
                         crouched = false
-                        DecorSetBool(GetPlayerPed(-1), "player:isCrouched", false)
+                        DecorSetBool(PlayerPedId(), "player:isCrouched", false)
                     elseif ( crouched == false ) then
                         SetPedMovementClipset( ped, "move_ped_crouched", 0.25 )
                         crouched = true
-                        DecorSetBool(GetPlayerPed(-1), "player:isCrouched", true)
+                        DecorSetBool(PlayerPedId(), "player:isCrouched", true)
                     end
                 end
             end
@@ -1090,7 +1090,7 @@ local mp_pointing = false
 local keyPressed = false
 
 local function startPointing()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     RequestAnimDict("anim@mp_point")
     while not HasAnimDictLoaded("anim@mp_point") do
         Wait(0)
@@ -1102,7 +1102,7 @@ local function startPointing()
 end
 
 local function stopPointing()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     Citizen.InvokeNative(0xD01015C7316AE176, ped, "Stop")
     if not IsPedInjured(ped) then
         ClearPedSecondaryTask(ped)
@@ -1158,7 +1158,7 @@ Citizen.CreateThread(function()
             if not IsPedOnFoot(PlayerPedId()) then
                 stopPointing()
             else
-                local ped = GetPlayerPed(-1)
+                local ped = PlayerPedId()
                 local camPitch = GetGameplayCamRelativePitch()
                 if camPitch < -70.0 then
                     camPitch = -70.0

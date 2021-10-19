@@ -24,8 +24,8 @@ end
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-    if IsEntityDead(GetPlayerPed(-1)) then
-      SetEntityHealth(GetPlayerPed(-1), 150)
+    if IsEntityDead(PlayerPedId()) then
+      SetEntityHealth(PlayerPedId(), 150)
       TriggerEvent('fsn_ems:killMe')
     end
   end
@@ -44,12 +44,12 @@ RegisterNetEvent('fsn_ems:reviveMe:force')
 AddEventHandler('fsn_ems:reviveMe:force', function()
   amidead = false
   deathtime = 0
-  NetworkResurrectLocalPlayer(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 0, false, false)
+  NetworkResurrectLocalPlayer(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 0, false, false)
   TriggerEvent('fsn_inventory:use:drink', 100)
   TriggerEvent('fsn_inventory:use:food', 100)
   TriggerEvent('fsn_needs:stress:remove', 100)
   ClearTimecycleModifier()
-  SetEntityHealth(GetPlayerPed(-1), GetEntityMaxHealth(GetPlayerPed(-1)))
+  SetEntityHealth(PlayerPedId(), GetEntityMaxHealth(PlayerPedId()))
 end)
 
 RegisterNetEvent('fsn_ems:reviveMe')
@@ -57,16 +57,16 @@ AddEventHandler('fsn_ems:reviveMe', function()
   amidead = false
   pulsing = false
   deathtime = 0
-  NetworkResurrectLocalPlayer(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 0, false, false)
+  NetworkResurrectLocalPlayer(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 0, false, false)
   TriggerEvent('fsn_inventory:use:drink', 100)
   TriggerEvent('fsn_inventory:use:food', 100)
   TriggerEvent('fsn_needs:stress:remove', 100)
   ClearTimecycleModifier()
-  SetEntityHealth(GetPlayerPed(-1), 105)
+  SetEntityHealth(PlayerPedId(), 105)
   if inbed then
-    SetEntityHealth(GetPlayerPed(-1), GetEntityMaxHealth(GetPlayerPed(-1)))
-	SetEntityCoords(GetPlayerPed(-1), beds[mybed].bed.x, beds[mybed].bed.y, beds[mybed].bed.z)
-	SetEntityHeading(GetPlayerPed(-1), beds[mybed].bed.h)
+    SetEntityHealth(PlayerPedId(), GetEntityMaxHealth(PlayerPedId()))
+	SetEntityCoords(PlayerPedId(), beds[mybed].bed.x, beds[mybed].bed.y, beds[mybed].bed.z)
+	SetEntityHeading(PlayerPedId(), beds[mybed].bed.h)
 	ExecuteCommand("e sleep")
   end
 end)
@@ -76,14 +76,14 @@ DecorRegister("deadPly")
 RegisterNetEvent('fsn_ems:killMe')
 AddEventHandler('fsn_ems:killMe', function()
   if not amidead then
-	DecorSetBool(GetPlayerPed(-1), "deadPly", true)
-    local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
-    if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-  		local veh = GetVehiclePedIsIn(GetPlayerPed(-1), false)
-      TaskLeaveVehicle(GetPlayerPed(-1), veh, 4160)
+	DecorSetBool(PlayerPedId(), "deadPly", true)
+    local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
+    if IsPedInAnyVehicle(PlayerPedId()) then
+  		local veh = GetVehiclePedIsIn(PlayerPedId(), false)
+      TaskLeaveVehicle(PlayerPedId(), veh, 4160)
     end
     if exports.fsn_police:fsn_PDDuty() then
-      local pos = GetEntityCoords(GetPlayerPed(-1))
+      local pos = GetEntityCoords(PlayerPedId())
       local coords = {
         x = pos.x,
         y = pos.y,
@@ -100,7 +100,7 @@ AddEventHandler('fsn_ems:killMe', function()
 	bandw = false
 	pulsing = true
   else
-	DecorSetBool(GetPlayerPed(-1), "deadPly", false)
+	DecorSetBool(PlayerPedId(), "deadPly", false)
   end
 end)
 
@@ -109,7 +109,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     if amidead then
-      SetPedToRagdoll(GetPlayerPed(-1), 1, 1000, 0, 0, 0, 0)
+      SetPedToRagdoll(PlayerPedId(), 1, 1000, 0, 0, 0, 0)
       local def = deathtime + 300
       if def > currenttime then
        -- (text,font,centre,x,y,scale,r,g,b,a)
@@ -161,7 +161,7 @@ function fsn_Airlift()
     TriggerEvent('mythic_hospital:client:RemoveBleed') -- remove bleed
     Citizen.Wait(2000)
     DoScreenFadeIn(1500)
-    ClearPedBloodDamage(GetPlayerPed(-1))
+    ClearPedBloodDamage(PlayerPedId())
     if #onduty_ems > 0 then
       TriggerEvent('fsn_bank:change:bankMinus', 5000)
       TriggerEvent("pNotify:SendNotification", {text = "You have been charged $5000 for medical bills.",
@@ -240,9 +240,9 @@ Citizen.CreateThread(function()
     Citizen.Wait(0)
 	SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
     for k, hosp in pairs(clockInStations) do
-      if GetDistanceBetweenCoords(hosp.x,hosp.y,hosp.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 and amiems then
+      if GetDistanceBetweenCoords(hosp.x,hosp.y,hosp.z,GetEntityCoords(PlayerPedId()), true) < 10 and amiems then
         DrawMarker(1,hosp.x,hosp.y,hosp.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(hosp.x,hosp.y,hosp.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(hosp.x,hosp.y,hosp.z,GetEntityCoords(PlayerPedId()), true) < 1 then
           if emsonduty then
             SetTextComponentFormat("STRING")
           	AddTextComponentString("Press ~INPUT_PICKUP~ to ~r~clock out~w~ as ~p~EMS")
@@ -338,9 +338,9 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     for k, hosp in pairs(hospitals) do
-      if GetDistanceBetweenCoords(hosp.x,hosp.y,hosp.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 and not healing then
+      if GetDistanceBetweenCoords(hosp.x,hosp.y,hosp.z,GetEntityCoords(PlayerPedId()), true) < 10 and not healing then
         DrawMarker(1,hosp.x,hosp.y,hosp.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(hosp.x,hosp.y,hosp.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(hosp.x,hosp.y,hosp.z,GetEntityCoords(PlayerPedId()), true) < 1 then
           SetTextComponentFormat("STRING")
 		  if #onduty_ems > 0 then
         	AddTextComponentString("Press ~INPUT_PICKUP~ to see a doctor (FREE)")
@@ -380,7 +380,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
 	SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
-	if GetEntityHealth(GetPlayerPed(-1)) < 130 then
+	if GetEntityHealth(PlayerPedId()) < 130 then
 		if not bandw then
 			SetTimecycleModifier("dying")
 			SetTimecycleModifierStrength(1.0)

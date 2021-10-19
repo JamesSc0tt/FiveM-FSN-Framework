@@ -168,15 +168,15 @@ if UseKey then
 end
 
 function getVehicleInDirection(coordFrom, coordTo)
-	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
+	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, PlayerPedId(), 0)
 	local a, b, c, d, vehicle = GetRaycastResult(rayHandle)
 	return vehicle
 end
 function fsn_lookingAt()
 	local targetVehicle = false
 
-	local coordA = GetEntityCoords(GetPlayerPed(-1), 1)
-	local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, -1.0)
+	local coordA = GetEntityCoords(PlayerPedId(), 1)
+	local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, -1.0)
 	targetVehicle = getVehicleInDirection(coordA, coordB)
 
 	return targetVehicle
@@ -188,23 +188,23 @@ myKeys = {}
 RegisterNetEvent('fsn_vehiclecontrol:getKeys')
 RegisterNetEvent('fsn_vehiclecontrol:giveKeys')
 AddEventHandler('fsn_vehiclecontrol:getKeys', function(veh)
-	if not table.contains(myKeys, GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false))) then
-		table.insert(myKeys, {GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false)),true})
+	if not table.contains(myKeys, GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), false))) then
+		table.insert(myKeys, {GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), false)),true})
 		TriggerEvent('fsn_notify:displayNotification', 'You got keys to this vehicle!', 'centerLeft', 5000, 'info')
 	else
 		TriggerEvent('fsn_notify:displayNotification', 'You already have keys to the vehicle', 'centerLeft', 5000, 'info')
 	end
 end)
 AddEventHandler('fsn_vehiclecontrol:giveKeys', function()
-	if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-		if exports.fsn_cargarage:fsn_IsVehicleOwner(GetVehiclePedIsIn(GetPlayerPed(-1), false)) then
+	if IsPedInAnyVehicle(PlayerPedId()) then
+		if exports.fsn_cargarage:fsn_IsVehicleOwner(GetVehiclePedIsIn(PlayerPedId(), false)) then
 			local ply = false
 			for _, id in ipairs(GetActivePlayers()) do --for id = 0, 32 do
 	      if NetworkIsPlayerActive(id) then
 	        ped = GetPlayerPed(id)
-					if ped ~= GetPlayerPed(-1) then
-						if GetDistanceBetweenCoords(GetEntityCoords(ped), GetEntityCoords(GetPlayerPed(-1))) < 5 then
-							if IsPedInAnyVehicle(ped) and GetVehiclePedIsIn(ped, false) == GetVehiclePedIsIn(GetPlayerPed(-1), false)then
+					if ped ~= PlayerPedId() then
+						if GetDistanceBetweenCoords(GetEntityCoords(ped), GetEntityCoords(PlayerPedId())) < 5 then
+							if IsPedInAnyVehicle(ped) and GetVehiclePedIsIn(ped, false) == GetVehiclePedIsIn(PlayerPedId(), false)then
 								ply = id
 							else
 								TriggerEvent('fsn_notify:displayNotification', 'They have to be in the car too!!', 'centerLeft', 5000, 'info')
@@ -215,7 +215,7 @@ AddEventHandler('fsn_vehiclecontrol:giveKeys', function()
 				end
 			end
 			if ply then
-				TriggerServerEvent('fsn_vehiclecontrol:givekeys', GetVehiclePedIsIn(GetPlayerPed(-1), false), GetPlayerServerId(ply))
+				TriggerServerEvent('fsn_vehiclecontrol:givekeys', GetVehiclePedIsIn(PlayerPedId(), false), GetPlayerServerId(ply))
 				TriggerEvent('fsn_notify:displayNotification', ':FSN: You gave keys to: '..ply, 'centerRight', 5000, 'info')
 			else
 				TriggerEvent('fsn_notify:displayNotification', 'Nobody detected :(<br>You have no friends', 'centerRight', 5000, 'info')
@@ -241,14 +241,14 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		if IsControlJustReleased(0, 7) then
-			if IsPedInAnyVehicle(GetPlayerPed(-1)) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) then
-				if GetVehicleDoorsLockedForPlayer(GetVehiclePedIsIn(GetPlayerPed(-1), false), PlayerId()) then
-					SetVehicleDoorsLockedForAllPlayers(GetVehiclePedIsIn(GetPlayerPed(-1), false), false)
+			if IsPedInAnyVehicle(PlayerPedId()) and GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() then
+				if GetVehicleDoorsLockedForPlayer(GetVehiclePedIsIn(PlayerPedId(), false), PlayerId()) then
+					SetVehicleDoorsLockedForAllPlayers(GetVehiclePedIsIn(PlayerPedId(), false), false)
 					TriggerEvent('fsn_notify:displayNotification', 'unlocked', 'centerRight', 3000, 'info')
 					TriggerEvent('fsn_commands:me', 'unlocked the vehicle...')
 				else
 					TriggerEvent('fsn_notify:displayNotification', 'locked', 'centerRight', 3000, 'info')
-					SetVehicleDoorsLockedForAllPlayers(GetVehiclePedIsIn(GetPlayerPed(-1), false), true)
+					SetVehicleDoorsLockedForAllPlayers(GetVehiclePedIsIn(PlayerPedId(), false), true)
 					TriggerEvent('fsn_commands:me', 'locked the vehicle...')
 				end
 			else
@@ -270,8 +270,8 @@ Citizen.CreateThread(function()
 		end
 		if UseKey and ToggleKey then
 			if IsControlJustReleased(1, ToggleKey) then
-				if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) then
-					--if exports.fsn_cargarage:fsn_IsVehicleOwner(GetVehiclePedIsIn(GetPlayerPed(-1), false)) or table.contains(myKeys, GetVehiclePedIsIn(GetPlayerPed(-1), false)) then
+				if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() then
+					--if exports.fsn_cargarage:fsn_IsVehicleOwner(GetVehiclePedIsIn(PlayerPedId(), false)) or table.contains(myKeys, GetVehiclePedIsIn(PlayerPedId(), false)) then
 						if fuel_amount > 0 then
 							TriggerEvent('EngineToggle:Engine')
 						end
@@ -281,18 +281,18 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if GetSeatPedIsTryingToEnter(GetPlayerPed(-1)) == -1 and not table.contains(vehicles, GetVehiclePedIsTryingToEnter(GetPlayerPed(-1))) then
-			table.insert(vehicles, {GetVehiclePedIsTryingToEnter(GetPlayerPed(-1)), false})--IsVehicleEngineOn(GetVehiclePedIsTryingToEnter(GetPlayerPed(-1)))})
-		elseif IsPedInAnyVehicle(GetPlayerPed(-1), false) and not table.contains(vehicles, GetVehiclePedIsIn(GetPlayerPed(-1), false)) then
-			table.insert(vehicles, {GetVehiclePedIsIn(GetPlayerPed(-1), false), false})--IsVehicleEngineOn(GetVehiclePedIsIn(GetPlayerPed(-1), false))})
+		if GetSeatPedIsTryingToEnter(PlayerPedId()) == -1 and not table.contains(vehicles, GetVehiclePedIsTryingToEnter(PlayerPedId())) then
+			table.insert(vehicles, {GetVehiclePedIsTryingToEnter(PlayerPedId()), false})--IsVehicleEngineOn(GetVehiclePedIsTryingToEnter(PlayerPedId()))})
+		elseif IsPedInAnyVehicle(PlayerPedId(), false) and not table.contains(vehicles, GetVehiclePedIsIn(PlayerPedId(), false)) then
+			table.insert(vehicles, {GetVehiclePedIsIn(PlayerPedId(), false), false})--IsVehicleEngineOn(GetVehiclePedIsIn(PlayerPedId(), false))})
 		end
 		for i, vehicle in ipairs(vehicles) do
 			if DoesEntityExist(vehicle[1]) then
-				if (GetPedInVehicleSeat(vehicle[1], -1) == GetPlayerPed(-1)) or IsVehicleSeatFree(vehicle[1], -1) then
+				if (GetPedInVehicleSeat(vehicle[1], -1) == PlayerPedId()) or IsVehicleSeatFree(vehicle[1], -1) then
 					if RPWorking then
 						if fuel_amount > 0 then
 							SetVehicleEngineOn(vehicle[1], vehicle[2], true, false)
-							if not IsPedInAnyVehicle(GetPlayerPed(-1), false) or (IsPedInAnyVehicle(GetPlayerPed(-1), false) and vehicle[1]~= GetVehiclePedIsIn(GetPlayerPed(-1), false)) then
+							if not IsPedInAnyVehicle(PlayerPedId(), false) or (IsPedInAnyVehicle(PlayerPedId(), false) and vehicle[1]~= GetVehiclePedIsIn(PlayerPedId(), false)) then
 								if IsThisModelAHeli(GetEntityModel(vehicle[1])) or IsThisModelAPlane(GetEntityModel(vehicle[1])) then
 									if vehicle[2] then
 										SetHeliBladesFullSpeed(vehicle[1])
@@ -310,7 +310,7 @@ Citizen.CreateThread(function()
 end)
 
 local function canunlock()
-	if exports.fsn_cargarage:fsn_IsVehicleOwner(GetVehiclePedIsIn(GetPlayerPed(-1), false)) or table.contains(myKeys, GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false))) then
+	if exports.fsn_cargarage:fsn_IsVehicleOwner(GetVehiclePedIsIn(PlayerPedId(), false)) or table.contains(myKeys, GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), false))) then
 		return true
 	else
 		return false
@@ -321,20 +321,20 @@ AddEventHandler('EngineToggle:Engine', function()
 	if not canunlock() then
 		TriggerEvent('fsn_notify:displayNotification', 'You don\'t have the keys for this vehicle!', 'centerLeft', 3000, 'error')
 	return end
-	if IsThisModelAPlane(GetEntityModel(GetVehiclePedIsIn(GetPlayerPed(-1), false))) and not exports["fsn_licenses"]:fsn_hasLicense('pilot') then 
+	if IsThisModelAPlane(GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), false))) and not exports["fsn_licenses"]:fsn_hasLicense('pilot') then 
 		TriggerEvent('fsn_notify:displayNotification', 'You are not trained to start this engine', 'centerLeft', 3000, 'error')
 	return end
 	local veh
 	local StateIndex
 	for i, vehicle in ipairs(vehicles) do
-		if vehicle[1] == GetVehiclePedIsIn(GetPlayerPed(-1), false) then
+		if vehicle[1] == GetVehiclePedIsIn(PlayerPedId(), false) then
 			veh = vehicle[1]
 			StateIndex = i
 		end
 	end
 	--Citizen.Wait(1500)
-	if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-		if (GetPedInVehicleSeat(veh, -1) == GetPlayerPed(-1)) then
+	if IsPedInAnyVehicle(PlayerPedId(), false) then
+		if (GetPedInVehicleSeat(veh, -1) == PlayerPedId()) then
 			vehicles[StateIndex][2] = not IsVehicleEngineOn(veh)
 			if vehicles[StateIndex][2] then
 				TriggerEvent('fsn_commands:me', 'turns the engine on.')
@@ -353,9 +353,9 @@ if OnAtEnter then
 	Citizen.CreateThread(function()
 		while true do
 			Citizen.Wait(0)
-			if GetSeatPedIsTryingToEnter(GetPlayerPed(-1)) == -1 then
+			if GetSeatPedIsTryingToEnter(PlayerPedId()) == -1 then
 				for i, vehicle in ipairs(vehicles) do
-					if vehicle[1] == GetVehiclePedIsTryingToEnter(GetPlayerPed(-1)) and not vehicle[2] then
+					if vehicle[1] == GetVehiclePedIsTryingToEnter(PlayerPedId()) and not vehicle[2] then
 						Citizen.Wait(3500)
 						vehicle[2] = true
 					end

@@ -25,7 +25,7 @@ Citizen.CreateThread(function()
             while true do
                 Citizen.Wait(0)
                 for k, v in pairs(bikeRentalCoords) do
-                    local playerPed = GetPlayerPed(-1)
+                    local playerPed = PlayerPedId()
                     local playerPos = GetEntityCoords(playerPed, 1)
 
             if GetDistanceBetweenCoords(v.x, v.y, v.z, playerPos, 1) <= 2 then
@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
                     if rentalText == true then
                         Util.DrawText3D(playerPos['x'], playerPos['y'], playerPos['z'] + 0.3, '~r~[E] ~w~Bike Rentals', {255, 255, 255, 255}, 0.25) -- Add this for Live Utils.
                     end
-                    elseif IsPedInAnyVehicle(playerPed, false) and DecorGetInt(GetVehiclePedIsIn(GetPlayerPed(-1), false), "bikeRental:rented") == 1 then
+                    elseif IsPedInAnyVehicle(playerPed, false) and DecorGetInt(GetVehiclePedIsIn(PlayerPedId(), false), "bikeRental:rented") == 1 then
                         Util.DrawText3D(playerPos['x'], playerPos['y'], playerPos['z'] + 0.3, '~r~[E] ~w~Return Bike', {255, 255, 255, 255}, 0.25) -- Add this for Live Utils.
                         rentalText = false
                         returnText = true
@@ -73,18 +73,18 @@ function spawnCar(car)
         Citizen.Wait(0)
     end
 
-    local x, y, z = table.unpack(GetEntityCoords(GetPlayerPed(-1), false))
+    local x, y, z = table.unpack(GetEntityCoords(PlayerPedId(), false))
     local vehicle = CreateVehicle(car, x, y, z + 1, 0.0, true, false)
     SetEntityAsMissionEntity(vehicle, true, true)
-    SetPedIntoVehicle(GetPlayerPed(-1), vehicle, -1) -- Teleport into bike seat.
+    SetPedIntoVehicle(PlayerPedId(), vehicle, -1) -- Teleport into bike seat.
     DecorSetInt(vehicle, "bikeRental:rented", 1)
 end
     -- Vehicle Spawner END --
 
     -- Vehicle Delete START --
 function deleteCar()
-    if DecorGetInt(GetVehiclePedIsIn(GetPlayerPed(-1), false), "bikeRental:rented") == 1 then -- Check if vehicle is a Rented Bike.    
-        local vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+    if DecorGetInt(GetVehiclePedIsIn(PlayerPedId(), false), "bikeRental:rented") == 1 then -- Check if vehicle is a Rented Bike.    
+        local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
         SetEntityAsMissionEntity(vehicle, true, true)
         Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(vehicle))
         rentalText = true

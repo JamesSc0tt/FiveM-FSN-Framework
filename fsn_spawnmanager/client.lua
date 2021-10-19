@@ -24,7 +24,7 @@ function camToLoc(key)
 	DoScreenFadeOut(1000)
 	Citizen.Wait(800)
 	RenderScriptCams(false, true, 500, true, true)
-	SetEntityCoords(GetPlayerPed(-1),-505.09, -1224.11, 232.2)
+	SetEntityCoords(PlayerPedId(),-505.09, -1224.11, 232.2)
 	Citizen.Wait(200)
 	DoScreenFadeIn(1000)
 	Citizen.Wait(1001)
@@ -77,7 +77,7 @@ end
 
 RegisterNetEvent('fsn_spawnmanager:start')
 AddEventHandler('fsn_spawnmanager:start', function(char)
-    SetEntityVisible(GetPlayerPed(-1), false, 0)
+    SetEntityVisible(PlayerPedId(), false, 0)
     if char then
 		my_char = char
 		TriggerEvent("clothes:spawn", json.decode(char.char_model))
@@ -89,9 +89,9 @@ AddEventHandler('fsn_spawnmanager:start', function(char)
 
 	DoScreenFadeOut(1000)
 	Citizen.Wait(900)
-	SetEntityCoords(GetPlayerPed(-1),-505.09, -1224.11, 232.2)
-	FreezeEntityPosition(GetPlayerPed(-1), true)
-	SetEntityVisible(GetPlayerPed(-1),false)
+	SetEntityCoords(PlayerPedId(),-505.09, -1224.11, 232.2)
+	FreezeEntityPosition(PlayerPedId(), true)
+	SetEntityVisible(PlayerPedId(),false)
 	Citizen.Wait(100)
 	DoScreenFadeIn(1000)
 	Citizen.Wait(1001)
@@ -138,8 +138,8 @@ RegisterNUICallback('spawnAtLoc', function(data, cb)
 		 spawn stuffs :)
 		]]--
 
-		SetEntityVisible(GetPlayerPed(-1), true)
-		FreezeEntityPosition(GetPlayerPed(-1), false)
+		SetEntityVisible(PlayerPedId(), true)
+		FreezeEntityPosition(PlayerPedId(), false)
 
 		--TriggerEvent('fsn->esx:clothing:spawn', json.decode(my_char.char_model))
 		--TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
@@ -149,7 +149,7 @@ RegisterNUICallback('spawnAtLoc', function(data, cb)
 			TriggerEvent('spawnme')
 			TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
 		else
-			SetEntityCoords(GetPlayerPed(-1), spawnloc.x, spawnloc.y,spawnloc.z)
+			SetEntityCoords(PlayerPedId(), spawnloc.x, spawnloc.y,spawnloc.z)
 			TriggerEvent('spawnme')
 			TriggerEvent("clothes:spawn", json.decode(my_char.char_model))
 		end

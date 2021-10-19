@@ -68,9 +68,9 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if GetDistanceBetweenCoords(clockIn.x, clockIn.y, clockIn.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(clockIn.x, clockIn.y, clockIn.z, GetEntityCoords(PlayerPedId()), true) < 10 then
 			DrawMarker(1,clockIn.x,clockIn.y,clockIn.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(clockIn.x, clockIn.y, clockIn.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(clockIn.x, clockIn.y, clockIn.z, GetEntityCoords(PlayerPedId()), true) < 1 then
 				if aminews then
 					SetTextComponentFormat("STRING")
 					AddTextComponentString("Press ~INPUT_PICKUP~ to ~r~clock out")
@@ -95,9 +95,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		
-		if GetDistanceBetweenCoords(equipmentRoom.x, equipmentRoom.y, equipmentRoom.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(equipmentRoom.x, equipmentRoom.y, equipmentRoom.z, GetEntityCoords(PlayerPedId()), true) < 10 then
 			DrawMarker(25,equipmentRoom.x, equipmentRoom.y, equipmentRoom.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 10.3, 255, 255, 255, 140, 0, 0, 2, 0, 0, 0, 0)
-			if GetDistanceBetweenCoords(equipmentRoom.x, equipmentRoom.y, equipmentRoom.z, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+			if GetDistanceBetweenCoords(equipmentRoom.x, equipmentRoom.y, equipmentRoom.z, GetEntityCoords(PlayerPedId()), true) < 5 then
 				fsn_drawText3D(equipmentRoom.x, equipmentRoom.y, equipmentRoom.z, '/news role camera\n\n/news role mic')
 				inRoom = true
 			else
@@ -180,7 +180,7 @@ Citizen.CreateThread(function()
 			DisableControlAction(0,25,true) -- disable aim
 			DisableControlAction(0, 44,  true) -- INPUT_COVER
 			DisableControlAction(0,37,true) -- INPUT_SELECT_WEAPON
-			SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_UNARMED"), true)
+			SetCurrentPedWeapon(PlayerPedId(), GetHashKey("WEAPON_UNARMED"), true)
 		end
 	end
 end)
@@ -207,7 +207,7 @@ Citizen.CreateThread(function()
 
 		Citizen.Wait(10)
 
-		local lPed = GetPlayerPed(-1)
+		local lPed = PlayerPedId()
 		local vehicle = GetVehiclePedIsIn(lPed)
 
 		if holdingCam and IsControlJustReleased(1, 244) then
@@ -224,7 +224,7 @@ Citizen.CreateThread(function()
 			end
 
 
-			local lPed = GetPlayerPed(-1)
+			local lPed = PlayerPedId()
 			local vehicle = GetVehiclePedIsIn(lPed)
 			local cam1 = CreateCam("DEFAULT_SCRIPTED_FLY_CAMERA", true)
 
@@ -269,8 +269,8 @@ Citizen.CreateThread(function()
 				end
 				camHeading = (camHeading + 180.0) / 360.0
 
-				Citizen.InvokeNative(0xD5BB4025AE449A4E, GetPlayerPed(-1), "Pitch", camPitch)
-				Citizen.InvokeNative(0xD5BB4025AE449A4E, GetPlayerPed(-1), "Heading", camHeading * -1.0 + 1.0)
+				Citizen.InvokeNative(0xD5BB4025AE449A4E, PlayerPedId(), "Pitch", camPitch)
+				Citizen.InvokeNative(0xD5BB4025AE449A4E, PlayerPedId(), "Heading", camHeading * -1.0 + 1.0)
 
 				Citizen.Wait(10)
 			end
@@ -296,7 +296,7 @@ Citizen.CreateThread(function()
 
 		Citizen.Wait(10)
 
-		local lPed = GetPlayerPed(-1)
+		local lPed = PlayerPedId()
 		local vehicle = GetVehiclePedIsIn(lPed)
 
 		if holdingCam and IsControlJustReleased(1, 38) then
@@ -318,7 +318,7 @@ Citizen.CreateThread(function()
 			end
 
 
-			local lPed = GetPlayerPed(-1)
+			local lPed = PlayerPedId()
 			local vehicle = GetVehiclePedIsIn(lPed)
 			local cam2 = CreateCam("DEFAULT_SCRIPTED_FLY_CAMERA", true)
 
@@ -364,8 +364,8 @@ Citizen.CreateThread(function()
 				end
 				camHeading = (camHeading + 180.0) / 360.0
 
-				Citizen.InvokeNative(0xD5BB4025AE449A4E, GetPlayerPed(-1), "Pitch", camPitch)
-				Citizen.InvokeNative(0xD5BB4025AE449A4E, GetPlayerPed(-1), "Heading", camHeading * -1.0 + 1.0)
+				Citizen.InvokeNative(0xD5BB4025AE449A4E, PlayerPedId(), "Pitch", camPitch)
+				Citizen.InvokeNative(0xD5BB4025AE449A4E, PlayerPedId(), "Heading", camHeading * -1.0 + 1.0)
 
 				Citizen.Wait(10)
 			end
@@ -424,7 +424,7 @@ function CheckInputRotation(cam, zoomvalue)
 end
 
 function HandleZoom(cam)
-	local lPed = GetPlayerPed(-1)
+	local lPed = PlayerPedId()
 	if not ( IsPedSittingInAnyVehicle( lPed ) ) then
 
 		if IsControlJustPressed(0,241) then

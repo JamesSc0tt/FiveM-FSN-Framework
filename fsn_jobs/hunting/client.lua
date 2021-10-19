@@ -18,7 +18,7 @@ Citizen.CreateThread(function()
   while true do
 	Citizen.Wait(0)
 	for k, v in pairs(huntingzones) do
-		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(GetPlayerPed(-1)), false) < 200 then
+		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(PlayerPedId()), false) < 200 then
 			canhunt = true
 		else
 			if canhunt then
@@ -97,9 +97,9 @@ Citizen.CreateThread(function()
   EndTextCommandSetBlipName(bleep)
   while true do
     Citizen.Wait(0)
-    if GetDistanceBetweenCoords(144.10649108887, -1480.7464599609, 29.357044219971, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+    if GetDistanceBetweenCoords(144.10649108887, -1480.7464599609, 29.357044219971, GetEntityCoords(PlayerPedId()), true) < 10 then
       DrawMarker(1,144.10649108887, -1480.7464599609, 28.357044219971,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-      if GetDistanceBetweenCoords(144.10649108887, -1480.7464599609, 29.357044219971, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+      if GetDistanceBetweenCoords(144.10649108887, -1480.7464599609, 29.357044219971, GetEntityCoords(PlayerPedId()), true) < 1 then
         SetTextComponentFormat("STRING")
         AddTextComponentString("Press ~INPUT_PICKUP~ to sell your ~p~Cooked Meat")
         DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -120,7 +120,7 @@ Citizen.CreateThread(function()
         end
       end
     end
-    if GetDistanceBetweenCoords(974.604, -2165.881, 29.16, GetEntityCoords(GetPlayerPed(-1)), true) < 3 then
+    if GetDistanceBetweenCoords(974.604, -2165.881, 29.16, GetEntityCoords(PlayerPedId()), true) < 3 then
       if not cooking then
         fsn_drawText3D(974.604, -2165.881, 29.16, 'Press [~g~E~w~] to cook your meat')
         if IsControlJustPressed(0,51) then
@@ -147,7 +147,7 @@ Citizen.CreateThread(function()
       end
     end
     for k, v in pairs(droppeditems) do
-      if GetDistanceBetweenCoords(GetEntityCoords(v[1]), GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+      if GetDistanceBetweenCoords(GetEntityCoords(v[1]), GetEntityCoords(PlayerPedId()), true) < 5 then
         if v[2] == nil then
           if not harvesting then
 			if canhunt then
@@ -157,7 +157,7 @@ Citizen.CreateThread(function()
 			end
             if IsControlJustPressed(0,51) then
 			  if canhunt then
-				  TaskStartScenarioInPlace(GetPlayerPed(-1), "CODE_HUMAN_MEDIC_KNEEL", 0, 1)
+				  TaskStartScenarioInPlace(PlayerPedId(), "CODE_HUMAN_MEDIC_KNEEL", 0, 1)
 				  harvesting = true
 				  harvestingstart = GetNetworkTime()
 			  else
@@ -178,7 +178,7 @@ Citizen.CreateThread(function()
         end
       end
     end
-    if IsPedShooting(GetPlayerPed(-1)) then
+    if IsPedShooting(PlayerPedId()) then
       animal, ass = Citizen.InvokeNative(0x2975c866e6713290, PlayerId(), Citizen.PointerValueIntInitialized(0))
       if IsEntityAPed(animal) then
         for k, v in pairs(hashes) do

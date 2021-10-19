@@ -27,7 +27,7 @@ function BuyBoat(key)
 	SetEntityAsMissionEntity(personalvehicle, true, true)
 	SetVehicleColours(personalvehicle,colors[1],colors[2])
 	SetVehicleExtraColours(personalvehicle,extra_colors[1],extra_colors[2])
-	TaskWarpPedIntoVehicle(GetPlayerPed(-1),personalvehicle,-1)
+	TaskWarpPedIntoVehicle(PlayerPedId(),personalvehicle,-1)
 	SetEntityVisible(ped,true)
 	
 	local details = {
@@ -110,7 +110,7 @@ function RentBoat(key)
 	SetEntityAsMissionEntity(boatrental, true, true)
 	SetVehicleColours(boatrental,colors[1],colors[2])
 	SetVehicleExtraColours(boatrental,extra_colors[1],extra_colors[2])
-	TaskWarpPedIntoVehicle(GetPlayerPed(-1),boatrental,-1)
+	TaskWarpPedIntoVehicle(PlayerPedId(),boatrental,-1)
 
 	TriggerEvent('fsn_cargarage:makeMine', boatrental, boat_spots[key].boat.model, GetVehicleNumberPlateText(boatrental))
 
@@ -124,14 +124,14 @@ function RentBoat(key)
 end
 
 Util.Tick(function()
-	if GetDistanceBetweenCoords(inside_store.x, inside_store.y, inside_store.z, GetEntityCoords(GetPlayerPed(-1)), true) < 100 then
+	if GetDistanceBetweenCoords(inside_store.x, inside_store.y, inside_store.z, GetEntityCoords(PlayerPedId()), true) < 100 then
 		for key, boat in pairs(boat_spots) do
 			if boat.boat.model then
 				if not DoesEntityExist(boat.boat.object) then
 					RequestModel(GetHashKey(boat.boat.model))
 					while not HasModelLoaded(GetHashKey(boat.boat.model)) do
 						Citizen.Wait(1)
-						if GetDistanceBetweenCoords(inside_store.x, inside_store.y, inside_store.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+						if GetDistanceBetweenCoords(inside_store.x, inside_store.y, inside_store.z, GetEntityCoords(PlayerPedId()), true) < 10 then
 							--Util.DrawText3D(boat.x, boat.y, boat.z, ':FSN: Loading vehicle: '..boat.boat.model, {255, 0, 0, 255}, 0.2)
 						end
 					end
@@ -172,7 +172,7 @@ Util.Tick(function()
 							--Util.DrawText3D(boat.x, boat.y, boat.z, ':FSN: Updating vehicle', {255, 0, 0, 255}, 0.2)
 						end
 					else
-						if GetDistanceBetweenCoords(boat.x, boat.y, boat.z, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+						if GetDistanceBetweenCoords(boat.x, boat.y, boat.z, GetEntityCoords(PlayerPedId()), true) < 5 then
 							Util.DrawText3D(boat.x, boat.y, boat.z+2.45, 'Vehicle: ~b~'..boat.boat.name, {255, 255, 255, 255}, 0.3)
 							Util.DrawText3D(boat.x, boat.y, boat.z+2.3, 'Base Price: ~g~$'..boat.boat.buyprice, {255, 255, 255, 200}, 0.2)
 							Util.DrawText3D(boat.x, boat.y, boat.z+2.18, 'Commission: ~r~'..boat.boat.commission..'~w~%', {255, 255, 255, 200}, 0.2)
@@ -242,7 +242,7 @@ end)
 RegisterNetEvent('fsn_boatshop:floor:commission')
 AddEventHandler('fsn_boatshop:floor:commission', function(amt)
 	for k,v in pairs(boat_spots) do
-		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 			TriggerServerEvent('fsn_boatshop:floor:commission', k, amt)
 		end
 	end
@@ -250,7 +250,7 @@ end)
 RegisterNetEvent('fsn_boatshop:floor:color:One')
 AddEventHandler('fsn_boatshop:floor:color:One', function(col)
 	for k,v in pairs(boat_spots) do
-		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 			TriggerServerEvent('fsn_boatshop:floor:color:One', k, col)
 		end
 	end
@@ -258,7 +258,7 @@ end)
 RegisterNetEvent('fsn_boatshop:floor:color:Two')
 AddEventHandler('fsn_boatshop:floor:color:Two', function(col)
 	for k,v in pairs(boat_spots) do
-		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 			TriggerServerEvent('fsn_boatshop:floor:color:Two', k, col)
 		end
 	end
@@ -279,7 +279,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(10)
-			local playerPed = GetPlayerPed(-1)
+			local playerPed = PlayerPedId()
 			local playerPos = GetEntityCoords(playerPed)
 			local rentedboat
 

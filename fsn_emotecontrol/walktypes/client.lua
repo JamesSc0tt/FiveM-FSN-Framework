@@ -1,6 +1,6 @@
 RegisterNetEvent('AnimSet:default');
 AddEventHandler('AnimSet:default', function()
-    ResetPedMovementClipset(GetPlayerPed(-1), 0)
+    ResetPedMovementClipset(PlayerPedId(), 0)
     AnimSet = "default";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -11,7 +11,7 @@ AddEventHandler('AnimSet:Hurry', function()
     while not HasAnimSetLoaded("move_m@hurry@a") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@hurry@a", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@hurry@a", true)
     AnimSet = "move_m@hurry@a";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -22,7 +22,7 @@ AddEventHandler('AnimSet:Business', function()
     while not HasAnimSetLoaded("move_m@business@a") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@business@a", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@business@a", true)
     AnimSet = "move_m@business@a";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -33,7 +33,7 @@ AddEventHandler('AnimSet:Brave', function()
     while not HasAnimSetLoaded("move_m@brave") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@brave", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@brave", true)
     AnimSet = "move_m@brave";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -44,7 +44,7 @@ AddEventHandler('AnimSet:Tipsy', function()
     while not HasAnimSetLoaded("move_m@drunk@slightlydrunk") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@drunk@slightlydrunk", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@drunk@slightlydrunk", true)
     AnimSet = "move_m@drunk@slightlydrunk";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -55,7 +55,7 @@ AddEventHandler('AnimSet:Injured', function()
     while not HasAnimSetLoaded("move_m@injured") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@injured", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@injured", true)
     AnimSet = "move_m@injured";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -66,7 +66,7 @@ AddEventHandler('AnimSet:ToughGuy', function()
     while not HasAnimSetLoaded("move_m@tough_guy@") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@tough_guy@", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@tough_guy@", true)
     AnimSet = "move_m@tough_guy@";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -77,7 +77,7 @@ AddEventHandler('AnimSet:Sassy', function()
     while not HasAnimSetLoaded("move_m@sassy") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@sassy", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@sassy", true)
     AnimSet = "move_m@sassy";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -88,7 +88,7 @@ AddEventHandler('AnimSet:Sad', function()
     while not HasAnimSetLoaded("move_m@sad@a") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@sad@a", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@sad@a", true)
     AnimSet = "move_m@sad@a";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -99,7 +99,7 @@ AddEventHandler('AnimSet:Posh', function()
     while not HasAnimSetLoaded("move_m@posh@") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@posh@", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@posh@", true)
     AnimSet = "move_m@posh@";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -113,7 +113,7 @@ AddEventHandler('AnimSet:Alien', function()
     while not HasAnimSetLoaded("move_m@alien") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@alien", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@alien", true)
     AnimSet = "move_m@alien";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -124,7 +124,7 @@ AddEventHandler('AnimSet:NonChalant', function()
     while not HasAnimSetLoaded("move_m@non_chalant") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@non_chalant", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@non_chalant", true)
     AnimSet = "move_m@non_chalant";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -136,7 +136,7 @@ AddEventHandler('AnimSet:Hobo', function()
     while not HasAnimSetLoaded("move_m@hobo@a") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@hobo@a", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@hobo@a", true)
     AnimSet = "move_m@hobo@a";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -150,7 +150,7 @@ AddEventHandler('AnimSet:Money', function()
     while not HasAnimSetLoaded("move_m@money") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@money", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@money", true)
     AnimSet = "move_m@money";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -162,7 +162,7 @@ AddEventHandler('AnimSet:Swagger', function()
     while not HasAnimSetLoaded("move_m@swagger") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@swagger", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@swagger", true)
     AnimSet = "move_m@swagger";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -173,7 +173,7 @@ AddEventHandler('AnimSet:Joy', function()
     while not HasAnimSetLoaded("move_m@joy") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@joy", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@joy", true)
     AnimSet = "move_m@joy";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -185,7 +185,7 @@ AddEventHandler('AnimSet:Moon', function()
     while not HasAnimSetLoaded("move_m@powerwalk") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@powerwalk", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@powerwalk", true)
     AnimSet = "move_m@powerwalk";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -196,7 +196,7 @@ AddEventHandler('AnimSet:Shady', function()
     while not HasAnimSetLoaded("move_m@shadyped@a") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@shadyped@a", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@shadyped@a", true)
     AnimSet = "move_m@shadyped@a";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -207,7 +207,7 @@ AddEventHandler('AnimSet:Tired', function()
     while not HasAnimSetLoaded("move_m@tired") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_m@tired", true)
+    SetPedMovementClipset(PlayerPedId(), "move_m@tired", true)
     AnimSet = "move_m@tired";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -218,7 +218,7 @@ AddEventHandler('AnimSet:Sexy', function()
     while not HasAnimSetLoaded("move_f@sexy") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_f@sexy", true)
+    SetPedMovementClipset(PlayerPedId(), "move_f@sexy", true)
     AnimSet = "move_f@sexy";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -229,7 +229,7 @@ AddEventHandler('AnimSet:ManEater', function()
     while not HasAnimSetLoaded("move_f@maneater") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_f@maneater", true)
+    SetPedMovementClipset(PlayerPedId(), "move_f@maneater", true)
     AnimSet = "move_f@maneater";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)
@@ -241,7 +241,7 @@ AddEventHandler('AnimSet:ChiChi', function()
     while not HasAnimSetLoaded("move_f@chichi") do
         Citizen.Wait(0)
     end
-    SetPedMovementClipset(GetPlayerPed(-1), "move_f@chichi", true)
+    SetPedMovementClipset(PlayerPedId(), "move_f@chichi", true)
     AnimSet = "move_f@chichi";
     TriggerServerEvent("police:setAnimData",AnimSet)
 end)

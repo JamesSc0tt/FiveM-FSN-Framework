@@ -86,12 +86,12 @@ Citizen.CreateThread(function()
 						local ped = false
 						if localPly == -1 then
 							if ply == GetPlayerServerId(PlayerId()) then
-								ped = GetPlayerPed(-1)
+								ped = PlayerPedId()
 							end
 						else
 							ped = GetPlayerPed(localPly)
 						end
-						if ped and GetDistanceBetweenCoords(GetEntityCoords(ped), GetEntityCoords(GetPlayerPed(-1)), true) < 8 then
+						if ped and GetDistanceBetweenCoords(GetEntityCoords(ped), GetEntityCoords(PlayerPedId()), true) < 8 then
 							local loc = GetWorldPositionOfEntityBone(ped, GetEntityBoneIndexByName(ped, BodyParts[s.bone]['index']))
 							Util.DrawText3D(loc.x, loc.y, loc.z, s.state, {255,255,255,opacity}, 0.15)
 						end
@@ -99,11 +99,11 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+		if not IsPedInAnyVehicle(PlayerPedId()) then
 			for k, b in pairs(BodyParts) do
 				if b.isDamaged and b.index then
-					local loc = GetWorldPositionOfEntityBone(GetPlayerPed(-1), GetEntityBoneIndexByName(GetPlayerPed(-1), b.index))
-					--print(GetEntityBoneIndexByName(GetPlayerPed(-1), b.index))
+					local loc = GetWorldPositionOfEntityBone(PlayerPedId(), GetEntityBoneIndexByName(PlayerPedId(), b.index))
+					--print(GetEntityBoneIndexByName(PlayerPedId(), b.index))
 					--print(tostring(loc))
 					local col = {255,255,255,255}
 					if b.severity <= 2 then

@@ -69,7 +69,7 @@ end
 
 function SpawnTractor(tractor,x,y,z)
   local car = GetHashKey(tractor)
-  local playerPed = GetPlayerPed(-1)
+  local playerPed = PlayerPedId()
   RequestModel(car)
   while not HasModelLoaded(car) do
 		Citizen.Wait(0)
@@ -101,9 +101,9 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     for k, v in pairs(farms) do
-      if GetDistanceBetweenCoords(v.job.start.x,v.job.start.y,v.job.start.z,GetEntityCoords(GetPlayerPed(-1))) < 40 then
+      if GetDistanceBetweenCoords(v.job.start.x,v.job.start.y,v.job.start.z,GetEntityCoords(PlayerPedId())) < 40 then
         DrawMarker(1,v.job.start.x,v.job.start.y,v.job.start.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if IsPedInAnyVehicle(GetPlayerPed(-1), true) == false and GetDistanceBetweenCoords(v.job.start.x,v.job.start.y,v.job.start.z,GetEntityCoords(GetPlayerPed(-1))) < 2 then
+        if IsPedInAnyVehicle(PlayerPedId(), true) == false and GetDistanceBetweenCoords(v.job.start.x,v.job.start.y,v.job.start.z,GetEntityCoords(PlayerPedId())) < 2 then
 					if isfarming == false then
 						DisplayHelpText(v.job.starttext)
 						if IsControlJustPressed(1,51) then
@@ -143,9 +143,9 @@ Citizen.CreateThread(function()
     end
     if isfarming then
       for k, v in pairs(farms) do
-        if GetDistanceBetweenCoords(v.job.seeds.x,v.job.seeds.y,v.job.seeds.z,GetEntityCoords(GetPlayerPed(-1))) < 40 then
+        if GetDistanceBetweenCoords(v.job.seeds.x,v.job.seeds.y,v.job.seeds.z,GetEntityCoords(PlayerPedId())) < 40 then
           DrawMarker(1,v.job.seeds.x,v.job.seeds.y,v.job.seeds.z-1,0,0,0,0,0,0,5.001,5.0001,0.4001,0,155,255,175,0,0,0,0)
-          if IsPedInAnyVehicle(GetPlayerPed(-1), true) and GetDistanceBetweenCoords(v.job.seeds.x,v.job.seeds.y,v.job.seeds.z,GetEntityCoords(GetPlayerPed(-1))) < 2 then
+          if IsPedInAnyVehicle(PlayerPedId(), true) and GetDistanceBetweenCoords(v.job.seeds.x,v.job.seeds.y,v.job.seeds.z,GetEntityCoords(PlayerPedId())) < 2 then
   					if hasseeds == false then
   						DisplayHelpText(v.job.seedtext)
   						if IsControlJustPressed(1,51) then
@@ -178,9 +178,9 @@ Citizen.CreateThread(function()
         end
       end
       for k, v in pairs(farms) do
-        if GetDistanceBetweenCoords(v.job.field.x,v.job.field.y,v.job.field.z,GetEntityCoords(GetPlayerPed(-1))) < 50 then
+        if GetDistanceBetweenCoords(v.job.field.x,v.job.field.y,v.job.field.z,GetEntityCoords(PlayerPedId())) < 50 then
           DrawMarker(1,v.job.field.x,v.job.field.y,v.job.field.z-1,0,0,0,0,0,0,45.001,45.0001,0.4001,0,155,255,175,0,0,0,0)
-          if IsPedInAnyVehicle(GetPlayerPed(-1), true) and GetDistanceBetweenCoords(v.job.field.x,v.job.field.y,v.job.field.z,GetEntityCoords(GetPlayerPed(-1))) < 50 then
+          if IsPedInAnyVehicle(PlayerPedId(), true) and GetDistanceBetweenCoords(v.job.field.x,v.job.field.y,v.job.field.z,GetEntityCoords(PlayerPedId())) < 50 then
   					if hasseeds then
   						DisplayHelpText(v.job.planttext)
   						if IsControlJustPressed(1,51) then

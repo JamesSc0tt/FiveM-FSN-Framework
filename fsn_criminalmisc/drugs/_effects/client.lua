@@ -34,7 +34,7 @@ AddEventHandler('fsn_criminalmisc:drugs:effects:weed', function()
 	--StartScreenEffect("DrugsMichaelAliensFightOut", 3.0, 0)
 	--Citizen.Wait(6000)
 	--StopScreenEffect("DrugsMichaelAliensFightOut")
-	AddArmourToPed(GetPlayerPed(-1), 10)
+	AddArmourToPed(PlayerPedId(), 10)
 end)
 
 AddEventHandler('fsn_criminalmisc:drugs:effects:meth', function()
@@ -61,7 +61,7 @@ end)
 
 --To stop the animation just press f5 then stop animation 
 function smokeAnimation()
-	local playerPed = GetPlayerPed(-1)
+	local playerPed = PlayerPedId()
 	
 	Citizen.CreateThread(function()
 		TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING", 0, true)

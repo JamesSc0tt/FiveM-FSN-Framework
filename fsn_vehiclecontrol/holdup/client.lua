@@ -223,7 +223,7 @@ Citizen.CreateThread(function()
 						if not holdingnotif then 
 							TriggerEvent('fsn_notify:displayNotification', 'Holding up for keys...', 'centerRight', 3000, 'info')
 							if math.random(1,100) < 85 then
-								local pos = GetEntityCoords(GetPlayerPed(-1))
+								local pos = GetEntityCoords(PlayerPedId())
 								local coords = {
 									x = pos.x,
 									y = pos.y,
@@ -310,7 +310,7 @@ Citizen.CreateThread(function()
 							if not holdingnotif then 
 								--TriggerEvent('fsn_notify:displayNotification', 'Robbing...', 'centerRight', 3000, 'info')
 								if math.random(1,100) < 40 then
-									local pos = GetEntityCoords(GetPlayerPed(-1))
+									local pos = GetEntityCoords(PlayerPedId())
 									local coords = {
 										x = pos.x,
 										y = pos.y,

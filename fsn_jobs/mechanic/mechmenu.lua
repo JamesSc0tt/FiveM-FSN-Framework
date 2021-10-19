@@ -1390,7 +1390,7 @@ return n + 0.0001
 end
 
 function LocalPed()
-return GetPlayerPed(-1)
+return PlayerPedId()
 end
 
 function try(f, catch_f)
@@ -1404,9 +1404,9 @@ function firstToUpper(str)
 end
 function DriveInGarage()
 
-	lsc.menu['repair'].buttons[1].costs = math.ceil((1000 - GetVehicleEngineHealth(GetVehiclePedIsIn(GetPlayerPed(-1), false))) + (1000 - GetVehiclePetrolTankHealth(GetVehiclePedIsIn(GetPlayerPed(-1), false))) + (1000 - GetVehicleBodyHealth(GetVehiclePedIsIn(GetPlayerPed(-1), false))) * 15)
+	lsc.menu['repair'].buttons[1].costs = math.ceil((1000 - GetVehicleEngineHealth(GetVehiclePedIsIn(PlayerPedId(), false))) + (1000 - GetVehiclePetrolTankHealth(GetVehiclePedIsIn(PlayerPedId(), false))) + (1000 - GetVehicleBodyHealth(GetVehiclePedIsIn(PlayerPedId(), false))) * 15)
 		local pos = lsc.currentpos.inside
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		local veh = GetVehiclePedIsUsing(ped)
 		if DoesEntityExist(veh) then
 
@@ -1688,7 +1688,7 @@ end
 function DriveOutOfGarage()
 	SetStreamedTextureDictAsNoLongerNeeded("mpmissmarkers256")
 	lsc.inside = false
-	local ped = GetPlayerPed(-1);
+	local ped = PlayerPedId();
 	local veh = GetVehiclePedIsUsing(ped);
 	lsc.menu["frontbumper"].buttons = {}
 	lsc.menu["rearbumper"].buttons = {}
@@ -1893,7 +1893,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if isMech() then
 		if lsc ~= nil and lsc.inside == false then
-            local ped = GetPlayerPed(-1);
+            local ped = PlayerPedId();
             local playerPos = GetEntityCoords(ped)
 			if IsPedSittingInAnyVehicle(ped) then
 				local veh = GetVehiclePedIsUsing(ped)
@@ -1914,7 +1914,7 @@ Citizen.CreateThread(function()
 				end
 			end
 		elseif lsc ~= nil then
-			local ped = GetPlayerPed(-1);
+			local ped = PlayerPedId();
 			local veh = GetVehiclePedIsUsing(ped)
 			if (lsc.currentpos and GetDistanceBetweenCoords(lsc.currentpos.inside.x,lsc.currentpos.inside.y,lsc.currentpos.inside.z,GetEntityCoords(ped)) > 10) then
 				DriveOutOfGarage();
@@ -2186,7 +2186,7 @@ end)
 
 
 function ButtonSelected(button)
-	local ped = GetPlayerPed(-1)
+	local ped = PlayerPedId()
 	local car = GetVehiclePedIsUsing(ped)
 	if lsc.currentmenu == "repair" then
 		if button.name == "Repair vehicle" then
@@ -2547,7 +2547,7 @@ function Back()
 		return
 	end
 	backlock = true
-	local ped = GetPlayerPed(-1)
+	local ped = PlayerPedId()
 	local car = GetVehiclePedIsUsing(ped)
 	if lsc.currentmenu == "main" or lsc.currentmenu == "repair" then
 		DriveOutOfGarage()

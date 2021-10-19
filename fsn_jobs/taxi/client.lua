@@ -87,9 +87,9 @@ Citizen.CreateThread(function()
       end
     end
     for k, v in pairs(taxirank) do
-      if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+      if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(PlayerPedId()), true) < 10 then
         DrawMarker(1,v.x,v.y,v.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(v.x,v.y,v.z,GetEntityCoords(PlayerPedId()), true) < 1 then
           if istaxi == false then
             SetTextComponentFormat("STRING")
             AddTextComponentString("Press ~INPUT_PICKUP~ to get a Taxi (~g~$150~w~)")
@@ -216,7 +216,7 @@ function StartJob(jobid)
 		jobs.coords.cx[60],jobs.coords.cy[60],jobs.coords.cz[60] = -1064.83,-2560.66,19.6811
 		jobs.coords.cx[61],jobs.coords.cy[61],jobs.coords.cz[61] = -1033.44,-2730.24,19.6868
 		jobs.coords.cx[62],jobs.coords.cy[62],jobs.coords.cz[62] = -1018.67,-2732,13.2687
-		jobs.cars[1] = GetVehiclePedIsUsing(GetPlayerPed(-1))
+		jobs.cars[1] = GetVehiclePedIsUsing(PlayerPedId())
 		jobs.flag[1] = 0
 		jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
 		Wait(500)
@@ -276,15 +276,15 @@ Citizen.CreateThread(function()
 		Wait(5)
 		if onJob == 0 then
 			if fsn_GetJob() == 'Taxi Driver' then -- DEL
-				if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
-					if IsVehicleModel(GetVehiclePedIsUsing(GetPlayerPed(-1)), GetHashKey("taxi", _r)) then
+				if IsPedSittingInAnyVehicle(PlayerPedId()) then
+					if IsVehicleModel(GetVehiclePedIsUsing(PlayerPedId()), GetHashKey("taxi", _r)) then
 						StartJob(1)
 					end
 				end
 			end
 		elseif onJob == 1 then
 			if DoesEntityExist(jobs.cars[1]) and IsVehicleDriveable(jobs.cars[1], 0) then
-				if IsPedSittingInVehicle(GetPlayerPed(-1), jobs.cars[1]) then
+				if IsPedSittingInVehicle(PlayerPedId(), jobs.cars[1]) then
 					if DoesEntityExist(jobs.peds[1]) then
 						if IsPedFatallyInjured(jobs.peds[1]) then
 							Citizen.InvokeNative(0xB736A491E64A32CF,Citizen.PointerValueIntInitialized(jobs.peds[1]))
@@ -318,10 +318,10 @@ Citizen.CreateThread(function()
 									jobs.flag[1] = 0
 									jobs.flag[2] = 59+GetRandomIntInRange(1, 61)
 								else
-									if IsPedSittingInVehicle(GetPlayerPed(-1), jobs.cars[1]) then
-										if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), GetEntityCoords(jobs.peds[1]), true) < 8.0001 then
-											local offs = GetOffsetFromEntityInWorldCoords(GetVehiclePedIsUsing(GetPlayerPed(-1)), 1.5, 0.0, 0.0)
-											local offs2 = GetOffsetFromEntityInWorldCoords(GetVehiclePedIsUsing(GetPlayerPed(-1)), -1.5, 0.0, 0.0)
+									if IsPedSittingInVehicle(PlayerPedId(), jobs.cars[1]) then
+										if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), GetEntityCoords(jobs.peds[1]), true) < 8.0001 then
+											local offs = GetOffsetFromEntityInWorldCoords(GetVehiclePedIsUsing(PlayerPedId()), 1.5, 0.0, 0.0)
+											local offs2 = GetOffsetFromEntityInWorldCoords(GetVehiclePedIsUsing(PlayerPedId()), -1.5, 0.0, 0.0)
 											if GetDistanceBetweenCoords(offs['x'], offs['y'], offs['z'], GetEntityCoords(jobs.peds[1]), true) < GetDistanceBetweenCoords(offs2['x'], offs2['y'], offs2['z'], GetEntityCoords(jobs.peds[1]), true) then
 												TaskEnterVehicle(jobs.peds[1], jobs.cars[1], -1, 2, 2.0001, 1)
 											else
@@ -366,7 +366,7 @@ Citizen.CreateThread(function()
 											local streetname = string.format("Take me to the %s", GetStreetNameFromHashKey(street[1]))
 											DrawMissionText(streetname, 5000)
 										end
-										Taxi_startLocation = GetEntityCoords(GetPlayerPed(-1))
+										Taxi_startLocation = GetEntityCoords(PlayerPedId())
 										jobs.blip[1] = AddBlipForCoord(jobs.coords.cx[jobs.flag[2]],jobs.coords.cy[jobs.flag[2]],jobs.coords.cz[jobs.flag[2]])
 										AddTextComponentString(GetStreetNameFromHashKey(street[1]))
 										N_0x80ead8e2e1d5d52e(jobs.blip[1])
@@ -375,7 +375,7 @@ Citizen.CreateThread(function()
 								end
 							end
 							if jobs.flag[1] == 3 then
-								if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), jobs.coords.cx[jobs.flag[2]],jobs.coords.cy[jobs.flag[2]],jobs.coords.cz[jobs.flag[2]], true) > 4.0001 then
+								if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), jobs.coords.cx[jobs.flag[2]],jobs.coords.cy[jobs.flag[2]],jobs.coords.cz[jobs.flag[2]], true) > 4.0001 then
 									DrawMarker(1, jobs.coords.cx[jobs.flag[2]],jobs.coords.cy[jobs.flag[2]],jobs.coords.cz[jobs.flag[2]]-1.0001, 0, 0, 0, 0, 0, 0, 4.0, 4.0, 2.0, 178, 236, 93, 155, 0, 0, 2, 0, 0, 0, 0)
 								else
 									if jobs.blip[1] ~= nil and DoesBlipExist(jobs.blip[1]) then
@@ -386,7 +386,7 @@ Citizen.CreateThread(function()
 									TaskLeaveVehicle(jobs.peds[1], jobs.cars[1], 0)
 									Citizen.InvokeNative(0xB736A491E64A32CF,Citizen.PointerValueIntInitialized(jobs.peds[1]))
 									jobs.peds[1] = nil
-									Taxi_stopLocation = GetEntityCoords(GetPlayerPed(-1))
+									Taxi_stopLocation = GetEntityCoords(PlayerPedId())
 									local distance = math.floor(GetDistanceBetweenCoords(Taxi_startLocation,  Taxi_stopLocation,  false))
 									local tip = math.random(2,13)
 
@@ -416,7 +416,7 @@ Citizen.CreateThread(function()
 							Wait(1000)
 							jobs.flag[2] = jobs.flag[2]-1
 							if jobs.flag[2] == 0 then
-								local pos = GetEntityCoords(GetPlayerPed(-1))
+								local pos = GetEntityCoords(PlayerPedId())
 								local rped = GetRandomPedAtCoord(pos['x'], pos['y'], pos['z'], 35.001, 35.001, 35.001, 6, _r)
 								if DoesEntityExist(rped) then
 									jobs.peds[1] = rped
@@ -439,7 +439,7 @@ Citizen.CreateThread(function()
 						end
 					end
 				else
-					if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), GetEntityCoords(jobs.cars[1]), true) > 50.0001 then
+					if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), GetEntityCoords(jobs.cars[1]), true) > 50.0001 then
 						StopJob(1)
 					else
 						DrawMissionText("Get back in your car to continue. Or go away to stop working.", 1)

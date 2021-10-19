@@ -36,7 +36,7 @@ end)
 
 RegisterNetEvent('fsn_licenses:showid')
 AddEventHandler('fsn_licenses:showid', function()
-  local pos = GetEntityCoords(GetPlayerPed(-1))
+  local pos = GetEntityCoords(PlayerPedId())
   TriggerServerEvent('fsn_licenses:chat', name, {
     type = 'id',
     charid = charid,
@@ -64,7 +64,7 @@ end)
 
 RegisterNetEvent('fsn_licenses:display')
 AddEventHandler('fsn_licenses:display', function(type)
-  local pos = GetEntityCoords(GetPlayerPed(-1))
+  local pos = GetEntityCoords(PlayerPedId())
   if type == 'all' then
     for k,v in pairs(licenses) do
       if licenses["driver"] then
@@ -189,9 +189,9 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     for k, v in pairs(license_stores) do
-      if GetDistanceBetweenCoords(v.loc.x,v.loc.y,v.loc.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+      if GetDistanceBetweenCoords(v.loc.x,v.loc.y,v.loc.z,GetEntityCoords(PlayerPedId()), true) < 10 then
         DrawMarker(1,v.loc.x,v.loc.y,v.loc.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(v.loc.x,v.loc.y,v.loc.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(v.loc.x,v.loc.y,v.loc.z,GetEntityCoords(PlayerPedId()), true) < 1 then
           SetTextComponentFormat("STRING")
           AddTextComponentString(v.text)
           DisplayHelpTextFromStringLabel(0, 0, 1, -1)

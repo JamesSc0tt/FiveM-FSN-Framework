@@ -15,9 +15,9 @@ Citizen.CreateThread(function()
 	--end
 	while true do Citizen.Wait(0)
 		-- craft crowbar
-		if GetDistanceBetweenCoords(craft_spot.x,craft_spot.y,craft_spot.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(craft_spot.x,craft_spot.y,craft_spot.z, GetEntityCoords(PlayerPedId()), true) < 10 then
 			DrawMarker(25,craft_spot.x, craft_spot.y, craft_spot.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 255, 255, 150, 0, 0, 2, 0, 0, 0, 0)
-			if GetDistanceBetweenCoords(craft_spot.x,craft_spot.y,craft_spot.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+			if GetDistanceBetweenCoords(craft_spot.x,craft_spot.y,craft_spot.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 				Util.DrawText3D(craft_spot.x, craft_spot.y, craft_spot.z, '[E] Craft ~b~Crowbar', {255,255,255,200}, 0.25)
 				if crafting then
 					if crafting_start+5000 <= GetGameTimer() then
@@ -113,9 +113,9 @@ end)
 	Citizen.CreateThread(function()
 		while true do Citizen.Wait(0)
 			local g = gathering_spots[current_gathering]
-			if GetDistanceBetweenCoords(g.x,g.y,g.z,GetEntityCoords(GetPlayerPed(-1)),false) < 50 then
+			if GetDistanceBetweenCoords(g.x,g.y,g.z,GetEntityCoords(PlayerPedId()),false) < 50 then
 				DrawMarker(1,g.x, g.y, g.z,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-				if GetDistanceBetweenCoords(g.x,g.y,g.z,GetEntityCoords(GetPlayerPed(-1)),true) < 1 then
+				if GetDistanceBetweenCoords(g.x,g.y,g.z,GetEntityCoords(PlayerPedId()),true) < 1 then
 					TriggerEvent('fsn_inventory:items:add', {
 						index = 'aluminium',
 						name = 'Aluminium',
@@ -158,7 +158,7 @@ AddEventHandler('fsn_criminalmisc:houserobbery:try', function()
 	if exports["fsn_inventory"]:fsn_HasItem('crowbar') then
 		if robbing then return end
 		for k, v in pairs(robbables) do
-			if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+			if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 				exports['mythic_notify']:DoCustomHudText('inform', 'Attempting to rob property: '..v.info..'.', 4000)
 				robbing_id = k
 				break
@@ -177,7 +177,7 @@ AddEventHandler('fsn_criminalmisc:houserobbery:try', function()
 			robbables[robbing_id].cooldown = GetGameTimer()
 			
 			-- pd call
-			local pos = GetEntityCoords(GetPlayerPed(-1))
+			local pos = GetEntityCoords(PlayerPedId())
 			local coords = {
 				x = pos.x,
 				y = pos.y,
@@ -190,17 +190,17 @@ AddEventHandler('fsn_criminalmisc:houserobbery:try', function()
 			while not HasAnimDictLoaded("veh@break_in@0h@p_m_one@") do
 				Citizen.Wait(0)
 			end
-			if not IsEntityPlayingAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 3) then
-				TaskPlayAnim(GetPlayerPed(-1), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0, 1.0, 1.0, 1, 0.0, 0, 0, 0)
+			if not IsEntityPlayingAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 3) then
+				TaskPlayAnim(PlayerPedId(), "veh@break_in@0h@p_m_one@", "low_force_entry_ds", 1.0, 1.0, 1.0, 1, 0.0, 0, 0, 0)
 				Citizen.Wait(8000)
-				ClearPedTasks(GetPlayerPed(-1))
+				ClearPedTasks(PlayerPedId())
 			end
 			Citizen.Wait(1)		
-			ClearPedTasks(GetPlayerPed(-1))
+			ClearPedTasks(PlayerPedId())
 			
 			-- instance stuff
 			TriggerServerEvent('fsn_apartments:instance:new')
-			SetEntityCoords(GetPlayerPed(-1), 347.04724121094,-1000.2844848633,-99.194671630859)
+			SetEntityCoords(PlayerPedId(), 347.04724121094,-1000.2844848633,-99.194671630859)
 			
 			-- prepare robbables
 			for k,v in pairs(inside) do
@@ -215,23 +215,23 @@ AddEventHandler('fsn_criminalmisc:houserobbery:try', function()
 			robbing = true
 			Citizen.CreateThread(function()
 				while robbing do Citizen.Wait(0)
-					if GetDistanceBetweenCoords(347.04724121094,-1000.2844848633,-99.194671630859, GetEntityCoords(GetPlayerPed(-1)), true) > 100 then
+					if GetDistanceBetweenCoords(347.04724121094,-1000.2844848633,-99.194671630859, GetEntityCoords(PlayerPedId()), true) > 100 then
 						-- instance stuff
 						TriggerServerEvent('fsn_apartments:instance:leave')
 						
-						SetEntityCoords(GetPlayerPed(-1), robbables[robbing_id].x, robbables[robbing_id].y, robbables[robbing_id].z)
+						SetEntityCoords(PlayerPedId(), robbables[robbing_id].x, robbables[robbing_id].y, robbables[robbing_id].z)
 						robbing = false
 						robbing_id = false
 						searching = false 
 					end
 					DrawMarker(25, leave.x, leave.y, leave.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 245, 179, 66, 140, 0, 0, 1, 0, 0, 0, 0)
-					if GetDistanceBetweenCoords(leave.x, leave.y, leave.z, GetEntityCoords(GetPlayerPed(-1)),true) < 1 then
+					if GetDistanceBetweenCoords(leave.x, leave.y, leave.z, GetEntityCoords(PlayerPedId()),true) < 1 then
 						Util.DrawText3D(leave.x, leave.y, leave.z, '[E] Leave', {255,255,255,200}, 0.3)
 						if IsControlJustPressed(0,38) then
 							-- instance stuff
 							TriggerServerEvent('fsn_apartments:instance:leave')
 							
-							SetEntityCoords(GetPlayerPed(-1), robbables[robbing_id].x, robbables[robbing_id].y, robbables[robbing_id].z)
+							SetEntityCoords(PlayerPedId(), robbables[robbing_id].x, robbables[robbing_id].y, robbables[robbing_id].z)
 							robbing = false
 							robbing_id = false
 							searching = false 
@@ -245,7 +245,7 @@ AddEventHandler('fsn_criminalmisc:houserobbery:try', function()
 								DrawMarker(25, v.xyz.x, v.xyz.y, v.xyz.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 245, 179, 66, 140, 0, 0, 1, 0, 0, 0, 0)
 							else
 								DrawMarker(25, v.xyz.x, v.xyz.y, v.xyz.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-								if GetDistanceBetweenCoords(v.xyz.x, v.xyz.y, v.xyz.z, GetEntityCoords(GetPlayerPed(-1)),true) < 1 then
+								if GetDistanceBetweenCoords(v.xyz.x, v.xyz.y, v.xyz.z, GetEntityCoords(PlayerPedId()),true) < 1 then
 									if not searching then
 										Util.DrawText3D(v.xyz.x, v.xyz.y, v.xyz.z, '[E] Search:\n'..v.name, {255,255,255,200}, 0.3)
 										if IsControlJustPressed(0,38) then
@@ -257,7 +257,7 @@ AddEventHandler('fsn_criminalmisc:houserobbery:try', function()
 											Citizen.CreateThread(function()
 												while searching do Citizen.Wait(0)
 													local spot = inside[searching_id]
-													if GetDistanceBetweenCoords(spot.xyz.x,spot.xyz.y,spot.xyz.z,GetEntityCoords(GetPlayerPed(-1)),true) < 1 then 
+													if GetDistanceBetweenCoords(spot.xyz.x,spot.xyz.y,spot.xyz.z,GetEntityCoords(PlayerPedId()),true) < 1 then 
 														if searching_start+5000 <= GetGameTimer() then
 															exports["fsn_progress"]:removeBar()
 															searching = false

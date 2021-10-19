@@ -55,7 +55,7 @@ local function notification(msg)
 end
 
 local function isPedDrivingAVehicle()
-	local ped = GetPlayerPed(-1)
+	local ped = PlayerPedId()
 	vehicle = GetVehiclePedIsIn(ped, false)
 	if IsPedInAnyVehicle(ped, false) then
 		-- Check if ped is in driver seat
@@ -147,7 +147,7 @@ end
 RegisterNetEvent('fsn_vehiclecontrol:damage:repair')
 AddEventHandler('fsn_vehiclecontrol:damage:repair', function()
 	if isPedDrivingAVehicle() then
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		vehicle = GetVehiclePedIsIn(ped, false)
 		if GetVehicleEngineHealth(vehicle) < cfg.cascadingFailureThreshold + 5 then
 			if GetVehicleOilLevel(vehicle) > 0 then
@@ -172,22 +172,22 @@ end)
 
 
 function getVehicleInDirection(coordFrom, coordTo)
-	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
+	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, PlayerPedId(), 0)
 	local a, b, c, d, vehicle = GetRaycastResult(rayHandle)
 	return vehicle
 end
 function fsn_lookingAt()
 	local targetVehicle = false
 
-	local coordA = GetEntityCoords(GetPlayerPed(-1), 1)
-	local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, -1.0)
+	local coordA = GetEntityCoords(PlayerPedId(), 1)
+	local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, -1.0)
 	targetVehicle = getVehicleInDirection(coordA, coordB)
 
 	return targetVehicle
 end
 RegisterNetEvent('fsn_vehiclecontrol:damage:repairkit')
 AddEventHandler('fsn_vehiclecontrol:damage:repairkit', function()
-	if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if IsPedInAnyVehicle(PlayerPedId()) then
 		TriggerEvent('fsn_notify:displayNotification', 'You need to be outside of the vehicle to use this.', 'centerLeft', 4000, 'error')
 	else
 		if fsn_lookingAt() then
@@ -195,8 +195,8 @@ AddEventHandler('fsn_vehiclecontrol:damage:repairkit', function()
 			local d1,d2 = GetModelDimensions(GetEntityModel(vehicle))
 			local moveto = GetOffsetFromEntityInWorldCoords(vehicle, 0.0,d2["y"]+0.5,0.0)
 
-			if GetDistanceBetweenCoords(moveto, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
-				FreezeEntityPosition(GetPlayerPed(-1), true)
+			if GetDistanceBetweenCoords(moveto, GetEntityCoords(PlayerPedId()), true) < 2 then
+				FreezeEntityPosition(PlayerPedId(), true)
 				SetVehicleDoorOpen(vehicle, 4, false, false)
 				exports["fsn_progress"]:fsn_ProgressBar(58, 133, 255,'repairing',10)
 				
@@ -204,12 +204,12 @@ AddEventHandler('fsn_vehiclecontrol:damage:repairkit', function()
 				while not HasAnimDictLoaded("mini@repair") do
 					Citizen.Wait(0)
 				end
-				TaskPlayAnim(GetPlayerPed(-1), "mini@repair", "fixing_a_player", 8.0, -8, -1, 16, 0, 0, 0, 0)
+				TaskPlayAnim(PlayerPedId(), "mini@repair", "fixing_a_player", 8.0, -8, -1, 16, 0, 0, 0, 0)
 				Citizen.Wait(10000)
-				ClearPedTasks(GetPlayerPed(-1))
-				FreezeEntityPosition(GetPlayerPed(-1), false)
+				ClearPedTasks(PlayerPedId())
+				FreezeEntityPosition(PlayerPedId(), false)
 				SetVehicleDoorShut(vehicle, 4, false)
-				if GetDistanceBetweenCoords(moveto, GetEntityCoords(GetPlayerPed(-1)), true) < 2 and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+				if GetDistanceBetweenCoords(moveto, GetEntityCoords(PlayerPedId()), true) < 2 and not IsPedInAnyVehicle(PlayerPedId()) then
 					SetVehicleUndriveable(vehicle,false)
 					SetVehicleEngineHealth(vehicle, cfg.cascadingFailureThreshold + 25)
 					SetVehiclePetrolTankHealth(vehicle, 750.0)
@@ -231,7 +231,7 @@ AddEventHandler('fsn_vehiclecontrol:damage:repairkit', function()
 	end
 	--[[
 	if isPedDrivingAVehicle() then
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		vehicle = GetVehiclePedIsIn(ped, false)
 		if GetVehicleEngineHealth(vehicle) < cfg.cascadingFailureThreshold + 5 then
 			if GetVehicleOilLevel(vehicle) > 0 then
@@ -346,7 +346,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(50)
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		if isPedDrivingAVehicle() then
 			vehicle = GetVehiclePedIsIn(ped, false)
 			vehicleClass = GetVehicleClass(vehicle)

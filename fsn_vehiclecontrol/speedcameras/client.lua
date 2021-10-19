@@ -53,10 +53,10 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     for k, v in pairs(speed_cameras) do
-      if GetDistanceBetweenCoords(v[1], v[2], v[3], GetEntityCoords(GetPlayerPed(-1)), true) < 30 then
-        if IsPedInAnyVehicle(GetPlayerPed(-1)) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1),  false), -1) == GetPlayerPed(-1) then
-		  if table.contains(flaggedplates, GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1)))) then
-			local pos = GetEntityCoords(GetPlayerPed(-1))
+      if GetDistanceBetweenCoords(v[1], v[2], v[3], GetEntityCoords(PlayerPedId()), true) < 30 then
+        if IsPedInAnyVehicle(PlayerPedId()) and GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(),  false), -1) == PlayerPedId() then
+		  if table.contains(flaggedplates, GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId()))) then
+			local pos = GetEntityCoords(PlayerPedId())
 		        local coords = {
 		          x = pos.x,
 		          y = pos.y,
@@ -64,11 +64,11 @@ Citizen.CreateThread(function()
 		        }
 		        TriggerServerEvent('fsn_police:dispatch', coords, 11)
 		  end
-		  local speed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1),  false)) * 2.236936
+		  local speed = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(),  false)) * 2.236936
 			    speed = math.floor(speed)
           local try = math.random(0, 100)
-          if try > 30 and speed > 60 and GetVehicleClass(GetVehiclePedIsIn(GetPlayerPed(-1),  false)) ~= 18 then
-						local pos = GetEntityCoords(GetPlayerPed(-1))
+          if try > 30 and speed > 60 and GetVehicleClass(GetVehiclePedIsIn(PlayerPedId(),  false)) ~= 18 then
+						local pos = GetEntityCoords(PlayerPedId())
 		        local coords = {
 		          x = pos.x,
 		          y = pos.y,
