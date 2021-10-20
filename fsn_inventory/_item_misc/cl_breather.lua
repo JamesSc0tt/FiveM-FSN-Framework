@@ -19,21 +19,21 @@ Citizen.CreateThread(function()
 	EndTextCommandSetBlipName(bleep)
 	while true do Citizen.Wait(0)
 		if equipped then
-			SetPedMaxTimeUnderwater(GetPlayerPed(-1), 400.00)
-			SetEnableScuba(GetPlayerPed(-1),true)
+			SetPedMaxTimeUnderwater(PlayerPedId(), 400.00)
+			SetEnableScuba(PlayerPedId(),true)
 			if equipped_time+600000 < GetGameTimer() then
 				equipped = false
 				exports['mythic_notify']:DoHudText('error', 'Scuba expired')
 			end
 		else
-			SetPedMaxTimeUnderwater(GetPlayerPed(-1), 100.00)
-			SetEnableScuba(GetPlayerPed(-1),false)
+			SetPedMaxTimeUnderwater(PlayerPedId(), 100.00)
+			SetEnableScuba(PlayerPedId(),false)
 		end
 		
 		-- store
-		if GetDistanceBetweenCoords(loc.x, loc.y, loc.z, GetEntityCoords(GetPlayerPed(-1)), false) < 10 then
+		if GetDistanceBetweenCoords(loc.x, loc.y, loc.z, GetEntityCoords(PlayerPedId()), false) < 10 then
 			DrawMarker(25,loc.x, loc.y, loc.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 255, 255, 150, 0, 0, 2, 0, 0, 0, 0)
-			if GetDistanceBetweenCoords(loc.x, loc.y, loc.z, GetEntityCoords(GetPlayerPed(-1)), false) < 1 then
+			if GetDistanceBetweenCoords(loc.x, loc.y, loc.z, GetEntityCoords(PlayerPedId()), false) < 1 then
 				Util.DrawText3D(loc.x, loc.y, loc.z, '[E] Buy ~b~Scuba Gear', {255,255,255,200}, 0.25)
 				if IsControlJustPressed(0,38) then
 					if exports["fsn_main"]:fsn_CanAfford(500) then

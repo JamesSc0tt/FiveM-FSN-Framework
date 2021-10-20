@@ -23,7 +23,7 @@ AddEventHandler("safecracking:loop", function()
 	openString = "lock_open"
 	closedString = "lock_closed"
 	cracking = true
-	mybasepos = GetEntityCoords(GetPlayerPed(-1))
+	mybasepos = GetEntityCoords(PlayerPedId())
 	dicks = 1
 	local pinfall = false
 	while cracking do
@@ -63,7 +63,7 @@ AddEventHandler("safecracking:loop", function()
 
 		safelock = math.floor(100-(i / 3.6))
 
-		if GetDistanceBetweenCoords(mybasepos, GetEntityCoords(GetPlayerPed(-1))) > 1 or curLock > difficulty then
+		if GetDistanceBetweenCoords(mybasepos, GetEntityCoords(PlayerPedId())) > 1 or curLock > difficulty then
 			cracking = false
 		end
 

@@ -38,7 +38,7 @@ Citizen.CreateThread( function()
 
 	while compass.show do
 		Wait( 0 )
-		if IsPedInAnyVehicle(GetPlayerPed(-1), true) then
+		if IsPedInAnyVehicle(PlayerPedId(), true) then
 			local pxDegree = compass.width / compass.fov
 			local playerHeadingDegrees = 0
 

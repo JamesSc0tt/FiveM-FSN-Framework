@@ -191,15 +191,15 @@ local last_Fight = 0
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if IsPedShooting(GetPlayerPed(-1)) and exports["fsn_criminalmisc"]:HoldingWeapon() then
+		if IsPedShooting(PlayerPedId()) and exports["fsn_criminalmisc"]:HoldingWeapon() then
 			print 'adding gsr'
 			lastGSR = current_time
 			myGSR = true
 			TriggerEvent('fsn_evidence:ped:addState', 'GSR Residue', 'LFINGER')
 		end
-		if IsPedInMeleeCombat(GetPlayerPed(-1)) and not pdonduty then
+		if IsPedInMeleeCombat(PlayerPedId()) and not pdonduty then
 			if last_Fight+10000 < GetGameTimer() then
-				local pos = GetEntityCoords(GetPlayerPed(-1))
+				local pos = GetEntityCoords(PlayerPedId())
 			   local coords = {
 				 x = pos.x,
 				 y = pos.y,
@@ -226,9 +226,9 @@ end)
 Citizen.CreateThread(function()
    while true do
      Citizen.Wait(0)
-	 if IsPedShooting(GetPlayerPed(-1)) and not pdonduty then
+	 if IsPedShooting(PlayerPedId()) and not pdonduty then
 		if exports["fsn_criminalmisc"]:HoldingWeapon() then
-		   local pos = GetEntityCoords(GetPlayerPed(-1))
+		   local pos = GetEntityCoords(PlayerPedId())
 		   local coords = {
 			 x = pos.x,
 			 y = pos.y,

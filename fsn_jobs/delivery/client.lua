@@ -24,9 +24,9 @@ end
 
 Citizen.CreateThread(function()
 	while true do Citizen.Wait(0)
-		if GetDistanceBetweenCoords(startpos.x,startpos.y,startpos.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(startpos.x,startpos.y,startpos.z,GetEntityCoords(PlayerPedId()), true) < 10 then
 			DrawMarker(1,startpos.x,startpos.y,startpos.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(startpos.x,startpos.y,startpos.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(startpos.x,startpos.y,startpos.z,GetEntityCoords(PlayerPedId()), true) < 1 then
 				if isdelivering then
 					SetTextComponentFormat("STRING")
 					AddTextComponentString("~r~You are currently out on delivery, finish your job")

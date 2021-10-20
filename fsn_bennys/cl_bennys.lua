@@ -31,7 +31,7 @@ end
 -- stuff
 Citizen.CreateThread(function()
 	while true do Citizen.Wait(0)
-		if GetDistanceBetweenCoords(Config.XYZ.x, Config.XYZ.y, Config.XYZ.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(Config.XYZ.x, Config.XYZ.y, Config.XYZ.z, GetEntityCoords(PlayerPedId()), true) < 10 then
 			if not ingarage then
 				Util.DrawText('Press ~o~ENTER~w~ to enter ~o~Benny\'s', 4, true, 0.5,0.8, 0.9, {255, 255, 255,255})
 				if IsControlJustReleased(0,201) then
@@ -81,10 +81,10 @@ end
 
 function EnterGarage()
 	
-	local ped = GetPlayerPed(-1)
+	local ped = PlayerPedId()
 	local veh = GetVehiclePedIsUsing(ped)
 	myveh.vehicle = veh
-	if not IsPedInAnyVehicle(GetPlayerPed(-1)) then exports['mythic_notify']:DoHudText('error', 'You need to be driving a vehicle to use this garage.') return end
+	if not IsPedInAnyVehicle(PlayerPedId()) then exports['mythic_notify']:DoHudText('error', 'You need to be driving a vehicle to use this garage.') return end
 	ingarage = true
 	
 	BennysMenu:setTitle("Benny's Motorworks")

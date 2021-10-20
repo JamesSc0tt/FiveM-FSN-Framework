@@ -54,9 +54,9 @@ function gunrange_start()
   TriggerEvent('fsn_notify:displayNotification', 'There are no ranges available, try again later.', 'centerLeft', 4000, 'error')
 end
 function gunrange_join(rid)
-  SetEntityCoords(GetPlayerPed(-1), ranges[rid].loc.x, ranges[rid].loc.y, ranges[rid].loc.z-1)
-  SetEntityHeading(GetPlayerPed(-1), ranges[rid].loc.h)
-  FreezeEntityPosition(GetPlayerPed(-1), true)
+  SetEntityCoords(PlayerPedId(), ranges[rid].loc.x, ranges[rid].loc.y, ranges[rid].loc.z-1)
+  SetEntityHeading(PlayerPedId(), ranges[rid].loc.h)
+  FreezeEntityPosition(PlayerPedId(), true)
   inrange = true
   gunrange_CreateTarget(0)
 end
@@ -64,10 +64,10 @@ function gunrange_leave()
   if currenttarget then
     DeleteObject(currenttarget)
   end
-  SetEntityCoords(GetPlayerPed(-1), range.x, range.y, range.z)
+  SetEntityCoords(PlayerPedId(), range.x, range.y, range.z)
   inrange = false
   lasttarget = 0
-  FreezeEntityPosition(GetPlayerPed(-1), false)
+  FreezeEntityPosition(PlayerPedId(), false)
 end
 function gunrange_CreateTarget(lastid)
   print('creating new target')
@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(0)
     if inrange then
       local created = false
-      if IsPedShooting(GetPlayerPed(-1)) then
+      if IsPedShooting(PlayerPedId()) then
         if not created then
           created = true
           gunrange_CreateTarget(lasttarget)
@@ -118,9 +118,9 @@ Citizen.CreateThread(function()
         gunrange_leave()
       end
     end
-    if GetDistanceBetweenCoords(range.x, range.y, range.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+    if GetDistanceBetweenCoords(range.x, range.y, range.z, GetEntityCoords(PlayerPedId()), true) < 10 then
       DrawMarker(1,range.x, range.y, range.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-      if GetDistanceBetweenCoords(range.x, range.y, range.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+      if GetDistanceBetweenCoords(range.x, range.y, range.z, GetEntityCoords(PlayerPedId()), true) < 1 then
         SetTextComponentFormat("STRING")
         AddTextComponentString("Press ~INPUT_PICKUP~ to access the range (~g~$500~w~)")
         DisplayHelpTextFromStringLabel(0, 0, 1, -1)

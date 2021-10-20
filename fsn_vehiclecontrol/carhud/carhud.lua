@@ -49,11 +49,11 @@ Citizen.CreateThread(function()
 	while true do Citizen.Wait(1)
 
 
-		local MyPed = GetPlayerPed(-1)
+		local MyPed = PlayerPedId()
 
 		if(IsPedInAnyVehicle(MyPed, false))then
 			DisplayRadar(true)
-			local MyPedVeh = GetVehiclePedIsIn(GetPlayerPed(-1),false)
+			local MyPedVeh = GetVehiclePedIsIn(PlayerPedId(),false)
 			local PlateVeh = GetVehicleNumberPlateText(MyPedVeh)
 			local VehStopped = IsVehicleStopped(MyPedVeh)
 			local VehEngineHP = GetVehicleEngineHealth(MyPedVeh)
@@ -61,9 +61,9 @@ Citizen.CreateThread(function()
 			local VehBurnout = IsVehicleInBurnout(MyPedVeh)
 
 			if HUD.Speed == 'kmh' then
-				Speed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 3.6
+				Speed = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false)) * 3.6
 			elseif HUD.Speed == 'mph' then
-				Speed = GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1), false)) * 2.236936
+				Speed = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false)) * 2.236936
 			else
 				Speed = 0.0
 			end
@@ -86,7 +86,7 @@ Citizen.CreateThread(function()
 						drawTxt(UI.x + 0.647, 	UI.y + 1.428, 1.0,1.0,0.4, "~r~ mph", 255, 255, 255, 255)
 					end
 					-- 0.33 difference
-					if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) then
+					if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() then
 						drawRct(UI.x + 0.124, 	UI.y + 0.899, 0.046,0.03,0,0,0,150) -- Speed panel
 						drawTxt(UI.x + 0.625, 	UI.y + 1.387, 1.0,1.0,0.64 , "~w~" .. math.floor(fuel_amount), 255, 255, 255, 255)
 						drawTxt(UI.x + 0.647, 	UI.y + 1.395, 1.0,1.0,0.4, "~w~  fuel", 255, 255, 255, 255)
@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
 						drawTxt(UI.x + 0.647, 	UI.y + 1.428, 1.0,1.0,0.4, "~r~ kmh", 255, 255, 255, 255)
 					end
 					-- 0.33 difference
-					if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) then
+					if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() then
 						drawRct(UI.x + 0.124, 	UI.y + 0.899, 0.046,0.03,0,0,0,150) -- Speed panel
 						drawTxt(UI.x + 0.625, 	UI.y + 1.387, 1.0,1.0,0.64 , "~w~" .. math.floor(fuel_amount), 255, 255, 255, 255)
 						drawTxt(UI.x + 0.647, 	UI.y + 1.395, 1.0,1.0,0.4, "~w~  fuel", 255, 255, 255, 255)

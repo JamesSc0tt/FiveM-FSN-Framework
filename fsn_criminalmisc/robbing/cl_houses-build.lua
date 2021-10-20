@@ -1,5 +1,5 @@
 function buildTrevor()
-	SetEntityCoords(GetPlayerPed(-1),-1153.18300000 ,-1518.34800000, 9.63082300)
+	SetEntityCoords(PlayerPedId(),-1153.18300000 ,-1518.34800000, 9.63082300)
 	--Wait(1200)
 	
 	local items = {'V_61_shell_walls', 'V_61_bd1_mesh_delta', 'V_61_bd1_over_normal', 'V_Res_Tre_lightFan'}
@@ -13,8 +13,8 @@ function buildTrevor()
 	end
 	
 	local generator = { x = curHouseCoords["x"] , y = curHouseCoords["y"], z = curHouseCoords["z"] - 35.0}
-	SetEntityCoords(GetPlayerPed(-1), generator.x, generator.y-4,generator.z+3.0)
-	FreezeEntityPosition(GetPlayerPed(-1), true)
+	SetEntityCoords(PlayerPedId(), generator.x, generator.y-4,generator.z+3.0)
+	FreezeEntityPosition(PlayerPedId(), true)
 	local building = CreateObject(GetHashKey("V_61_shell_walls"),generator.x+0.42222900,generator.y-0.13131700,generator.z+1.18855100,false,false,false)
 	FreezeEntityPosition(building,true)
 
@@ -75,7 +75,7 @@ CreateObject(GetHashKey("V_61_shell_doorFrames"),generator.x+5.16617300,generato
 CreateObject(GetHashKey("V_61_shell_FdFrame"),generator.x+0.61957400,generator.y-4.27097800,generator.z+1.39039500,false,false,false)
 
 CreateObject(GetHashKey("V_61_Bath_over_dec"),generator.x+2.66080000,generator.y-3.60888800,generator.z+0.01784800,false,false,false)
-SetEntityHeading(GetPlayerPed(-1),267.0)
+SetEntityHeading(PlayerPedId(),267.0)
 SetGameplayCamRelativeHeading(0.0)
 
 end

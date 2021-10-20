@@ -71,14 +71,14 @@ Citizen.CreateThread(function()
     for k, v in pairs(policeDoors) do
       local closestDoor = GetClosestObjectOfType(v.x, v.y, v.z, 1.0, v.objName, false, false, false)
       local doorCoords = GetEntityCoords(closestDoor)
-      if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, v.x, v.y, v.z, true) < 10 then
+      if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, v.x, v.y, v.z, true) < 10 then
         if v.locked then
           FreezeEntityPosition(closestDoor, true)
         else
           FreezeEntityPosition(closestDoor, false)
         end
       end
-      if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, v.x, v.y, v.z, true) < 2 then
+      if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, v.x, v.y, v.z, true) < 2 then
         if amipolice then
           if v.locked then
             fsn_drawText3D(v.txtX, v.txtY, v.txtZ, "[E] to ~g~unlock door")
@@ -89,15 +89,15 @@ Citizen.CreateThread(function()
           end
           if IsControlJustPressed(1,51) then
 			if v.locked then
-              --TaskPlayAnim(GetPlayerPed(-1), 'missheistfbisetup1', 'unlock_enter_janitor', 8.0, -1, false, false, false, false)
+              --TaskPlayAnim(PlayerPedId(), 'missheistfbisetup1', 'unlock_enter_janitor', 8.0, -1, false, false, false, false)
               fsn_loadAnimDict( "gestures@f@standing@casual" )
-              TaskPlayAnim(GetPlayerPed(-1), "gestures@f@standing@casual", "gesture_hand_down", 8.0, 1.0, 3, 2, 0, 0, 0, 0 )
+              TaskPlayAnim(PlayerPedId(), "gestures@f@standing@casual", "gesture_hand_down", 8.0, 1.0, 3, 2, 0, 0, 0, 0 )
               fsn_doorUnlockSound()
               TriggerServerEvent('fsn_doormanager:unlockDoor', 'police', k)
               FreezeEntityPosition(closestDoor, false)
             else
               fsn_loadAnimDict( "gestures@f@standing@casual" )
-              TaskPlayAnim(GetPlayerPed(-1), "gestures@f@standing@casual", "gesture_hand_down", 8.0, 1.0, 3, 2, 0, 0, 0, 0 )
+              TaskPlayAnim(PlayerPedId(), "gestures@f@standing@casual", "gesture_hand_down", 8.0, 1.0, 3, 2, 0, 0, 0, 0 )
               fsn_doorUnlockSound()
               TriggerServerEvent('fsn_doormanager:lockDoor', 'police', k)
               FreezeEntityPosition(closestDoor, true)

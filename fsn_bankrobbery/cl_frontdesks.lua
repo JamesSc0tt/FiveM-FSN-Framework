@@ -9,7 +9,7 @@ TriggerServerEvent('fsn_bankrobbery:desks:request')
 Util.Tick(function()
 	for k, v in pairs(desks) do
 		-- doors
-		if GetDistanceBetweenCoords(v.door.x, v.door.y, v.door.z, GetEntityCoords(GetPlayerPed(-1)), true) < 3 then
+		if GetDistanceBetweenCoords(v.door.x, v.door.y, v.door.z, GetEntityCoords(PlayerPedId()), true) < 3 then
 			if v.door.locked then
 				local door = GetClosestObjectOfType(v.door.x, v.door.y, v.door.z, 1.0, v.door.mdl, false, false, false)
 				if door then
@@ -27,7 +27,7 @@ Util.Tick(function()
 		end
 		if not v.door.locked then
 			for key, keyboard in pairs(v.keyboards) do
-				if GetDistanceBetweenCoords(keyboard.robspot.x, keyboard.robspot.y, keyboard.robspot.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+				if GetDistanceBetweenCoords(keyboard.robspot.x, keyboard.robspot.y, keyboard.robspot.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 					if keyboard.robbed == 'nothacked' then
 						Util.DrawText3D(keyboard.x, keyboard.y, keyboard.z, '[E] Begin hack', {255, 255, 255, 200}, 0.25)
 						if IsControlJustPressed(0,38) then

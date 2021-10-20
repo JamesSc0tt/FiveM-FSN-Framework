@@ -10,7 +10,7 @@ end
 
 function HoldingWeapon()
 	for k, v in pairs(hashGunToText) do
-		if tostring(GetSelectedPedWeapon(GetPlayerPed(-1))) == k then
+		if tostring(GetSelectedPedWeapon(PlayerPedId())) == k then
 			if v.isweapon then
 				return true
 			end
@@ -68,15 +68,15 @@ function weaponInfo(hash)
 	local weapon = {}
 	local remov = 0
 	for k,v in pairs(myWeapons) do
-		if v.hash == GetSelectedPedWeapon(GetPlayerPed(-1)) then
+		if v.hash == GetSelectedPedWeapon(PlayerPedId()) then
 			remov = k
 			weapon = v
 			print('getting weapon info for: '..weapon.name)
 		end
 	end
 	if weapon == {} then
-		TriggerEvent('fsn_notify:displayNotification', 'There is no weaponinfo regarding '..GetSelectedPedWeapon(GetPlayerPed(-1))..' contact a developer', 'centerRight', 10000, 'error')
-		RemoveWeaponFromPed(GetPlayerPed(-1), GetSelectedPedWeapon(GetPlayerPed(-1)))
+		TriggerEvent('fsn_notify:displayNotification', 'There is no weaponinfo regarding '..GetSelectedPedWeapon(PlayerPedId())..' contact a developer', 'centerRight', 10000, 'error')
+		RemoveWeaponFromPed(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId()))
 	else
 		if weapon == nil then
 			print 'im a dumbass'
@@ -92,7 +92,7 @@ AddEventHandler('fsn_criminalmisc:weapons:add', function(hash, ammo)
 		for k, v in pairs(myWeapons) do
 			if v.hash == hash then
 				TriggerEvent('fsn_notify:displayNotification', 'You already have '..info.name..' so got 200 ammo', 'centerRight', 6000, 'info')
-				SetPedAmmo(GetPlayerPed(-1), v.hash, 200)
+				SetPedAmmo(PlayerPedId(), v.hash, 200)
 				return
 			end
 		end
@@ -122,7 +122,7 @@ AddEventHandler('fsn_criminalmisc:weapons:add:police', function(hash, ammo)
 		for k, v in pairs(myWeapons) do
 			if v.hash == hash then
 				TriggerEvent('fsn_notify:displayNotification', 'You already have '..info.name..' so got 200 ammo', 'centerRight', 6000, 'info')
-				SetPedAmmo(GetPlayerPed(-1), v.hash, 200)
+				SetPedAmmo(PlayerPedId(), v.hash, 200)
 				return
 			end
 		end
@@ -155,7 +155,7 @@ AddEventHandler('fsn_criminalmisc:weapons:add:unknown', function(hash, ammo)
 		for k, v in pairs(myWeapons) do
 			if v.hash == hash then
 				TriggerEvent('fsn_notify:displayNotification', 'You already have '..info.name..' so got 200 ammo', 'centerRight', 6000, 'info')
-				SetPedAmmo(GetPlayerPed(-1), v.hash, 200)
+				SetPedAmmo(PlayerPedId(), v.hash, 200)
 				return
 			end
 		end
@@ -193,7 +193,7 @@ AddEventHandler('fsn_criminalmisc:weapons:pickup', function(weapon)
 		for k, v in pairs(myWeapons) do
 			if v.hash == weapon.hash then
 				TriggerEvent('fsn_notify:displayNotification', 'You already have '..weapon.name..' so got 200 ammo', 'centerRight', 6000, 'info')
-				SetPedAmmo(GetPlayerPed(-1), v.hash, 200)
+				SetPedAmmo(PlayerPedId(), v.hash, 200)
 				v.ammo = 200
 				return
 			end
@@ -208,12 +208,12 @@ end)
 
 RegisterNetEvent('fsn_criminalmisc:weapons:info')
 AddEventHandler('fsn_criminalmisc:weapons:info', function()
-	if GetSelectedPedWeapon(GetPlayerPed(-1)) == -1569615261 then
+	if GetSelectedPedWeapon(PlayerPedId()) == -1569615261 then
 		TriggerEvent('fsn_notify:displayNotification', 'Your fists do not have a serial number', 'centerRight', 10000, 'error')
 		return
 	end
 	for k,v in pairs(myWeapons) do
-		if v.hash == GetSelectedPedWeapon(GetPlayerPed(-1)) then
+		if v.hash == GetSelectedPedWeapon(PlayerPedId()) then
 			 TriggerEvent('chatMessage', '', {255,255,255}, '^1^r:FSN:^0^* INFO | Registered to: '..v.owner.name..' / Serial: '..v.owner.serial)
 		end
 	end
@@ -222,35 +222,35 @@ end)
 RegisterNetEvent('fsn_criminalmisc:weapons:equip')
 AddEventHandler('fsn_criminalmisc:weapons:equip', function()
 	for k, v in pairs(myWeapons) do
-		if not HasPedGotWeapon(GetPlayerPed(-1), v.hash, false) then
+		if not HasPedGotWeapon(PlayerPedId(), v.hash, false) then
 			print('equipping '..v.name..' ('..v.hash..')')
-			GiveWeaponToPed(GetPlayerPed(-1), v.hash, v.ammo, false, true)
+			GiveWeaponToPed(PlayerPedId(), v.hash, v.ammo, false, true)
 		end
 	end
 end)
 
 RegisterNetEvent('fsn_criminalmisc:weapons:drop')
 AddEventHandler('fsn_criminalmisc:weapons:drop', function()
-	if GetSelectedPedWeapon(GetPlayerPed(-1)) == -1569615261 then
+	if GetSelectedPedWeapon(PlayerPedId()) == -1569615261 then
 		TriggerEvent('fsn_notify:displayNotification', 'You cannot drop your fists', 'centerRight', 10000, 'error')
 		return
 	end
 	local weapon = {}
 	local remov = 0
 	for k,v in pairs(myWeapons) do
-		if v.hash == GetSelectedPedWeapon(GetPlayerPed(-1)) then
+		if v.hash == GetSelectedPedWeapon(PlayerPedId()) then
 			remov = k
 			weapon = v
 			print('droppping current weapon: '..weapon.name)
 		end
 	end
 	if weapon == {} then
-		TriggerEvent('fsn_notify:displayNotification', 'There is no weaponinfo regarding '..GetSelectedPedWeapon(GetPlayerPed(-1))..' contact a developer', 'centerRight', 10000, 'error')
-		RemoveWeaponFromPed(GetPlayerPed(-1), GetSelectedPedWeapon(GetPlayerPed(-1)))
+		TriggerEvent('fsn_notify:displayNotification', 'There is no weaponinfo regarding '..GetSelectedPedWeapon(PlayerPedId())..' contact a developer', 'centerRight', 10000, 'error')
+		RemoveWeaponFromPed(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId()))
 	else
-		TriggerServerEvent('fsn_criminalmisc:weapons:addDrop', weapon, {x=GetEntityCoords(GetPlayerPed(-1)).x, y=GetEntityCoords(GetPlayerPed(-1)).y, z=GetEntityCoords(GetPlayerPed(-1)).z})
+		TriggerServerEvent('fsn_criminalmisc:weapons:addDrop', weapon, {x=GetEntityCoords(PlayerPedId()).x, y=GetEntityCoords(PlayerPedId()).y, z=GetEntityCoords(PlayerPedId()).z})
 		
-		RemoveWeaponFromPed(GetPlayerPed(-1), GetSelectedPedWeapon(GetPlayerPed(-1)))
+		RemoveWeaponFromPed(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId()))
 		myWeapons[remov] = nil
 		table.remove(myWeapons, remov)
 		
@@ -260,26 +260,26 @@ end)
 
 RegisterNetEvent('fsn_criminalmisc:weapons:destroy')
 AddEventHandler('fsn_criminalmisc:weapons:destroy', function()
-	if GetSelectedPedWeapon(GetPlayerPed(-1)) == -1569615261 then
+	if GetSelectedPedWeapon(PlayerPedId()) == -1569615261 then
 		TriggerEvent('fsn_notify:displayNotification', 'You cannot destroy your fists', 'centerRight', 10000, 'error')
 		return
 	end
 	local weapon = {}
 	local remov = 0
 	for k,v in pairs(myWeapons) do
-		if v.hash == GetSelectedPedWeapon(GetPlayerPed(-1)) then
+		if v.hash == GetSelectedPedWeapon(PlayerPedId()) then
 			remov = k
 			weapon = v
 			print('droppping current weapon: '..weapon.name)
 		end
 	end
 	if weapon == {} then
-		TriggerEvent('fsn_notify:displayNotification', 'There is no weaponinfo regarding '..GetSelectedPedWeapon(GetPlayerPed(-1))..' contact a developer', 'centerRight', 10000, 'error')
-		RemoveWeaponFromPed(GetPlayerPed(-1), GetSelectedPedWeapon(GetPlayerPed(-1)))
+		TriggerEvent('fsn_notify:displayNotification', 'There is no weaponinfo regarding '..GetSelectedPedWeapon(PlayerPedId())..' contact a developer', 'centerRight', 10000, 'error')
+		RemoveWeaponFromPed(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId()))
 	else
-		--TriggerServerEvent('fsn_criminalmisc:weapons:addDrop', weapon, {x=GetEntityCoords(GetPlayerPed(-1)).x, y=GetEntityCoords(GetPlayerPed(-1)).y, z=GetEntityCoords(GetPlayerPed(-1)).z})
+		--TriggerServerEvent('fsn_criminalmisc:weapons:addDrop', weapon, {x=GetEntityCoords(PlayerPedId()).x, y=GetEntityCoords(PlayerPedId()).y, z=GetEntityCoords(PlayerPedId()).z})
 		
-		RemoveWeaponFromPed(GetPlayerPed(-1), GetSelectedPedWeapon(GetPlayerPed(-1)))
+		RemoveWeaponFromPed(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId()))
 		myWeapons[remov] = nil
 		table.remove(myWeapons, remov)
 		
@@ -325,19 +325,19 @@ local stripper = {x = 605.54632568359, y = -3091.7287597656, z = 6.0692601203918
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if GetDistanceBetweenCoords(stripper.x, stripper.y, stripper.z, GetEntityCoords(GetPlayerPed(-1))) < 10 then
+		if GetDistanceBetweenCoords(stripper.x, stripper.y, stripper.z, GetEntityCoords(PlayerPedId())) < 10 then
 			DrawMarker(1,stripper.x, stripper.y, stripper.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(stripper.x, stripper.y, stripper.z, GetEntityCoords(GetPlayerPed(-1))) < 1 then
+			if GetDistanceBetweenCoords(stripper.x, stripper.y, stripper.z, GetEntityCoords(PlayerPedId())) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("~INPUT_PICKUP~ modify weapon (~r~5000DM~w~)")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 				if IsControlJustPressed(0, 38) then
-					if GetSelectedPedWeapon(GetPlayerPed(-1)) == -1569615261 then
+					if GetSelectedPedWeapon(PlayerPedId()) == -1569615261 then
 						TriggerEvent('fsn_notify:displayNotification', 'It looks like that tool would hurt your hands...', 'centerRight', 5000, 'error')
 					else
 						if exports["fsn_inventory"]:fsn_HasItem('dirty_money') and exports["fsn_inventory"]:fsn_GetItemAmount('dirty_money') >= 5000 then
 							for k,v in pairs(myWeapons) do
-								if v.hash == GetSelectedPedWeapon(GetPlayerPed(-1)) then
+								if v.hash == GetSelectedPedWeapon(PlayerPedId()) then
 									if v.owner.name ~= 'UNKNOWN' and v.owner.serial ~= 'illegible' then
 										if string.find(v.owner.name, '(PD ISSUE)') then
 											TriggerEvent('fsn_notify:displayNotification', 'The heat are looking for this gun, you cannot modify it here.', 'centerRight', 5000, 'success')
@@ -358,9 +358,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		for k,v in pairs(droppedWeapons) do
-			if GetDistanceBetweenCoords(v.loc.x, v.loc.y, v.loc.z, GetEntityCoords(GetPlayerPed(-1))) < 10 then
+			if GetDistanceBetweenCoords(v.loc.x, v.loc.y, v.loc.z, GetEntityCoords(PlayerPedId())) < 10 then
 				DrawMarker(25, v.loc.x, v.loc.y, v.loc.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-				if GetDistanceBetweenCoords(v.loc.x, v.loc.y, v.loc.z, GetEntityCoords(GetPlayerPed(-1))) < 1 then
+				if GetDistanceBetweenCoords(v.loc.x, v.loc.y, v.loc.z, GetEntityCoords(PlayerPedId())) < 1 then
 					fsn_drawText3D(v.loc.x, v.loc.y, v.loc.z, "[E] pickup "..v.weapon.name)
 					if IsControlJustPressed(0, 38) then
 						TriggerServerEvent('fsn_criminalmisc:weapons:pickup', v.dropid)
@@ -374,7 +374,7 @@ end)
 RegisterNetEvent('fsn_police:search:strip')
 AddEventHandler('fsn_police:search:strip', function()
   TriggerEvent('fsn_inventory:empty')
-  RemoveAllPedWeapons(GetPlayerPed(-1))
+  RemoveAllPedWeapons(PlayerPedId())
   TriggerEvent('fsn_bank:change:bankandwallet', 0, false)
   myWeapons = {}
   ExecuteCommand('save')
@@ -389,7 +389,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(5000)
 		for k,v in pairs(myWeapons) do
-			v.ammo = GetAmmoInPedWeapon(GetPlayerPed(-1), v.hash)
+			v.ammo = GetAmmoInPedWeapon(PlayerPedId(), v.hash)
 		end
 	end
 end)

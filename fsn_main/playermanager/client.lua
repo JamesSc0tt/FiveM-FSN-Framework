@@ -13,7 +13,7 @@ evData = AddEventHandler("playerSpawned", function()
 
 	RemoveLoadingPrompt()]]
 	Citizen.Wait(10*1000)
-	if GetPlayerPed(-1) then
+	if PlayerPedId() then
 		DoScreenFadeIn(2000)
 		TriggerEvent("fsn_main:charMenu")
 	end

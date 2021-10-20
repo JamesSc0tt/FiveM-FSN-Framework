@@ -15,7 +15,7 @@ Citizen.CreateThread( function()
 
 	while streetName.show do
 		Wait( 0 )
-		if IsPedInAnyVehicle(GetPlayerPed(-1), true) then
+		if IsPedInAnyVehicle(PlayerPedId(), true) then
 			local playerPos = GetEntityCoords( GetPlayerPed( -1 ), true )
 			local streetA, streetB = Citizen.InvokeNative( 0x2EB41072B4C1E4C0, playerPos.x, playerPos.y, playerPos.z, Citizen.PointerValueInt(), Citizen.PointerValueInt() )
 			local street = {}

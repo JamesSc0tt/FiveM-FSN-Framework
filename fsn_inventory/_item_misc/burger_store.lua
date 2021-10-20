@@ -52,9 +52,9 @@ Citizen.CreateThread(function()
 	EndTextCommandSetBlipName(blip)
 	while true do Citizen.Wait(0)
 		-- Storage take
-		if GetDistanceBetweenCoords(-1197.05078125, -893.90710449219, 13.995162963867, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1197.05078125, -893.90710449219, 13.995162963867, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1197.05078125, -893.90710449219, 13.995162963867-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1197.05078125, -893.90710449219, 13.995162963867, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1197.05078125, -893.90710449219, 13.995162963867, GetEntityCoords(PlayerPedId()), true) < 1 then
 				fsn_drawText3D(-1197.05078125, -893.90710449219, 13.995162963867, 'Burgers: '..storage.burgers..'/5\nFries: '..storage.fries..'/5\nDrinks: '..storage.drinks..'/5')
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("~INPUT_PICKUP~ Take eCola\n~INPUT_SPECIAL_ABILITY_SECONDARY~ Take Burger\n~INPUT_ENTER~ Take Fries")
@@ -98,9 +98,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Storage add
-		if GetDistanceBetweenCoords(-1197.462890625, -896.1552734375, 13.995164871216, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1197.462890625, -896.1552734375, 13.995164871216, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1197.462890625, -896.1552734375, 13.995164871216-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1197.462890625, -896.1552734375, 13.995164871216, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1197.462890625, -896.1552734375, 13.995164871216, GetEntityCoords(PlayerPedId()), true) < 1 then
 				fsn_drawText3D(-1197.462890625, -896.1552734375, 13.995164871216, 'Burgers: '..storage.burgers..'/5\nFries: '..storage.fries..'/5\nDrinks: '..storage.drinks..'/5')
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("~INPUT_PICKUP~ Store eCola\n~INPUT_SPECIAL_ABILITY_SECONDARY~ Store Burger\n~INPUT_ENTER~ Store Fries")
@@ -144,9 +144,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Till
-		if GetDistanceBetweenCoords(-1196.7224121094, -891.4462890625, 13.995155334473, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1196.7224121094, -891.4462890625, 13.995155334473, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1196.7224121094, -891.4462890625, 13.995155334473-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1196.7224121094, -891.4462890625, 13.995155334473, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1196.7224121094, -891.4462890625, 13.995155334473, GetEntityCoords(PlayerPedId()), true) < 1 then
 				if currentorder ~= -1 then
 					SetTextComponentFormat("STRING")
 					AddTextComponentString("Press ~INPUT_PICKUP~ to sell your order\nPress ~INPUT_PUSH_TO_TALK~ to view your order")					
@@ -205,9 +205,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Freezer 
-		if GetDistanceBetweenCoords(-1197.1879882813, -899.86334228516, 13.995163917542, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1197.1879882813, -899.86334228516, 13.995163917542, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1197.1879882813, -899.86334228516, 13.995163917542-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1197.1879882813, -899.86334228516, 13.995163917542, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1197.1879882813, -899.86334228516, 13.995163917542, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("Press ~INPUT_SPECIAL_ABILITY_SECONDARY~ to get <b>burger</b>\nPress ~INPUT_ENTER~ to get <b>fries")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -228,9 +228,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Sink 
-		if GetDistanceBetweenCoords(-1197.3479003906, -901.61151123047, 13.995161056519, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1197.3479003906, -901.61151123047, 13.995161056519, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1197.3479003906, -901.61151123047, 13.995161056519-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1197.3479003906, -901.61151123047, 13.995161056519, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1197.3479003906, -901.61151123047, 13.995161056519, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("Press ~INPUT_PICKUP~ to wash your hands")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -245,9 +245,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Prepare 
-		if GetDistanceBetweenCoords(-1198.8013916016, -902.11535644531, 13.995160102844, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1198.8013916016, -902.11535644531, 13.995160102844, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1198.8013916016, -902.11535644531, 13.995160102844-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1198.8013916016, -902.11535644531, 13.995160102844, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1198.8013916016, -902.11535644531, 13.995160102844, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("Press ~INPUT_PICKUP~ to prepare a burger")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -271,9 +271,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Grill 
-		if GetDistanceBetweenCoords(-1202.4093017578, -896.89923095703, 13.995160102844, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1202.4093017578, -896.89923095703, 13.995160102844, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1202.4093017578, -896.89923095703, 13.995160102844-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1202.4093017578, -896.89923095703, 13.995160102844, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1202.4093017578, -896.89923095703, 13.995160102844, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("Press ~INPUT_PICKUP~ to cook a burger")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -290,9 +290,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Fryer 
-		if GetDistanceBetweenCoords(-1200.6815185547, -899.34533691406, 13.995161056519, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1200.6815185547, -899.34533691406, 13.995161056519, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1200.6815185547, -899.34533691406, 13.995161056519-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1200.6815185547, -899.34533691406, 13.995161056519, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1200.6815185547, -899.34533691406, 13.995161056519, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("Press ~INPUT_PICKUP~ to cook fries")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -309,9 +309,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Oven 
-		if GetDistanceBetweenCoords(-1203.0020751953, -895.39642333984, 13.995157241821, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1203.0020751953, -895.39642333984, 13.995157241821, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1203.0020751953, -895.39642333984, 13.995157241821-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1203.0020751953, -895.39642333984, 13.995157241821, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1203.0020751953, -895.39642333984, 13.995157241821, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("Press ~INPUT_PICKUP~ to get a <b>Bun</b>, <b>Lettuce</b> & <b>Tomato")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -325,9 +325,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		-- Drink Vendor 
-		if GetDistanceBetweenCoords(-1199.1781005859, -894.56127929688, 13.995157241821, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
+		if GetDistanceBetweenCoords(-1199.1781005859, -894.56127929688, 13.995157241821, GetEntityCoords(PlayerPedId()), true) < 5 then
 			DrawMarker(1,-1199.1781005859, -894.56127929688, 13.995157241821-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(-1199.1781005859, -894.56127929688, 13.995157241821, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(-1199.1781005859, -894.56127929688, 13.995157241821, GetEntityCoords(PlayerPedId()), true) < 1 then
 				SetTextComponentFormat("STRING")
 				AddTextComponentString("Press ~INPUT_PICKUP~ to pour <b>eCola")
 				DisplayHelpTextFromStringLabel(0, 0, 1, -1)

@@ -423,8 +423,8 @@ end
 function fsn_lookingAt()
 	local targetVehicle = false
 
-	local coordA = GetEntityCoords(GetPlayerPed(-1), 1)
-	local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, -1.0)
+	local coordA = GetEntityCoords(PlayerPedId(), 1)
+	local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, -1.0)
 	targetVehicle = getVehicleInDirection(coordA, coordB)
 
 	return targetVehicle
@@ -459,13 +459,13 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if currentPickup and GetDistanceBetweenCoords(garbageLocations[currentPickup][1],garbageLocations[currentPickup][2],garbageLocations[currentPickup][3],GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if currentPickup and GetDistanceBetweenCoords(garbageLocations[currentPickup][1],garbageLocations[currentPickup][2],garbageLocations[currentPickup][3],GetEntityCoords(PlayerPedId()), true) < 10 then
 			if not pickedupTrash then
 				DrawMarker(1,garbageLocations[currentPickup][1],garbageLocations[currentPickup][2],garbageLocations[currentPickup][3],0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
 			end
-			if GetDistanceBetweenCoords(garbageLocations[currentPickup][1],garbageLocations[currentPickup][2],garbageLocations[currentPickup][3],GetEntityCoords(GetPlayerPed(-1)), false) < 2 then
+			if GetDistanceBetweenCoords(garbageLocations[currentPickup][1],garbageLocations[currentPickup][2],garbageLocations[currentPickup][3],GetEntityCoords(PlayerPedId()), false) < 2 then
 				if not pickedupTrash then
-					if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+					if not IsPedInAnyVehicle(PlayerPedId()) then
 						SetTextComponentFormat("STRING")
 						AddTextComponentString("Press ~INPUT_PICKUP~ to pick up the trash")
 						DisplayHelpTextFromStringLabel(0, 0, 1, -1)
@@ -474,9 +474,9 @@ Citizen.CreateThread(function()
 							RequestAnimDict('pickup_object')
 							Citizen.Wait(5)
 						  end
-						  TaskPlayAnim(GetPlayerPed(-1), 'pickup_object', 'pickup_low', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
+						  TaskPlayAnim(PlayerPedId(), 'pickup_object', 'pickup_low', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
 						  Citizen.Wait(1000)
-						  ClearPedTasks(GetPlayerPed(-1))
+						  ClearPedTasks(PlayerPedId())
 						  TriggerEvent('fsn_notify:displayNotification', 'Put the trash in your van and head to the next spot', 'centerRight', 4000, 'info')
 						  pickedupTrash = true
 						end
@@ -492,8 +492,8 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if GetDistanceBetweenCoords(garbageTruckSpawn.x, garbageTruckSpawn.y, garbageTruckSpawn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 5 and trashTruck then
-			if IsPedInAnyVehicle(GetPlayerPed(-1)) and GetVehiclePedIsUsing(GetPlayerPed(-1)) == trashTruck then
+		if GetDistanceBetweenCoords(garbageTruckSpawn.x, garbageTruckSpawn.y, garbageTruckSpawn.z,GetEntityCoords(PlayerPedId()), true) < 5 and trashTruck then
+			if IsPedInAnyVehicle(PlayerPedId()) and GetVehiclePedIsUsing(PlayerPedId()) == trashTruck then
 				if totalGarbageCollected >= requiredGarbageCollected then
 					SetTextComponentFormat("STRING")
 					AddTextComponentString("Press ~INPUT_PICKUP~ to return your truck")
@@ -521,9 +521,9 @@ Citizen.CreateThread(function()
 				end
 			end
 		end
-		if GetDistanceBetweenCoords(garbageJobLocation.x, garbageJobLocation.y, garbageJobLocation.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+		if GetDistanceBetweenCoords(garbageJobLocation.x, garbageJobLocation.y, garbageJobLocation.z,GetEntityCoords(PlayerPedId()), true) < 10 then
 			DrawMarker(1,garbageJobLocation.x,garbageJobLocation.y,garbageJobLocation.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-			if GetDistanceBetweenCoords(garbageJobLocation.x, garbageJobLocation.y, garbageJobLocation.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+			if GetDistanceBetweenCoords(garbageJobLocation.x, garbageJobLocation.y, garbageJobLocation.z,GetEntityCoords(PlayerPedId()), true) < 1 then
 				if not trashTruck then
 					SetTextComponentFormat("STRING")
 					AddTextComponentString("Press ~INPUT_PICKUP~ to start work")

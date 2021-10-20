@@ -22,14 +22,14 @@ local Keys = {
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(10)
-		local lPed = GetPlayerPed(-1)
+		local lPed = PlayerPedId()
 		local vehicle = GetVehiclePedIsIn(lPed)
 		if binoculars then
 			binoculars = true
 			if not ( IsPedSittingInAnyVehicle( lPed ) ) then
 				Citizen.CreateThread(function()
-					TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_BINOCULARS", 0, 1)
-					PlayAmbientSpeech1(GetPlayerPed(-1), "GENERIC_CURSE_MED", "SPEECH_PARAMS_FORCE")
+					TaskStartScenarioInPlace(PlayerPedId(), "WORLD_HUMAN_BINOCULARS", 0, 1)
+					PlayAmbientSpeech1(PlayerPedId(), "GENERIC_CURSE_MED", "SPEECH_PARAMS_FORCE")
 				end)
 			end
 			Wait(2000)
@@ -39,7 +39,7 @@ Citizen.CreateThread(function()
 			while not HasScaleformMovieLoaded(scaleform) do
 				Citizen.Wait(10)
 			end
-			local lPed = GetPlayerPed(-1)
+			local lPed = PlayerPedId()
 			local vehicle = GetVehiclePedIsIn(lPed)
 			local cam = CreateCam("DEFAULT_SCRIPTED_FLY_CAMERA", true)
 			AttachCamToEntity(cam, lPed, 0.0,0.0,1.0, true)
@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
 			while binoculars and not IsEntityDead(lPed) and (GetVehiclePedIsIn(lPed) == vehicle) and true do
 				if IsControlJustPressed(0, Keys['BACKSPACE']) or IsControlJustPressed(0, Keys['ESCAPE']) then
 					PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
-					ClearPedTasks(GetPlayerPed(-1))
+					ClearPedTasks(PlayerPedId())
 					binoculars = false
 				end
 				local zoomvalue = (1.0/(fov_max-fov_min))*(fov-fov_min)
@@ -110,7 +110,7 @@ function CheckInputRotation(cam, zoomvalue)
 end
 
 function HandleZoom(cam)
-	local lPed = GetPlayerPed(-1)
+	local lPed = PlayerPedId()
 	if not ( IsPedSittingInAnyVehicle( lPed ) ) then
 		if IsControlJustPressed(0,241) then -- Scrollup
 			fov = math.max(fov - zoomspeed, fov_min)

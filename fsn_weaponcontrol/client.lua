@@ -93,7 +93,7 @@ local weapon_models = {}
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-		if IsPedInAnyVehicle(GetPlayerPed(-1), false) or IsPedGettingIntoAVehicle(GetPlayerPed(-1)) then
+		if IsPedInAnyVehicle(PlayerPedId(), false) or IsPedGettingIntoAVehicle(PlayerPedId()) then
 			for k, v in pairs(weapon_models) do
 				DetachEntity(weapon_models[k].obj, true, true)
 	      DeleteObject(weapon_models[k].obj)
@@ -101,8 +101,8 @@ Citizen.CreateThread(function()
 			end
 		else
 	    for k, wepdetails in pairs(weapons) do
-	      if HasPedGotWeapon(GetPlayerPed(-1), GetHashKey(wepdetails.name), false) then
-	        if GetSelectedPedWeapon(GetPlayerPed(-1)) == GetHashKey(wepdetails.name) then
+	      if HasPedGotWeapon(PlayerPedId(), GetHashKey(wepdetails.name), false) then
+	        if GetSelectedPedWeapon(PlayerPedId()) == GetHashKey(wepdetails.name) then
 	          if weapon_models[wepdetails.name] then
 	            DetachEntity(weapon_models[wepdetails.name].obj, true, true)
 	            DeleteObject(weapon_models[wepdetails.name].obj)
@@ -111,7 +111,7 @@ Citizen.CreateThread(function()
 	        else
 	          if not weapon_models[wepdetails.name] then
 	            if wepdetails.model ~= '' then
-	              local bonePos = GetWorldPositionOfEntityBone(GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), wepdetails.bone))
+	              local bonePos = GetWorldPositionOfEntityBone(PlayerPedId(), GetPedBoneIndex(PlayerPedId(), wepdetails.bone))
 	              local startLoad = GetNetworkTime()
 	              RequestModel(GetHashKey(wepdetails.model))
 	              while not HasModelLoaded(GetHashKey(wepdetails.model)) do
@@ -130,7 +130,7 @@ Citizen.CreateThread(function()
 	                weapon_models[wepdetails.name] = {}
 	                weapon_models[wepdetails.name].obj = object
 									SetEntityCollision(object, false, false)
-	                AttachEntityToEntity(object, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), wepdetails.bone), wepdetails.x, wepdetails.y, wepdetails.z, wepdetails.xRot, wepdetails.yRot, wepdetails.zRot, false, false, false, false, 2, true)
+	                AttachEntityToEntity(object, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), wepdetails.bone), wepdetails.x, wepdetails.y, wepdetails.z, wepdetails.xRot, wepdetails.yRot, wepdetails.zRot, false, false, false, false, 2, true)
 	              end
 	            end
 	          end

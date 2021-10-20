@@ -145,9 +145,9 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     for k, v in pairs(spots) do
-      if GetDistanceBetweenCoords(v.enter.x, v.enter.y, v.enter.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+      if GetDistanceBetweenCoords(v.enter.x, v.enter.y, v.enter.z, GetEntityCoords(PlayerPedId()), true) < 10 then
         DrawMarker(25,v.enter.x, v.enter.y, v.enter.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 10.3, 255, 255, 255, 140, 0, 0, 2, 0, 0, 0, 0)
-        if GetDistanceBetweenCoords(v.enter.x, v.enter.y, v.enter.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(v.enter.x, v.enter.y, v.enter.z, GetEntityCoords(PlayerPedId()), true) < 1 then
           if v.locked then
             fsn_drawText3D(v.enter.x, v.enter.y, v.enter.z, "~r~"..k.." is locked!")
           else
@@ -156,7 +156,7 @@ Citizen.CreateThread(function()
 			  if not exports["fsn_police"]:fsn_PDDuty() then
 				  if k == 'Courtroom' then
 					for k, v in pairs(savingWeapons) do
-						if HasPedGotWeapon(GetPlayerPed(-1), GetHashKey(v)) and canenter then
+						if HasPedGotWeapon(PlayerPedId(), GetHashKey(v)) and canenter then
 							TriggerEvent('fsn_notify:displayNotification', 'No weapons in the courtroom.', 'centerLeft', 4000, 'error')
 							canenter = false
 						end
@@ -166,7 +166,7 @@ Citizen.CreateThread(function()
 			  if canenter then
 				  DoScreenFadeOut(1000)
 				  Citizen.Wait(1500)
-				  SetEntityCoords(GetPlayerPed(-1), v.exit.x, v.exit.y, v.exit.z)
+				  SetEntityCoords(PlayerPedId(), v.exit.x, v.exit.y, v.exit.z)
 				  Citizen.Wait(1500)
 				  DoScreenFadeIn(2000)
 			  end
@@ -174,14 +174,14 @@ Citizen.CreateThread(function()
           end
         end
       end
-      if GetDistanceBetweenCoords(v.exit.x, v.exit.y, v.exit.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+      if GetDistanceBetweenCoords(v.exit.x, v.exit.y, v.exit.z, GetEntityCoords(PlayerPedId()), true) < 10 then
         DrawMarker(25,v.exit.x, v.exit.y, v.exit.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 10.3, 255, 255, 255, 140, 0, 0, 2, 0, 0, 0, 0)
-        if GetDistanceBetweenCoords(v.exit.x, v.exit.y, v.exit.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(v.exit.x, v.exit.y, v.exit.z, GetEntityCoords(PlayerPedId()), true) < 1 then
           fsn_drawText3D(v.exit.x, v.exit.y, v.exit.z, "Press [E] to exit "..k)
           if IsControlJustPressed(0, 51) then
             DoScreenFadeOut(1000)
             Citizen.Wait(1500)
-            SetEntityCoords(GetPlayerPed(-1), v.enter.x, v.enter.y, v.enter.z)
+            SetEntityCoords(PlayerPedId(), v.enter.x, v.enter.y, v.enter.z)
             Citizen.Wait(1500)
             DoScreenFadeIn(2000)
           end
@@ -196,7 +196,7 @@ AddEventHandler('fsn_doj:judge:toggleLock', function(tf)
 	spots["Courtroom"].locked = tf
 end)
 
---SetEntityCoords(GetPlayerPed(-1), -458.790, 284.750, 78.521)
+--SetEntityCoords(PlayerPedId(), -458.790, 284.750, 78.521)
 
 RegisterNetEvent('fsn_teleporters:teleport:waypoint')
 AddEventHandler('fsn_teleporters:teleport:waypoint', function(source)
@@ -226,7 +226,7 @@ end)
 
 RegisterNetEvent('fsn_teleporters:teleport:coordinates')
 AddEventHandler('fsn_teleporters:teleport:coordinates', function(x, y, z)
-  local playerPed = GetPlayerPed(-1)
+  local playerPed = PlayerPedId()
 
 
   -- lua doesnt know floats from tonumbers apperantly so make that number a float otherwise it will crash when trying to tp

@@ -29,9 +29,9 @@ end)
 Citizen.CreateThread(function()
 	while true do Citizen.Wait(0)
 		for k,p in pairs(properties_xyz) do
-			if GetDistanceBetweenCoords(p.xyz.x,p.xyz.y,p.xyz.z,GetEntityCoords(GetPlayerPed(-1)),true) < 20 then
+			if GetDistanceBetweenCoords(p.xyz.x,p.xyz.y,p.xyz.z,GetEntityCoords(PlayerPedId()),true) < 20 then
 				DrawMarker(25, p.xyz.x,p.xyz.y,p.xyz.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-				if GetDistanceBetweenCoords(p.xyz.x,p.xyz.y,p.xyz.z,GetEntityCoords(GetPlayerPed(-1)),true) < 0.5 then
+				if GetDistanceBetweenCoords(p.xyz.x,p.xyz.y,p.xyz.z,GetEntityCoords(PlayerPedId()),true) < 0.5 then
 					Util.DrawText3D(p.xyz.x,p.xyz.y,p.xyz.z, '[E] Access:\n'..p.name, {255, 255, 255, 140}, 0.25)
 					if IsControlJustPressed(0,38) then
 						TriggerServerEvent('fsn_properties:access', k)
@@ -152,7 +152,7 @@ function depositWeapon()
 		"WEAPON_DBSHOTGUN",
 		"WEAPON_COMPACTRIFLE"
 	}
-	local wep = GetSelectedPedWeapon(GetPlayerPed(-1))
+	local wep = GetSelectedPedWeapon(PlayerPedId())
 	local submitting = false
 	for k,v in pairs(accepted) do
 		if GetHashKey(v) == wep then
@@ -162,7 +162,7 @@ function depositWeapon()
 	if submitting == false then
 		exports['mythic_notify']:DoHudText('error', 'You cannot put this weapon here!')
 	else
-		local info = exports["fsn_criminalmisc"]:weaponInfo(GetSelectedPedWeapon(GetPlayerPed(-1)))
+		local info = exports["fsn_criminalmisc"]:weaponInfo(GetSelectedPedWeapon(PlayerPedId()))
 		if info.name then
 			exports['mythic_notify']:DoHudText('inform', 'Adding: '..info.name)
 			table.insert(current_p.weapons,#current_p.weapons+1,info)

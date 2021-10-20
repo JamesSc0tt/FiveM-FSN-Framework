@@ -81,7 +81,7 @@ Citizen.CreateThread(function()
     end
     while true do
         Citizen.Wait(0)
-        local pos = GetEntityCoords(GetPlayerPed(-1), true)
+        local pos = GetEntityCoords(PlayerPedId(), true)
         for k,v in ipairs(clothing_shops) do
             if(Vdist(pos.x, pos.y, pos.z, v.x, v.y, v.z) < 15.0)then
                 DrawMarker(1, v.x, v.y, v.z - 1, 0, 0, 0, 0, 0, 0, 3.0001, 3.0001, 0.5001, 1555, 0, 0,165, 0, 0, 0,0)

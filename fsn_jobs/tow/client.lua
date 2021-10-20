@@ -123,7 +123,7 @@ function SpawnTowTruck(x, y, z)
   --TriggerServerEvent('jTow:spawn')
   if canAfford then
     local car = GetHashKey("flatbed")
-  	local playerPed = GetPlayerPed(-1)
+  	local playerPed = PlayerPedId()
   	RequestModel(car)
   	while not HasModelLoaded(car) do
   			Citizen.Wait(0)
@@ -149,7 +149,7 @@ function SpawnTowTruck(x, y, z)
 end
 
 function getVehicleInDirection(coordFrom, coordTo)
-	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
+	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, PlayerPedId(), 0)
 	local a, b, c, d, vehicle = GetRaycastResult(rayHandle)
 	return vehicle
 end
@@ -188,8 +188,8 @@ end
 function aimingAt()
 	local targetVehicle = false
 
-	local coordA = GetEntityCoords(GetPlayerPed(-1), 1)
-	local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, -1.0)
+	local coordA = GetEntityCoords(PlayerPedId(), 1)
+	local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, -1.0)
 	targetVehicle = getVehicleInDirection(coordA, coordB)
 
 	return targetVehicle
@@ -261,9 +261,9 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     for k, v in pairs(stations) do
-      if GetDistanceBetweenCoords(v.centerPoint.x,v.centerPoint.y,v.centerPoint.z,GetEntityCoords(GetPlayerPed(-1))) < 40 then
+      if GetDistanceBetweenCoords(v.centerPoint.x,v.centerPoint.y,v.centerPoint.z,GetEntityCoords(PlayerPedId())) < 40 then
         DrawMarker(1,v.centerPoint.x,v.centerPoint.y,v.centerPoint.z-1,0,0,0,0,0,0,5.001,5.0001,0.4001,0,155,255,175,0,0,0,0)
-        if IsPedInAnyVehicle(GetPlayerPed(-1), true) == false and GetDistanceBetweenCoords(v.centerPoint.x,v.centerPoint.y,v.centerPoint.x,GetEntityCoords(GetPlayerPed(-1))) < 4 then
+        if IsPedInAnyVehicle(PlayerPedId(), true) == false and GetDistanceBetweenCoords(v.centerPoint.x,v.centerPoint.y,v.centerPoint.x,GetEntityCoords(PlayerPedId())) < 4 then
           if towtruck then
             DisplayHelpText(v.returntext)
             if IsControlJustPressed(1,51) then
@@ -289,9 +289,9 @@ Citizen.CreateThread(function()
         end
       end
       if towedvehicle then
-        if GetDistanceBetweenCoords(v.intake.x,v.intake.y,v.intake.z,GetEntityCoords(GetPlayerPed(-1))) < 40 then
+        if GetDistanceBetweenCoords(v.intake.x,v.intake.y,v.intake.z,GetEntityCoords(PlayerPedId())) < 40 then
           DrawMarker(1,v.intake.x,v.intake.y,v.intake.z-1,0,0,0,0,0,0,10.001,10.0001,0.4001,0,255,0,175,0,0,0,0)
-          if IsPedInAnyVehicle(GetPlayerPed(-1), true) == false and GetDistanceBetweenCoords(v.intake.x,v.intake.y,v.intake.x,GetEntityCoords(GetPlayerPed(-1))) < 9 then
+          if IsPedInAnyVehicle(PlayerPedId(), true) == false and GetDistanceBetweenCoords(v.intake.x,v.intake.y,v.intake.x,GetEntityCoords(PlayerPedId())) < 9 then
             if towedvehicle then
               if currentlytowing then
                 DisplayHelpText("~r~Remove the vehicle first")
@@ -315,7 +315,7 @@ Citizen.CreateThread(function()
       local vehicle = aimingAt()
       if vehicle ~= towtruck then
         if true then
-          if GetDistanceBetweenCoords(GetEntityCoords(vehicle), GetEntityCoords(GetPlayerPed(-1))) < 5 then
+          if GetDistanceBetweenCoords(GetEntityCoords(vehicle), GetEntityCoords(PlayerPedId())) < 5 then
             if GetDistanceBetweenCoords(GetEntityCoords(vehicle), GetEntityCoords(towtruck)) < 15 then
 			  --if availableTows[string.lower(GetVehicleNumberPlateText(vehicle))] then
 				  DisplayHelpText("Press ~INPUT_CONTEXT~ to tow!")

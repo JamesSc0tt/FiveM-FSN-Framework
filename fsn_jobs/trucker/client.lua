@@ -37,7 +37,7 @@ function spawnTruck(cost)
 		SetVehicleOnGroundProperly(cur_truck)
   	TriggerEvent('fsn_cargarage:makeMine', cur_truck, GetDisplayNameFromVehicleModel(GetEntityModel(cur_truck)), GetVehicleNumberPlateText(cur_truck))
     TriggerEvent('fsn_bank:change:walletMinus', cost)
-    TaskWarpPedIntoVehicle(GetPlayerPed(-1),cur_truck,-1)
+    TaskWarpPedIntoVehicle(PlayerPedId(),cur_truck,-1)
     getNewJob(0)
 	else
     TriggerEvent('chatMessage', '', {255,255,255}, '^*^1:FSN:^0^r There cannot be anything in the truck pickup area!')
@@ -68,7 +68,7 @@ function getNewJob(cost)
     if cost ~= 0 then
       TriggerEvent('fsn_bank:change:walletMinus', cost)
     end
-    TaskWarpPedIntoVehicle(GetPlayerPed(-1),cur_trailer,-1)
+    TaskWarpPedIntoVehicle(PlayerPedId(),cur_trailer,-1)
 
     trailer_blip = AddBlipForCoord(job.pickup.x, job.pickup.y, job.pickup.z)
     SetBlipSprite(trailer_blip, 1)
@@ -144,7 +144,7 @@ Citizen.CreateThread(function()
     -----------------------------------------------------------------
     -- Truck/Job shit
     -----------------------------------------------------------------
-    if GetDistanceBetweenCoords(truckspawn.x,truckspawn.y,truckspawn.z, GetEntityCoords(GetPlayerPed(-1))) < 5 and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+    if GetDistanceBetweenCoords(truckspawn.x,truckspawn.y,truckspawn.z, GetEntityCoords(PlayerPedId())) < 5 and not IsPedInAnyVehicle(PlayerPedId()) then
       if mission_index == 0 then
         if cur_truck then
           SetTextComponentFormat("STRING")

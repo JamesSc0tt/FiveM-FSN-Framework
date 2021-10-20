@@ -26,7 +26,7 @@ function BuyCar(key)
 	SetEntityAsMissionEntity(personalvehicle, true, true)
 	SetVehicleColours(personalvehicle,colors[1],colors[2])
 	SetVehicleExtraColours(personalvehicle,extra_colors[1],extra_colors[2])
-	TaskWarpPedIntoVehicle(GetPlayerPed(-1),personalvehicle,-1)
+	TaskWarpPedIntoVehicle(PlayerPedId(),personalvehicle,-1)
 	SetEntityVisible(ped,true)
 	
 	local details = {
@@ -82,14 +82,14 @@ function BuyCar(key)
 end
 
 Util.Tick(function()
-	if GetDistanceBetweenCoords(inside_store.x, inside_store.y, inside_store.z, GetEntityCoords(GetPlayerPed(-1)), true) < 100 then
+	if GetDistanceBetweenCoords(inside_store.x, inside_store.y, inside_store.z, GetEntityCoords(PlayerPedId()), true) < 100 then
 		for key, car in pairs(car_spots) do
 			if car.car.model then
 				if not DoesEntityExist(car.car.object) then
 					RequestModel(GetHashKey(car.car.model))
 					while not HasModelLoaded(GetHashKey(car.car.model)) do
 						Citizen.Wait(1)
-						if GetDistanceBetweenCoords(inside_store.x, inside_store.y, inside_store.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+						if GetDistanceBetweenCoords(inside_store.x, inside_store.y, inside_store.z, GetEntityCoords(PlayerPedId()), true) < 10 then
 							Util.DrawText3D(car.x, car.y, car.z, ':FSN: Loading vehicle: '..car.car.model, {255, 0, 0, 255}, 0.2)
 						end
 					end
@@ -130,7 +130,7 @@ Util.Tick(function()
 							Util.DrawText3D(car.x, car.y, car.z, ':FSN: Updating vehicle', {255, 0, 0, 255}, 0.2)
 						end
 					else
-						if GetDistanceBetweenCoords(car.x, car.y, car.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+						if GetDistanceBetweenCoords(car.x, car.y, car.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 							Util.DrawText3D(car.x, car.y, car.z+0.25, ':FSN: Vehicle: '..car.car.name, {255, 255, 255, 255}, 0.3)
 							Util.DrawText3D(car.x, car.y, car.z+0.15, 'Base Price: $'..car.car.buyprice, {255, 255, 255, 200}, 0.2)
 							Util.DrawText3D(car.x, car.y, car.z+0.1, 'Commission: '..car.car.commission..'%', {255, 255, 255, 200}, 0.2)
@@ -192,7 +192,7 @@ end)
 RegisterNetEvent('fsn_carstore:floor:commission')
 AddEventHandler('fsn_carstore:floor:commission', function(amt)
 	for k,v in pairs(car_spots) do
-		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 			TriggerServerEvent('fsn_carstore:floor:commission', k, amt)
 		end
 	end
@@ -200,7 +200,7 @@ end)
 RegisterNetEvent('fsn_carstore:floor:color:One')
 AddEventHandler('fsn_carstore:floor:color:One', function(col)
 	for k,v in pairs(car_spots) do
-		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 			TriggerServerEvent('fsn_carstore:floor:color:One', k, col)
 		end
 	end
@@ -208,7 +208,7 @@ end)
 RegisterNetEvent('fsn_carstore:floor:color:Two')
 AddEventHandler('fsn_carstore:floor:color:Two', function(col)
 	for k,v in pairs(car_spots) do
-		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(GetPlayerPed(-1)), true) < 2 then
+		if GetDistanceBetweenCoords(v.x, v.y, v.z, GetEntityCoords(PlayerPedId()), true) < 2 then
 			TriggerServerEvent('fsn_carstore:floor:color:Two', k, col)
 		end
 	end
@@ -270,7 +270,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(10)
 		if TestingCar then
-			local playerPed = GetPlayerPed(-1)
+			local playerPed = PlayerPedId()
 			local playerPos = GetEntityCoords(playerPed)
 
 			local testVehicleReturn = vector3(-45.347373962402, -1082.3184814453, 26.691509246826)

@@ -5,8 +5,8 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(2500)
 		if amicuffed then
-			if IsPedRunning(GetPlayerPed(-1)) then
-				SetPedToRagdoll(GetPlayerPed(-1), 1, 1000, 0, 0, 0, 0)
+			if IsPedRunning(PlayerPedId()) then
+				SetPedToRagdoll(PlayerPedId(), 1, 1000, 0, 0, 0, 0)
 				Citizen.Wait(math.random(2000,5000))
 			end
 		end
@@ -20,12 +20,12 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 		if escorted then
 			if IsPedRagdoll(crimPed) then
-				DetachEntity(GetPlayerPed(-1), true, false)
+				DetachEntity(PlayerPedId(), true, false)
 				escorted = false
 				escortedto = false
 			end
 			if DecorGetBool(crimPed, "deadPly") then
-				DetachEntity(GetPlayerPed(-1), true, false)
+				DetachEntity(PlayerPedId(), true, false)
 				escorted = false
 				escortedto = false
 			end
@@ -39,11 +39,11 @@ AddEventHandler('fsn_criminalmisc:toggleDrag', function(crim)
   if not escorted then
 	local maff = dragtime + 3
 	if maff < myTime or dragtime == 0 then
-		local myPed = GetPlayerPed(-1)
+		local myPed = PlayerPedId()
 		local crimPed = GetPlayerPed(GetPlayerFromServerId(crim))
 		escortedto = crimPed
-		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-		  TaskLeaveVehicle(GetPlayerPed(-1), GetVehiclePedIsIn(GetPlayerPed(-1)), 16)
+		if IsPedInAnyVehicle(PlayerPedId()) then
+		  TaskLeaveVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId()), 16)
 		end
 		AttachEntityToEntity(myPed, crimPed, 4103, 11816, 0.48, 0.00, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
 		escorted = true
@@ -52,7 +52,7 @@ AddEventHandler('fsn_criminalmisc:toggleDrag', function(crim)
   else
 	local maff = dragtime + 3
 	if dragtime < myTime then
-		DetachEntity(GetPlayerPed(-1), true, false)
+		DetachEntity(PlayerPedId(), true, false)
 		escorted = false
 		escortedto = false
 		dragtime = myTime
@@ -64,7 +64,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		if amicuffed then
-			DecorSetBool(GetPlayerPed(-1), "crim_cuff", true)
+			DecorSetBool(PlayerPedId(), "crim_cuff", true)
 			DisableControlAction(1, 18, true)
 			DisableControlAction(1, 24, true)
 			DisableControlAction(1, 69, true)
@@ -122,11 +122,11 @@ Citizen.CreateThread(function()
 				RequestAnimDict('mp_arresting')
 				Citizen.Wait(5)
 			end
-			if not IsEntityPlayingAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 3) and not IsPedRagdoll(GetPlayerPed(-1)) then
-				TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
+			if not IsEntityPlayingAnim(PlayerPedId(), 'mp_arresting', 'idle', 3) and not IsPedRagdoll(PlayerPedId()) then
+				TaskPlayAnim(PlayerPedId(), 'mp_arresting', 'idle', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
 			end
 		else
-			DecorSetBool(GetPlayerPed(-1), "crim_cuff", false)
+			DecorSetBool(PlayerPedId(), "crim_cuff", false)
 		end
 	end
 end)
@@ -137,14 +137,14 @@ Citizen.CreateThread(function()
 		for _, id in ipairs(GetActivePlayers()) do
 			if NetworkIsPlayerActive(id) then
 				  local ped = GetPlayerPed(id)
-				  if GetDistanceBetweenCoords(GetEntityCoords(ped, false), GetEntityCoords(GetPlayerPed(-1),false), true) < 2 and DecorGetBool(ped, "crim_cuff") then
-						if ped ~= GetPlayerPed(-1) then
+				  if GetDistanceBetweenCoords(GetEntityCoords(ped, false), GetEntityCoords(PlayerPedId(),false), true) < 2 and DecorGetBool(ped, "crim_cuff") then
+						if ped ~= PlayerPedId() then
 							fsn_drawText3D(GetEntityCoords(ped).x, GetEntityCoords(ped).y, GetEntityCoords(ped).z, '~r~Ziptied~g~\n[H] to cut free\n[E] to escort\n[X] to rob')
-							if IsControlJustPressed(0, 304) and not IsPedInAnyVehicle(GetPlayerPed(-1), true) then
+							if IsControlJustPressed(0, 304) and not IsPedInAnyVehicle(PlayerPedId(), true) then
 								TriggerServerEvent('fsn_criminalmisc:handcuffs:requestunCuff', GetPlayerServerId(id))
 							end
 							if IsControlJustPressed(0, 38) then
-								if HasPedGotWeapon(GetPlayerPed(-1), GetHashKey("WEAPON_KNIFE"), false) then
+								if HasPedGotWeapon(PlayerPedId(), GetHashKey("WEAPON_KNIFE"), false) then
 									--print('attempting to uncuff '..GetPlayerServerId(id))
 									TriggerServerEvent('fsn_criminalmisc:handcuffs:toggleEscort', GetPlayerServerId(id)) 
 									Citizen.Wait(1000)
@@ -152,7 +152,7 @@ Citizen.CreateThread(function()
 									TriggerEvent('fsn_notify:displayNotification', 'You do not have a knife to cut these', 'centerLeft', 4000, 'error')
 								end
 							end
-							if IsControlJustPressed(0, 73) and not IsPedInAnyVehicle(GetPlayerPed(-1), true) then
+							if IsControlJustPressed(0, 73) and not IsPedInAnyVehicle(PlayerPedId(), true) then
 								--TriggerServerEvent('fsn_criminalmisc:robbing:requesRob', GetPlayerServerId(id)) 
 								TriggerEvent('fsn_criminalmisc:robbing:startRobbing', id)
 							end
@@ -169,13 +169,13 @@ RegisterNetEvent('fsn_criminalmisc:handcuffs:startCuffed')
 AddEventHandler('fsn_criminalmisc:handcuffs:startCuffed', function(srv_id)
 	if not amicuffed then
 		local crimPed = GetPlayerPed(GetPlayerFromServerId(srv_id))
-		SetEntityHeading(GetPlayerPed(-1), GetEntityHeading(crimPed))
-		SetEntityCoords(GetPlayerPed(-1), GetOffsetFromEntityInWorldCoords(crimPed, 0.0, 0.45, 0.0))
+		SetEntityHeading(PlayerPedId(), GetEntityHeading(crimPed))
+		SetEntityCoords(PlayerPedId(), GetOffsetFromEntityInWorldCoords(crimPed, 0.0, 0.45, 0.0))
 		while not HasAnimDictLoaded('mp_arrest_paired') do
 			RequestAnimDict('mp_arrest_paired')
 			Citizen.Wait(5)
 		end
-		TaskPlayAnim(GetPlayerPed(-1), "mp_arrest_paired", "crook_p2_back_right", 8.0, -8, -1, 32, 0, 0, 0, 0)
+		TaskPlayAnim(PlayerPedId(), "mp_arrest_paired", "crook_p2_back_right", 8.0, -8, -1, 32, 0, 0, 0, 0)
 		Citizen.Wait(3500)
 		amicuffed = true
 	else
@@ -186,24 +186,24 @@ end)
 RegisterNetEvent('fsn_criminalmisc:handcuffs:startunCuffed')
 AddEventHandler('fsn_criminalmisc:handcuffs:startunCuffed', function(srv_id)
 	local crimPed = GetPlayerPed(GetPlayerFromServerId(srv_id))
-	SetEntityHeading(GetPlayerPed(-1), GetEntityHeading(crimPed))
-	SetEntityCoords(GetPlayerPed(-1), GetOffsetFromEntityInWorldCoords(crimPed, 0.0, 0.45, 0.0))
+	SetEntityHeading(PlayerPedId(), GetEntityHeading(crimPed))
+	SetEntityCoords(PlayerPedId(), GetOffsetFromEntityInWorldCoords(crimPed, 0.0, 0.45, 0.0))
 	Citizen.Wait(2200)
 	escorted = false
 	escortedto = false
 	amicuffed = false
 	Citizen.Wait(500)
-	ClearPedTasks(GetPlayerPed(-1))
+	ClearPedTasks(PlayerPedId())
 end)
 ------------------------- handcuff someone else
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if HasHandcuffs() and not exports["fsn_ems"]:fsn_IsDead() and not IsPedInAnyVehicle(GetPlayerPed(-1)) and not exports["fsn_apartments"]:inInstance() then
+		if HasHandcuffs() and not exports["fsn_ems"]:fsn_IsDead() and not IsPedInAnyVehicle(PlayerPedId()) and not exports["fsn_apartments"]:inInstance() then
 			for _, id in ipairs(GetActivePlayers()) do
 				if NetworkIsPlayerActive(id) then
 				  local ped = GetPlayerPed(id)
-				  if not IsPedInAnyVehicle(ped) and GetDistanceBetweenCoords(GetEntityCoords(ped, false), GetEntityCoords(GetPlayerPed(-1),false), true) < 2 and ped ~= GetPlayerPed(-1) then
+				  if not IsPedInAnyVehicle(ped) and GetDistanceBetweenCoords(GetEntityCoords(ped, false), GetEntityCoords(PlayerPedId(),false), true) < 2 and ped ~= PlayerPedId() then
 					if DecorGetBool(GetPlayerPed(id), "crim_cuff") == false then
 					  showLoadingPrompt("[SHIFT + Y] ziptie "..GetPlayerServerId(id), 6000, 3)
 					end
@@ -226,7 +226,7 @@ AddEventHandler('fsn_criminalmisc:handcuffs:startCuffing', function()
 		RequestAnimDict('mp_arrest_paired')
 		Citizen.Wait(5)
 	end
-	TaskPlayAnim(GetPlayerPed(-1), "mp_arrest_paired", "cop_p2_back_right", 8.0, -8, -1, 48, 0, 0, 0, 0)
+	TaskPlayAnim(PlayerPedId(), "mp_arrest_paired", "cop_p2_back_right", 8.0, -8, -1, 48, 0, 0, 0, 0)
 	Citizen.Wait(2500)	
 end)
 
@@ -236,6 +236,6 @@ AddEventHandler('fsn_criminalmisc:handcuffs:startunCuffing', function()
 		RequestAnimDict('mp_arresting')
 		Citizen.Wait(5)
 	end
-	TaskPlayAnim(GetPlayerPed(-1), "mp_arresting", "a_uncuff", 8.0, -8, -1, 48, 0, 0, 0, 0)
+	TaskPlayAnim(PlayerPedId(), "mp_arresting", "a_uncuff", 8.0, -8, -1, 48, 0, 0, 0, 0)
 	Citizen.Wait(2500)	
 end)

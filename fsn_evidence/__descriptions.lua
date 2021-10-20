@@ -1,5 +1,5 @@
 -- export for getting description of current clothing!
-local ped = GetPlayerPed(-1)
+local ped = PlayerPedId()
 local ready = false
 
 function getSex()
@@ -16,8 +16,8 @@ function getJacket()
 	local sex = getSex()
 	local jacket = false
 	local comp = {
-		GetPedDrawableVariation(GetPlayerPed(-1), 11),
-		GetPedTextureVariation(GetPlayerPed(-1), 11),
+		GetPedDrawableVariation(PlayerPedId(), 11),
+		GetPedTextureVariation(PlayerPedId(), 11),
 	}
 
 	if sex then
@@ -37,8 +37,8 @@ function getTop()
 	local sex = getSex()
 	local top = false
 	local comp = {
-		GetPedDrawableVariation(GetPlayerPed(-1), 3),
-		GetPedTextureVariation(GetPlayerPed(-1), 3),
+		GetPedDrawableVariation(PlayerPedId(), 3),
+		GetPedTextureVariation(PlayerPedId(), 3),
 	}
 
 	if sex then
@@ -58,8 +58,8 @@ function getPants()
 	local sex = getSex()
 	local pants = false
 	local comp = {
-		GetPedDrawableVariation(GetPlayerPed(-1), 3),
-		GetPedTextureVariation(GetPlayerPed(-1), 3),
+		GetPedDrawableVariation(PlayerPedId(), 3),
+		GetPedTextureVariation(PlayerPedId(), 3),
 	}
 
 	if sex then

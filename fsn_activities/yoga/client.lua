@@ -49,7 +49,7 @@ Citizen.CreateThread(function()
     
     while true do
         Citizen.Wait(0)
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		local playerPos = GetEntityCoords(playerPed)
 		local nearestDist, nearestPos = PositionCheck(playerPos)
         local dist = Util.GetVecDist(playerPos, yogaLocation)
@@ -73,7 +73,7 @@ Citizen.CreateThread(function()
 
     while true do
         Citizen.Wait(0)
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		local playerPos = GetEntityCoords(playerPed)
 		local nearestDist,nearestPos = PositionCheck(playerPos)
         local dist = Util.GetVecDist(playerPos, yogaLocation)
@@ -136,7 +136,7 @@ end
 
 RegisterNetEvent('fsn_yoga:checkStress')
 AddEventHandler('fsn_yoga:checkStress', function()
-	local playerPed = GetPlayerPed(-1)
+	local playerPed = PlayerPedId()
 	
 	if doingYoga then
 		TriggerEvent('fsn_needs:stress:remove', 10)

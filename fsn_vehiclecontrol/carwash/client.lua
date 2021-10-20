@@ -20,13 +20,13 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     for _, cwash in pairs(carwashes) do
-      if GetDistanceBetweenCoords(cwash.x, cwash.y, cwash.z, GetEntityCoords(GetPlayerPed(-1))) < 5 and IsPedInAnyVehicle(GetPlayerPed(-1)) then
+      if GetDistanceBetweenCoords(cwash.x, cwash.y, cwash.z, GetEntityCoords(PlayerPedId())) < 5 and IsPedInAnyVehicle(PlayerPedId()) then
         SetTextComponentFormat("STRING")
         AddTextComponentString("Press ~INPUT_PICKUP~ to wash your car!")
         DisplayHelpTextFromStringLabel(0, 0, 1, -1)
         if IsControlJustPressed(0,38) then
           if exports.fsn_main:fsn_GetWallet() >= 150 then
-            SetVehicleDirtLevel(GetVehiclePedIsIn(GetPlayerPed(-1), 0.0))
+            SetVehicleDirtLevel(GetVehiclePedIsIn(PlayerPedId(), 0.0))
             TriggerEvent('fsn_bank:change:walletMinus', 50)
           else
             TriggerEvent('fsn_notify:displayNotification', 'You cannot afford this', 'centerLeft', 5000, 'error')

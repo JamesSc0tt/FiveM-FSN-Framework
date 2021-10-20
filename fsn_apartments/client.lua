@@ -319,11 +319,11 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
 	if data == 'weapon-putaway' then
 		print 'attempting to put away weapon'
 		ToggleActionMenu()
-		if GetSelectedPedWeapon(GetPlayerPed(-1)) == -1569615261 then
+		if GetSelectedPedWeapon(PlayerPedId()) == -1569615261 then
 			TriggerEvent('fsn_notify:displayNotification', 'You cannot store your fists.', 'centerRight', 10000, 'error')
 			return
 		end
-		local weapon = exports["fsn_criminalmisc"]:weaponInfo(GetSelectedPedWeapon(GetPlayerPed(-1)))
+		local weapon = exports["fsn_criminalmisc"]:weaponInfo(GetSelectedPedWeapon(PlayerPedId()))
 		print(json.encode(weapon))
 		table.insert(apptdetails["apt_utils"]["weapons"],#apptdetails["apt_utils"]["weapons"]+1, weapon)
 		TriggerEvent('fsn_criminalmisc:weapons:destroy')
@@ -352,7 +352,7 @@ Citizen.CreateThread(function()
 			if inappt then
 				-- storage
 				DrawMarker(25, storage.x, storage.y, storage.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-				if GetDistanceBetweenCoords(storage.x, storage.y, storage.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+				if GetDistanceBetweenCoords(storage.x, storage.y, storage.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 					fsn_drawText3D(storage.x, storage.y, storage.z, "[E] access storage")--\n~r~Not available yet")
 					if IsControlJustPressed(0,38) then
 						ToggleActionMenu()
@@ -364,13 +364,13 @@ Citizen.CreateThread(function()
 				
 				-- money
 				DrawMarker(25, cash.x, cash.y, cash.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-				if GetDistanceBetweenCoords(cash.x, cash.y, cash.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+				if GetDistanceBetweenCoords(cash.x, cash.y, cash.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 					fsn_drawText3D(cash.x, cash.y, cash.z, "$"..apptdetails.apt_cash.." / $150,000\n\n/stash add {amt}\n/stash take {amt}")
 				end
 				
 				-- outfits
 				DrawMarker(25, outfits.x, outfits.y, outfits.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-				if GetDistanceBetweenCoords(outfits.x, outfits.y, outfits.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+				if GetDistanceBetweenCoords(outfits.x, outfits.y, outfits.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 					fsn_drawText3D(outfits.x, outfits.y, outfits.z, "/outfit add {name}\n/outfit use {name}\n/outfit remove {name}\n/outfit list")
 					inWardrobe = true
 				else
@@ -379,16 +379,16 @@ Citizen.CreateThread(function()
 				
 				-- leaving
 				DrawMarker(25, leave.x, leave.y, leave.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-				if GetDistanceBetweenCoords(leave.x, leave.y, leave.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+				if GetDistanceBetweenCoords(leave.x, leave.y, leave.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 					fsn_drawText3D(leave.x, leave.y, leave.z, "[E] Leave Apartment")
 					if IsControlJustPressed(0,38) then
-						SetEntityCoords(GetPlayerPed(-1), apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z)
-						FreezeEntityPosition(GetPlayerPed(-1), true)
+						SetEntityCoords(PlayerPedId(), apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z)
+						FreezeEntityPosition(PlayerPedId(), true)
 						DoScreenFadeOut(0)
 						Citizen.Wait(3000)
 						inappt = false
 						DoScreenFadeIn(3000)
-						FreezeEntityPosition(GetPlayerPed(-1), false)
+						FreezeEntityPosition(PlayerPedId(), false)
 						
 						-- instance stuff, leave
 						--instanceMe(false)
@@ -397,15 +397,15 @@ Citizen.CreateThread(function()
 				end
 					
 				-- spawn outside of appt
-				if GetDistanceBetweenCoords(leave.x, leave.y, leave.z, GetEntityCoords(GetPlayerPed(-1)), true) > 30 then
+				if GetDistanceBetweenCoords(leave.x, leave.y, leave.z, GetEntityCoords(PlayerPedId()), true) > 30 then
 					if inInstance() then
-						SetEntityCoords(GetPlayerPed(-1), apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z)
-						FreezeEntityPosition(GetPlayerPed(-1), true)
+						SetEntityCoords(PlayerPedId(), apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z)
+						FreezeEntityPosition(PlayerPedId(), true)
 						DoScreenFadeOut(0)
 						Citizen.Wait(3000)
 						inappt = false
 						DoScreenFadeIn(3000)
-						FreezeEntityPosition(GetPlayerPed(-1), false)
+						FreezeEntityPosition(PlayerPedId(), false)
 						
 						-- instance stuff, leave
 						--instanceMe(false)
@@ -413,10 +413,10 @@ Citizen.CreateThread(function()
 					end
 				end
 			else
-				if GetDistanceBetweenCoords(apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z, GetEntityCoords(GetPlayerPed(-1))) < 20 then
+				if GetDistanceBetweenCoords(apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z, GetEntityCoords(PlayerPedId())) < 20 then
 					DrawMarker(25, apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
 					DrawMarker(0, apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-					if GetDistanceBetweenCoords(apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+					if GetDistanceBetweenCoords(apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 						fsn_drawText3D(apartments[myRoomNumber].x, apartments[myRoomNumber].y, apartments[myRoomNumber].z+1, "[E] Enter Apartment")
 						if IsControlJustPressed(0,38) then
 							EnterRoom(myRoomNumber)
@@ -429,12 +429,12 @@ Citizen.CreateThread(function()
 end)
 function EnterRoom(id)
 	DoScreenFadeOut(0)
-	SetEntityCoords(GetPlayerPed(-1), 152.09986877441 , -1004.7946166992, -98.999984741211)
+	SetEntityCoords(PlayerPedId(), 152.09986877441 , -1004.7946166992, -98.999984741211)
 	DoScreenFadeIn(3000)
 	-- instance stuff, create new instance for me
 	--instanceMe(true)
 	TriggerServerEvent('fsn_apartments:instance:new')
-	FreezeEntityPosition(GetPlayerPed(-1), false)
+	FreezeEntityPosition(PlayerPedId(), false)
 	Citizen.Wait(1000)
 	inappt = true
 end
@@ -446,9 +446,9 @@ RegisterNetEvent('fsn_apartments:characterCreation')
 AddEventHandler('fsn_apartments:characterCreation', function()
 	local xyz = {x = 223.19703674316, y = -967.322265625, z = -99.002616882324, h = 230.43223571777}
 	local campos = {x = 225.67114257813, y = -969.71331787109, z = -98.999954223633, h = 39.208980560303}
-	SetEntityCoords(GetPlayerPed(-1), xyz.x, xyz.y, xyz.z)
-	SetEntityHeading(GetPlayerPed(-1), xyz.h)
-	FreezeEntityPosition(GetPlayerPed(-1), true)
+	SetEntityCoords(PlayerPedId(), xyz.x, xyz.y, xyz.z)
+	SetEntityHeading(PlayerPedId(), xyz.h)
+	FreezeEntityPosition(PlayerPedId(), true)
 	TriggerEvent('fsn_clothing:menu')
 	creating = true
 	
@@ -466,10 +466,10 @@ AddEventHandler('fsn_apartments:characterCreation', function()
 				TriggerEvent('fsn_spawnmanager:start', false)
 				DoScreenFadeIn(1000)
 			end
-			if GetDistanceBetweenCoords(xyz.x, xyz.y, xyz.z, GetEntityCoords(GetPlayerPed(-1)), true) < 5 then
-				SetEntityCoords(GetPlayerPed(-1), xyz.x, xyz.y, xyz.z)
-				FreezeEntityPosition(GetPlayerPed(-1), true)
-				SetEntityHeading(GetPlayerPed(-1), xyz.h)
+			if GetDistanceBetweenCoords(xyz.x, xyz.y, xyz.z, GetEntityCoords(PlayerPedId()), true) < 5 then
+				SetEntityCoords(PlayerPedId(), xyz.x, xyz.y, xyz.z)
+				FreezeEntityPosition(PlayerPedId(), true)
+				SetEntityHeading(PlayerPedId(), xyz.h)
 			end
 		end
 	end)

@@ -45,7 +45,7 @@ local datastore = {
   }
 }
 
-local myPed = GetPlayerPed(-1)
+local myPed = PlayerPedId()
 
 ------------------------------------------------------- exports
 function getVehicles(nearby)

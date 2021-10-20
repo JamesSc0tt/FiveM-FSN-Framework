@@ -4,14 +4,14 @@ notified = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-			if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0) == GetPlayerPed(-1) then
-				if GetIsTaskActive(GetPlayerPed(-1), 165) then
-					SetPedIntoVehicle(GetPlayerPed(-1), GetVehiclePedIsIn(GetPlayerPed(-1), false), 0)
+		if IsPedInAnyVehicle(PlayerPedId(), false) then
+			if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), 0) == PlayerPedId() then
+				if GetIsTaskActive(PlayerPedId(), 165) then
+					SetPedIntoVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId(), false), 0)
 				end
 			end
 		end
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		if IsPedInAnyVehicle(ped) then
 			if not notified then
 				TriggerEvent('fsn_notify:displayNotification', 'Click it or ticket! <span style="color:#42f486;font-weight:bold">LSHIFT + S</span> to activate your seatbelt!', 'centerLeft', 4500, 'info')
@@ -31,7 +31,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end
-			if IsControlJustPressed(0, 73) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) then
+			if IsControlJustPressed(0, 73) and GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() then
 				if cruise then
 					SetEntityMaxSpeed(GetVehiclePedIsUsing(ped, true), 154.6465)
 					cruise = false
@@ -80,7 +80,7 @@ Fwv = function (entity)
 Citizen.CreateThread(function()
 	Citizen.Wait(500)
 	while true do
-		local ped = GetPlayerPed(-1)
+		local ped = PlayerPedId()
 		local car = GetVehiclePedIsIn(ped)
 		if car ~= 0 and (wasInCar or IsCar(car)) and not exports["fsn_police"]:fsn_PDDuty() then
 			wasInCar = true
@@ -96,8 +96,8 @@ Citizen.CreateThread(function()
 				local co = GetEntityCoords(ped)
 				local fw = Fwv(ped)
 				PlaySound(-1, "10_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
-				if IsPointOnRoad(GetEntityCoords(GetPlayerPed(-1)), GetVehiclePedIsIn(GetPlayerPed(-1))) then
-					local pos = GetEntityCoords(GetPlayerPed(-1))
+				if IsPointOnRoad(GetEntityCoords(PlayerPedId()), GetVehiclePedIsIn(PlayerPedId())) then
+					local pos = GetEntityCoords(PlayerPedId())
 					local coords = {
 					 x = pos.x,
 					 y = pos.y,
@@ -108,7 +108,7 @@ Citizen.CreateThread(function()
 				SetEntityCoords(ped, co.x + fw.x, co.y + fw.y, co.z - 0.47, true, true, true)
 				SetEntityVelocity(ped, velBuffer[2].x, velBuffer[2].y, velBuffer[2].z)
 				Citizen.Wait(1)
-				SetPedToRagdoll(GetPlayerPed(-1), 1, 1000, 0, 0, 0, 0)
+				SetPedToRagdoll(PlayerPedId(), 1, 1000, 0, 0, 0, 0)
 			end
 			velBuffer[2] = velBuffer[1]
 			velBuffer[1] = GetEntityVelocity(car)

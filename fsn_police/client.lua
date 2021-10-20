@@ -39,26 +39,26 @@ function fsn_getPDLevel()
 end
 
 function getNearestVeh()
-local pos = GetEntityCoords(GetPlayerPed(-1))
-		local entityWorld = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, 0.0)
+local pos = GetEntityCoords(PlayerPedId())
+		local entityWorld = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, 0.0)
 
-		local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, GetPlayerPed(-1), 0)
+		local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, PlayerPedId(), 0)
 		local _, _, _, _, vehicleHandle = GetRaycastResult(rayHandle)
 return vehicleHandle
 end
 
 RegisterNetEvent('fsn_police:putMeInVeh')
 AddEventHandler('fsn_police:putMeInVeh', function()
-  if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
-    local curpos = GetEntityCoords(GetPlayerPed(-1))
+  if not IsPedInAnyVehicle(PlayerPedId()) then
+    local curpos = GetEntityCoords(PlayerPedId())
     local car = getNearestVeh()--GetClosestVehicle(curpos.x, curpos.y, curpos.z, 3.000, 0, 70)
     if IsVehicleSeatFree(car, 2) then
-    	TaskWarpPedIntoVehicle(GetPlayerPed(-1), car, 2)
+    	TaskWarpPedIntoVehicle(PlayerPedId(), car, 2)
     else
-    	TaskWarpPedIntoVehicle(GetPlayerPed(-1), car, 1)
+    	TaskWarpPedIntoVehicle(PlayerPedId(), car, 1)
     end
   else
-    TaskLeaveVehicle(GetPlayerPed(-1), GetVehiclePedIsIn(GetPlayerPed(-1)), 16)
+    TaskLeaveVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId()), 16)
   end
 end)
 
@@ -264,7 +264,7 @@ local function fsn_policeEquipped()
     "WEAPON_KNIFE"
   }
   for i=1, #policeWeapons do
-    if not HasPedGotWeapon(GetPlayerPed(-1), GetHashKey(policeWeapons[i])) then
+    if not HasPedGotWeapon(PlayerPedId(), GetHashKey(policeWeapons[i])) then
       return false
     end
   end
@@ -295,7 +295,7 @@ Citizen.CreateThread(function()
       for id = 0, 32 do
         if NetworkIsPlayerActive(id) then
           local ped = GetPlayerPed(id)
-          if GetDistanceBetweenCoords(ped, GetPlayerPed(-1), true) < 2 and ped ~= GetPlayerPed(-1) then
+          if GetDistanceBetweenCoords(ped, PlayerPedId(), true) < 2 and ped ~= PlayerPedId() then
             if DecorGetBool(GetPlayerPed(id), "hardcuff") then
               showLoadingPrompt("[SHIFT + Y] uncuff "..GetPlayerServerId(id), 3000, 3)
             else
@@ -333,9 +333,9 @@ Citizen.CreateThread(function()
       end
     end
     for k, stn in pairs(clockInStations) do
-      if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 and amicop then
+      if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(PlayerPedId()), true) < 10 and amicop then
         DrawMarker(1,stn.x,stn.y,stn.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(PlayerPedId()), true) < 1 then
           if pdonduty == false then
             SetTextComponentFormat("STRING")
           	AddTextComponentString("Press ~INPUT_PICKUP~ to ~g~clock in~w~ as ~b~police")
@@ -366,20 +366,20 @@ Citizen.CreateThread(function()
       end
     end
     --[[for k, stn in pairs(armoryStations) do
-      if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 and pdonduty then
+      if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(PlayerPedId()), true) < 10 and pdonduty then
         DrawMarker(1,stn.x,stn.y,stn.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(PlayerPedId()), true) < 1 then
             SetTextComponentFormat("STRING")
           	AddTextComponentString("Press ~INPUT_PICKUP~ to ~g~collect~w~ your weapons")
           	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
           if IsControlJustPressed(0,38) then
               for k, v in pairs(policeWeapons) do
-                --GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(v), 1000)
+                --GiveWeaponToPed(PlayerPedId(), GetHashKey(v), 1000)
                 --TriggerEvent('fsn_criminalmisc:weapons:add:police', GetHashKey(v), 250)
                 TriggerEvent('fsn_inventory:items:add', v, 1)
               end
-	            GiveWeaponComponentToPed(GetPlayerPed(-1), 0x5EF9FEC4, 0x359B7AAE)-- Combat Pistol Flashlight
-              AddArmourToPed(GetPlayerPed(-1), 100)
+	            GiveWeaponComponentToPed(PlayerPedId(), 0x5EF9FEC4, 0x359B7AAE)-- Combat Pistol Flashlight
+              AddArmourToPed(PlayerPedId(), 100)
               TriggerEvent('fsn_notify:displayNotification', 'You have <span style="color:red">checked out</span> <span style="color:#f4a442;font-weight:bold">STANDARD LOADOUT</span> from '..stn.name, 'centerLeft', 2000, 'info')
             end
           end
@@ -402,7 +402,7 @@ AddEventHandler('fsn_police:command:duty', function()
       pdonduty = true
       TriggerEvent('fsn_notify:displayNotification', 'You have clocked in as <span style="color: #42b6f4">police</span> (lvl: '..policelevel..')', 'centerLeft', 2000, 'info')
       TriggerServerEvent('fsn_police:onDuty', policelevel)
-	  SetPedRelationshipGroupHash(GetPlayerPed(-1),GetHashKey('store_guards'))
+	  SetPedRelationshipGroupHash(PlayerPedId(),GetHashKey('store_guards'))
     else
       TriggerEvent('fsn_notify:displayNotification', 'You are not a police officer!', 'centerLeft', 6000, 'error')
     end
@@ -429,13 +429,13 @@ RegisterNetEvent('fsn_police:cuffs:startCuffed')
 AddEventHandler('fsn_police:cuffs:startCuffed', function(srv_id)
 	if not cuffed then
 		local crimPed = GetPlayerPed(GetPlayerFromServerId(srv_id))
-		SetEntityHeading(GetPlayerPed(-1), GetEntityHeading(crimPed))
-		SetEntityCoords(GetPlayerPed(-1), GetOffsetFromEntityInWorldCoords(crimPed, 0.0, 0.45, 0.0))
+		SetEntityHeading(PlayerPedId(), GetEntityHeading(crimPed))
+		SetEntityCoords(PlayerPedId(), GetOffsetFromEntityInWorldCoords(crimPed, 0.0, 0.45, 0.0))
 		while not HasAnimDictLoaded('mp_arrest_paired') do
 			RequestAnimDict('mp_arrest_paired')
 			Citizen.Wait(5)
 		end
-		TaskPlayAnim(GetPlayerPed(-1), "mp_arrest_paired", "crook_p2_back_right", 8.0, -8, -1, 32, 0, 0, 0, 0)
+		TaskPlayAnim(PlayerPedId(), "mp_arrest_paired", "crook_p2_back_right", 8.0, -8, -1, 32, 0, 0, 0, 0)
 		Citizen.Wait(3500)
 		cuffed = true
 	end
@@ -443,16 +443,16 @@ end)
 RegisterNetEvent('fsn_police:cuffs:startunCuffed')
 AddEventHandler('fsn_police:cuffs:startunCuffed', function(srv_id)
 	local crimPed = GetPlayerPed(GetPlayerFromServerId(srv_id))
-	SetEntityHeading(GetPlayerPed(-1), GetEntityHeading(crimPed))
-	SetEntityCoords(GetPlayerPed(-1), GetOffsetFromEntityInWorldCoords(crimPed, 0.0, 0.45, 0.0))
-	DetachEntity(GetPlayerPed(-1), true, false)
+	SetEntityHeading(PlayerPedId(), GetEntityHeading(crimPed))
+	SetEntityCoords(PlayerPedId(), GetOffsetFromEntityInWorldCoords(crimPed, 0.0, 0.45, 0.0))
+	DetachEntity(PlayerPedId(), true, false)
 	Citizen.Wait(2200)
 	cuffed = false
 	cuffed_hard = false
 	escorted = false
 	escorted_id = 0
 	Citizen.Wait(500)
-	ClearPedTasks(GetPlayerPed(-1))
+	ClearPedTasks(PlayerPedId())
 end)
 RegisterNetEvent('fsn_police:cuffs:startCuffing')
 AddEventHandler('fsn_police:cuffs:startCuffing', function()
@@ -460,7 +460,7 @@ AddEventHandler('fsn_police:cuffs:startCuffing', function()
 		RequestAnimDict('mp_arrest_paired')
 		Citizen.Wait(5)
 	end
-	TaskPlayAnim(GetPlayerPed(-1), "mp_arrest_paired", "cop_p2_back_right", 8.0, -8, -1, 48, 0, 0, 0, 0)
+	TaskPlayAnim(PlayerPedId(), "mp_arrest_paired", "cop_p2_back_right", 8.0, -8, -1, 48, 0, 0, 0, 0)
 	Citizen.Wait(300)
 	TriggerServerEvent('InteractSound_SV:PlayWithinDistance', 2, 'handcuffs', 1.0)
 	Citizen.Wait(2200)	
@@ -471,7 +471,7 @@ AddEventHandler('fsn_police:cuffs:startunCuffing', function()
 		RequestAnimDict('mp_arresting')
 		Citizen.Wait(5)
 	end
-	TaskPlayAnim(GetPlayerPed(-1), "mp_arresting", "a_uncuff", 8.0, -8, -1, 48, 0, 0, 0, 0)
+	TaskPlayAnim(PlayerPedId(), "mp_arresting", "a_uncuff", 8.0, -8, -1, 48, 0, 0, 0, 0)
 	Citizen.Wait(2500)	
 end)
 RegisterNetEvent('fsn_police:cuffs:toggleHard')
@@ -496,15 +496,15 @@ end)
 RegisterNetEvent('fsn_police:ply:toggleDrag')
 AddEventHandler('fsn_police:ply:toggleDrag', function(officer)
 	if not escorted then
-		local myPed = GetPlayerPed(-1)
+		local myPed = PlayerPedId()
 		local pdPed = GetPlayerPed(GetPlayerFromServerId(officer))
-		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-			TaskLeaveVehicle(GetPlayerPed(-1), GetVehiclePedIsIn(GetPlayerPed(-1)), 16)
+		if IsPedInAnyVehicle(PlayerPedId()) then
+			TaskLeaveVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId()), 16)
 		end
 		AttachEntityToEntity(myPed, pdPed, 11816, 0.54, 0.44, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
 		escorted = true
 	else
-		DetachEntity(GetPlayerPed(-1), true, false)
+		DetachEntity(PlayerPedId(), true, false)
 		escorted = false
 	end
 end)
@@ -516,8 +516,8 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(2500)
 		if cuffed and not cuffed_hard then
-			if IsPedRunning(GetPlayerPed(-1)) then
-				SetPedToRagdoll(GetPlayerPed(-1), 1, 1000, 0, 0, 0, 0)
+			if IsPedRunning(PlayerPedId()) then
+				SetPedToRagdoll(PlayerPedId(), 1, 1000, 0, 0, 0, 0)
 				Citizen.Wait(math.random(2000,5000))
 			end
 		end
@@ -529,8 +529,8 @@ Citizen.CreateThread(function()
 			for _, id in ipairs(GetActivePlayers()) do
 				if NetworkIsPlayerActive(id) then
 					local ped = GetPlayerPed(id)
-					if ped ~= GetPlayerPed(-1) then
-						if GetDistanceBetweenCoords(GetEntityCoords(ped, false), GetEntityCoords(GetPlayerPed(-1),false), true) < 2 then
+					if ped ~= PlayerPedId() then
+						if GetDistanceBetweenCoords(GetEntityCoords(ped, false), GetEntityCoords(PlayerPedId(),false), true) < 2 then
 							if DecorGetBool(ped, "pd_cuff") then
 								if DecorGetBool(ped, "pd_cuff_hard") then
 									Util.DrawText3D(GetEntityCoords(ped).x, GetEntityCoords(ped).y, GetEntityCoords(ped).z, '~b~POLICE CUFFED~w~\n[LSHIFT+E] Soft Cuff\n[Y] Toggle Escort\n[H] Un-cuff', {255,255,255,255}, 0.25)
@@ -571,9 +571,9 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 		-- cuff stuff
 		if cuffed then
-			DecorSetBool(GetPlayerPed(-1), "pd_cuff", true)
+			DecorSetBool(PlayerPedId(), "pd_cuff", true)
 			if cuffed_hard then
-				DecorSetBool(GetPlayerPed(-1), "pd_cuff_hard", true)
+				DecorSetBool(PlayerPedId(), "pd_cuff_hard", true)
 				for i=1,345 do
 					if i > 10 and i ~= 249 and i ~= 25 and i ~= 245 then
 						DisableControlAction(1, i, true)
@@ -599,7 +599,7 @@ Citizen.CreateThread(function()
 				DisableControlAction(0, 106, false)
 				DisableControlAction(0, 25, false)
 			else
-				DecorSetBool(GetPlayerPed(-1), "pd_cuff_hard", false)
+				DecorSetBool(PlayerPedId(), "pd_cuff_hard", false)
 				DisableControlAction(1, 18, true)
 				DisableControlAction(1, 24, true)
 				DisableControlAction(1, 69, true)
@@ -658,12 +658,12 @@ Citizen.CreateThread(function()
 				RequestAnimDict('mp_arresting')
 				Citizen.Wait(5)
 			end
-			if not IsEntityPlayingAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 3) and not IsPedRagdoll(GetPlayerPed(-1)) then
-				TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
+			if not IsEntityPlayingAnim(PlayerPedId(), 'mp_arresting', 'idle', 3) and not IsPedRagdoll(PlayerPedId()) then
+				TaskPlayAnim(PlayerPedId(), 'mp_arresting', 'idle', 8.0, 1.0, -1, 49, 1.0, 0, 0, 0)
 			end
 		else
-			DecorSetBool(GetPlayerPed(-1), "pd_cuff", false)
-			DecorSetBool(GetPlayerPed(-1), "pd_cuff_hard", false)
+			DecorSetBool(PlayerPedId(), "pd_cuff", false)
+			DecorSetBool(PlayerPedId(), "pd_cuff_hard", false)
 			if cuffed_hard then
 				cuffed_hard = not cuffed_hard
 			end
@@ -675,7 +675,7 @@ end)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
     local playerLocalisation = GetEntityCoords(playerPed)
     ClearAreaOfCops(playerLocalisation.x, playerLocalisation.y, playerLocalisation.z, 400.0)
   end

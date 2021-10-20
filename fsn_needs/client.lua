@@ -37,7 +37,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(1)
     if init then
-			if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+			if IsPedInAnyVehicle(PlayerPedId()) then
 	      drawRct(UI.x + 0.0149, UI.y + 0.797, 0.1569,0.0140,0,0,0,130) -- bar at top
 	      drawRct(UI.x + 0.0149, UI.y + 0.800, 0.07718,0.0080,255,255,255,60) -- sub-bar (hunger)
 	      drawRct(UI.x + 0.0941, UI.y + 0.800, 0.07718,0.0080,255,255,255,60) -- sub-bar (thirst)
@@ -96,7 +96,7 @@ Citizen.CreateThread(function()
     clienttime = clienttime + 1
     if clienttime / 1000 == math.floor(clienttime) / 1000 and init then
       if hunger - 0.006 <= 0 then
-		local helf = GetEntityHealth(GetPlayerPed(-1))-3
+		local helf = GetEntityHealth(PlayerPedId())-3
 		print(helf)
 		if helf < 105 and not ded then
 			TriggerEvent('fsn_ems:killMe')
@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
 			ded = true
 		else
 			if not ded then
-				SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1))-2)
+				SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId())-2)
 			end
 			if notifstarve == false then
 				TriggerEvent('fsn_notify:displayNotification', 'You are <b>STARVING', 'centerLeft', 3000, 'info')
@@ -118,7 +118,7 @@ Citizen.CreateThread(function()
 		notifstarve = false
       end
       if thirst - 0.007 <= 0 then
-		local helf = GetEntityHealth(GetPlayerPed(-1))-3
+		local helf = GetEntityHealth(PlayerPedId())-3
 		print(helf)
 		if helf < 105 and not ded then
 			TriggerEvent('fsn_ems:killMe')
@@ -126,7 +126,7 @@ Citizen.CreateThread(function()
 			ded = true
 		else
 			if not ded then
-				SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1))-2)
+				SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId())-2)
 			end
 			if notifthirst == false then
 				TriggerEvent('fsn_notify:displayNotification', 'You are <b>THIRSTY', 'centerLeft', 3000, 'info')
@@ -153,7 +153,7 @@ local blacklistedWeapons = {
 
 function blacklisted()
 	local weapon
-	local found, currentWeapon = GetCurrentPedWeapon(GetPlayerPed(-1))
+	local found, currentWeapon = GetCurrentPedWeapon(PlayerPedId())
 	if found then
 		for k,w in pairs(blacklistedWeapons) do
 			weaponhash = GetHashKey(w)
@@ -171,7 +171,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(10)
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		if IsPedShooting(playerPed) and not exports.fsn_police:fsn_PDDuty() and not blacklisted() then -- If its just a civ and they are not using a blacklisted weapon
 			TriggerEvent('fsn_needs:stress:add', 1)
 		elseif IsPedShooting(playerPed) and exports.fsn_police:fsn_PDDuty() and not blacklisted() then -- If police are on duty they get less stress and not using a blacklisted weapon

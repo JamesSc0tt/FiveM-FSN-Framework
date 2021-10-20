@@ -5,9 +5,9 @@ local whitelisted = true
 
 Citizen.CreateThread(function()
 	while true do Citizen.Wait(0)
-		if GetDistanceBetweenCoords(volspot.x,volspot.y,volspot.z,GetEntityCoords(GetPlayerPed(-1)),false) < 10 then
+		if GetDistanceBetweenCoords(volspot.x,volspot.y,volspot.z,GetEntityCoords(PlayerPedId()),false) < 10 then
 			DrawMarker(25,volspot.x, volspot.y, volspot.z - 0.95, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 255, 255, 255, 150, 0, 0, 2, 0, 0, 0, 0)
-			if GetDistanceBetweenCoords(volspot.x,volspot.y,volspot.z,GetEntityCoords(GetPlayerPed(-1)),false) < 1 then
+			if GetDistanceBetweenCoords(volspot.x,volspot.y,volspot.z,GetEntityCoords(PlayerPedId()),false) < 1 then
 				Util.DrawText3D(volspot.x, volspot.y, volspot.z, '[E] ~g~Volunteer~w~ as ~r~EMS', {255,255,255,200}, 0.25)
 			
 				if #volunteer_ems < 4 then

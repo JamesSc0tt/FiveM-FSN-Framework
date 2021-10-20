@@ -101,22 +101,22 @@ end)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-  --  if IsPedInAnyVehicle(GetPlayerPed(-1)) and amicop then
-   --   if IsControlJustPressed(0,244) and GetVehicleClass(GetVehiclePedIsIn(GetPlayerPed(-1))) == 18 and IsVehicleEngineOn(GetVehiclePedIsIn(GetPlayerPed(-1))) then
+  --  if IsPedInAnyVehicle(PlayerPedId()) and amicop then
+   --   if IsControlJustPressed(0,244) and GetVehicleClass(GetVehiclePedIsIn(PlayerPedId())) == 18 and IsVehicleEngineOn(GetVehiclePedIsIn(PlayerPedId())) then
    --     TriggerEvent('fsn_police:MDT:toggle')
     --    TriggerEvent('fsn_commands:me', 'uses the onboard computer...')
   --    end
  --   end
     for k, stn in pairs(MDTStations) do
-      if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 10 and amicop then
+      if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(PlayerPedId()), true) < 10 and amicop then
         DrawMarker(1,stn.x,stn.y,stn.z-1,0,0,0,0,0,0,1.001,1.0001,0.4001,0,155,255,175,0,0,0,0)
-        if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(GetPlayerPed(-1)), true) < 1 then
+        if GetDistanceBetweenCoords(stn.x,stn.y,stn.z,GetEntityCoords(PlayerPedId()), true) < 1 then
           SetTextComponentFormat("STRING")
           AddTextComponentString("Press ~INPUT_INTERACTION_MENU~ to access the ~p~MDT")
           DisplayHelpTextFromStringLabel(0, 0, 1, -1)
           if IsControlJustPressed(0,244) then
-            SetEntityCoords(GetPlayerPed(-1), stn.x,stn.y,stn.z-1)
-            SetEntityHeading(GetPlayerPed(-1),stn.h)
+            SetEntityCoords(PlayerPedId(), stn.x,stn.y,stn.z-1)
+            SetEntityHeading(PlayerPedId(),stn.h)
             TriggerEvent('fsn_police:MDT:toggle')
           end
         end

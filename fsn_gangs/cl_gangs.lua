@@ -35,7 +35,7 @@ AddEventHandler('fsn_gangs:hideout:enter', function(key, g)
 	gangs[key] = g
 	DoScreenFadeOut(1000)
 	Citizen.Wait(800)
-	SetEntityCoords(GetPlayerPed(-1),interior.doorloc.x, interior.doorloc.y, interior.doorloc.z)
+	SetEntityCoords(PlayerPedId(),interior.doorloc.x, interior.doorloc.y, interior.doorloc.z)
 	Citizen.Wait(200)
 	DoScreenFadeIn(2000)
 	interior.g = key
@@ -64,14 +64,14 @@ AddEventHandler('fsn_gangs:hideout:leave', function(plate)
 	interior.inside = false
 	if plate then
 		-- do shit to spawn car :)
-		SetEntityCoords(GetPlayerPed(-1), g.interior.garage.x,g.interior.garage.y,g.interior.garage.z)
-		SetEntityHeading(GetPlayerPed(-1), g.interior.garage.h)
+		SetEntityCoords(PlayerPedId(), g.interior.garage.x,g.interior.garage.y,g.interior.garage.z)
+		SetEntityHeading(PlayerPedId(), g.interior.garage.h)
 		Citizen.Wait(100)
 		local vid = exports['fsn_cargarage']:fsn_GetVehicleVehIDP(plate)
 		print(plate..' has vid '..vid)
 		exports['fsn_cargarage']:fsn_SpawnVehicle(vid)
 	else
-		SetEntityCoords(GetPlayerPed(-1), g.interior.door.x,g.interior.door.y,g.interior.door.z)
+		SetEntityCoords(PlayerPedId(), g.interior.door.x,g.interior.door.y,g.interior.door.z)
 	end
 	Citizen.Wait(700)
 	DoScreenFadeIn(2000)
@@ -157,10 +157,10 @@ Util.Tick(function()
 				end
 			end
 		end
-		if Util.GetVecDist(vector3(g.xyz.x, g.xyz.y, g.xyz.z),GetEntityCoords(GetPlayerPed(-1))) < 75 then
+		if Util.GetVecDist(vector3(g.xyz.x, g.xyz.y, g.xyz.z),GetEntityCoords(PlayerPedId())) < 75 then
 			DrawMarker(1,g.xyz.x, g.xyz.y, g.xyz.z-13,0,0,0,0,0,0,150.0,150.0,20.0,g.color[1],g.color[2],g.color[3],175,0,0,0,1)
 			cur_gang = g.short
-			if not IsPedDeadOrDying(g.npc.ped) and Util.GetVecDist(vector3(g.npc.xyz.x, g.npc.xyz.y, g.npc.xyz.z),GetEntityCoords(GetPlayerPed(-1))) < 2 then
+			if not IsPedDeadOrDying(g.npc.ped) and Util.GetVecDist(vector3(g.npc.xyz.x, g.npc.xyz.y, g.npc.xyz.z),GetEntityCoords(PlayerPedId())) < 2 then
 				Util.DrawText3D(g.npc.xyz.x, g.npc.xyz.y, g.npc.xyz.z+0.2, string.upper(name))
 				if not g.owner then
 					Util.DrawText3D(g.npc.xyz.x, g.npc.xyz.y, g.npc.xyz.z-0.1, '[E] Takeover ($'..g.takeover.cost..')')
@@ -178,7 +178,7 @@ Util.Tick(function()
 					end
 				end
 			end
-		elseif Util.GetVecDist(vector3(g.xyz.x, g.xyz.y, g.xyz.z),GetEntityCoords(GetPlayerPed(-1))) < 180 then
+		elseif Util.GetVecDist(vector3(g.xyz.x, g.xyz.y, g.xyz.z),GetEntityCoords(PlayerPedId())) < 180 then
 			if not cur_gang then cur_nearby = g.short end 
 		end
 	end
@@ -214,14 +214,14 @@ Util.Tick(function()
 	if interior.inside then
 		local i = interior
 		local g = gangs[interior.g]
-		if Util.GetVecDist(vector3(i.doorloc.x,i.doorloc.y,i.doorloc.z), GetEntityCoords(GetPlayerPed(-1))) > 50 then
+		if Util.GetVecDist(vector3(i.doorloc.x,i.doorloc.y,i.doorloc.z), GetEntityCoords(PlayerPedId())) > 50 then
 			-- has glitched out of the building
-			SetEntityCoords(GetPlayerPed(-1), vector3(1093.6, -3196.6, -38.99841))
+			SetEntityCoords(PlayerPedId(), vector3(1093.6, -3196.6, -38.99841))
 		else
 			-- is inside the building
 			-- exit
 			DrawMarker(25, i.doorloc.x, i.doorloc.y, i.doorloc.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-			if GetDistanceBetweenCoords(i.doorloc.x, i.doorloc.y, i.doorloc.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+			if GetDistanceBetweenCoords(i.doorloc.x, i.doorloc.y, i.doorloc.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 				Util.DrawText3D(i.doorloc.x, i.doorloc.y, i.doorloc.z, "[E] Leave")
 				if IsControlJustPressed(0, Util.GetKeyNumber('E')) then
 					if not i.leaving then
@@ -233,7 +233,7 @@ Util.Tick(function()
 
 			-- inventory
 			DrawMarker(25, i.storageloc.x, i.storageloc.y, i.storageloc.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-			if GetDistanceBetweenCoords(i.storageloc.x, i.storageloc.y, i.storageloc.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+			if GetDistanceBetweenCoords(i.storageloc.x, i.storageloc.y, i.storageloc.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 				Util.DrawText3D(i.storageloc.x, i.storageloc.y, i.storageloc.z, "[E] Access Stash")
 			end
 
@@ -244,7 +244,7 @@ Util.Tick(function()
 				if g.interior.car then
 					if exports['fsn_cargarage']:fsn_IsVehicleOwnerP(g.interior.car.plate) then
 						Util.DrawText3D(GetEntityCoords(i.car).x,GetEntityCoords(i.car).y,GetEntityCoords(i.car).z, 'GET IN TO LEAVE')
-						if GetVehiclePedIsIn(GetPlayerPed(-1),false) == i.car then 
+						if GetVehiclePedIsIn(PlayerPedId(),false) == i.car then 
 							if not i.leaving then
 								TriggerServerEvent('fsn_gangs:hideout:leave', i.g, true)
 								i.leaving = true
@@ -260,19 +260,19 @@ Util.Tick(function()
 			if true then --if nearbyGang() == myGang() then
 				local g = gangs[getGang(nearbyGang())]
 				if g then 
-					if GetDistanceBetweenCoords(g.interior.door.x, g.interior.door.y, g.interior.door.z, GetEntityCoords(GetPlayerPed(-1)), true) < 10 then
+					if GetDistanceBetweenCoords(g.interior.door.x, g.interior.door.y, g.interior.door.z, GetEntityCoords(PlayerPedId()), true) < 10 then
 						DrawMarker(25, g.interior.door.x, g.interior.door.y, g.interior.door.z - 0.95, 0, 0, 0, 0, 0, 0, 0.50, 0.50, 10.3, 255, 255, 255, 140, 0, 0, 1, 0, 0, 0, 0)
-						if GetDistanceBetweenCoords(g.interior.door.x, g.interior.door.y, g.interior.door.z, GetEntityCoords(GetPlayerPed(-1)), true) < 0.5 then
+						if GetDistanceBetweenCoords(g.interior.door.x, g.interior.door.y, g.interior.door.z, GetEntityCoords(PlayerPedId()), true) < 0.5 then
 							Util.DrawText3D(g.interior.door.x, g.interior.door.y, g.interior.door.z, "[E] Enter")
 							if IsControlJustPressed(0,Util.GetKeyNumber('E')) then
 								TriggerServerEvent('fsn_gangs:hideout:enter',getGang(nearbyGang()))
 							end
 						end
 					end
-					if IsPedInAnyVehicle(GetPlayerPed(-1)) and exports['fsn_cargarage']:fsn_IsVehicleOwnerP(GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false))) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) and GetDistanceBetweenCoords(g.interior.garage.x, g.interior.garage.y,g.interior.garage.z, GetEntityCoords(GetPlayerPed(-1))) < 2 then
+					if IsPedInAnyVehicle(PlayerPedId()) and exports['fsn_cargarage']:fsn_IsVehicleOwnerP(GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), false))) and GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() and GetDistanceBetweenCoords(g.interior.garage.x, g.interior.garage.y,g.interior.garage.z, GetEntityCoords(PlayerPedId())) < 2 then
 						Util.DrawText3D(g.interior.garage.x, g.interior.garage.y,g.interior.garage.z, '[E] Enter')
 						if IsControlJustPressed(0,Util.GetKeyNumber('E')) then
-							TriggerServerEvent('fsn_gangs:garage:enter', getGang(nearbyGang()), GetEntityModel(GetVehiclePedIsIn(GetPlayerPed(-1), false)), GetVehicleNumberPlateText(GetVehiclePedIsIn(GetPlayerPed(-1), false)))
+							TriggerServerEvent('fsn_gangs:garage:enter', getGang(nearbyGang()), GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), false)), GetVehicleNumberPlateText(GetVehiclePedIsIn(PlayerPedId(), false)))
 						end
 					end
 				end
@@ -356,18 +356,18 @@ end)
 
 
 Citizen.CreateThread(function()
-	StopEntityFire(GetPlayerPed(-1))
+	StopEntityFire(PlayerPedId())
 	while true do Citizen.Wait(0)
-		if GetEntityModel(GetPlayerPed(-1)) == GetHashKey('mp_f_freemode_01') or GetEntityModel(GetPlayerPed(-1)) == GetHashKey('mp_m_freemode_01') then
-			if GetPedDrawableVariation(GetPlayerPed(-1), 1) == 94 and GetPedTextureVariation(GetPlayerPed(-1),1) == 1 then
-				if not IsEntityOnFire(GetPlayerPed(-1)) then
-					StartEntityFire(GetPlayerPed(-1))
+		if GetEntityModel(PlayerPedId()) == GetHashKey('mp_f_freemode_01') or GetEntityModel(PlayerPedId()) == GetHashKey('mp_m_freemode_01') then
+			if GetPedDrawableVariation(PlayerPedId(), 1) == 94 and GetPedTextureVariation(PlayerPedId(),1) == 1 then
+				if not IsEntityOnFire(PlayerPedId()) then
+					StartEntityFire(PlayerPedId())
 					Citizen.Wait(1000)
-					StopEntityFire(GetPlayerPed(-1))
+					StopEntityFire(PlayerPedId())
 					Citizen.Wait(1000)
-					StartEntityFire(GetPlayerPed(-1))
+					StartEntityFire(PlayerPedId())
 					Citizen.Wait(1000)
-					StopEntityFire(GetPlayerPed(-1))
+					StopEntityFire(PlayerPedId())
 					Citizen.Wait(1000)
 				end
 			end

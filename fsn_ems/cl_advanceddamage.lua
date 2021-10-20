@@ -346,9 +346,9 @@ AddEventHandler('fsn_ems:set:WalkType', function(wt)
 			Citizen.Wait(0)
 			print('loading animset: '..currentwalktype)
 		end
-		SetPedMovementClipset(GetPlayerPed(-1), currentwalktype, true)
+		SetPedMovementClipset(PlayerPedId(), currentwalktype, true)
 	else
-		ResetPedMovementClipset(GetPlayerPed(-1), 0)
+		ResetPedMovementClipset(PlayerPedId(), 0)
 	end	
 	exports['mythic_notify']:DoCustomHudText('success', 'Walktype updated: '..currentwalktype, 5000)
 end)
@@ -360,7 +360,7 @@ Citizen.CreateThread(function()
 	while true do Citizen.Wait(0)
 		if IsControlJustPressed(0, 36) then
 			if crouching then
-				ResetPedMovementClipset(GetPlayerPed(-1), 0, 0)
+				ResetPedMovementClipset(PlayerPedId(), 0, 0)
 			else
 				if not HasAnimSetLoaded( "move_ped_crouched" ) then
 					RequestAnimSet( "move_ped_crouched" )
@@ -369,7 +369,7 @@ Citizen.CreateThread(function()
 						print('loading clipset: move_ped_crouched')
 					end
 				end
-				SetPedMovementClipset(GetPlayerPed(-1), "move_ped_crouched", 0)
+				SetPedMovementClipset(PlayerPedId(), "move_ped_crouched", 0)
 			end
 			crouching = not crouching
 		end
@@ -389,7 +389,7 @@ function ProcessRunStuff(ped)
 					print('loading clipset: move_ped_crouched')
 				end
 			end
-			SetPedMovementClipset(GetPlayerPed(-1), "move_ped_crouched", 0)
+			SetPedMovementClipset(PlayerPedId(), "move_ped_crouched", 0)
 		else
 			SetPedMovementClipset(ped, "move_m@injured", 1 )
 		end
@@ -420,7 +420,7 @@ function ProcessRunStuff(ped)
 					print('loading clipset: move_ped_crouched')
 				end
 			end
-			SetPedMovementClipset(GetPlayerPed(-1), "move_ped_crouched", 0)
+			SetPedMovementClipset(PlayerPedId(), "move_ped_crouched", 0)
 		else
 			if currentwalktype ~= 0 then
 				if not HasAnimSetLoaded(currentwalktype) then
@@ -430,9 +430,9 @@ function ProcessRunStuff(ped)
 						print('loading animset: '..currentwalktype)
 					end
 				end
-				SetPedMovementClipset(GetPlayerPed(-1), currentwalktype, 0)
+				SetPedMovementClipset(PlayerPedId(), currentwalktype, 0)
 			else
-				ResetPedMovementClipset(GetPlayerPed(-1), 0, 0)
+				ResetPedMovementClipset(PlayerPedId(), 0, 0)
 			end
 		end
 		
@@ -718,7 +718,7 @@ Citizen.CreateThread(function()
 					--Function.Call(Hash.SET_FLASH, 0, 0, 100, 500, 100);
 				end
 				exports['mythic_notify']:DoCustomHudText('inform', 'You Have ' .. BleedingStates[isBleeding], 25000)
-					local pos = GetEntityCoords(GetPlayerPed(-1))
+					local pos = GetEntityCoords(PlayerPedId())
 					local coords = {
 					 x = pos.x,
 					 y = pos.y,

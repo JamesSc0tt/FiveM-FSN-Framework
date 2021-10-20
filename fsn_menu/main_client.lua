@@ -28,15 +28,15 @@ function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
 end
 
 function getVehicleInDirection(coordFrom, coordTo)
-	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
+	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, PlayerPedId(), 0)
 	local a, b, c, d, vehicle = GetRaycastResult(rayHandle)
 	return vehicle
 end
 function fsn_lookingAt()
 	local targetVehicle = false
 
-	local coordA = GetEntityCoords(GetPlayerPed(-1), 1)
-	local coordB = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0.0, 20.0, -1.0)
+	local coordA = GetEntityCoords(PlayerPedId(), 1)
+	local coordB = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, -1.0)
 	targetVehicle = getVehicleInDirection(coordA, coordB)
 
 	return targetVehicle
@@ -45,11 +45,11 @@ end
 function ToggleActionMenu()
 	menuEnabled = not menuEnabled
 	if ( menuEnabled ) then
-		if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
-			if not IsPedGettingIntoAVehicle(GetPlayerPed(-1)) then
-				--FreezeEntityPosition(GetPlayerPed(-1), 0)
-				--SetEntityCollision(GetPlayerPed(-1), 1, 1)
-				--ClearPedTasks(GetPlayerPed(-1))
+		if not IsPedInAnyVehicle(PlayerPedId()) then
+			if not IsPedGettingIntoAVehicle(PlayerPedId()) then
+				--FreezeEntityPosition(PlayerPedId(), 0)
+				--SetEntityCollision(PlayerPedId(), 1, 1)
+				--ClearPedTasks(PlayerPedId())
 			end
 		end
 
@@ -76,7 +76,7 @@ function ToggleActionMenu()
 			ems = false
 			emscommand = false
 		end
-		if IsPedInAnyVehicle(GetPlayerPed(-1)) then
+		if IsPedInAnyVehicle(PlayerPedId()) then
 			vehicle = true
 			lookingatvehicle = false
 		else
@@ -111,7 +111,7 @@ function fsn_NearestPlayersS(x, y, z, radius)
 	local players = {}
 	for id = 0, 128 do
 		local ppos = GetEntityCoords(GetPlayerPed(id))
-    if GetPlayerPed(id) ~= GetPlayerPed(-1) then
+    if GetPlayerPed(id) ~= PlayerPedId() then
   		if GetDistanceBetweenCoords(ppos.x, ppos.y, ppos.z, x, y, z) < radius then
   			table.insert(players, #players+1, GetPlayerServerId(id))
   		end
@@ -147,7 +147,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
 	ExecuteCommand('walktype '..split[3])
   elseif split[1] == 'hdc' then
     if split[2] == 'escort' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand(hdccommand..' escort '..ply)
       else
@@ -155,7 +155,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'cuff' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand(hdccommand..' toggle '..ply)
       else
@@ -163,7 +163,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'search' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand(hdccommand..' search '..ply)
       else
@@ -171,7 +171,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'rob' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand(hdccommand..' rob '..ply)
       else
@@ -179,7 +179,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'takephone' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand(hdccommand..' takephone '..ply)
       else
@@ -206,7 +206,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
     if split[2] == 'command' then
       if split[3] == 'level' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           Citizen.CreateThread(function()
             DisplayOnscreenKeyboard(false, "FMMC_KEY_TIP8", "", "", "", "", "", 2)
@@ -234,7 +234,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'escort' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand('ems escort '..ply)
       else
@@ -242,7 +242,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'vehicle' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand('ems vehicle '..ply)
       else
@@ -250,7 +250,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'revive' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand('ems revive '..ply)
       else
@@ -262,7 +262,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       --/police search all 1
       if split[3] == 'cpic' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('pd cpic '..ply)
         else
@@ -271,7 +271,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
       if split[3] == 'all' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('pd search all '..ply)
         else
@@ -280,7 +280,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
       if split[3] == 'weapons' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('pd search weapons '..ply)
         else
@@ -289,7 +289,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
       if split[3] == 'inventory' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('pd search inventory '..ply)
         else
@@ -298,7 +298,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
       if split[3] == 'money' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('pd search money '..ply)
         else
@@ -307,7 +307,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
       if split[3] == 'strip' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('pd search strip '..ply)
         else
@@ -324,7 +324,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
       if split[3] == 'searchperson' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('pd k9 search person ' .. ply)
         else
@@ -343,7 +343,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
     if split[2] == 'command' then
       if split[3] == 'license' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('pd command givelicense '..ply..' '..split[4])
         else
@@ -356,7 +356,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
       if split[3] == 'duty1' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           ExecuteCommand('police command duty '..ply)
         else
@@ -365,7 +365,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
       if split[3] == 'level' then
         ToggleActionMenu()
-        local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+        local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
         if ply and ply ~= GetPlayerServerId(PlayerId()) then
           Citizen.CreateThread(function()
             DisplayOnscreenKeyboard(false, "FMMC_KEY_TIP8", "", "", "", "", "", 2)
@@ -393,7 +393,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'escort' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand('police escort '..ply)
       else
@@ -407,7 +407,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       ExecuteCommand('police impound2')
     end
     if split[2] == 'putinveh' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand('police putinveh '..ply)
       else
@@ -418,7 +418,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       ExecuteCommand('police runplate')
     end
     if split[2] == 'licenses' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand('police license take '..split[3]..' '..ply)
       else
@@ -426,7 +426,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'revive' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand('police revive '..ply)
       else
@@ -434,7 +434,7 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
       end
     end
     if split[2] == 'handcuffs' then
-      local ply = fsn_NearestPlayersS(GetEntityCoords(GetPlayerPed(-1)).x, GetEntityCoords(GetPlayerPed(-1)).y, GetEntityCoords(GetPlayerPed(-1)).z, 2)[1]
+      local ply = fsn_NearestPlayersS(GetEntityCoords(PlayerPedId()).x, GetEntityCoords(PlayerPedId()).y, GetEntityCoords(PlayerPedId()).z, 2)[1]
       if ply and ply ~= GetPlayerServerId(PlayerId()) then
         ExecuteCommand('police cuff '..ply)
       else
@@ -473,134 +473,134 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
 		if split[2] == 'window' then
 		  if split[3] == '*' then
 			if not windows[1] then
-			  RollDownWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0)
+			  RollDownWindow(GetVehiclePedIsIn(PlayerPedId(), false), 0)
 			  windows[1] = true
 			  TriggerEvent('fsn_notify:displayNotification', 'Window open', 'centerLeft', 3000, 'info')
 			else
-			  RollUpWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0)
+			  RollUpWindow(GetVehiclePedIsIn(PlayerPedId(), false), 0)
 			  windows[1] = false
 			  TriggerEvent('fsn_notify:displayNotification', 'Window closed', 'centerLeft', 3000, 'info')
 			end
 			if not windows[2] then
-			  RollDownWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 1)
+			  RollDownWindow(GetVehiclePedIsIn(PlayerPedId(), false), 1)
 			  windows[2] = true
 			  TriggerEvent('fsn_notify:displayNotification', 'Window open', 'centerLeft', 3000, 'info')
 			else
-			  RollUpWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 1)
+			  RollUpWindow(GetVehiclePedIsIn(PlayerPedId(), false), 1)
 			  windows[2] = false
 			  TriggerEvent('fsn_notify:displayNotification', 'Window closed', 'centerLeft', 3000, 'info')
 			end
 			if not windows[3] then
-			  RollDownWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 2)
+			  RollDownWindow(GetVehiclePedIsIn(PlayerPedId(), false), 2)
 			  windows[3] = true
 			  TriggerEvent('fsn_notify:displayNotification', 'Window open', 'centerLeft', 3000, 'info')
 			else
-			  RollUpWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 2)
+			  RollUpWindow(GetVehiclePedIsIn(PlayerPedId(), false), 2)
 			  windows[3] = false
 			  TriggerEvent('fsn_notify:displayNotification', 'Window closed', 'centerLeft', 3000, 'info')
 			end
 			if not windows[4] then
-			  RollDownWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 3)
+			  RollDownWindow(GetVehiclePedIsIn(PlayerPedId(), false), 3)
 			  windows[4] = true
 			  TriggerEvent('fsn_notify:displayNotification', 'Window open', 'centerLeft', 3000, 'info')
 			else
-			  RollUpWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 3)
+			  RollUpWindow(GetVehiclePedIsIn(PlayerPedId(), false), 3)
 			  windows[4] = false
 			  TriggerEvent('fsn_notify:displayNotification', 'Window closed', 'centerLeft', 3000, 'info')
 			end
 		  end
 		  if split[3] == '1' then
 			if not windows[1] then
-			  RollDownWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0)
+			  RollDownWindow(GetVehiclePedIsIn(PlayerPedId(), false), 0)
 			  windows[1] = true
 			  TriggerEvent('fsn_notify:displayNotification', 'Window open', 'centerLeft', 3000, 'info')
 			else
-			  RollUpWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0)
+			  RollUpWindow(GetVehiclePedIsIn(PlayerPedId(), false), 0)
 			  windows[1] = false
 			  TriggerEvent('fsn_notify:displayNotification', 'Window closed', 'centerLeft', 3000, 'info')
 			end
 		  end
 		  if split[3] == '2' then
 			if not windows[2] then
-			  RollDownWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 1)
+			  RollDownWindow(GetVehiclePedIsIn(PlayerPedId(), false), 1)
 			  windows[2] = true
 			  TriggerEvent('fsn_notify:displayNotification', 'Window open', 'centerLeft', 3000, 'info')
 			else
-			  RollUpWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 1)
+			  RollUpWindow(GetVehiclePedIsIn(PlayerPedId(), false), 1)
 			  windows[2] = false
 			  TriggerEvent('fsn_notify:displayNotification', 'Window closed', 'centerLeft', 3000, 'info')
 			end
 		  end
 		  if split[3] == '3' then
 			if not windows[3] then
-			  RollDownWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 2)
+			  RollDownWindow(GetVehiclePedIsIn(PlayerPedId(), false), 2)
 			  windows[3] = true
 			  TriggerEvent('fsn_notify:displayNotification', 'Window open', 'centerLeft', 3000, 'info')
 			else
-			  RollUpWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 2)
+			  RollUpWindow(GetVehiclePedIsIn(PlayerPedId(), false), 2)
 			  windows[3] = false
 			  TriggerEvent('fsn_notify:displayNotification', 'Window closed', 'centerLeft', 3000, 'info')
 			end
 		  end
 		  if split[3] == '4' then
 			if not windows[4] then
-			  RollDownWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 3)
+			  RollDownWindow(GetVehiclePedIsIn(PlayerPedId(), false), 3)
 			  windows[4] = true
 			  TriggerEvent('fsn_notify:displayNotification', 'Window open', 'centerLeft', 3000, 'info')
 			else
-			  RollUpWindow(GetVehiclePedIsIn(GetPlayerPed(-1), false), 3)
+			  RollUpWindow(GetVehiclePedIsIn(PlayerPedId(), false), 3)
 			  windows[4] = false
 			  TriggerEvent('fsn_notify:displayNotification', 'Window closed', 'centerLeft', 3000, 'info')
 			end
 		  end
 		end
 		if split[2] == 'door' then
-		  if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) == GetPlayerPed(-1) then
+		  if GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) == PlayerPedId() then
 			if split[3] == '*' then
-			  SetVehicleDoorsShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), false)
+			  SetVehicleDoorsShut(GetVehiclePedIsIn(PlayerPedId(), false), false)
 			end
 			if split[3] == '1' then
-			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 4) then
+			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(PlayerPedId(), false), 4) then
 				print('opened')
-				SetVehicleDoorOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 4, false, false)
+				SetVehicleDoorOpen(GetVehiclePedIsIn(PlayerPedId(), false), 4, false, false)
 			  else
 				print('closed')
-				SetVehicleDoorShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), 4, false)
+				SetVehicleDoorShut(GetVehiclePedIsIn(PlayerPedId(), false), 4, false)
 			  end
 			end
 			if split[3] == '2' then
-			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0) then
-				SetVehicleDoorOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0, false, false)
+			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(PlayerPedId(), false), 0) then
+				SetVehicleDoorOpen(GetVehiclePedIsIn(PlayerPedId(), false), 0, false, false)
 			  else
-				SetVehicleDoorShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0, false)
+				SetVehicleDoorShut(GetVehiclePedIsIn(PlayerPedId(), false), 0, false)
 			  end
 			end
 			if split[3] == '3' then
-			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 1) then
-				SetVehicleDoorOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 1, false, false)
+			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(PlayerPedId(), false), 1) then
+				SetVehicleDoorOpen(GetVehiclePedIsIn(PlayerPedId(), false), 1, false, false)
 			  else
-				SetVehicleDoorShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), 1, false)
+				SetVehicleDoorShut(GetVehiclePedIsIn(PlayerPedId(), false), 1, false)
 			  end
 			end
 			if split[3] == '4' then
-			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 2) then
-				SetVehicleDoorOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 2, false, false)
+			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(PlayerPedId(), false), 2) then
+				SetVehicleDoorOpen(GetVehiclePedIsIn(PlayerPedId(), false), 2, false, false)
 			  else
-				SetVehicleDoorShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), 2, false)
+				SetVehicleDoorShut(GetVehiclePedIsIn(PlayerPedId(), false), 2, false)
 			  end
 			end
 			if split[3] == '5' then
-			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 3) then
-				SetVehicleDoorOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 3, false, false)
+			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(PlayerPedId(), false), 3) then
+				SetVehicleDoorOpen(GetVehiclePedIsIn(PlayerPedId(), false), 3, false, false)
 			  else
-				SetVehicleDoorShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), 3, false)
+				SetVehicleDoorShut(GetVehiclePedIsIn(PlayerPedId(), false), 3, false)
 			  end
 			end
 			if split[3] == '6' then
-			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 5) then
-				SetVehicleDoorOpen(GetVehiclePedIsIn(GetPlayerPed(-1), false), 5, false, false)
+			  if not IsVehicleDoorFullyOpen(GetVehiclePedIsIn(PlayerPedId(), false), 5) then
+				SetVehicleDoorOpen(GetVehiclePedIsIn(PlayerPedId(), false), 5, false, false)
 			  else
-				SetVehicleDoorShut(GetVehiclePedIsIn(GetPlayerPed(-1), false), 5, false)
+				SetVehicleDoorShut(GetVehiclePedIsIn(PlayerPedId(), false), 5, false)
 			  end
 			end
 		  else
@@ -613,31 +613,31 @@ RegisterNUICallback( "ButtonClick", function( data, cb )
 		end
 		if split[2] == 'seat' then
 			if split[3] == '1' then
-				if IsVehicleSeatFree(GetVehiclePedIsIn(GetPlayerPed(-1)), -1) then
-					SetPedIntoVehicle(GetPlayerPed(-1), GetVehiclePedIsIn(GetPlayerPed(-1), false), -1)
+				if IsVehicleSeatFree(GetVehiclePedIsIn(PlayerPedId()), -1) then
+					SetPedIntoVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId(), false), -1)
 					TriggerEvent('fsn_commands:me', 'shuffles to the driver seat.')
-				elseif GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), -1) ~= GetPlayerPed(-1) then
+				elseif GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) ~= PlayerPedId() then
 					TriggerEvent('fsn_notify:displayNotification', 'Somebody is already there!', 'centerLeft', 3000, 'error')
 				end
 			elseif split[3] == '2' then
-				if IsVehicleSeatFree(GetVehiclePedIsIn(GetPlayerPed(-1)), 0) then
-					SetPedIntoVehicle(GetPlayerPed(-1), GetVehiclePedIsIn(GetPlayerPed(-1), false), 0)
+				if IsVehicleSeatFree(GetVehiclePedIsIn(PlayerPedId()), 0) then
+					SetPedIntoVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId(), false), 0)
 					TriggerEvent('fsn_commands:me', 'shuffles to the passenger seat.')
-				elseif GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0) ~= GetPlayerPed(-1) then
+				elseif GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), 0) ~= PlayerPedId() then
 					TriggerEvent('fsn_notify:displayNotification', 'Somebody is already there!', 'centerLeft', 3000, 'error')
 				end
 			elseif split[3] == '3' then
-				if IsVehicleSeatFree(GetVehiclePedIsIn(GetPlayerPed(-1)), 1) then
-					SetPedIntoVehicle(GetPlayerPed(-1), GetVehiclePedIsIn(GetPlayerPed(-1), false), 1)
+				if IsVehicleSeatFree(GetVehiclePedIsIn(PlayerPedId()), 1) then
+					SetPedIntoVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId(), false), 1)
 					TriggerEvent('fsn_commands:me', 'shuffles to the rear left seat.')
-				elseif GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), 1) ~= GetPlayerPed(-1) then
+				elseif GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), 1) ~= PlayerPedId() then
 					TriggerEvent('fsn_notify:displayNotification', 'Somebody is already there!', 'centerLeft', 3000, 'error')
 				end
 			elseif split[3] == '4' then
-				if IsVehicleSeatFree(GetVehiclePedIsIn(GetPlayerPed(-1)), 2) then
-					SetPedIntoVehicle(GetPlayerPed(-1), GetVehiclePedIsIn(GetPlayerPed(-1), false), 2)
+				if IsVehicleSeatFree(GetVehiclePedIsIn(PlayerPedId()), 2) then
+					SetPedIntoVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId(), false), 2)
 					TriggerEvent('fsn_commands:me', 'shuffles to the rear right seat.')
-				elseif GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false), 2) ~= GetPlayerPed(-1) then
+				elseif GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), 2) ~= PlayerPedId() then
 			 	 	TriggerEvent('fsn_notify:displayNotification', 'Somebody is already there!', 'centerLeft', 3000, 'error')
 				end
 			end
