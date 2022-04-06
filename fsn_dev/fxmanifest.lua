@@ -1,15 +1,55 @@
---[[/	:FSN:	\]]--
-fx_version 'adamant'
-game 'gta5'
+--  -----------------------------
+--  BEGIN:         FiveM Manifest
+--  -----------------------------
 
-client_script '@fsn_main/cl_utils.lua'
-server_script '@fsn_main/sv_utils.lua'
-client_script '@fsn_main/server_settings/sh_settings.lua'
-server_script '@fsn_main/server_settings/sh_settings.lua'
-server_script '@mysql-async/lib/MySQL.lua'
---[[/	:FSN:	\]]--
+fx_version  'cerulean'
+games       { 'gta5' }
 
--- Noclipping, inspired by
--- https://github.com/blattersturm/expeditious-execution/blob/master/resources/%5Bexpeditious%5D/execution-noclip
-dependency "freecam"
-client_script "cl_noclip.lua"
+author      'Crutchie'
+description 'FSN Developer'
+version     '0.0.1'
+
+--  -----------------------------
+--  END:           FiveM Manifest
+--  -----------------------------
+
+--  -----------------------------
+--  BEGIN: Client Scripts/Exports
+--  -----------------------------
+
+client_scripts {
+
+    'client/client.lua',
+    'client/cl_noclip.lua',
+
+}
+
+exports {
+
+}
+
+--  -----------------------------
+--  END:   Client Scripts/Exports
+--  -----------------------------
+
+--  -----------------------------
+--  BEGIN: Server Scripts/Exports
+--  -----------------------------
+
+server_scripts {
+
+    '@mysql-async/lib/MySQL.lua',
+
+    'config.lua',
+    'server/server.lua',
+
+}
+
+server_exports {
+
+
+}
+
+--  -----------------------------
+--  END:   Server Scripts/Exports
+--  -----------------------------
